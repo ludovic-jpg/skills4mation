@@ -1,0 +1,82 @@
+import { Link } from "@tanstack/react-router";
+import { Linkedin, Mail, Twitter } from "lucide-react";
+
+import { QualiopiBadge } from "@/components/Brand";
+
+export function SiteFooter() {
+  return (
+    <footer className="mt-24 bg-primary text-primary-foreground">
+      <div className="section-shell grid gap-10 py-14 md:grid-cols-4">
+        <div className="md:col-span-2">
+          <p className="font-display text-xl font-semibold">Skills4mation</p>
+          <p className="mt-3 max-w-sm text-sm text-primary-foreground/75">
+            L'ingénierie des compétences en mouvement. Portage administratif et pédagogique pour
+            formateurs indépendants.
+          </p>
+          <div className="mt-6 flex gap-3">
+            <a
+              href="https://www.linkedin.com"
+              aria-label="LinkedIn"
+              className="rounded-full border border-primary-foreground/30 p-2 transition-colors hover:bg-primary-foreground/10"
+            >
+              <Linkedin className="size-4" />
+            </a>
+            <a
+              href="https://twitter.com"
+              aria-label="X"
+              className="rounded-full border border-primary-foreground/30 p-2 transition-colors hover:bg-primary-foreground/10"
+            >
+              <Twitter className="size-4" />
+            </a>
+            <a
+              href="mailto:contact@skills4mation.com"
+              aria-label="Email"
+              className="rounded-full border border-primary-foreground/30 p-2 transition-colors hover:bg-primary-foreground/10"
+            >
+              <Mail className="size-4" />
+            </a>
+          </div>
+        </div>
+
+        <nav className="text-sm">
+          <p className="mb-3 font-semibold">Navigation</p>
+          <ul className="space-y-2 text-primary-foreground/75">
+            <li>
+              <Link to="/catalogue">Catalogue de formation</Link>
+            </li>
+            <li>
+              <Link to="/pole-formateur">Pôle formateur</Link>
+            </li>
+            <li>
+              <Link to="/contact">Contact</Link>
+            </li>
+            <li>
+              <Link to="/auth">Espace formateur</Link>
+            </li>
+          </ul>
+        </nav>
+
+        <div className="text-sm">
+          <p className="mb-3 font-semibold">Informations légales</p>
+          <ul className="space-y-2 text-primary-foreground/75">
+            <li>
+              <Link to="/mentions-legales">Mentions légales</Link>
+            </li>
+            <li>
+              <Link to="/confidentialite">Politique de confidentialité</Link>
+            </li>
+            <li>Charte déontologique</li>
+          </ul>
+          <QualiopiBadge className="mt-5" />
+        </div>
+      </div>
+
+      <div className="border-t border-primary-foreground/15 py-5">
+        <p className="section-shell text-xs text-primary-foreground/60">
+          © {new Date().getFullYear()} Skills4mation — Organisme de formation certifié Qualiopi ·
+          Actions de formation éligibles CPF.
+        </p>
+      </div>
+    </footer>
+  );
+}
