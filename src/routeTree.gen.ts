@@ -10,15 +10,27 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthRouteImport } from './routes/_auth'
+import { Route as AuthRouteImport } from './routes/auth'
 import { Route as CatalogueRouteImport } from './routes/catalogue'
 import { Route as ConfidentialiteRouteImport } from './routes/confidentialite'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as MentionsLegalesRouteImport } from './routes/mentions-legales'
 import { Route as PoleFormateurRouteImport } from './routes/pole-formateur'
+import { Route as AuthEspaceIndexRouteImport } from './routes/_auth.espace.index'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/_auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CatalogueRoute = CatalogueRouteImport.update({
@@ -46,61 +58,82 @@ const PoleFormateurRoute = PoleFormateurRouteImport.update({
   path: '/pole-formateur',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthEspaceIndexRoute = AuthEspaceIndexRouteImport.update({
+  id: '/espace/',
+  path: '/espace/',
+  getParentRoute: () => AuthRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
   '/catalogue': typeof CatalogueRoute
   '/confidentialite': typeof ConfidentialiteRoute
   '/contact': typeof ContactRoute
   '/mentions-legales': typeof MentionsLegalesRoute
   '/pole-formateur': typeof PoleFormateurRoute
+  '/espace/': typeof AuthEspaceIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
   '/catalogue': typeof CatalogueRoute
   '/confidentialite': typeof ConfidentialiteRoute
   '/contact': typeof ContactRoute
   '/mentions-legales': typeof MentionsLegalesRoute
   '/pole-formateur': typeof PoleFormateurRoute
+  '/espace': typeof AuthEspaceIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_auth': typeof AuthRouteWithChildren
+  '/auth': typeof AuthRoute
   '/catalogue': typeof CatalogueRoute
   '/confidentialite': typeof ConfidentialiteRoute
   '/contact': typeof ContactRoute
   '/mentions-legales': typeof MentionsLegalesRoute
   '/pole-formateur': typeof PoleFormateurRoute
+  '/_auth/espace/': typeof AuthEspaceIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/auth'
     | '/catalogue'
     | '/confidentialite'
     | '/contact'
     | '/mentions-legales'
     | '/pole-formateur'
+    | '/espace/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/auth'
     | '/catalogue'
     | '/confidentialite'
     | '/contact'
     | '/mentions-legales'
     | '/pole-formateur'
+    | '/espace'
   id:
     | '__root__'
     | '/'
+    | '/_auth'
+    | '/auth'
     | '/catalogue'
     | '/confidentialite'
     | '/contact'
     | '/mentions-legales'
     | '/pole-formateur'
+    | '/_auth/espace/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthRoute: typeof AuthRouteWithChildren
+  AuthRoute: typeof AuthRoute
   CatalogueRoute: typeof CatalogueRoute
   ConfidentialiteRoute: typeof ConfidentialiteRoute
   ContactRoute: typeof ContactRoute
@@ -115,6 +148,20 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_auth': {
+      id: '/_auth'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/catalogue': {
@@ -152,11 +199,30 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PoleFormateurRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_auth/espace/': {
+      id: '/_auth/espace/'
+      path: '/espace'
+      fullPath: '/espace/'
+      preLoaderRoute: typeof AuthEspaceIndexRouteImport
+      parentRoute: typeof AuthRoute
+    }
   }
 }
 
+interface AuthRouteChildren {
+  AuthEspaceIndexRoute: typeof AuthEspaceIndexRoute
+}
+
+const AuthRouteChildren: AuthRouteChildren = {
+  AuthEspaceIndexRoute: AuthEspaceIndexRoute,
+}
+
+const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthRoute: AuthRouteWithChildren,
+  AuthRoute: AuthRoute,
   CatalogueRoute: CatalogueRoute,
   ConfidentialiteRoute: ConfidentialiteRoute,
   ContactRoute: ContactRoute,
