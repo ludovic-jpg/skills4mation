@@ -5,7 +5,7 @@ import { FORMATEUR_NAV } from "@/components/app/nav";
 import { Card, CardContent } from "@/components/ui/card";
 import { useAuth } from "@/hooks/useAuth";
 
-export const Route = createFileRoute("/_auth/espace/dossiers/new")({
+export const Route = createFileRoute("/_app/espace/dossiers/new")({
   component: NouveauDossier,
 });
 

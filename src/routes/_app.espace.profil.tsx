@@ -12,7 +12,7 @@ import { Label } from "@/components/ui/label";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 
-export const Route = createFileRoute("/_auth/espace/profil")({
+export const Route = createFileRoute("/_app/espace/profil")({
   component: Profil,
 });
 

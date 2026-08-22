@@ -11,7 +11,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { formatDate, type CandidatureStatut } from "@/lib/statuts";
 import { supabase } from "@/integrations/supabase/client";
 
-export const Route = createFileRoute("/_auth/admin/")({
+export const Route = createFileRoute("/_app/admin/")({
   component: AdminCandidatures,
 });
 

@@ -11,7 +11,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { formatDate, type DossierStatut } from "@/lib/statuts";
 import { supabase } from "@/integrations/supabase/client";
 
-export const Route = createFileRoute("/_auth/espace/")({
+export const Route = createFileRoute("/_app/espace/")({
   component: EspaceAccueil,
 });
 
