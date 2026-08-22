@@ -80,7 +80,14 @@ function PoleFormateur() {
     }
     setErrors({});
     setSending(true);
-    const { error } = await supabase.from("candidatures").insert(parsed.data);
+    const { error } = await supabase.from("candidatures").insert({
+      prenom: parsed.data.prenom,
+      nom: parsed.data.nom,
+      email: parsed.data.email,
+      telephone: parsed.data.telephone ?? null,
+      expertise: parsed.data.expertise,
+      message: parsed.data.message ?? null,
+    });
     setSending(false);
     if (error) {
       toast.error("L'envoi a échoué. Merci de réessayer.");
@@ -154,25 +161,25 @@ function PoleFormateur() {
             ) : (
               <form onSubmit={onSubmit} className="grid gap-4" noValidate>
                 <div className="grid gap-4 sm:grid-cols-2">
-                  <Field label="Prénom" name="prenom" error={errors.prenom} required />
-                  <Field label="Nom" name="nom" error={errors.nom} required />
+                  <Field label="Prénom" name="prenom" error={errors["prenom"]} required />
+                  <Field label="Nom" name="nom" error={errors["nom"]} required />
                 </div>
                 <div className="grid gap-4 sm:grid-cols-2">
                   <Field
                     label="Email"
                     name="email"
                     type="email"
-                    error={errors.email}
+                    error={errors["email"]}
                     required
                     autoComplete="email"
                   />
-                  <Field label="Téléphone" name="telephone" error={errors.telephone} />
+                  <Field label="Téléphone" name="telephone" error={errors["telephone"]} />
                 </div>
                 <Field
                   label="Votre expertise"
                   name="expertise"
                   placeholder="Ex. management, cybersécurité, soft skills…"
-                  error={errors.expertise}
+                  error={errors["expertise"]}
                   required
                 />
                 <div className="grid gap-2">
@@ -206,7 +213,7 @@ function Field({
   name,
   error,
   ...rest
-}: { label: string; name: string; error?: string } & React.ComponentProps<typeof Input>) {
+}: { label: string; name: string; error?: string | undefined } & React.ComponentProps<typeof Input>) {
   return (
     <div className="grid gap-2">
       <Label htmlFor={name}>{label}</Label>
