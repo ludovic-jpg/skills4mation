@@ -10,25 +10,25 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as AuthRouteImport } from './routes/_auth'
+import { Route as AppRouteImport } from './routes/_app'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as CatalogueRouteImport } from './routes/catalogue'
 import { Route as ConfidentialiteRouteImport } from './routes/confidentialite'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as MentionsLegalesRouteImport } from './routes/mentions-legales'
 import { Route as PoleFormateurRouteImport } from './routes/pole-formateur'
-import { Route as AuthAdminIndexRouteImport } from './routes/_auth.admin.index'
-import { Route as AuthEspaceIndexRouteImport } from './routes/_auth.espace.index'
-import { Route as AuthEspaceProfilRouteImport } from './routes/_auth.espace.profil'
-import { Route as AuthEspaceDossiersNewRouteImport } from './routes/_auth.espace.dossiers.new'
+import { Route as AppAdminIndexRouteImport } from './routes/_app.admin.index'
+import { Route as AppEspaceIndexRouteImport } from './routes/_app.espace.index'
+import { Route as AppEspaceProfilRouteImport } from './routes/_app.espace.profil'
+import { Route as AppEspaceDossiersNewRouteImport } from './routes/_app.espace.dossiers.new'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AuthRoute = AuthRouteImport.update({
-  id: '/_auth',
+const AppRoute = AppRouteImport.update({
+  id: '/_app',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthRoute = AuthRouteImport.update({
@@ -61,25 +61,25 @@ const PoleFormateurRoute = PoleFormateurRouteImport.update({
   path: '/pole-formateur',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AuthAdminIndexRoute = AuthAdminIndexRouteImport.update({
+const AppAdminIndexRoute = AppAdminIndexRouteImport.update({
   id: '/admin/',
   path: '/admin/',
-  getParentRoute: () => AuthRoute,
+  getParentRoute: () => AppRoute,
 } as any)
-const AuthEspaceIndexRoute = AuthEspaceIndexRouteImport.update({
+const AppEspaceIndexRoute = AppEspaceIndexRouteImport.update({
   id: '/espace/',
   path: '/espace/',
-  getParentRoute: () => AuthRoute,
+  getParentRoute: () => AppRoute,
 } as any)
-const AuthEspaceProfilRoute = AuthEspaceProfilRouteImport.update({
+const AppEspaceProfilRoute = AppEspaceProfilRouteImport.update({
   id: '/espace/profil',
   path: '/espace/profil',
-  getParentRoute: () => AuthRoute,
+  getParentRoute: () => AppRoute,
 } as any)
-const AuthEspaceDossiersNewRoute = AuthEspaceDossiersNewRouteImport.update({
+const AppEspaceDossiersNewRoute = AppEspaceDossiersNewRouteImport.update({
   id: '/espace/dossiers/new',
   path: '/espace/dossiers/new',
-  getParentRoute: () => AuthRoute,
+  getParentRoute: () => AppRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
@@ -90,10 +90,10 @@ export interface FileRoutesByFullPath {
   '/contact': typeof ContactRoute
   '/mentions-legales': typeof MentionsLegalesRoute
   '/pole-formateur': typeof PoleFormateurRoute
-  '/espace/profil': typeof AuthEspaceProfilRoute
-  '/admin/': typeof AuthAdminIndexRoute
-  '/espace/': typeof AuthEspaceIndexRoute
-  '/espace/dossiers/new': typeof AuthEspaceDossiersNewRoute
+  '/espace/profil': typeof AppEspaceProfilRoute
+  '/admin/': typeof AppAdminIndexRoute
+  '/espace/': typeof AppEspaceIndexRoute
+  '/espace/dossiers/new': typeof AppEspaceDossiersNewRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -103,25 +103,25 @@ export interface FileRoutesByTo {
   '/contact': typeof ContactRoute
   '/mentions-legales': typeof MentionsLegalesRoute
   '/pole-formateur': typeof PoleFormateurRoute
-  '/espace/profil': typeof AuthEspaceProfilRoute
-  '/admin': typeof AuthAdminIndexRoute
-  '/espace': typeof AuthEspaceIndexRoute
-  '/espace/dossiers/new': typeof AuthEspaceDossiersNewRoute
+  '/espace/profil': typeof AppEspaceProfilRoute
+  '/admin': typeof AppAdminIndexRoute
+  '/espace': typeof AppEspaceIndexRoute
+  '/espace/dossiers/new': typeof AppEspaceDossiersNewRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/_auth': typeof AuthRouteWithChildren
+  '/_app': typeof AppRouteWithChildren
   '/auth': typeof AuthRoute
   '/catalogue': typeof CatalogueRoute
   '/confidentialite': typeof ConfidentialiteRoute
   '/contact': typeof ContactRoute
   '/mentions-legales': typeof MentionsLegalesRoute
   '/pole-formateur': typeof PoleFormateurRoute
-  '/_auth/espace/profil': typeof AuthEspaceProfilRoute
-  '/_auth/admin/': typeof AuthAdminIndexRoute
-  '/_auth/espace/': typeof AuthEspaceIndexRoute
-  '/_auth/espace/dossiers/new': typeof AuthEspaceDossiersNewRoute
+  '/_app/espace/profil': typeof AppEspaceProfilRoute
+  '/_app/admin/': typeof AppAdminIndexRoute
+  '/_app/espace/': typeof AppEspaceIndexRoute
+  '/_app/espace/dossiers/new': typeof AppEspaceDossiersNewRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -153,22 +153,22 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
-    | '/_auth'
+    | '/_app'
     | '/auth'
     | '/catalogue'
     | '/confidentialite'
     | '/contact'
     | '/mentions-legales'
     | '/pole-formateur'
-    | '/_auth/espace/profil'
-    | '/_auth/admin/'
-    | '/_auth/espace/'
-    | '/_auth/espace/dossiers/new'
+    | '/_app/espace/profil'
+    | '/_app/admin/'
+    | '/_app/espace/'
+    | '/_app/espace/dossiers/new'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  AuthRoute: typeof AuthRouteWithChildren
+  AppRoute: typeof AppRouteWithChildren
   AuthRoute: typeof AuthRoute
   CatalogueRoute: typeof CatalogueRoute
   ConfidentialiteRoute: typeof ConfidentialiteRoute
@@ -186,11 +186,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_auth': {
-      id: '/_auth'
+    '/_app': {
+      id: '/_app'
       path: ''
       fullPath: '/'
-      preLoaderRoute: typeof AuthRouteImport
+      preLoaderRoute: typeof AppRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/auth': {
@@ -235,56 +235,56 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PoleFormateurRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_auth/admin/': {
-      id: '/_auth/admin/'
+    '/_app/admin/': {
+      id: '/_app/admin/'
       path: '/admin'
       fullPath: '/admin/'
-      preLoaderRoute: typeof AuthAdminIndexRouteImport
-      parentRoute: typeof AuthRoute
+      preLoaderRoute: typeof AppAdminIndexRouteImport
+      parentRoute: typeof AppRoute
     }
-    '/_auth/espace/': {
-      id: '/_auth/espace/'
+    '/_app/espace/': {
+      id: '/_app/espace/'
       path: '/espace'
       fullPath: '/espace/'
-      preLoaderRoute: typeof AuthEspaceIndexRouteImport
-      parentRoute: typeof AuthRoute
+      preLoaderRoute: typeof AppEspaceIndexRouteImport
+      parentRoute: typeof AppRoute
     }
-    '/_auth/espace/profil': {
-      id: '/_auth/espace/profil'
+    '/_app/espace/profil': {
+      id: '/_app/espace/profil'
       path: '/espace/profil'
       fullPath: '/espace/profil'
-      preLoaderRoute: typeof AuthEspaceProfilRouteImport
-      parentRoute: typeof AuthRoute
+      preLoaderRoute: typeof AppEspaceProfilRouteImport
+      parentRoute: typeof AppRoute
     }
-    '/_auth/espace/dossiers/new': {
-      id: '/_auth/espace/dossiers/new'
+    '/_app/espace/dossiers/new': {
+      id: '/_app/espace/dossiers/new'
       path: '/espace/dossiers/new'
       fullPath: '/espace/dossiers/new'
-      preLoaderRoute: typeof AuthEspaceDossiersNewRouteImport
-      parentRoute: typeof AuthRoute
+      preLoaderRoute: typeof AppEspaceDossiersNewRouteImport
+      parentRoute: typeof AppRoute
     }
   }
 }
 
-interface AuthRouteChildren {
-  AuthEspaceProfilRoute: typeof AuthEspaceProfilRoute
-  AuthAdminIndexRoute: typeof AuthAdminIndexRoute
-  AuthEspaceIndexRoute: typeof AuthEspaceIndexRoute
-  AuthEspaceDossiersNewRoute: typeof AuthEspaceDossiersNewRoute
+interface AppRouteChildren {
+  AppEspaceProfilRoute: typeof AppEspaceProfilRoute
+  AppAdminIndexRoute: typeof AppAdminIndexRoute
+  AppEspaceIndexRoute: typeof AppEspaceIndexRoute
+  AppEspaceDossiersNewRoute: typeof AppEspaceDossiersNewRoute
 }
 
-const AuthRouteChildren: AuthRouteChildren = {
-  AuthEspaceProfilRoute: AuthEspaceProfilRoute,
-  AuthAdminIndexRoute: AuthAdminIndexRoute,
-  AuthEspaceIndexRoute: AuthEspaceIndexRoute,
-  AuthEspaceDossiersNewRoute: AuthEspaceDossiersNewRoute,
+const AppRouteChildren: AppRouteChildren = {
+  AppEspaceProfilRoute: AppEspaceProfilRoute,
+  AppAdminIndexRoute: AppAdminIndexRoute,
+  AppEspaceIndexRoute: AppEspaceIndexRoute,
+  AppEspaceDossiersNewRoute: AppEspaceDossiersNewRoute,
 }
 
-const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
+const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  AuthRoute: AuthRouteWithChildren,
+  AppRoute: AppRouteWithChildren,
   AuthRoute: AuthRoute,
   CatalogueRoute: CatalogueRoute,
   ConfidentialiteRoute: ConfidentialiteRoute,
