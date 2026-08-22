@@ -17,7 +17,10 @@ import { Route as ConfidentialiteRouteImport } from './routes/confidentialite'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as MentionsLegalesRouteImport } from './routes/mentions-legales'
 import { Route as PoleFormateurRouteImport } from './routes/pole-formateur'
+import { Route as AuthAdminIndexRouteImport } from './routes/_auth.admin.index'
 import { Route as AuthEspaceIndexRouteImport } from './routes/_auth.espace.index'
+import { Route as AuthEspaceProfilRouteImport } from './routes/_auth.espace.profil'
+import { Route as AuthEspaceDossiersNewRouteImport } from './routes/_auth.espace.dossiers.new'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -58,9 +61,24 @@ const PoleFormateurRoute = PoleFormateurRouteImport.update({
   path: '/pole-formateur',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthAdminIndexRoute = AuthAdminIndexRouteImport.update({
+  id: '/admin/',
+  path: '/admin/',
+  getParentRoute: () => AuthRoute,
+} as any)
 const AuthEspaceIndexRoute = AuthEspaceIndexRouteImport.update({
   id: '/espace/',
   path: '/espace/',
+  getParentRoute: () => AuthRoute,
+} as any)
+const AuthEspaceProfilRoute = AuthEspaceProfilRouteImport.update({
+  id: '/espace/profil',
+  path: '/espace/profil',
+  getParentRoute: () => AuthRoute,
+} as any)
+const AuthEspaceDossiersNewRoute = AuthEspaceDossiersNewRouteImport.update({
+  id: '/espace/dossiers/new',
+  path: '/espace/dossiers/new',
   getParentRoute: () => AuthRoute,
 } as any)
 
@@ -72,7 +90,10 @@ export interface FileRoutesByFullPath {
   '/contact': typeof ContactRoute
   '/mentions-legales': typeof MentionsLegalesRoute
   '/pole-formateur': typeof PoleFormateurRoute
+  '/espace/profil': typeof AuthEspaceProfilRoute
+  '/admin/': typeof AuthAdminIndexRoute
   '/espace/': typeof AuthEspaceIndexRoute
+  '/espace/dossiers/new': typeof AuthEspaceDossiersNewRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -82,7 +103,10 @@ export interface FileRoutesByTo {
   '/contact': typeof ContactRoute
   '/mentions-legales': typeof MentionsLegalesRoute
   '/pole-formateur': typeof PoleFormateurRoute
+  '/espace/profil': typeof AuthEspaceProfilRoute
+  '/admin': typeof AuthAdminIndexRoute
   '/espace': typeof AuthEspaceIndexRoute
+  '/espace/dossiers/new': typeof AuthEspaceDossiersNewRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -94,7 +118,10 @@ export interface FileRoutesById {
   '/contact': typeof ContactRoute
   '/mentions-legales': typeof MentionsLegalesRoute
   '/pole-formateur': typeof PoleFormateurRoute
+  '/_auth/espace/profil': typeof AuthEspaceProfilRoute
+  '/_auth/admin/': typeof AuthAdminIndexRoute
   '/_auth/espace/': typeof AuthEspaceIndexRoute
+  '/_auth/espace/dossiers/new': typeof AuthEspaceDossiersNewRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -106,7 +133,10 @@ export interface FileRouteTypes {
     | '/contact'
     | '/mentions-legales'
     | '/pole-formateur'
+    | '/espace/profil'
+    | '/admin/'
     | '/espace/'
+    | '/espace/dossiers/new'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -116,7 +146,10 @@ export interface FileRouteTypes {
     | '/contact'
     | '/mentions-legales'
     | '/pole-formateur'
+    | '/espace/profil'
+    | '/admin'
     | '/espace'
+    | '/espace/dossiers/new'
   id:
     | '__root__'
     | '/'
@@ -127,7 +160,10 @@ export interface FileRouteTypes {
     | '/contact'
     | '/mentions-legales'
     | '/pole-formateur'
+    | '/_auth/espace/profil'
+    | '/_auth/admin/'
     | '/_auth/espace/'
+    | '/_auth/espace/dossiers/new'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -199,6 +235,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PoleFormateurRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_auth/admin/': {
+      id: '/_auth/admin/'
+      path: '/admin'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AuthAdminIndexRouteImport
+      parentRoute: typeof AuthRoute
+    }
     '/_auth/espace/': {
       id: '/_auth/espace/'
       path: '/espace'
@@ -206,15 +249,35 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthEspaceIndexRouteImport
       parentRoute: typeof AuthRoute
     }
+    '/_auth/espace/profil': {
+      id: '/_auth/espace/profil'
+      path: '/espace/profil'
+      fullPath: '/espace/profil'
+      preLoaderRoute: typeof AuthEspaceProfilRouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/_auth/espace/dossiers/new': {
+      id: '/_auth/espace/dossiers/new'
+      path: '/espace/dossiers/new'
+      fullPath: '/espace/dossiers/new'
+      preLoaderRoute: typeof AuthEspaceDossiersNewRouteImport
+      parentRoute: typeof AuthRoute
+    }
   }
 }
 
 interface AuthRouteChildren {
+  AuthEspaceProfilRoute: typeof AuthEspaceProfilRoute
+  AuthAdminIndexRoute: typeof AuthAdminIndexRoute
   AuthEspaceIndexRoute: typeof AuthEspaceIndexRoute
+  AuthEspaceDossiersNewRoute: typeof AuthEspaceDossiersNewRoute
 }
 
 const AuthRouteChildren: AuthRouteChildren = {
+  AuthEspaceProfilRoute: AuthEspaceProfilRoute,
+  AuthAdminIndexRoute: AuthAdminIndexRoute,
   AuthEspaceIndexRoute: AuthEspaceIndexRoute,
+  AuthEspaceDossiersNewRoute: AuthEspaceDossiersNewRoute,
 }
 
 const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
