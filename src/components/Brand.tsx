@@ -1,41 +1,27 @@
 import { Link } from "@tanstack/react-router";
 import { ShieldCheck } from "lucide-react";
 
-import logoMark from "@/assets/logo-mark.png";
+import logoWordmark from "@/assets/logo-skills4mation.png.asset.json";
 import { cn } from "@/lib/utils";
 
 export function Logo({ variant = "dark" }: { variant?: "dark" | "light" }) {
   return (
-    <Link to="/" className="flex items-center gap-3" aria-label="Skills4mation — accueil">
-      {/* Zone logo : remplacer src/assets/logo-mark.png par le logo officiel Skills4mation */}
+    <Link to="/" className="flex items-center gap-2" aria-label="Skills4mation — accueil">
       <img
-        src={logoMark}
+        src={logoWordmark.url}
         alt="Logo Skills4mation"
-        width={40}
-        height={40}
-        className="h-10 w-10 rounded-xl bg-background object-contain p-1"
+        width={200}
+        height={44}
+        className={cn(
+          "h-11 w-auto object-contain",
+          variant === "light" && "rounded-lg bg-primary-foreground/95 px-2 py-1",
+        )}
       />
-      <span className="leading-tight">
-        <span
-          className={cn(
-            "block font-display text-lg font-semibold tracking-tight",
-            variant === "light" ? "text-primary-foreground" : "text-primary",
-          )}
-        >
-          Skills4mation
-        </span>
-        <span
-          className={cn(
-            "block text-[11px] font-medium",
-            variant === "light" ? "text-primary-foreground/70" : "text-muted-foreground",
-          )}
-        >
-          Ingénierie des compétences
-        </span>
-      </span>
+      <span className="sr-only">Skills4mation — Ingénierie des compétences</span>
     </Link>
   );
 }
+
 
 /** Badge de certification. Remplacer par le fichier officiel Qualiopi fourni par le client. */
 export function QualiopiBadge({ className }: { className?: string }) {
