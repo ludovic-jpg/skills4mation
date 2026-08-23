@@ -6,19 +6,20 @@ import { cn } from "@/lib/utils";
 
 export function Logo({ variant = "dark" }: { variant?: "dark" | "light" }) {
   return (
-    <Link to="/" className="flex items-center gap-2" aria-label="Skills4mation — accueil">
+    <Link to="/" className="flex items-center" aria-label="Skills4mation — accueil">
       <img
         src={logoWordmark.url}
         alt="Logo Skills4mation"
-        width={200}
-        height={44}
+        width={469}
+        height={61}
         className={cn(
-          "h-11 w-auto object-contain",
+          "h-7 w-auto object-contain sm:h-8",
           variant === "light" && "rounded-lg bg-primary-foreground/95 px-2 py-1",
         )}
       />
       <span className="sr-only">Skills4mation — Ingénierie des compétences</span>
     </Link>
+
   );
 }
 
