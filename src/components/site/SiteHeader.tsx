@@ -10,6 +10,7 @@ import { useAuth } from "@/hooks/useAuth";
 const NAV = [
   { to: "/", hash: undefined, label: "Accueil" },
   { to: "/", hash: "portage", label: "Portage Qualiopi" },
+  { to: "/catalogue", hash: undefined, label: "Catalogue" },
   { to: "/", hash: "etapes", label: "Comment ça marche" },
   { to: "/", hash: "tarifs", label: "Tarifs" },
   { to: "/", hash: "profils", label: "Pour qui ?" },

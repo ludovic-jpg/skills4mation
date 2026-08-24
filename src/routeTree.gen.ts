@@ -12,14 +12,16 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppRouteImport } from './routes/_app'
 import { Route as AuthRouteImport } from './routes/auth'
-import { Route as CatalogueRouteImport } from './routes/catalogue'
 import { Route as ConfidentialiteRouteImport } from './routes/confidentialite'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as MentionsLegalesRouteImport } from './routes/mentions-legales'
 import { Route as PoleFormateurRouteImport } from './routes/pole-formateur'
+import { Route as CatalogueIndexRouteImport } from './routes/catalogue.index'
 import { Route as AppAdminIndexRouteImport } from './routes/_app.admin.index'
 import { Route as AppEspaceIndexRouteImport } from './routes/_app.espace.index'
 import { Route as AppEspaceProfilRouteImport } from './routes/_app.espace.profil'
+import { Route as CatalogueCategoryIndexRouteImport } from './routes/catalogue.$category.index'
+import { Route as CatalogueCategorySlugRouteImport } from './routes/catalogue.$category.$slug'
 import { Route as AppEspaceDossiersNewRouteImport } from './routes/_app.espace.dossiers.new'
 
 const IndexRoute = IndexRouteImport.update({
@@ -34,11 +36,6 @@ const AppRoute = AppRouteImport.update({
 const AuthRoute = AuthRouteImport.update({
   id: '/auth',
   path: '/auth',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CatalogueRoute = CatalogueRouteImport.update({
-  id: '/catalogue',
-  path: '/catalogue',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ConfidentialiteRoute = ConfidentialiteRouteImport.update({
@@ -61,6 +58,11 @@ const PoleFormateurRoute = PoleFormateurRouteImport.update({
   path: '/pole-formateur',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CatalogueIndexRoute = CatalogueIndexRouteImport.update({
+  id: '/catalogue/',
+  path: '/catalogue/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AppAdminIndexRoute = AppAdminIndexRouteImport.update({
   id: '/admin/',
   path: '/admin/',
@@ -76,6 +78,16 @@ const AppEspaceProfilRoute = AppEspaceProfilRouteImport.update({
   path: '/espace/profil',
   getParentRoute: () => AppRoute,
 } as any)
+const CatalogueCategoryIndexRoute = CatalogueCategoryIndexRouteImport.update({
+  id: '/catalogue/$category/',
+  path: '/catalogue/$category/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CatalogueCategorySlugRoute = CatalogueCategorySlugRouteImport.update({
+  id: '/catalogue/$category/$slug',
+  path: '/catalogue/$category/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AppEspaceDossiersNewRoute = AppEspaceDossiersNewRouteImport.update({
   id: '/espace/dossiers/new',
   path: '/espace/dossiers/new',
@@ -85,27 +97,31 @@ const AppEspaceDossiersNewRoute = AppEspaceDossiersNewRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
-  '/catalogue': typeof CatalogueRoute
   '/confidentialite': typeof ConfidentialiteRoute
   '/contact': typeof ContactRoute
   '/mentions-legales': typeof MentionsLegalesRoute
   '/pole-formateur': typeof PoleFormateurRoute
+  '/catalogue/': typeof CatalogueIndexRoute
   '/espace/profil': typeof AppEspaceProfilRoute
+  '/catalogue/$category/$slug': typeof CatalogueCategorySlugRoute
   '/admin/': typeof AppAdminIndexRoute
   '/espace/': typeof AppEspaceIndexRoute
+  '/catalogue/$category/': typeof CatalogueCategoryIndexRoute
   '/espace/dossiers/new': typeof AppEspaceDossiersNewRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
-  '/catalogue': typeof CatalogueRoute
   '/confidentialite': typeof ConfidentialiteRoute
   '/contact': typeof ContactRoute
   '/mentions-legales': typeof MentionsLegalesRoute
   '/pole-formateur': typeof PoleFormateurRoute
+  '/catalogue': typeof CatalogueIndexRoute
   '/espace/profil': typeof AppEspaceProfilRoute
+  '/catalogue/$category/$slug': typeof CatalogueCategorySlugRoute
   '/admin': typeof AppAdminIndexRoute
   '/espace': typeof AppEspaceIndexRoute
+  '/catalogue/$category': typeof CatalogueCategoryIndexRoute
   '/espace/dossiers/new': typeof AppEspaceDossiersNewRoute
 }
 export interface FileRoutesById {
@@ -113,14 +129,16 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_app': typeof AppRouteWithChildren
   '/auth': typeof AuthRoute
-  '/catalogue': typeof CatalogueRoute
   '/confidentialite': typeof ConfidentialiteRoute
   '/contact': typeof ContactRoute
   '/mentions-legales': typeof MentionsLegalesRoute
   '/pole-formateur': typeof PoleFormateurRoute
+  '/catalogue/': typeof CatalogueIndexRoute
   '/_app/espace/profil': typeof AppEspaceProfilRoute
+  '/catalogue/$category/$slug': typeof CatalogueCategorySlugRoute
   '/_app/admin/': typeof AppAdminIndexRoute
   '/_app/espace/': typeof AppEspaceIndexRoute
+  '/catalogue/$category/': typeof CatalogueCategoryIndexRoute
   '/_app/espace/dossiers/new': typeof AppEspaceDossiersNewRoute
 }
 export interface FileRouteTypes {
@@ -128,41 +146,47 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/auth'
-    | '/catalogue'
     | '/confidentialite'
     | '/contact'
     | '/mentions-legales'
     | '/pole-formateur'
+    | '/catalogue/'
     | '/espace/profil'
+    | '/catalogue/$category/$slug'
     | '/admin/'
     | '/espace/'
+    | '/catalogue/$category/'
     | '/espace/dossiers/new'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/auth'
-    | '/catalogue'
     | '/confidentialite'
     | '/contact'
     | '/mentions-legales'
     | '/pole-formateur'
+    | '/catalogue'
     | '/espace/profil'
+    | '/catalogue/$category/$slug'
     | '/admin'
     | '/espace'
+    | '/catalogue/$category'
     | '/espace/dossiers/new'
   id:
     | '__root__'
     | '/'
     | '/_app'
     | '/auth'
-    | '/catalogue'
     | '/confidentialite'
     | '/contact'
     | '/mentions-legales'
     | '/pole-formateur'
+    | '/catalogue/'
     | '/_app/espace/profil'
+    | '/catalogue/$category/$slug'
     | '/_app/admin/'
     | '/_app/espace/'
+    | '/catalogue/$category/'
     | '/_app/espace/dossiers/new'
   fileRoutesById: FileRoutesById
 }
@@ -170,11 +194,13 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AppRoute: typeof AppRouteWithChildren
   AuthRoute: typeof AuthRoute
-  CatalogueRoute: typeof CatalogueRoute
   ConfidentialiteRoute: typeof ConfidentialiteRoute
   ContactRoute: typeof ContactRoute
   MentionsLegalesRoute: typeof MentionsLegalesRoute
   PoleFormateurRoute: typeof PoleFormateurRoute
+  CatalogueIndexRoute: typeof CatalogueIndexRoute
+  CatalogueCategorySlugRoute: typeof CatalogueCategorySlugRoute
+  CatalogueCategoryIndexRoute: typeof CatalogueCategoryIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -198,13 +224,6 @@ declare module '@tanstack/react-router' {
       path: '/auth'
       fullPath: '/auth'
       preLoaderRoute: typeof AuthRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/catalogue': {
-      id: '/catalogue'
-      path: '/catalogue'
-      fullPath: '/catalogue'
-      preLoaderRoute: typeof CatalogueRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/confidentialite': {
@@ -235,6 +254,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PoleFormateurRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/catalogue/': {
+      id: '/catalogue/'
+      path: '/catalogue'
+      fullPath: '/catalogue/'
+      preLoaderRoute: typeof CatalogueIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_app/admin/': {
       id: '/_app/admin/'
       path: '/admin'
@@ -255,6 +281,20 @@ declare module '@tanstack/react-router' {
       fullPath: '/espace/profil'
       preLoaderRoute: typeof AppEspaceProfilRouteImport
       parentRoute: typeof AppRoute
+    }
+    '/catalogue/$category/': {
+      id: '/catalogue/$category/'
+      path: '/catalogue/$category'
+      fullPath: '/catalogue/$category/'
+      preLoaderRoute: typeof CatalogueCategoryIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/catalogue/$category/$slug': {
+      id: '/catalogue/$category/$slug'
+      path: '/catalogue/$category/$slug'
+      fullPath: '/catalogue/$category/$slug'
+      preLoaderRoute: typeof CatalogueCategorySlugRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/_app/espace/dossiers/new': {
       id: '/_app/espace/dossiers/new'
@@ -286,11 +326,13 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AppRoute: AppRouteWithChildren,
   AuthRoute: AuthRoute,
-  CatalogueRoute: CatalogueRoute,
   ConfidentialiteRoute: ConfidentialiteRoute,
   ContactRoute: ContactRoute,
   MentionsLegalesRoute: MentionsLegalesRoute,
   PoleFormateurRoute: PoleFormateurRoute,
+  CatalogueIndexRoute: CatalogueIndexRoute,
+  CatalogueCategorySlugRoute: CatalogueCategorySlugRoute,
+  CatalogueCategoryIndexRoute: CatalogueCategoryIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
