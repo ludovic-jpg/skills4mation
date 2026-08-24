@@ -55,6 +55,16 @@ export function SiteFooter() {
               <Link to="/catalogue">Catalogue de formation</Link>
             </li>
             <li>
+              <Link to="/" hash="budget">
+                Évaluer mon budget formation
+              </Link>
+            </li>
+            <li>
+              <Link to="/" hash="projet">
+                Parler de mon projet
+              </Link>
+            </li>
+            <li>
               <Link to="/pole-formateur">Devenir partenaire porté</Link>
             </li>
             <li>

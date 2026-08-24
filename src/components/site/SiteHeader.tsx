@@ -13,7 +13,8 @@ const NAV = [
   { to: "/catalogue", hash: undefined, label: "Catalogue" },
   { to: "/", hash: "etapes", label: "Comment ça marche" },
   { to: "/", hash: "tarifs", label: "Tarifs" },
-  { to: "/", hash: "profils", label: "Pour qui ?" },
+  { to: "/", hash: "apprenants", label: "Apprenants" },
+  { to: "/", hash: "projet", label: "Mon projet" },
   { to: "/", hash: "faq", label: "Ressources" },
   { to: "/contact", hash: undefined, label: "Contact" },
 ] as const;
