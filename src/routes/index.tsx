@@ -20,10 +20,17 @@ import {
   UserCheck,
   Users,
   Wallet,
+  BookOpen,
+  CalendarHeart,
+  MessagesSquare,
+  Route as RouteIcon,
+  Target,
+  UserSearch,
 } from "lucide-react";
 
 import heroImage from "@/assets/hero-formation.jpg";
 import { QualiopiBadge } from "@/components/Brand";
+import { EvaluationBudget } from "@/components/site/EvaluationBudget";
 import { PublicLayout } from "@/components/site/PublicLayout";
 import { SimulateurCommission } from "@/components/site/SimulateurCommission";
 import {
@@ -167,6 +174,35 @@ const AUTRES_SERVICES = [
     texte:
       "Indicateurs de satisfaction et de compétences pour objectiver la qualité de vos formations.",
   },
+];
+
+const APPRENANTS = [
+  {
+    icon: UserSearch,
+    titre: "Le formateur que vous choisissez",
+    texte:
+      "Vous consultez le profil, l'expertise et l'approche pédagogique du formateur avant de vous engager. Le courant doit passer : c'est la première condition d'une formation utile.",
+  },
+  {
+    icon: Target,
+    titre: "Un parcours calé sur votre projet pro",
+    texte:
+      "Évolution, prise de poste, reconversion ou développement de votre activité : le contenu est construit à partir de votre objectif, pas d'un programme standard.",
+  },
+  {
+    icon: CalendarHeart,
+    titre: "Compatible avec votre vie réelle",
+    texte:
+      "Sessions en soirée, sur une demi-journée, en distanciel ou fractionnées sur plusieurs semaines : le rythme s'adapte à vos disponibilités personnelles.",
+  },
+];
+
+const PROJET_ETAPES = [
+  "Un entretien de cadrage pour poser votre objectif professionnel et votre niveau de départ",
+  "Une proposition de formateur et de programme sur mesure, ajustée à vos contraintes",
+  "Un calendrier construit avec vous, selon vos disponibilités personnelles",
+  "Le montage de votre financement et le suivi administratif de A à Z",
+  "Un point de suivi post-formation pour ancrer et mesurer vos acquis",
 ];
 
 const FAQ = [
@@ -397,6 +433,107 @@ function Accueil() {
               </Card>
             ))}
           </div>
+        </div>
+      </section>
+
+
+      <section id="apprenants" className="section-shell scroll-mt-24 py-16 lg:py-20">
+        <p className="eyebrow">Vous êtes apprenant</p>
+        <h2 className="mt-3 max-w-3xl text-3xl font-semibold sm:text-4xl">
+          Formez-vous auprès du formateur de votre choix
+        </h2>
+        <p className="mt-5 max-w-3xl text-muted-foreground">
+          Chez Skills4mation, vous ne choisissez pas seulement un programme : vous choisissez la
+          personne qui va vous accompagner. Nos formateurs experts sont sélectionnés pour leur
+          pratique du métier, et chaque parcours est ajusté à votre projet professionnel, à votre
+          niveau réel et à vos disponibilités personnelles.
+        </p>
+
+        <div className="mt-10 grid gap-5 lg:grid-cols-3">
+          {APPRENANTS.map((item) => (
+            <Card key={item.titre} className="rounded-2xl border-border/70 shadow-soft">
+              <CardContent className="p-6">
+                <span className="inline-flex rounded-xl bg-accent p-3 text-accent-foreground">
+                  <item.icon className="size-5" />
+                </span>
+                <h3 className="mt-4 text-lg font-semibold">{item.titre}</h3>
+                <p className="mt-2 text-sm text-muted-foreground">{item.texte}</p>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+
+        <div className="mt-10 grid gap-5 lg:grid-cols-2">
+          <Card className="rounded-3xl border-none bg-gradient-hero text-primary-foreground shadow-elevated">
+            <CardContent className="flex h-full flex-col p-6 sm:p-8">
+              <span className="inline-flex w-fit rounded-xl bg-primary-foreground/10 p-3">
+                <BookOpen className="size-5 text-cta" aria-hidden />
+              </span>
+              <h3 className="mt-4 text-xl font-semibold text-primary-foreground">
+                Découvrez le catalogue de formation
+              </h3>
+              <p className="mt-3 text-sm text-primary-foreground/85">
+                Bien-être, bureautique &amp; digital, business, management, langues, sécurité… Des
+                dizaines de formations professionnelles, disponibles en présentiel, à distance ou en
+                format mixte, adaptables en individuel comme en collectif.
+              </p>
+              <div className="mt-auto pt-7">
+                <Button asChild variant="cta" size="lg">
+                  <Link to="/catalogue">Explorer le catalogue</Link>
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+
+          <EvaluationBudget />
+        </div>
+      </section>
+
+      <section id="projet" className="scroll-mt-24 bg-muted/60 py-16 lg:py-20">
+        <div className="section-shell grid gap-10 lg:grid-cols-[1fr_0.9fr]">
+          <div>
+            <p className="eyebrow">Votre projet, votre rythme</p>
+            <h2 className="mt-3 text-3xl font-semibold sm:text-4xl">
+              Parler de mon projet de formation
+            </h2>
+            <p className="mt-5 text-muted-foreground">
+              Un échange de 20 minutes suffit pour clarifier votre objectif professionnel,
+              identifier la formation et le formateur adaptés, caler un calendrier compatible avec
+              votre emploi du temps et sécuriser votre financement. Nous revenons vers vous sous 48
+              heures ouvrées avec une proposition personnalisée.
+            </p>
+            <ul className="mt-6 grid gap-3 text-sm">
+              {PROJET_ETAPES.map((item) => (
+                <li key={item} className="flex items-start gap-3">
+                  <RouteIcon className="mt-0.5 size-4 shrink-0 text-secondary" aria-hidden />
+                  <span className="text-muted-foreground">{item}</span>
+                </li>
+              ))}
+            </ul>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <Button asChild variant="cta" size="lg">
+                <Link to="/contact">Parler de mon projet de formation</Link>
+              </Button>
+              <Button asChild variant="outline" size="lg">
+                <Link to="/catalogue">Voir les formations</Link>
+              </Button>
+            </div>
+          </div>
+
+          <Card className="h-fit rounded-3xl border-border/70 shadow-soft">
+            <CardContent className="p-6 sm:p-8">
+              <MessagesSquare className="size-6 text-secondary" aria-hidden />
+              <h3 className="mt-4 text-lg font-semibold">Un accompagnement très proactif</h3>
+              <p className="mt-3 text-sm text-muted-foreground">
+                Un interlocuteur unique vous suit du premier échange jusqu'à l'attestation :
+                relances des financeurs, coordination avec le formateur, ajustement du planning si
+                votre activité évolue, et point de suivi après la formation pour mesurer vos acquis.
+              </p>
+              <p className="mt-4 text-sm font-semibold">
+                Réponse sous 48 h ouvrées · Sessions du lundi au samedi · Horaires aménageables
+              </p>
+            </CardContent>
+          </Card>
         </div>
       </section>
 
