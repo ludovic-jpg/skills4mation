@@ -40,7 +40,7 @@ export const Route = createFileRoute("/catalogue/$category/$slug")({
     };
   },
   notFoundComponent: FormationNotFound,
-  component: FormationDetail;
+  component: FormationDetail,
 });
 
 function FormationNotFound() {
