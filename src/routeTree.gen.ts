@@ -20,6 +20,7 @@ import { Route as CatalogueIndexRouteImport } from './routes/catalogue.index'
 import { Route as AppAdminIndexRouteImport } from './routes/_app.admin.index'
 import { Route as AppEspaceIndexRouteImport } from './routes/_app.espace.index'
 import { Route as AppEspaceProfilRouteImport } from './routes/_app.espace.profil'
+import { Route as CatalogueCategoryIndexRouteImport } from './routes/catalogue.$category.index'
 import { Route as AppEspaceDossiersNewRouteImport } from './routes/_app.espace.dossiers.new'
 
 const IndexRoute = IndexRouteImport.update({
@@ -76,6 +77,11 @@ const AppEspaceProfilRoute = AppEspaceProfilRouteImport.update({
   path: '/espace/profil',
   getParentRoute: () => AppRoute,
 } as any)
+const CatalogueCategoryIndexRoute = CatalogueCategoryIndexRouteImport.update({
+  id: '/catalogue/$category/',
+  path: '/catalogue/$category/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AppEspaceDossiersNewRoute = AppEspaceDossiersNewRouteImport.update({
   id: '/espace/dossiers/new',
   path: '/espace/dossiers/new',
@@ -93,6 +99,7 @@ export interface FileRoutesByFullPath {
   '/espace/profil': typeof AppEspaceProfilRoute
   '/admin/': typeof AppAdminIndexRoute
   '/espace/': typeof AppEspaceIndexRoute
+  '/catalogue/$category/': typeof CatalogueCategoryIndexRoute
   '/espace/dossiers/new': typeof AppEspaceDossiersNewRoute
 }
 export interface FileRoutesByTo {
@@ -106,6 +113,7 @@ export interface FileRoutesByTo {
   '/espace/profil': typeof AppEspaceProfilRoute
   '/admin': typeof AppAdminIndexRoute
   '/espace': typeof AppEspaceIndexRoute
+  '/catalogue/$category': typeof CatalogueCategoryIndexRoute
   '/espace/dossiers/new': typeof AppEspaceDossiersNewRoute
 }
 export interface FileRoutesById {
@@ -121,6 +129,7 @@ export interface FileRoutesById {
   '/_app/espace/profil': typeof AppEspaceProfilRoute
   '/_app/admin/': typeof AppAdminIndexRoute
   '/_app/espace/': typeof AppEspaceIndexRoute
+  '/catalogue/$category/': typeof CatalogueCategoryIndexRoute
   '/_app/espace/dossiers/new': typeof AppEspaceDossiersNewRoute
 }
 export interface FileRouteTypes {
@@ -136,6 +145,7 @@ export interface FileRouteTypes {
     | '/espace/profil'
     | '/admin/'
     | '/espace/'
+    | '/catalogue/$category/'
     | '/espace/dossiers/new'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -149,6 +159,7 @@ export interface FileRouteTypes {
     | '/espace/profil'
     | '/admin'
     | '/espace'
+    | '/catalogue/$category'
     | '/espace/dossiers/new'
   id:
     | '__root__'
@@ -163,6 +174,7 @@ export interface FileRouteTypes {
     | '/_app/espace/profil'
     | '/_app/admin/'
     | '/_app/espace/'
+    | '/catalogue/$category/'
     | '/_app/espace/dossiers/new'
   fileRoutesById: FileRoutesById
 }
@@ -175,6 +187,7 @@ export interface RootRouteChildren {
   MentionsLegalesRoute: typeof MentionsLegalesRoute
   PoleFormateurRoute: typeof PoleFormateurRoute
   CatalogueIndexRoute: typeof CatalogueIndexRoute
+  CatalogueCategoryIndexRoute: typeof CatalogueCategoryIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -256,6 +269,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppEspaceProfilRouteImport
       parentRoute: typeof AppRoute
     }
+    '/catalogue/$category/': {
+      id: '/catalogue/$category/'
+      path: '/catalogue/$category'
+      fullPath: '/catalogue/$category/'
+      preLoaderRoute: typeof CatalogueCategoryIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_app/espace/dossiers/new': {
       id: '/_app/espace/dossiers/new'
       path: '/espace/dossiers/new'
@@ -291,6 +311,7 @@ const rootRouteChildren: RootRouteChildren = {
   MentionsLegalesRoute: MentionsLegalesRoute,
   PoleFormateurRoute: PoleFormateurRoute,
   CatalogueIndexRoute: CatalogueIndexRoute,
+  CatalogueCategoryIndexRoute: CatalogueCategoryIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
