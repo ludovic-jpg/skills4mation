@@ -21,6 +21,7 @@ import { Route as AppAdminIndexRouteImport } from './routes/_app.admin.index'
 import { Route as AppEspaceIndexRouteImport } from './routes/_app.espace.index'
 import { Route as AppEspaceProfilRouteImport } from './routes/_app.espace.profil'
 import { Route as CatalogueCategoryIndexRouteImport } from './routes/catalogue.$category.index'
+import { Route as CatalogueCategorySlugRouteImport } from './routes/catalogue.$category.$slug'
 import { Route as AppEspaceDossiersNewRouteImport } from './routes/_app.espace.dossiers.new'
 
 const IndexRoute = IndexRouteImport.update({
@@ -82,6 +83,11 @@ const CatalogueCategoryIndexRoute = CatalogueCategoryIndexRouteImport.update({
   path: '/catalogue/$category/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CatalogueCategorySlugRoute = CatalogueCategorySlugRouteImport.update({
+  id: '/catalogue/$category/$slug',
+  path: '/catalogue/$category/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AppEspaceDossiersNewRoute = AppEspaceDossiersNewRouteImport.update({
   id: '/espace/dossiers/new',
   path: '/espace/dossiers/new',
@@ -97,6 +103,7 @@ export interface FileRoutesByFullPath {
   '/pole-formateur': typeof PoleFormateurRoute
   '/catalogue/': typeof CatalogueIndexRoute
   '/espace/profil': typeof AppEspaceProfilRoute
+  '/catalogue/$category/$slug': typeof CatalogueCategorySlugRoute
   '/admin/': typeof AppAdminIndexRoute
   '/espace/': typeof AppEspaceIndexRoute
   '/catalogue/$category/': typeof CatalogueCategoryIndexRoute
@@ -111,6 +118,7 @@ export interface FileRoutesByTo {
   '/pole-formateur': typeof PoleFormateurRoute
   '/catalogue': typeof CatalogueIndexRoute
   '/espace/profil': typeof AppEspaceProfilRoute
+  '/catalogue/$category/$slug': typeof CatalogueCategorySlugRoute
   '/admin': typeof AppAdminIndexRoute
   '/espace': typeof AppEspaceIndexRoute
   '/catalogue/$category': typeof CatalogueCategoryIndexRoute
@@ -127,6 +135,7 @@ export interface FileRoutesById {
   '/pole-formateur': typeof PoleFormateurRoute
   '/catalogue/': typeof CatalogueIndexRoute
   '/_app/espace/profil': typeof AppEspaceProfilRoute
+  '/catalogue/$category/$slug': typeof CatalogueCategorySlugRoute
   '/_app/admin/': typeof AppAdminIndexRoute
   '/_app/espace/': typeof AppEspaceIndexRoute
   '/catalogue/$category/': typeof CatalogueCategoryIndexRoute
@@ -143,6 +152,7 @@ export interface FileRouteTypes {
     | '/pole-formateur'
     | '/catalogue/'
     | '/espace/profil'
+    | '/catalogue/$category/$slug'
     | '/admin/'
     | '/espace/'
     | '/catalogue/$category/'
@@ -157,6 +167,7 @@ export interface FileRouteTypes {
     | '/pole-formateur'
     | '/catalogue'
     | '/espace/profil'
+    | '/catalogue/$category/$slug'
     | '/admin'
     | '/espace'
     | '/catalogue/$category'
@@ -172,6 +183,7 @@ export interface FileRouteTypes {
     | '/pole-formateur'
     | '/catalogue/'
     | '/_app/espace/profil'
+    | '/catalogue/$category/$slug'
     | '/_app/admin/'
     | '/_app/espace/'
     | '/catalogue/$category/'
@@ -187,6 +199,7 @@ export interface RootRouteChildren {
   MentionsLegalesRoute: typeof MentionsLegalesRoute
   PoleFormateurRoute: typeof PoleFormateurRoute
   CatalogueIndexRoute: typeof CatalogueIndexRoute
+  CatalogueCategorySlugRoute: typeof CatalogueCategorySlugRoute
   CatalogueCategoryIndexRoute: typeof CatalogueCategoryIndexRoute
 }
 
@@ -276,6 +289,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CatalogueCategoryIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/catalogue/$category/$slug': {
+      id: '/catalogue/$category/$slug'
+      path: '/catalogue/$category/$slug'
+      fullPath: '/catalogue/$category/$slug'
+      preLoaderRoute: typeof CatalogueCategorySlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_app/espace/dossiers/new': {
       id: '/_app/espace/dossiers/new'
       path: '/espace/dossiers/new'
@@ -311,6 +331,7 @@ const rootRouteChildren: RootRouteChildren = {
   MentionsLegalesRoute: MentionsLegalesRoute,
   PoleFormateurRoute: PoleFormateurRoute,
   CatalogueIndexRoute: CatalogueIndexRoute,
+  CatalogueCategorySlugRoute: CatalogueCategorySlugRoute,
   CatalogueCategoryIndexRoute: CatalogueCategoryIndexRoute,
 }
 export const routeTree = rootRouteImport
