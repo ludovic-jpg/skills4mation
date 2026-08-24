@@ -37,7 +37,7 @@ export function QualiopiBadge({ className }: { className?: string }) {
       <div className="text-left leading-tight">
         <p className="text-sm font-semibold text-primary">Certifié Qualiopi</p>
         <p className="text-[11px] text-muted-foreground">
-          Actions de formation · Éligible CPF
+          Actions de formation · Portage hors CPF
         </p>
       </div>
     </div>

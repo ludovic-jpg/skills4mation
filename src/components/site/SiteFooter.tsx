@@ -10,8 +10,8 @@ export function SiteFooter() {
         <div className="md:col-span-2">
           <p className="font-display text-xl font-semibold">Skills4mation</p>
           <p className="mt-3 max-w-sm text-sm text-primary-foreground/75">
-            L'ingénierie des compétences en mouvement. Portage administratif et pédagogique pour
-            formateurs indépendants.
+            L'ingénierie des compétences en mouvement. Spécialiste du portage Qualiopi hors CPF pour
+            formateurs indépendants, organismes et entreprises de formation.
           </p>
           <div className="mt-6 flex gap-3">
             <a
@@ -42,10 +42,20 @@ export function SiteFooter() {
           <p className="mb-3 font-semibold">Navigation</p>
           <ul className="space-y-2 text-primary-foreground/75">
             <li>
+              <Link to="/" hash="portage">
+                Portage Qualiopi
+              </Link>
+            </li>
+            <li>
+              <Link to="/" hash="tarifs">
+                Tarifs
+              </Link>
+            </li>
+            <li>
               <Link to="/catalogue">Catalogue de formation</Link>
             </li>
             <li>
-              <Link to="/pole-formateur">Pôle formateur</Link>
+              <Link to="/pole-formateur">Devenir partenaire porté</Link>
             </li>
             <li>
               <Link to="/contact">Contact</Link>
@@ -65,6 +75,7 @@ export function SiteFooter() {
             <li>
               <Link to="/confidentialite">Politique de confidentialité</Link>
             </li>
+            <li>CGV / CGU</li>
             <li>Charte déontologique</li>
           </ul>
           <QualiopiBadge className="mt-5" />
@@ -74,7 +85,7 @@ export function SiteFooter() {
       <div className="border-t border-primary-foreground/15 py-5">
         <p className="section-shell text-xs text-primary-foreground/60">
           © {new Date().getFullYear()} Skills4mation — Organisme de formation certifié Qualiopi ·
-          Actions de formation éligibles CPF.
+          Portage de formation hors CPF.
         </p>
       </div>
     </footer>
