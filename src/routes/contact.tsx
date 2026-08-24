@@ -247,10 +247,10 @@ function Field({
 }: {
   id: string;
   label: string;
-  error?: string;
+  error?: string | undefined;
   type?: string;
-  placeholder?: string;
-  autoComplete?: string;
+  placeholder?: string | undefined;
+  autoComplete?: string | undefined;
 }) {
   return (
     <div>
