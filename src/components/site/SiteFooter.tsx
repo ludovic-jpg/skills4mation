@@ -75,6 +75,7 @@ export function SiteFooter() {
             <li>
               <Link to="/confidentialite">Politique de confidentialité</Link>
             </li>
+            <li>CGV / CGU</li>
             <li>Charte déontologique</li>
           </ul>
           <QualiopiBadge className="mt-5" />
@@ -84,7 +85,7 @@ export function SiteFooter() {
       <div className="border-t border-primary-foreground/15 py-5">
         <p className="section-shell text-xs text-primary-foreground/60">
           © {new Date().getFullYear()} Skills4mation — Organisme de formation certifié Qualiopi ·
-          Actions de formation éligibles CPF.
+          Portage de formation hors CPF.
         </p>
       </div>
     </footer>
