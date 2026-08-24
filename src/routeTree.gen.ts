@@ -16,6 +16,7 @@ import { Route as ConfidentialiteRouteImport } from './routes/confidentialite'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as MentionsLegalesRouteImport } from './routes/mentions-legales'
 import { Route as PoleFormateurRouteImport } from './routes/pole-formateur'
+import { Route as CatalogueIndexRouteImport } from './routes/catalogue.index'
 import { Route as AppAdminIndexRouteImport } from './routes/_app.admin.index'
 import { Route as AppEspaceIndexRouteImport } from './routes/_app.espace.index'
 import { Route as AppEspaceProfilRouteImport } from './routes/_app.espace.profil'
@@ -55,6 +56,11 @@ const PoleFormateurRoute = PoleFormateurRouteImport.update({
   path: '/pole-formateur',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CatalogueIndexRoute = CatalogueIndexRouteImport.update({
+  id: '/catalogue/',
+  path: '/catalogue/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AppAdminIndexRoute = AppAdminIndexRouteImport.update({
   id: '/admin/',
   path: '/admin/',
@@ -83,6 +89,7 @@ export interface FileRoutesByFullPath {
   '/contact': typeof ContactRoute
   '/mentions-legales': typeof MentionsLegalesRoute
   '/pole-formateur': typeof PoleFormateurRoute
+  '/catalogue/': typeof CatalogueIndexRoute
   '/espace/profil': typeof AppEspaceProfilRoute
   '/admin/': typeof AppAdminIndexRoute
   '/espace/': typeof AppEspaceIndexRoute
@@ -95,6 +102,7 @@ export interface FileRoutesByTo {
   '/contact': typeof ContactRoute
   '/mentions-legales': typeof MentionsLegalesRoute
   '/pole-formateur': typeof PoleFormateurRoute
+  '/catalogue': typeof CatalogueIndexRoute
   '/espace/profil': typeof AppEspaceProfilRoute
   '/admin': typeof AppAdminIndexRoute
   '/espace': typeof AppEspaceIndexRoute
@@ -109,6 +117,7 @@ export interface FileRoutesById {
   '/contact': typeof ContactRoute
   '/mentions-legales': typeof MentionsLegalesRoute
   '/pole-formateur': typeof PoleFormateurRoute
+  '/catalogue/': typeof CatalogueIndexRoute
   '/_app/espace/profil': typeof AppEspaceProfilRoute
   '/_app/admin/': typeof AppAdminIndexRoute
   '/_app/espace/': typeof AppEspaceIndexRoute
@@ -123,6 +132,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/mentions-legales'
     | '/pole-formateur'
+    | '/catalogue/'
     | '/espace/profil'
     | '/admin/'
     | '/espace/'
@@ -135,6 +145,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/mentions-legales'
     | '/pole-formateur'
+    | '/catalogue'
     | '/espace/profil'
     | '/admin'
     | '/espace'
@@ -148,6 +159,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/mentions-legales'
     | '/pole-formateur'
+    | '/catalogue/'
     | '/_app/espace/profil'
     | '/_app/admin/'
     | '/_app/espace/'
@@ -162,6 +174,7 @@ export interface RootRouteChildren {
   ContactRoute: typeof ContactRoute
   MentionsLegalesRoute: typeof MentionsLegalesRoute
   PoleFormateurRoute: typeof PoleFormateurRoute
+  CatalogueIndexRoute: typeof CatalogueIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -213,6 +226,13 @@ declare module '@tanstack/react-router' {
       path: '/pole-formateur'
       fullPath: '/pole-formateur'
       preLoaderRoute: typeof PoleFormateurRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/catalogue/': {
+      id: '/catalogue/'
+      path: '/catalogue'
+      fullPath: '/catalogue/'
+      preLoaderRoute: typeof CatalogueIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_app/admin/': {
@@ -270,6 +290,7 @@ const rootRouteChildren: RootRouteChildren = {
   ContactRoute: ContactRoute,
   MentionsLegalesRoute: MentionsLegalesRoute,
   PoleFormateurRoute: PoleFormateurRoute,
+  CatalogueIndexRoute: CatalogueIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
