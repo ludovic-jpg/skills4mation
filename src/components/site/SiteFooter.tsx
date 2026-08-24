@@ -10,7 +10,7 @@ export function SiteFooter() {
         <div className="md:col-span-2">
           <p className="font-display text-xl font-semibold">Skills4mation</p>
           <p className="mt-3 max-w-sm text-sm text-primary-foreground/75">
-            L'ingénierie des compétences en mouvement. Spécialiste du portage Qualiopi hors CPF pour
+            L'ingénierie des compétences en mouvement. Spécialiste du portage Qualiopi pour
             formateurs indépendants, organismes et entreprises de formation.
           </p>
           <div className="mt-6 flex gap-3">
@@ -55,6 +55,16 @@ export function SiteFooter() {
               <Link to="/catalogue">Catalogue de formation</Link>
             </li>
             <li>
+              <Link to="/" hash="budget">
+                Évaluer mon budget formation
+              </Link>
+            </li>
+            <li>
+              <Link to="/" hash="projet">
+                Parler de mon projet
+              </Link>
+            </li>
+            <li>
               <Link to="/pole-formateur">Devenir partenaire porté</Link>
             </li>
             <li>
@@ -85,7 +95,7 @@ export function SiteFooter() {
       <div className="border-t border-primary-foreground/15 py-5">
         <p className="section-shell text-xs text-primary-foreground/60">
           © {new Date().getFullYear()} Skills4mation — Organisme de formation certifié Qualiopi ·
-          Portage de formation hors CPF.
+          Portage de formation professionnelle.
         </p>
       </div>
     </footer>
