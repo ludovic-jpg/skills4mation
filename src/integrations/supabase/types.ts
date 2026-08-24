@@ -92,6 +92,51 @@ export type Database = {
         }
         Relationships: []
       }
+      demandes_contact: {
+        Row: {
+          budget_estime: string | null
+          created_at: string
+          disponibilites: string | null
+          email: string
+          formation_souhaitee: string | null
+          id: string
+          message: string | null
+          nom: string
+          objectif: string | null
+          prenom: string
+          profil: string | null
+          telephone: string | null
+        }
+        Insert: {
+          budget_estime?: string | null
+          created_at?: string
+          disponibilites?: string | null
+          email: string
+          formation_souhaitee?: string | null
+          id?: string
+          message?: string | null
+          nom: string
+          objectif?: string | null
+          prenom: string
+          profil?: string | null
+          telephone?: string | null
+        }
+        Update: {
+          budget_estime?: string | null
+          created_at?: string
+          disponibilites?: string | null
+          email?: string
+          formation_souhaitee?: string | null
+          id?: string
+          message?: string | null
+          nom?: string
+          objectif?: string | null
+          prenom?: string
+          profil?: string | null
+          telephone?: string | null
+        }
+        Relationships: []
+      }
       documents_dossier: {
         Row: {
           dossier_id: string
