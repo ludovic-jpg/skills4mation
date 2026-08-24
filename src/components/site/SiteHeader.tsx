@@ -34,7 +34,7 @@ export function SiteHeader() {
               to={item.to}
               {...(item.hash ? { hash: item.hash } : {})}
               activeOptions={{ exact: item.to === "/" && !item.hash }}
-              className="rounded-full px-3 py-2 text-sm font-medium text-foreground/80 transition-colors hover:text-primary"
+              className="rounded-full px-2.5 py-2 text-[13px] font-medium whitespace-nowrap text-foreground/80 transition-colors hover:text-primary"
             >
               {item.label}
             </Link>
@@ -42,7 +42,7 @@ export function SiteHeader() {
         </nav>
 
         <div className="flex items-center gap-2">
-          <Button asChild variant="ghost" size="sm" className="hidden lg:inline-flex">
+          <Button asChild variant="ghost" size="sm" className="hidden 2xl:inline-flex">
             <Link to="/" hash="simulateur">
               Simuler ma rémunération
             </Link>

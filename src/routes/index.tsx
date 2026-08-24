@@ -299,7 +299,7 @@ function Accueil() {
             </div>
           </div>
 
-          <Card className="rounded-3xl border-cta/40 bg-cta/10 shadow-soft">
+          <Card className="h-fit rounded-3xl border-cta/40 bg-cta/10 shadow-soft">
             <CardContent className="p-6 sm:p-8">
               <p className="text-base font-semibold">Notre portage ne couvre pas le CPF.</p>
               <p className="mt-3 text-sm text-muted-foreground">
