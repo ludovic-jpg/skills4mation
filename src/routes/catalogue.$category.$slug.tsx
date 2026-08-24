@@ -194,7 +194,7 @@ function FormationDetail() {
           </h2>
           <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
             <li>Une formation adaptée à votre niveau après une évaluation</li>
-            <li>Financement possible via votre OPCO, AGEFICE ou FIFPL (hors CPF)</li>
+            <li>Financement possible via votre OPCO, AGEFICE ou FIFPL</li>
             {f.certification ? <li>Certification associée : {f.certification}</li> : null}
           </ul>
           <Button asChild variant="cta" className="mt-6">

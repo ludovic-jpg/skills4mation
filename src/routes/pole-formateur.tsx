@@ -19,7 +19,7 @@ export const Route = createFileRoute("/pole-formateur")({
       {
         name: "description",
         content:
-          "Portage administratif et pédagogique pour formateurs indépendants : Qualiopi, conventions, financements professionnels hors CPF. Candidatez au réseau Skills4mation.",
+          "Portage administratif et pédagogique pour formateurs indépendants : Qualiopi, conventions, financements professionnels. Candidatez au réseau Skills4mation.",
       },
       { property: "og:title", content: "Pôle formateur — Rejoindre Skills4mation" },
       {
@@ -49,7 +49,7 @@ const ATOUTS = [
   {
     icon: Banknote,
     titre: "Financements pris en charge",
-    texte: "Montage OPCO, AIF, Transitions Pro et suivi des accords de financement (hors CPF).",
+    texte: "Montage OPCO, AIF, Transitions Pro et suivi des accords de financement.",
   },
   {
     icon: BadgeCheck,
