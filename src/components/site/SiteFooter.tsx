@@ -10,8 +10,8 @@ export function SiteFooter() {
         <div className="md:col-span-2">
           <p className="font-display text-xl font-semibold">Skills4mation</p>
           <p className="mt-3 max-w-sm text-sm text-primary-foreground/75">
-            L'ingénierie des compétences en mouvement. Portage administratif et pédagogique pour
-            formateurs indépendants.
+            L'ingénierie des compétences en mouvement. Spécialiste du portage Qualiopi hors CPF pour
+            formateurs indépendants, organismes et entreprises de formation.
           </p>
           <div className="mt-6 flex gap-3">
             <a
