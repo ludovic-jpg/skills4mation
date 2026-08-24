@@ -42,7 +42,7 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "Skills4mation porte votre activité de formation sous sa certification Qualiopi (hors CPF). Autonomie pédagogique, conventions en 48h, commission unique de 20 %.",
+          "Skills4mation porte votre activité de formation sous sa certification Qualiopi. Autonomie pédagogique, conventions en 48h, commission unique de 20 %.",
       },
       {
         property: "og:title",
@@ -51,7 +51,7 @@ export const Route = createFileRoute("/")({
       {
         property: "og:description",
         content:
-          "Portage Qualiopi hors CPF pour formateurs indépendants, organismes non certifiés et entreprises de formation. 99 € HT/an + 20 % de commission.",
+          "Portage Qualiopi pour formateurs indépendants, organismes non certifiés et entreprises de formation. 99 € HT/an + 20 % de commission.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -78,7 +78,7 @@ const CONFIANCE = [
   },
   {
     icon: Wallet,
-    titre: "Financements hors CPF",
+    titre: "Financements professionnels",
     texte: "OPCO, plan de développement des compétences, AIF, Transitions Pro/Pro-A, FAF.",
   },
 ];
@@ -172,11 +172,7 @@ const AUTRES_SERVICES = [
 const FAQ = [
   {
     q: "Le portage Qualiopi est-il légal ?",
-    a: "Oui, dans le cadre où nous opérons : un contrat clair définit les responsabilités de chacun, notre équipe assure un véritable suivi qualité et pédagogique, et nous ne portons que des financements professionnels hors CPF.",
-  },
-  {
-    q: "Puis-je porter une formation financée par le CPF ?",
-    a: "Non. Nous avons fait le choix de ne pas proposer le portage CPF. Notre offre couvre les financements professionnels : OPCO, plan de développement des compétences, AIF, Transitions Pro/Pro-A, FAF.",
+    a: "Oui, dans le cadre où nous opérons : un contrat clair définit les responsabilités de chacun, notre équipe assure un véritable suivi qualité et pédagogique, et nous ne portons que des financements professionnels.",
   },
   {
     q: "Est-ce que je garde mon autonomie pédagogique ?",
@@ -212,7 +208,7 @@ function Accueil() {
       <section className="bg-gradient-hero text-primary-foreground">
         <div className="section-shell grid items-center gap-12 py-16 lg:grid-cols-2 lg:py-24">
           <div>
-            <p className="eyebrow text-cta">Portage Qualiopi — hors CPF</p>
+            <p className="eyebrow text-cta">Portage Qualiopi & formations sur mesure</p>
             <h1 className="mt-4 text-4xl font-semibold text-primary-foreground sm:text-5xl lg:text-6xl">
               Le portage Qualiopi qui vous laisse 100 % libre de former.
             </h1>
@@ -233,8 +229,8 @@ function Accueil() {
             </div>
             <ul className="mt-10 grid gap-2 text-sm text-primary-foreground/80">
               <li className="flex items-center gap-2">
-                <ShieldCheck className="size-4 text-cta" aria-hidden /> Certifié Qualiopi — hors
-                CPF, 100 % financements professionnels
+                <ShieldCheck className="size-4 text-cta" aria-hidden /> Certifié Qualiopi — 100 %
+                financements professionnels
               </li>
               <li className="flex items-center gap-2">
                 <GraduationCap className="size-4 text-cta" aria-hidden /> Autonomie pédagogique
@@ -279,7 +275,7 @@ function Accueil() {
       </section>
 
       <section id="portage" className="scroll-mt-24 bg-muted/60 py-16 lg:py-20">
-        <div className="section-shell grid gap-10 lg:grid-cols-[1.2fr_0.8fr]">
+        <div className="section-shell max-w-4xl">
           <div>
             <p className="eyebrow">Qu'est-ce que le portage Qualiopi ?</p>
             <h2 className="mt-3 text-3xl font-semibold sm:text-4xl">
@@ -299,15 +295,6 @@ function Accueil() {
             </div>
           </div>
 
-          <Card className="h-fit rounded-3xl border-cta/40 bg-cta/10 shadow-soft">
-            <CardContent className="p-6 sm:p-8">
-              <p className="text-base font-semibold">Notre portage ne couvre pas le CPF.</p>
-              <p className="mt-3 text-sm text-muted-foreground">
-                Nous sommes spécialisés sur les financements professionnels hors CPF, dans un cadre
-                contractuel clair où chacun connaît son rôle et sa responsabilité.
-              </p>
-            </CardContent>
-          </Card>
         </div>
       </section>
 
