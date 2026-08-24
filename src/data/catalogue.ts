@@ -1,0 +1,5150 @@
+// Contenu du catalogue de formation Skills4mation (extrait du site historique).
+export type Module = { titre: string; points: string[] };
+export type Formation = {
+  slug: string;
+  category: string;
+  title: string;
+  intro: string;
+  image: string | null;
+  niveau: string | null;
+  tarif: string | null;
+  objectif: string | null;
+  duree: string | null;
+  prerequis: string | null;
+  objectifs: string[];
+  modalites: string[];
+  modules: Module[];
+  certification: string | null;
+};
+
+export const CATEGORIES: { slug: string; label: string }[] = [
+  {
+    "slug": "bien-etre",
+    "label": "Bien-être"
+  },
+  {
+    "slug": "bureautique",
+    "label": "Bureautique & digital"
+  },
+  {
+    "slug": "communication",
+    "label": "Communication"
+  },
+  {
+    "slug": "creation-dentreprise",
+    "label": "Business & création d’entreprise"
+  },
+  {
+    "slug": "langues",
+    "label": "Langues"
+  },
+  {
+    "slug": "metier-specifique",
+    "label": "Métier spécifique"
+  },
+  {
+    "slug": "rh-management",
+    "label": "RH & Management"
+  },
+  {
+    "slug": "rse",
+    "label": "RSE"
+  },
+  {
+    "slug": "ventes",
+    "label": "Ventes"
+  }
+];
+
+export const FORMATIONS: Formation[] = [
+ {
+  "slug": "formation-devenez-formateur-massage-quintessence",
+  "category": "bien-etre",
+  "title": "Formation Devenez Formateur Massage Quintessence",
+  "intro": "Apprenez à transmettre vos connaissances en massage bien-être et à former de nouveaux praticiens à la technique Massage Quintessence. Cette formation vous offre des outils pédagogiques concrets pour structurer vos enseignements, partager votre expertise et inspirer vos apprenants. Idéale pour les professionnels du bien-être souhaitant élargir leur impact dans le domaine de la formation.",
+  "image": "https://skills4mation.com/wp-content/uploads/2024/12/massage-bien-etre-1024x682.webp",
+  "niveau": "Professionnel du bien-être et/ou personne en reconversion professionnel",
+  "tarif": "A partir de 1200 € - Financement possible",
+  "objectif": "être en capacité de dispenser des massage et soins selon la méthode de MASSAGE QUINTESSENCE DEEP INSIDE ®",
+  "duree": "A partir de 18 H de formation",
+  "prerequis": "Développer les facultés d’écoute et de bienveillance. Etre pédagogue",
+  "objectifs": [
+   "Maîtriser les techniques avancées de massage quintessence.",
+   "Développer des compétences pédagogiques spécifiques à l’enseignement du massage.",
+   "Concevoir et piloter des séances de formation engageantes et efficaces.",
+   "Adapter l’enseignement aux besoins individuels des apprenants.",
+   "Évaluer les progrès et fournir des retours constructifs.",
+   "Promouvoir le bien-être et l’auto-amélioration à travers l’enseignement.",
+   "connaitre les techniques applicables le plus facilement",
+   "Comprendre les besoins et adapter les massages bien-être",
+   "Créer des conditions favorables d’une relation de confiance",
+   "Choisir et organiser l’espace pour optimiser le confort de chacun"
+  ],
+  "modalites": [
+   "Formation en présentiel dans le cadre des sessions proposés par notre formatrice",
+   "Méthodes d’animation participatives : interactivité, exemples et mise en pratiques dans un cabinet de massage ( Chez le stagiaire ou au cabinet de la formatrice",
+   "Procédés pédagogiques adaptés au niveau du/des participants",
+   "Travaux pratiques adaptés à votre activité"
+  ],
+  "modules": [
+   {
+    "titre": "Module 1: Fondations et découverte du concept de MASSAGE QUINTESSENCE DEEP INSIDE ®",
+    "points": [
+     "Comprendre l’histoire et la philosophie du massage quintessence.",
+     "Identifier les principaux principes et techniques.",
+     "Démontrer les gestes de base et leur impact sur le bien-être."
+    ]
+   },
+   {
+    "titre": "Module 2: Pédagogie du Bien-être",
+    "points": [
+     "Concevoir des plans de cours adaptés aux divers publics.",
+     "Utiliser des méthodes d’enseignement interactives et participatives.",
+     "Évaluer l’apprentissage des élèves de manière constructive."
+    ]
+   },
+   {
+    "titre": "Module 3: Techniques Avancées de Massage",
+    "points": [
+     "Maîtriser des techniques de massage spécifiques et avancées.",
+     "Intégrer des approches complémentaires (aromathérapie, réflexologie).",
+     "Pratiquer l’adaptation des techniques aux besoins individuels."
+    ]
+   },
+   {
+    "titre": "Module 4: Communication et Relations Interpersonnelles",
+    "points": [
+     "Développer des compétences en communication efficace.",
+     "Gérer la dynamique de groupe dans un contexte d’apprentissage.",
+     "Encourager la rétroaction constructive entre pairs et formateurs."
+    ]
+   },
+   {
+    "titre": "Module 5: Gestion de Classe et Animation",
+    "points": [
+     "Organiser l’espace de formation pour maximiser l’apprentissage.",
+     "Utiliser des outils pédagogiques pour renforcer l’engagement.",
+     "Gérer efficacement les défis et les situations difficiles en classe."
+    ]
+   },
+   {
+    "titre": "Module 6: Développement Professionnel et Personnel",
+    "points": [
+     "Réfléchir sur la pratique personnelle et professionnelle.",
+     "Encourager l’auto-amélioration continue chez les formateurs et les élèves.",
+     "Explorer les opportunités de carrière et de développement dans le domaine du bien-être."
+    ]
+   }
+  ],
+  "certification": null
+ },
+ {
+  "slug": "formation-devenez-praticien-en-massage-quintessence",
+  "category": "bien-etre",
+  "title": "Formation Devenez Praticien en Massage Quintessence",
+  "intro": "Découvrez les bienfaits du Massage Quintessence, une méthode holistique associant énergies, huiles essentielles et lithothérapie. Cette formation pratique vous guide dans l’apprentissage des gestes précis pour débloquer les tensions et harmoniser le corps et l’esprit. Développez des compétences recherchées dans le secteur du bien-être et proposez des soins exceptionnels à votre clientèle.",
+  "image": "https://skills4mation.com/wp-content/uploads/2024/12/formation-massage3-811x1024.webp",
+  "niveau": "Professionnel du bien-être et/ou personne en reconversion professionnel",
+  "tarif": "A partir de 1200 € - Financement possible",
+  "objectif": "être en capacité de dispenser des massage et soins selon la méthode de MASSAGE QUINTESSENCE DEEP INSIDE ®",
+  "duree": "A partir de 14 H de formation",
+  "prerequis": "Développer les facultés d’écoute et de bienveillance. Etre pédagogue",
+  "objectifs": [
+   "Maîtriser les techniques avancées de massage quintessence.",
+   "Développer des compétences pédagogiques spécifiques à l’enseignement du massage.",
+   "Concevoir et piloter des séances de formation engageantes et efficaces.",
+   "Adapter l’enseignement aux besoins individuels des apprenants.",
+   "Évaluer les progrès et fournir des retours constructifs.",
+   "Promouvoir le bien-être et l’auto-amélioration à travers l’enseignement.",
+   "connaitre les techniques applicables le plus facilement",
+   "Comprendre les besoins et adapter les massages bien-être",
+   "Créer des conditions favorables d’une relation de confiance",
+   "Choisir et organiser l’espace pour optimiser le confort de chacun"
+  ],
+  "modalites": [
+   "Formation en présentiel dans le cadre des sessions proposés par notre formatrice",
+   "Méthodes d’animation participatives : interactivité, exemples et mise en pratiques dans un cabinet de massage ( Chez le stagiaire ou au cabinet de la formatrice",
+   "Procédés pédagogiques adaptés au niveau du/des participants",
+   "Travaux pratiques adaptés à votre activité"
+  ],
+  "modules": [
+   {
+    "titre": "Module 1: Fondations et découverte du concept de MASSAGE QUINTESSENCE DEEP INSIDE ®",
+    "points": [
+     "Comprendre l’histoire et la philosophie du massage quintessence.",
+     "Identifier les principaux principes et techniques.",
+     "Démontrer les gestes de base et leur impact sur le bien-être."
+    ]
+   },
+   {
+    "titre": "Module 2: Pédagogie du Bien-être",
+    "points": [
+     "Concevoir des plans de cours adaptés aux divers publics.",
+     "Utiliser des méthodes d’enseignement interactives et participatives.",
+     "Évaluer l’apprentissage des élèves de manière constructive."
+    ]
+   },
+   {
+    "titre": "Module 3: Techniques Avancées de Massage",
+    "points": [
+     "Maîtriser des techniques de massage spécifiques et avancées.",
+     "Intégrer des approches complémentaires (aromathérapie, réflexologie).",
+     "Pratiquer l’adaptation des techniques aux besoins individuels."
+    ]
+   },
+   {
+    "titre": "Module 4: Communication et Relations Interpersonnelles",
+    "points": [
+     "Développer des compétences en communication efficace.",
+     "Gérer la dynamique de groupe dans un contexte d’apprentissage.",
+     "Encourager la rétroaction constructive entre pairs et formateurs."
+    ]
+   },
+   {
+    "titre": "Module 5: Gestion de Classe et Animation",
+    "points": [
+     "Organiser l’espace de formation pour maximiser l’apprentissage.",
+     "Utiliser des outils pédagogiques pour renforcer l’engagement.",
+     "Gérer efficacement les défis et les situations difficiles en classe."
+    ]
+   },
+   {
+    "titre": "Module 6: Développement Professionnel et Personnel",
+    "points": [
+     "Réfléchir sur la pratique personnelle et professionnelle.",
+     "Encourager l’auto-amélioration continue chez les formateurs et les élèves.",
+     "Explorer les opportunités de carrière et de développement dans le domaine du bien-être."
+    ]
+   }
+  ],
+  "certification": null
+ },
+ {
+  "slug": "formation-enseigner-le-yoga",
+  "category": "bien-etre",
+  "title": "Formation Enseigner le Yoga",
+  "intro": "Devenez instructeur de yoga en apprenant à guider des séances structurées et inspirantes. Maîtrisez les postures, techniques de respiration (pranayama), méditation et les principes fondamentaux de la philosophie du yoga. Découvrez comment adapter vos cours à différents niveaux et besoins pour offrir une pratique sécurisée et épanouissante. Ce programme vous prépare à transmettre votre passion tout en développant vos compétences pédagogiques.",
+  "image": "https://skills4mation.com/wp-content/uploads/2024/12/formation-yoga.webp",
+  "niveau": "Professionnel du bien-être et/ou personne en reconversion professionnel",
+  "tarif": "A partir de 2200 € - Financement possible",
+  "objectif": "proposer des ateliers de YOGA en toute confiance avec tous type de public",
+  "duree": "A partir de 30 H de formation",
+  "prerequis": "Être: coach sportif, professeur de yoga, professeur de fitness, ou professeur de danse. Avoir suivi régulièrement une pratique du yoga en tant que pratiquant avec un enseignant confirmé.",
+  "objectifs": [
+   "Comprendre les principes fondamentaux et la philosophie du yoga.",
+   "Maîtriser les techniques de posture, de respiration et de méditation.",
+   "Développer des compétences en communication et en enseignement pour guider les étudiants de manière efficace.",
+   "Concevoir des cours de yoga adaptés à différents niveaux et besoins.",
+   "Intégrer les principes d’anatomie et de physiologie dans l’enseignement du yoga.",
+   "Cultiver une pratique personnelle du yoga pour enseigner par l’exemple."
+  ],
+  "modalites": [
+   "Formation en présentiel dans le cadre des sessions proposés par notre formateur",
+   "Méthodes d’animation participatives : interactivité, exemples et mise en pratiques",
+   "Procédés pédagogiques adaptés au niveau du/des participants"
+  ],
+  "modules": [
+   {
+    "titre": "Module 1: Fondements du Yoga",
+    "points": [
+     "Explorer l’histoire et la philosophie du yoga.",
+     "Introduction aux textes fondateurs du yoga.",
+     "Comprendre les huit membres du yoga."
+    ]
+   },
+   {
+    "titre": "Module 2: Anatomie et Physiologie",
+    "points": [
+     "Étudier l’anatomie humaine en relation avec le yoga.",
+     "Comprendre la biomécanique des mouvements de yoga.",
+     "Identifier les contre-indications pour certaines postures."
+    ]
+   },
+   {
+    "titre": "Module 3: Techniques de Posture (Asanas)",
+    "points": [
+     "Apprendre et pratiquer les asanas de base à avancés.",
+     "Techniques de modification et d’ajustement des postures.",
+     "Séquençage des postures pour optimiser les bénéfices."
+    ]
+   },
+   {
+    "titre": "Module 4: Techniques de Respiration (Pranayama) et Méditation",
+    "points": [
+     "Pratiquer diverses techniques de pranayama.",
+     "Initiation à la méditation et à ses bienfaits.",
+     "Intégrer pranayama et méditation dans l’enseignement du yoga."
+    ]
+   },
+   {
+    "titre": "Module 5: Méthodologie d’Enseignement",
+    "points": [
+     "Techniques de communication efficaces pour l’enseignement.",
+     "Planification et structuration d’un cours de yoga.",
+     "Gestion de la dynamique de groupe et des besoins individuels."
+    ]
+   },
+   {
+    "titre": "Module 6: Pratique Professionnelle",
+    "points": [
+     "Principes éthiques de l’enseignement du yoga.",
+     "Construire sa présence en tant qu’instructeur de yoga.",
+     "Développement professionnel continu et auto-réflexion"
+    ]
+   }
+  ],
+  "certification": null
+ },
+ {
+  "slug": "formation-massage-5-continents",
+  "category": "bien-etre",
+  "title": "Formation Massage 5 Continents",
+  "intro": "Explorez les techniques de massage internationales grâce à ce programme combinant des méthodes traditionnelles issues des cinq continents. Apprenez à harmoniser le corps et l’esprit en intégrant des gestes fluides, des huiles essentielles et des techniques de relaxation profonde. Cette formation vous permet de proposer un soin global et unique à vos clients.",
+  "image": "https://skills4mation.com/wp-content/uploads/2024/12/formation-massage-1-1024x501.webp",
+  "niveau": "Professionnel du bien-être et/ou personne en reconversion professionnel",
+  "tarif": "A partir de 1000 € - Financement possible",
+  "objectif": "être en capacité de dispenser des massage et soins selon la méthode de massage 5 continents",
+  "duree": "A partir de 14 H de formation",
+  "prerequis": "Développer les facultés d’écoute et de bienveillance",
+  "objectifs": [
+   "Maîtriser les techniques de massage issues des cinq continents.",
+   "Comprendre l’histoire et la signification culturelle des différentes pratiques de massage.",
+   "Développer une approche globale et intégrée du bien-être.",
+   "Appliquer les techniques apprises de manière professionnelle et bienveillante.",
+   "Utiliser efficacement les outils de communication fournis pour promouvoir vos services."
+  ],
+  "modalites": [
+   "Formation en présentiel dans le cadre des sessions proposés par notre formatrice",
+   "Méthodes d’animation participatives : interactivité, exemples et mise en pratiques dans un cabinet de massage ( Chez le stagiaire ou au cabinet de la formatrice",
+   "Procédés pédagogiques adaptés au niveau du/des participants",
+   "Travaux pratiques adaptés à votre activité"
+  ],
+  "modules": [
+   {
+    "titre": "Module 1 : Introduction au Massage des 5 Continents",
+    "points": [
+     "Comprendre l’origine et les principes du Massage des 5 Continents.",
+     "Découvrir les bienfaits du massage sur le bien-être physique et mental.",
+     "Se familiariser avec le matériel et l’environnement nécessaires à la pratique."
+    ]
+   },
+   {
+    "titre": "Module 2 : Techniques de Massage d’Asie",
+    "points": [
+     "Apprendre les techniques spécifiques du massage asiatique.",
+     "Pratiquer le massage Shiatsu et le massage Thaï.",
+     "Intégrer les principes de l’énergie et des méridiens dans le massage."
+    ]
+   },
+   {
+    "titre": "Module 3 : Techniques de Massage d’Afrique",
+    "points": [
+     "Explorer les techniques de massage africaines et leur contexte culturel.",
+     "Maîtriser les mouvements rythmiques et l’utilisation des huiles essentielles.",
+     "Appliquer les techniques de relaxation profonde et de revitalisation."
+    ]
+   },
+   {
+    "titre": "Module 4 : Techniques de Massage d’Europe",
+    "points": [
+     "Étudier les techniques de massage classiques européennes.",
+     "Pratiquer le massage suédois et le massage aux pierres chaudes.",
+     "Comprendre l’importance de l’anatomie et de la physiologie dans le massage."
+    ]
+   },
+   {
+    "titre": "Module 5 : Techniques de Massage d’Amérique",
+    "points": [
+     "Découvrir les pratiques de massage américaines, y compris le massage deep tissue.",
+     "Intégrer les techniques de libération myofasciale.",
+     "Utiliser le massage pour améliorer la mobilité et réduire les tensions."
+    ]
+   },
+   {
+    "titre": "Module 6 : Synthèse et Pratique Intensive",
+    "points": [
+     "Réviser et pratiquer intensivement les techniques apprises.",
+     "Recevoir des feedbacks constructifs sur la technique et la posture.",
+     "Préparer et présenter une séance de massage complète intégrant les techniques des 5 continents."
+    ]
+   }
+  ],
+  "certification": null
+ },
+ {
+  "slug": "formation-massage-assis",
+  "category": "bien-etre",
+  "title": "Formation Massage Assis",
+  "intro": "Apprenez à pratiquer le massage assis, une technique rapide et efficace pour soulager les tensions musculaires dans un temps limité. Idéal en milieu professionnel ou événementiel, ce massage se pratique sur chaise, sans huile, et offre des bénéfices immédiats en termes de relaxation et de gestion du stress. Intégrez cette compétence pour diversifier vos services et répondre aux besoins actuels.",
+  "image": "https://skills4mation.com/wp-content/uploads/2024/12/formation-massage-assi-1024x834.webp",
+  "niveau": "De Débutant à Avancé",
+  "tarif": "A partir de 900 € - Financement possible",
+  "objectif": "Maîtriser les techniques de massage assis",
+  "duree": "A partir de 7 H de formation",
+  "prerequis": "Aucun",
+  "objectifs": [
+   "Apprendre à maîtriser les techniques fondamentales du massage assis.",
+   "Identifier les points de tension et les soulager efficacement à travers le massage.",
+   "Utiliser les postures et mouvements adaptés pour assurer un confort optimal au receveur.",
+   "Adapter les techniques de massage assis en fonction des besoins spécifiques de chaque personne.",
+   "Développer une pratique professionnelle du massage assis en respectant les normes d’hygiène et de sécurité."
+  ],
+  "modalites": [
+   "Formation en présentiel dans le cadre des sessions proposés par notre formateur",
+   "Méthodes d’animation participatives : interactivité, exemples et mise en pratiques",
+   "Procédés pédagogiques adaptés au niveau du/des participants",
+   "Travaux pratiques adaptés à votre activité"
+  ],
+  "modules": [
+   {
+    "titre": "Module 1 : Introduction au massage assis et ses bienfaits",
+    "points": [
+     "Comprendre les origines et les fondements du massage assis.",
+     "Découvrir les bienfaits physiques et mentaux du massage en milieu professionnel.",
+     "Identifier les situations et contextes propices à l’utilisation du massage assis."
+    ]
+   },
+   {
+    "titre": "Module 2 : Anatomie de base et points de tension",
+    "points": [
+     "Étudier les principales structures anatomiques concernées par le massage assis.",
+     "Localiser les points de tension les plus courants chez les individus stressés.",
+     "Apprendre à reconnaître les symptômes de tension musculaire à travers l’observation et la palpation."
+    ]
+   },
+   {
+    "titre": "Module 3 : Techniques fondamentales de massage assis",
+    "points": [
+     "Maîtriser les gestes et mouvements de base du massage assis (pressions, étirements, percussions).",
+     "Appliquer les techniques de massage en fonction des besoins spécifiques du receveur.",
+     "Adapter l’intensité du massage pour une relaxation optimale."
+    ]
+   },
+   {
+    "titre": "Module 4 : Posture du praticien et ergonomie",
+    "points": [
+     "Apprendre à adopter une posture correcte pour éviter les tensions chez le praticien.",
+     "Utiliser efficacement l’ergonomie de la chaise de massage pour optimiser le confort du receveur.",
+     "Gérer l’espace de travail pour assurer une séance fluide et sécurisée."
+    ]
+   },
+   {
+    "titre": "Module 5 : Adapter le massage assis à différents contextes",
+    "points": [
+     "Personnaliser les séances de massage assis en fonction du cadre professionnel (entreprise, événementiel, etc.).",
+     "Adapter le massage à différents profils de receveurs (salariés, cadres, etc.).",
+     "Prendre en compte les besoins spécifiques et éventuelles contre-indications médicales."
+    ]
+   },
+   {
+    "titre": "Module 6 : Pratique professionnelle et cadre légal",
+    "points": [
+     "Intégrer les bonnes pratiques d’hygiène et de sécurité dans le cadre d’un massage assis.",
+     "Respecter les obligations légales et éthiques liées à la pratique professionnelle.",
+     "Développer ses compétences relationnelles pour une communication fluide avec les clients ou collègues."
+    ]
+   }
+  ],
+  "certification": null
+ },
+ {
+  "slug": "formation-massage-ayurvedique",
+  "category": "bien-etre",
+  "title": "Formation Massage Ayurvédique",
+  "intro": "Maîtrisez les techniques du massage ayurvédique, une pratique ancestrale issue de la médecine indienne pour revitaliser le corps et équilibrer les énergies. Apprenez à utiliser les huiles essentielles, les gestes fluides et les pressions adaptées pour offrir une détente profonde et durable. Cette formation vous donne les compétences pour devenir un praticien expert en bien-être holistique.",
+  "image": "https://skills4mation.com/wp-content/uploads/2024/12/formation-ayurvedique-1024x879.webp",
+  "niveau": "De Débutant à Avancé",
+  "tarif": "A partir de 900 € - Financement possible",
+  "objectif": "Maîtriser les techniques de massage ayurvédique",
+  "duree": "A partir de 7 H de formation",
+  "prerequis": "Aucun",
+  "objectifs": [
+   "Maîtriser les techniques fondamentales et avancées du massage ayurvédique.",
+   "Utiliser efficacement les huiles et les herbes traditionnelles dans la pratique du massage.",
+   "Comprendre les principes de l’Ayurveda et leur application dans les thérapies de bien-être.",
+   "Développer des compétences en évaluation des besoins spécifiques des clients pour des traitements personnalisés.",
+   "Acquérir les compétences nécessaires pour lancer et gérer une activité professionnelle en massage ayurvédique."
+  ],
+  "modalites": [
+   "Formation en présentiel dans le cadre des sessions proposés par notre formateur",
+   "Méthodes d’animation participatives : interactivité, exemples et mise en pratiques",
+   "Procédés pédagogiques adaptés au niveau du/des participants",
+   "Travaux pratiques adaptés à votre activité"
+  ],
+  "modules": [
+   {
+    "titre": "Module 1: Introduction à l’Ayurveda et aux Massages Ayurvédiques",
+    "points": [
+     "Découvrir les origines et la philosophie de l’Ayurveda.",
+     "Comprendre les trois doshas : Vata, Pitta, et Kapha, et leur influence sur le corps et l’esprit.",
+     "Identifier les fondements du massage ayurvédique et ses bienfaits sur la santé."
+    ]
+   },
+   {
+    "titre": "Module 2: Anatomie et Physiologie pour le Massage Ayurvédique",
+    "points": [
+     "Étudier l’anatomie humaine spécifique aux techniques de massage ayurvédique.",
+     "Explorer le système circulatoire et lymphatique pour améliorer les techniques de massage.",
+     "Comprendre les points marma et leur rôle dans le bien-être général."
+    ]
+   },
+   {
+    "titre": "Module 3: Techniques de Base du Massage Ayurvédique",
+    "points": [
+     "Apprendre les mouvements de base du massage ayurvédique, y compris les techniques de pétrissage et de frictions.",
+     "Pratiquer le bon alignement et la posture pour exécuter les massages efficacement.",
+     "Maîtriser l’utilisation des huiles et des herbes spécifiques dans les massages."
+    ]
+   },
+   {
+    "titre": "Module 4: Techniques Avancées et Spécialisées",
+    "points": [
+     "Développer des compétences en techniques avancées pour traiter des problèmes spécifiques de santé.",
+     "Utiliser des approches personnalisées en fonction du dosha et de l’état de santé du client.",
+     "Intégrer des éléments de détente profonde et de méditation dans la pratique du massage."
+    ]
+   },
+   {
+    "titre": "Module 5: Évaluation et Adaptation des Soins",
+    "points": [
+     "Apprendre à évaluer les besoins des clients avant, pendant, et après les séances de massage.",
+     "Adapter les techniques de massage en fonction de l’évaluation continue du bien-être du client.",
+     "Développer un plan de traitement holistique qui inclut des conseils en nutrition et mode de vie ayurvédiques."
+    ]
+   },
+   {
+    "titre": "Module 6: Gestion et Marketing de votre Pratique de Massage Ayurvédique",
+    "points": [
+     "Acquérir des compétences en gestion d’entreprise spécifiques à une pratique de bien-être.",
+     "Développer une stratégie de marketing efficace pour attirer et retenir une clientèle.",
+     "Comprendre les aspects légaux et éthiques de la pratique du massage professionnel."
+    ]
+   }
+  ],
+  "certification": null
+ },
+ {
+  "slug": "formation-massage-bien-etre",
+  "category": "bien-etre",
+  "title": "Formation Massage Bien-être",
+  "intro": "Initiez-vous aux fondamentaux du massage bien-être pour offrir des soins personnalisés qui répondent aux besoins croissants de relaxation et de gestion du stress. Apprenez les techniques de base : effleurages, pressions et mouvements fluides pour favoriser la détente physique et mentale. Cette formation pratique est conçue pour vous lancer avec succès dans un secteur en plein développement.",
+  "image": "https://skills4mation.com/wp-content/uploads/2024/12/massage-1024x682.webp",
+  "niveau": "De Débutant à Avancé",
+  "tarif": "A partir de 1800 € - Financement possible",
+  "objectif": "Maîtriser les techniques de massage bien-être",
+  "duree": "A déterminer selon votre niveau et objectif",
+  "prerequis": "Aucun",
+  "objectifs": [
+   "A la fin de ce module, le participant sera capable de :",
+   "1- Connaître les fondamentaux du Massage Bien-être",
+   "2- Savoir préparer un Massage Bien-être",
+   "3- Connaître les zones massées",
+   "4- Savoir exercer les manœuvres du Massage Bien-être",
+   "5- Savoir exécuter le protocole complet du Massage Bien-être"
+  ],
+  "modalites": [
+   "Formation en présentiel dans le cadre des sessions proposés par notre formateur – 14 H de Formation Online et 7 H de formation présentiel",
+   "Méthodes d’animation participatives : interactivité, exemples et mise en pratiques",
+   "Procédés pédagogiques adaptés au niveau du/des participants",
+   "Travaux pratiques adaptés à votre activité"
+  ],
+  "modules": [
+   {
+    "titre": "Module 1: Histoire et Principes du Massage Bien-être",
+    "points": [
+     "Explorer l’évolution historique du massage et son importance culturelle à travers les âges.",
+     "Identifier le matériel et les accessoires essentiels pour une séance de massage réussie.",
+     "Comprendre les multiples bienfaits du massage bien-être et les contre-indications majeures."
+    ]
+   },
+   {
+    "titre": "Module 2: Anatomie pour le Massage",
+    "points": [
+     "Étudier l’anatomie du dos, des trapèzes et de la nuque pour des techniques de massage ciblées.",
+     "Examiner les structures musculaires des jambes et des bras et leur implication dans différents types de massage.",
+     "Apprendre à masser le thorax et l’abdomen en respectant les précautions et techniques adaptées."
+    ]
+   },
+   {
+    "titre": "Module 3: Techniques Fondamentales de Massage",
+    "points": [
+     "Acquérir les gestes de base du massage, tels que l’effleurage, le pétrissage et la friction.",
+     "S’entraîner à la bonne exécution des mouvements et à la gestion du flux d’une séance.",
+     "Apprendre à créer une ambiance propice au bien-être et à la relaxation du client."
+    ]
+   },
+   {
+    "titre": "Module 4: Séquençage et Protocole de Massage",
+    "points": [
+     "Apprendre le séquençage logique d’une séance de massage bien-être pour un effet maximal.",
+     "Observer des démonstrations pratiques pour maîtriser chaque étape du protocole.",
+     "Pratiquer les protocoles de massage en autonomie pour développer la confiance et la compétence."
+    ]
+   },
+   {
+    "titre": "Module 5: Perfectionnement des Techniques de Massage",
+    "points": [
+     "Intégrer des techniques avancées et des manipulations spécifiques pour un massage personnalisé.",
+     "S’exercer à des méthodes de massage adaptées à différentes conditions et populations.",
+     "Utiliser des études de cas pour comprendre comment varier les techniques selon les besoins du client."
+    ]
+   },
+   {
+    "titre": "Module 6: Pratique Professionnelle et Éthique",
+    "points": [
+     "Incarner le savoir-être du masseur à travers une communication professionnelle et empathique.",
+     "Suivre les étapes pour réussir le massage et assurer une expérience client exceptionnelle.",
+     "Établir des standards éthiques et professionnels pour une pratique durable et respectée."
+    ]
+   }
+  ],
+  "certification": null
+ },
+ {
+  "slug": "formation-massage-chi-nei-tsang",
+  "category": "bien-etre",
+  "title": "Formation Massage Chi Nei Tsang",
+  "intro": "Découvrez le Chi Nei Tsang, un massage abdominal ancestral qui vise à libérer les blocages énergétiques et à améliorer le fonctionnement des organes internes. Apprenez des techniques spécifiques pour favoriser la détoxification, soulager les tensions profondes et rétablir l’harmonie du corps et de l’esprit. Cette formation pratique est idéale pour les praticiens en quête de nouvelles approches holistiques.",
+  "image": "https://skills4mation.com/wp-content/uploads/2024/12/formation-masssage-708x1024.webp",
+  "niveau": "De Débutant à Avancé",
+  "tarif": "A partir de 900 € - Financement possible",
+  "objectif": "Maîtriser les techniques de massage Chi Nei Tsang",
+  "duree": "A partir de 7 H de formation",
+  "prerequis": "Aucun",
+  "objectifs": [
+   "Maîtriser les techniques fondamentales du massage Chi Nei Tsang pour améliorer la santé gastro-intestinale et le bien-être général.",
+   "Appliquer les principes du Qi Gong dans les pratiques de massage pour stimuler la circulation énergétique et la détoxification.",
+   "Identifier les blocages énergétiques dans l’abdomen des clients et utiliser des méthodes spécifiques pour les résoudre.",
+   "Développer des compétences en communication thérapeutique pour établir une relation de confiance et comprendre les besoins spécifiques des clients.",
+   "Intégrer le massage Chi Nei Tsang dans une pratique professionnelle de bien-être, en respectant les normes de sécurité et d’éthique professionnelle."
+  ],
+  "modalites": [
+   "Formation en présentiel dans le cadre des sessions proposés par notre formateur",
+   "Méthodes d’animation participatives : interactivité, exemples et mise en pratiques",
+   "Procédés pédagogiques adaptés au niveau du/des participants",
+   "Travaux pratiques adaptés à votre activité"
+  ],
+  "modules": [
+   {
+    "titre": "Module 1: Introduction au Chi Nei Tsang",
+    "points": [
+     "Comprendre l’histoire et les principes fondamentaux du Chi Nei Tsang.",
+     "Explorer l’importance du massage abdominal dans les médecines traditionnelles.",
+     "Identifier les principaux systèmes énergétiques impliqués dans la pratique du Chi Nei Tsang."
+    ]
+   },
+   {
+    "titre": "Module 2: Anatomie et physiologie pour le Chi Nei Tsang",
+    "points": [
+     "Étudier l’anatomie détaillée de l’abdomen et les organes internes associés.",
+     "Comprendre les interactions entre les systèmes digestif, lymphatique et nerveux.",
+     "Apprendre à reconnaître les signes de déséquilibre énergétique et physique chez le client."
+    ]
+   },
+   {
+    "titre": "Module 3: Techniques de base du Chi Nei Tsang",
+    "points": [
+     "Pratiquer les techniques manuelles pour stimuler la circulation et la détoxification.",
+     "Apprendre à appliquer la pression adéquate pour un massage abdominal efficace.",
+     "Intégrer les mouvements de respiration pour renforcer l’efficacité du massage."
+    ]
+   },
+   {
+    "titre": "Module 4: Approfondissement des techniques spécifiques",
+    "points": [
+     "Maîtriser les techniques avancées pour traiter des problèmes spécifiques tels que le stress, l’insomnie, et les troubles digestifs.",
+     "Utiliser le Chi Nei Tsang pour améliorer la santé émotionnelle et le lâcher-prise.",
+     "Développer des protocoles de traitement personnalisés en fonction des besoins individuels des clients."
+    ]
+   },
+   {
+    "titre": "Module 5: Pratique thérapeutique et communication",
+    "points": [
+     "Apprendre les compétences de communication pour établir une relation de confiance avec les clients.",
+     "Pratiquer des consultations initiales et des évaluations holistiques pour comprendre les attentes et les antécédents des clients.",
+     "Gérer des séances de Chi Nei Tsang en intégrant écoute active et réponses adaptées aux feedbacks des clients."
+    ]
+   },
+   {
+    "titre": "Module 6: Intégration professionnelle et éthique",
+    "points": [
+     "Comprendre les aspects légaux et éthiques de la pratique du massage thérapeutique.",
+     "Développer des stratégies pour intégrer le Chi Nei Tsang dans une offre de services de bien-être plus large.",
+     "Préparer les participants à lancer et à gérer leur propre pratique professionnelle de Chi Nei Tsang."
+    ]
+   }
+  ],
+  "certification": null
+ },
+ {
+  "slug": "formation-massage-dos-et-cranien",
+  "category": "bien-etre",
+  "title": "Formation Massage Dos et Crânien",
+  "intro": "Spécialisez-vous dans le massage du dos et du crâne pour soulager les tensions accumulées et promouvoir la détente nerveuse. Apprenez des gestes ciblés, des pressions adaptées et des techniques spécifiques pour apporter relaxation et bien-être à vos clients. Cette formation est idéale pour les praticiens cherchant à élargir leur expertise dans les soins ciblés et thérapeutiques.",
+  "image": "https://skills4mation.com/wp-content/uploads/2024/12/formation-massage-cranier-1024x758.webp",
+  "niveau": "De Débutant à Avancé",
+  "tarif": "A partir de 1800 € - Financement possible",
+  "objectif": "Maîtriser les techniques de massage bien-être",
+  "duree": "A partir de 7 H de formation",
+  "prerequis": "Aucun",
+  "objectifs": [
+   "Acquérir des compétences fondamentales en massage du dos et du crâne.",
+   "Maîtriser les techniques spécifiques de détente musculaire et de soulagement du stress.",
+   "Appliquer les meilleures pratiques en matière de manipulation douce et de pression thérapeutique.",
+   "Développer une approche personnalisée pour chaque client, adaptée à ses besoins spécifiques.",
+   "Promouvoir le bien-être général et la santé grâce à des méthodes de massage innovantes."
+  ],
+  "modalites": [
+   "Formation en présentiel dans le cadre des sessions proposés par notre formateur – 14 H de Formation Online et 7 H de formation présentiel",
+   "Méthodes d’animation participatives : interactivité, exemples et mise en pratiques",
+   "Procédés pédagogiques adaptés au niveau du/des participants",
+   "Travaux pratiques adaptés à votre activité"
+  ],
+  "modules": [
+   {
+    "titre": "Module 1: Introduction au massage thérapeutique",
+    "points": [
+     "Comprendre l’histoire et les fondements du massage thérapeutique.",
+     "Identifier les différents types de massage et leur application.",
+     "Étudier l’anatomie de base du crâne et du dos."
+    ]
+   },
+   {
+    "titre": "Module 2: Techniques de base du massage du dos",
+    "points": [
+     "Apprendre les gestes fondamentaux de préparation et d’échauffement musculaire.",
+     "Pratiquer les mouvements de base comme l’effleurage et le pétrissage.",
+     "Reconnaître les zones de tension et les techniques pour les soulager."
+    ]
+   },
+   {
+    "titre": "Module 3: Approfondissement du massage crânien",
+    "points": [
+     "Maîtriser les points de pression spécifiques au crâne pour un effet relaxant.",
+     "Appliquer les techniques de massage crânien pour réduire le stress et les maux de tête.",
+     "Combiner les mouvements crâniens avec des techniques de respiration pour maximiser l’effet détente."
+    ]
+   },
+   {
+    "titre": "Module 4: Techniques avancées pour le massage du dos",
+    "points": [
+     "Intégrer des techniques avancées telles que le massage profond et les mobilisations.",
+     "Utiliser des outils et des aides comme les huiles essentielles et les balles de massage.",
+     "Adapter les séances en fonction des besoins spécifiques des clients, tels que les problèmes de posture ou les douleurs chroniques."
+    ]
+   },
+   {
+    "titre": "Module 5: Pratique clinique et étude de cas",
+    "points": [
+     "Réaliser des séances de massage sous supervision dans un cadre clinique.",
+     "Analyser des études de cas pour comprendre divers scénarios et réponses thérapeutiques.",
+     "Recevoir et intégrer des retours constructifs pour affiner les techniques."
+    ]
+   },
+   {
+    "titre": "Module 6: Développement professionnel et éthique du massage",
+    "points": [
+     "Étudier les principes éthiques essentiels dans la pratique du massage thérapeutique.",
+     "Explorer les voies de développement professionnel continu, y compris les certifications spécialisées.",
+     "Préparer les participants à gérer leur propre pratique, en se concentrant sur le marketing, la gestion des relations clients et les aspects légaux."
+    ]
+   }
+  ],
+  "certification": null
+ },
+ {
+  "slug": "formation-massage-kobi",
+  "category": "bien-etre",
+  "title": "Formation Massage Kobi",
+  "intro": "Découvrez le massage Kobi, une technique innovante et relaxante qui allie gestes précis et approche thérapeutique pour soulager les tensions musculaires. Apprenez à adapter vos soins en fonction des besoins de vos clients pour offrir une expérience de relaxation profonde. Cette formation pratique vous permet d’ajouter une compétence unique à votre offre professionnelle.",
+  "image": "https://skills4mation.com/wp-content/uploads/2024/12/formation-massage-1024x600.webp",
+  "niveau": "De Débutant à Avancé",
+  "tarif": "A partir de 1800 € - Financement possible",
+  "objectif": "Maîtriser les techniques de massage bien-être",
+  "duree": "A partir de 7 H de formation",
+  "prerequis": "Aucun",
+  "objectifs": [
+   "Acquérir les techniques fondamentales et avancées du massage Kobi pour améliorer la relaxation et le bien-être.",
+   "Développer une compréhension approfondie de l’anatomie humaine et des points de tension spécifiques liés au massage Kobi.",
+   "Maîtriser l’application des différentes pressions et mouvements spécifiques au massage Kobi.",
+   "Apprendre à créer un environnement thérapeutique adapté, en intégrant des éléments de musique, de lumière et d’aromathérapie.",
+   "Cultiver les compétences interpersonnelles nécessaires pour établir une relation de confiance et de professionnalisme avec les clients."
+  ],
+  "modalites": [
+   "Formation en présentiel dans le cadre des sessions proposés par notre formateur – 14 H de Formation Online et 7 H de formation présentiel",
+   "Méthodes d’animation participatives : interactivité, exemples et mise en pratiques",
+   "Procédés pédagogiques adaptés au niveau du/des participants",
+   "Travaux pratiques adaptés à votre activité"
+  ],
+  "modules": [
+   {
+    "titre": "Module 1: Introduction au Massage Kobi",
+    "points": [
+     "Découvrir l’histoire et les principes fondamentaux du massage Kobi.",
+     "Identifier les bienfaits du massage Kobi sur le corps et l’esprit.",
+     "Se familiariser avec le matériel et l’environnement nécessaires pour pratiquer efficacement."
+    ]
+   },
+   {
+    "titre": "Module 2: Anatomie et Physiologie pour le Massage Kobi",
+    "points": [
+     "Comprendre la structure et les fonctions des systèmes musculaire et nerveux.",
+     "Étudier les zones de tension typiques et leur impact sur le bien-être général.",
+     "Apprendre à identifier les points de déclenchement et les zones de relaxation."
+    ]
+   },
+   {
+    "titre": "Module 3: Techniques de Base du Massage Kobi",
+    "points": [
+     "Maîtriser les mouvements de base tels que le pétrissage, la pression et l’effleurage.",
+     "Pratiquer l’application de différentes pressions pour un effet thérapeutique optimal.",
+     "Intégrer des techniques de respiration et de relaxation pendant les séances de massage."
+    ]
+   },
+   {
+    "titre": "Module 4: Techniques Avancées en Massage Kobi",
+    "points": [
+     "Appliquer des techniques avancées pour des traitements spécifiques tels que le soulagement de la douleur et la réduction du stress.",
+     "Utiliser des méthodes combinées pour améliorer l’efficacité du massage.",
+     "Personnaliser les séances de massage selon les besoins individuels des clients."
+    ]
+   },
+   {
+    "titre": "Module 5: Création d’un Environnement Thérapeutique",
+    "points": [
+     "Concevoir un espace de massage qui encourage la relaxation et le bien-être.",
+     "Intégrer des éléments sensoriels tels que l’aromathérapie, la musique et l’éclairage adapté.",
+     "Établir des protocoles de confidentialité et de confort pour les clients."
+    ]
+   },
+   {
+    "titre": "Module 6: Pratique Professionnelle et Développement des Compétences Interpersonnelles",
+    "points": [
+     "Développer des compétences en communication pour mieux comprendre et répondre aux attentes des clients.",
+     "Apprendre à gérer un agenda de rendez-vous et à maintenir des relations professionnelles durables.",
+     "Cultiver une éthique professionnelle et des pratiques de travail sûres et efficaces."
+    ]
+   }
+  ],
+  "certification": null
+ },
+ {
+  "slug": "formation-massage-lomi",
+  "category": "bien-etre",
+  "title": "Formation Massage Lomi",
+  "intro": "Maîtrisez le massage Lomi Lomi, une tradition hawaïenne qui combine mouvements fluides et enveloppants pour rétablir l’harmonie du corps et de l’esprit. Apprenez à utiliser vos avant-bras, les pressions et les gestes synchronisés pour offrir un soin relaxant et énergétique. Ce programme vous initie à une pratique unique qui allie culture, technique et bien-être global.",
+  "image": "https://skills4mation.com/wp-content/uploads/2024/12/massage-lomi-926x1024.webp",
+  "niveau": "De Débutant à Avancé",
+  "tarif": "A partir de 1800 € - Financement possible",
+  "objectif": "Maîtriser les techniques de massage Lomi",
+  "duree": "A déterminer selon votre niveau et objectif",
+  "prerequis": "Aucun",
+  "objectifs": [
+   "Maîtriser les techniques de base et avancées du massage Lomi Lomi.",
+   "Comprendre l’histoire et les principes culturels sous-jacents au massage Lomi.",
+   "Développer une approche thérapeutique intégrant le bien-être physique et émotionnel.",
+   "Appliquer les méthodes de relaxation et de réduction du stress spécifiques au Lomi.",
+   "Acquérir les compétences pour pratiquer professionnellement le massage Lomi dans divers environnements."
+  ],
+  "modalites": [
+   "Formation en présentiel dans le cadre des sessions proposés par notre formateur – 14 H de Formation Online et 7 H de formation présentiel",
+   "Méthodes d’animation participatives : interactivité, exemples et mise en pratiques",
+   "Procédés pédagogiques adaptés au niveau du/des participants",
+   "Travaux pratiques adaptés à votre activité"
+  ],
+  "modules": [
+   {
+    "titre": "Module 1: Introduction au Massage Lomi Lomi",
+    "points": [
+     "Découvrir l’origine et l’évolution historique du massage Lomi Lomi.",
+     "Identifier les principes fondamentaux et les valeurs culturelles hawaïennes intégrées dans la pratique.",
+     "Comprendre les bienfaits du massage Lomi Lomi sur le corps et l’esprit."
+    ]
+   },
+   {
+    "titre": "Module 2: Anatomie et Physiologie pour le Massage Lomi",
+    "points": [
+     "Explorer l’anatomie humaine clé et la physiologie liée aux techniques de massage.",
+     "Reconnaître les zones de tension et les points de déclenchement courants.",
+     "Apprendre à évaluer les besoins physiques des clients avant de pratiquer le massage."
+    ]
+   },
+   {
+    "titre": "Module 3: Techniques de Base du Massage Lomi Lomi",
+    "points": [
+     "Maîtriser les mouvements de base tels que les effleurages longs et fluides.",
+     "Pratiquer la coordination des gestes avec la respiration harmonieuse.",
+     "Appliquer les huiles et préparer l’environnement de massage pour optimiser le confort et l’efficacité."
+    ]
+   },
+   {
+    "titre": "Module 4: Techniques Avancées et Personnalisation",
+    "points": [
+     "Intégrer des techniques avancées pour traiter des problèmes spécifiques du corps.",
+     "Personnaliser les séances en fonction des conditions physiques et des préférences des clients.",
+     "Utiliser des méthodes de relaxation profonde et de rééquilibrage énergétique."
+    ]
+   },
+   {
+    "titre": "Module 5: Pratique Clinique et Études de Cas",
+    "points": [
+     "Effectuer des séances complètes de massage Lomi Lomi sous supervision.",
+     "Analyser des études de cas pour identifier les stratégies de traitement efficaces.",
+     "Recevoir des retours constructifs pour affiner les techniques et la méthode de pratique."
+    ]
+   },
+   {
+    "titre": "Module 6: Développement Professionnel et Éthique",
+    "points": [
+     "Connaître les aspects légaux et éthiques de la pratique du massage.",
+     "Développer des compétences en communication et en service client pour bâtir une clientèle fidèle.",
+     "Planifier une trajectoire professionnelle dans le domaine du bien-être en intégrant le massage Lomi"
+    ]
+   }
+  ],
+  "certification": null
+ },
+ {
+  "slug": "formation-massage-shinzu-body",
+  "category": "bien-etre",
+  "title": "Formation Massage SHINZU BODY™",
+  "intro": "Maîtrisez les techniques du massage SHINZU BODY™, alliant traditions orientales et pratiques modernes pour favoriser la relaxation et la revitalisation du corps. Apprenez des gestes précis, des protocoles professionnels et des techniques pour apaiser les tensions musculaires. Cette formation enrichit vos compétences et vous permet d’offrir des soins uniques dans le domaine du bien-être.",
+  "image": "https://skills4mation.com/wp-content/uploads/2024/12/formation-massage-4-721x1024.webp",
+  "niveau": "Professionnel du bien-être et/ou personne en reconversion professionnel",
+  "tarif": "A partir de 1200 € - Financement possible",
+  "objectif": "être en capacité de dispenser des massage et soins selon la méthode de Shinzy Body",
+  "duree": "A partir de 14 H de formation",
+  "prerequis": "Développer les facultés d’écoute et de bienveillance",
+  "objectifs": [
+   "Maîtriser les techniques du massage SHINZU BODY facilement applicables.",
+   "Comprendre les besoins spécifiques pour adapter les massages.",
+   "Instaurer une relation de confiance avec le client.",
+   "Optimiser l’espace de massage pour le confort de tous.",
+   "Adapter ses postures pour garantir une pratique efficace et sûre."
+  ],
+  "modalites": [
+   "Formation en présentiel dans le cadre des sessions proposés par notre formatrice",
+   "Méthodes d’animation participatives : interactivité, exemples et mise en pratiques dans un cabinet de massage ( Chez le stagiaire ou au cabinet de la formatrice",
+   "Procédés pédagogiques adaptés au niveau du/des participants",
+   "Travaux pratiques adaptés à votre activité"
+  ],
+  "modules": [
+   {
+    "titre": "Module 1: Introduction au SHINZU BODY et ses Fondamentaux",
+    "points": [
+     "Comprendre l’histoire et les principes du massage SHINZU BODY.",
+     "Identifier les bienfaits du massage SHINZU BODY pour le corps et l’esprit.",
+     "Apprendre les gestes de base et les techniques de préparation."
+    ]
+   },
+   {
+    "titre": "Module 2: Techniques de Relaxation et Méditation",
+    "points": [
+     "Intégrer des techniques de respiration et de méditation dans les sessions de massage.",
+     "Maîtriser les méthodes de relaxation profonde pour débuter et conclure une séance.",
+     "Utiliser la musique et l’aromathérapie comme outils complémentaires."
+    ]
+   },
+   {
+    "titre": "Module 3: Pratiques Avancées en Massage SHINZU BODY",
+    "points": [
+     "Approfondir les techniques spécifiques du SHINZU BODY pour traiter des zones ciblées.",
+     "Adapter le massage aux besoins spécifiques des clients pour un soulagement optimal.",
+     "Combiner différentes pressions et mouvements pour une expérience unique."
+    ]
+   },
+   {
+    "titre": "Module 4: Personnalisation des Soins et Approche Holistique",
+    "points": [
+     "Développer des programmes de soin personnalisés en fonction des attentes et besoins des clients.",
+     "Intégrer une approche holistique dans la pratique du massage, considérant l’individu dans sa globalité.",
+     "Utiliser le feedback client pour affiner et améliorer les techniques de massage."
+    ]
+   },
+   {
+    "titre": "Module 5: Bien-être et Santé Mentale",
+    "points": [
+     "Reconnaître l’impact du massage sur la santé mentale et le stress.",
+     "Appliquer des techniques de massage pour favoriser la détente mentale et l’équilibre émotionnel.",
+     "Encourager les pratiques de bien-être personnel chez les clients."
+    ]
+   },
+   {
+    "titre": "Module 6: Pratique Professionnelle et Éthique",
+    "points": [
+     "Comprendre les aspects éthiques et professionnels du métier de masseur.",
+     "Gérer efficacement un espace de massage, de la prise de rendez-vous à la fidélisation des clients.",
+     "Respecter la confidentialité et l’intégrité de chaque client."
+    ]
+   }
+  ],
+  "certification": null
+ },
+ {
+  "slug": "formation-massage-shinzu-face",
+  "category": "bien-etre",
+  "title": "Formation Massage SHINZU FACE™",
+  "intro": "Spécialisez-vous dans les techniques de massage facial avec la méthode SHINZU FACE™. Apprenez à combiner relaxation, gestion des méridiens énergétiques et stimulation cutanée pour des effets rajeunissants et apaisants. Cette formation pratique vous permet d’élargir votre offre professionnelle avec des soins innovants et recherchés par vos clients.",
+  "image": "https://skills4mation.com/wp-content/uploads/2024/12/formation-visage-1024x682.webp",
+  "niveau": "Professionnel du bien-être et/ou personne en reconversion professionnel",
+  "tarif": "A partir de 1200 € - Financement possible",
+  "objectif": "être en capacité de dispenser des massage et soins selon la méthode de massage SHINZU FACE ™",
+  "duree": "A partir de 14 H de formation",
+  "prerequis": "Développer les facultés d’écoute et de bienveillance",
+  "objectifs": [
+   "Maîtriser les techniques du massage SHINZU BODY facilement applicables.",
+   "Comprendre les besoins spécifiques pour adapter les massages.",
+   "Instaurer une relation de confiance avec le client.",
+   "Optimiser l’espace de massage pour le confort de tous.",
+   "Adapter ses postures pour garantir une pratique efficace et sûre"
+  ],
+  "modalites": [
+   "Formation en présentiel dans le cadre des sessions proposés par notre formatrice",
+   "Méthodes d’animation participatives : interactivité, exemples et mise en pratiques dans un cabinet de massage ( Chez le stagiaire ou au cabinet de la formatrice",
+   "Procédés pédagogiques adaptés au niveau du/des participants",
+   "Travaux pratiques adaptés à votre activité"
+  ],
+  "modules": [
+   {
+    "titre": "Module 1: Introduction au MASSAGE SHINZU FACE",
+    "points": [
+     "Comprendre les fondements du massage SHINZU et ses bienfaits.",
+     "Identifier les contre-indications.",
+     "Établir une communication efficace avec le client."
+    ]
+   },
+   {
+    "titre": "Module 2: La pratique de base et les techniques",
+    "points": [
+     "Pratiquer les techniques de base sur le dos et le visage.",
+     "Échanger des feedbacks constructifs en binômes.",
+     "Réaliser des mises en situation pratiques."
+    ]
+   },
+   {
+    "titre": "Module 3: La gestion de l’espace et du matériel",
+    "points": [
+     "Choisir et organiser l’espace pour le massage.",
+     "Savoir régler la table de massage pour le confort du receveur.",
+     "Gérer le matériel nécessaire pour le massage SHINZU FACE."
+    ]
+   },
+   {
+    "titre": "Module 4: Les aspects théoriques de la formation",
+    "points": [
+     "Approfondir les connaissances sur la circulation de l’énergie et des méridiens.",
+     "Étudier le rôle du formateur dans la transmission des savoirs.",
+     "Aborder les aspects administratifs de la formation."
+    ]
+   },
+   {
+    "titre": "Module 5: Techniques avancées et adaptation",
+    "points": [
+     "Adapter ses techniques aux besoins spécifiques des clients.",
+     "Pratiquer des techniques avancées pour le visage.",
+     "Utiliser la Kansa pour maximiser les bienfaits du massage."
+    ]
+   },
+   {
+    "titre": "Module 6: Évaluation et certification",
+    "points": [
+     "Réaliser une évaluation pratique de fin de formation.",
+     "Répondre à un quizz théorique pour consolider les connaissances.",
+     "Obtenir la certification après succès de l’évaluation."
+    ]
+   }
+  ],
+  "certification": null
+ },
+ {
+  "slug": "formation-massage-aux-pierres-chaudes",
+  "category": "bien-etre",
+  "title": "Formation Massage aux Pierres Chaudes",
+  "intro": "Apprenez à pratiquer le massage aux pierres chaudes, une technique ancestrale qui favorise la relaxation profonde et soulage les tensions musculaires. Cette formation vous initie à l’utilisation sécurisée des pierres volcaniques et aux gestes adaptés pour offrir un soin complet et apaisant. Idéale pour les praticiens du bien-être souhaitant diversifier leur expertise.",
+  "image": "https://skills4mation.com/wp-content/uploads/2024/12/formation-pierre-chaude-1024x1016.webp",
+  "niveau": "Professionnel du bien-être et/ou personne en reconversion professionnel",
+  "tarif": "A partir de 1000 € - Financement possible",
+  "objectif": "être en capacité de dispenser des massage et soins selon la méthode de massage pierres chaudes",
+  "duree": "A partir de 14 H de formation",
+  "prerequis": "Développer les facultés d’écoute et de bienveillance",
+  "objectifs": [
+   "Maîtriser les techniques de massage aux pierres chaudes pour une relaxation profonde.",
+   "Comprendre la théorie derrière les bienfaits physiologiques et psychologiques du massage aux pierres chaudes.",
+   "Appliquer les méthodes d’entretien et de maniement des pierres pour assurer une pratique sécuritaire et durable.",
+   "Découvrir l’histoire et les fondements du massage aux pierres chaudes.",
+   "Identifier les bienfaits et contre-indications de cette pratique.",
+   "Manipuler l’unité chauffante et les pierres adéquatement.",
+   "Exécuter une séance de massage aux pierres chaudes avec aisance.",
+   "Assurer l’entretien et la sécurité des pierres chaudes.",
+   "Évaluer les besoins du client pour une séance personnalisée."
+  ],
+  "modalites": [
+   "Formation en présentiel dans le cadre des sessions proposés par notre formatrice",
+   "Méthodes d’animation participatives : interactivité, exemples et mise en pratiques dans un cabinet de massage ( Chez le stagiaire ou au cabinet de la formatrice",
+   "Procédés pédagogiques adaptés au niveau du/des participants",
+   "Travaux pratiques adaptés à votre activité"
+  ],
+  "modules": [
+   {
+    "titre": "Programme",
+    "points": [
+     "Fondements et Histoire du Massage aux Pierres Chaudes",
+     "Comprendre l’origine et l’évolution historique du massage aux pierres chaudes.",
+     "Explorer les cultures et pratiques traditionnelles associées.",
+     "Relier les anciennes techniques aux méthodes modernes.",
+     "Bienfaits et Contre-Indications",
+     "Identifier les effets thérapeutiques sur le corps et l’esprit.",
+     "Reconnaître les contre-indications pour éviter les risques.",
+     "Étudier les recherches et données actuelles sur l’efficacité du massage aux pierres chaudes.",
+     "Techniques de Massage aux Pierres Chaudes",
+     "Appliquer les techniques manuelles de massage (californien/suédois) combinées avec l’usage des pierres.",
+     "Varier la pression et le rythme pour une efficacité optimale.",
+     "Intégrer des mouvements spécifiques pour les différents groupes musculaires.",
+     "Gestion de l’Unité Chauffante et des Pierres",
+     "Opérer l’unité chauffante pour atteindre la température idéale.",
+     "Sélectionner et préparer les pierres selon leurs tailles et formes.",
+     "Appliquer des techniques de refroidissement et de réchauffement sécuritaires.",
+     "Pratique et Sécurité",
+     "Mener une séance complète en suivant un protocole sécuritaire.",
+     "Adapter la séance aux besoins spécifiques de chaque client.",
+     "Gérer l’environnement de la séance pour maximiser le confort et la sécurité."
+    ]
+   }
+  ],
+  "certification": null
+ },
+ {
+  "slug": "formation-yoga-et-ayurveda",
+  "category": "bien-etre",
+  "title": "Formation Yoga et Ayurveda pour une vie harmonieuse et saine",
+  "intro": "Explorez l’alliance du yoga et de l’ayurveda pour favoriser un bien-être global. Apprenez à intégrer ces disciplines ancestrales dans votre quotidien pour rétablir l’équilibre du corps, de l’esprit et des émotions. Ce parcours vous offre des outils pratiques comme la nutrition ayurvédique, la méditation et des postures ciblées pour guider vos élèves vers une vie plus saine et harmonieuse.",
+  "image": "https://skills4mation.com/wp-content/uploads/2024/12/formation-yoga1.webp",
+  "niveau": "De Débutant à Avancé",
+  "tarif": "A partir de 1800 € - Financement possible",
+  "objectif": "Maîtriser les techniques de yoga ayurveda",
+  "duree": "A partir de 21 H de formation",
+  "prerequis": "Aucun",
+  "objectifs": [
+   "Comprendre les principes fondamentaux de l’Ayurveda et du Yoga.",
+   "Apprendre à créer des routines de Yoga adaptées aux différents doshas.",
+   "Intégrer les principes de l’Ayurveda dans l’alimentation et le mode de vie.",
+   "Développer une pratique personnelle de méditation et de pranayama.",
+   "Utiliser les techniques ayurvédiques pour améliorer le bien-être physique et mental.",
+   "Guider les autres dans leur parcours de bien-être à travers le Yoga et l’Ayurveda."
+  ],
+  "modalites": [
+   "Formation en présentiel dans le cadre des sessions proposés par notre formateur",
+   "Méthodes d’animation participatives : interactivité, exemples et mise en pratiques",
+   "Procédés pédagogiques adaptés au niveau du/des participants",
+   "Travaux pratiques adaptés à votre activité"
+  ],
+  "modules": [
+   {
+    "titre": "Module 1 : Introduction au Yoga et à l’Ayurveda",
+    "points": [
+     "Comprendre l’histoire et les philosophies du Yoga et de l’Ayurveda.",
+     "Identifier les trois doshas et leur influence sur notre corps et notre esprit.",
+     "Explorer les Yamas et Niyamas comme fondements éthiques du Yoga."
+    ]
+   },
+   {
+    "titre": "Module 2 : Les Doshas et le Yoga",
+    "points": [
+     "Apprendre à identifier les déséquilibres des doshas chez soi et chez les autres.",
+     "Concevoir des séquences de Yoga adaptées à chaque dosha.",
+     "Intégrer la respiration (Pranayama) et la méditation pour équilibrer les doshas."
+    ]
+   },
+   {
+    "titre": "Module 3 : Nutrition et Hygiène de Vie Ayurvédique",
+    "points": [
+     "Comprendre les principes de l’alimentation ayurvédique pour équilibrer les doshas.",
+     "Intégrer les routines ayurvédiques quotidiennes (Dinacharya) pour améliorer le bien-être.",
+     "Utiliser les épices et les herbes dans la cuisine ayurvédique pour la santé et la guérison."
+    ]
+   },
+   {
+    "titre": "Module 4 : Pratique Avancée de Yoga",
+    "points": [
+     "Approfondir les asanas, pranayama, et techniques de méditation.",
+     "Explorer les techniques de purification du Yoga (Shatkarmas) pour le bien-être physique.",
+     "Développer une séquence de Yoga personnelle pour la pratique quotidienne."
+    ]
+   },
+   {
+    "titre": "Module 5 : Ayurveda et Gestion du Stress",
+    "points": [
+     "Comprendre l’impact du stress sur les doshas et le bien-être général.",
+     "Apprendre des techniques ayurvédiques et yogiques pour gérer le stress.",
+     "Pratiquer la méditation et le pranayama pour la réduction du stress."
+    ]
+   },
+   {
+    "titre": "Module 6 : Devenir un Guide en Yoga Ayurveda",
+    "points": [
+     "Développer des compétences pour enseigner le Yoga et l’Ayurveda.",
+     "Apprendre à créer des ateliers et des séminaires sur le Yoga Ayurveda.",
+     "Éthique et pratiques professionnelles pour les praticiens du Yoga Ayurveda."
+    ]
+   }
+  ],
+  "certification": null
+ },
+ {
+  "slug": "formation-creer-et-administrer-son-site",
+  "category": "bureautique",
+  "title": "Formation Créer et administrer son site",
+  "intro": "De l’idée au site web opérationnel, notre formation “Créer et administrer son site” vous guide étape par étape pour concevoir un site internet professionnel. Apprenez à utiliser des outils comme WordPress, gérer les thèmes et plugins, personnaliser le design, optimiser les performances et assurer la sécurité de votre site. Que ce soit pour un blog personnel, un site vitrine d’entreprise ou une boutique en ligne, cette formation est idéale pour les débutants souhaitant développer leur présence sur le web sans connaissances techniques.",
+  "image": "https://skills4mation.com/wp-content/uploads/2024/12/site-internet-1024x860.webp",
+  "niveau": "De Débutant à Avancé",
+  "tarif": "A partir de 2400 € - Financement possible",
+  "objectif": "Savoir comment créer un site WEB à votre image",
+  "duree": "A déterminer selon votre niveau et objectif",
+  "prerequis": "Savoir manipuler internet",
+  "objectifs": [
+   "Définir sa stratégie de communication digitale",
+   "Identifier les fonctionnalités attendues",
+   "Créer une documentation fonctionnelle & technique permettant d’assurer le développement",
+   "Sélectionner et installer un thème WordPress ou un page builder",
+   "Configurer et administrer son site avec WordPress et les extensions adaptées",
+   "Créer des contenus écrits et visuels pour alimenter le site",
+   "Générer du trafic sur le site via la mise en place ou l’optimisation de leviers webmarketing (réseaux sociaux, emailing, référencement naturel & payant… )",
+   "À l’issue de la formation, vous serez en mesure de publier votre propre site WEB."
+  ],
+  "modalites": [
+   "Approche Intégrée et Contextualisée :",
+   "Ce cours est spécialement conçu pour lier les aspects techniques et créatifs de la création de sites web, assurant ainsi que les participants peuvent immédiatement mettre en pratique les compétences acquises dans leurs environnements professionnels.",
+   "Contenu Sur-Mesure :",
+   "Adaptation du contenu aux besoins spécifiques des participants, en fonction de leur domaine d’activité. Cela permet une pertinence accrue et une application directe des compétences en développement web.",
+   "Évaluation Continue et Feedback Personnalisé :",
+   "Des évaluations régulières et des retours constructifs sont intégrés tout au long du parcours pour suivre les progrès des participants et ajuster l’approche pédagogique si nécessaire."
+  ],
+  "modules": [
+   {
+    "titre": "Module 1: Introduction à WordPress",
+    "points": [
+     "Comprendre WordPress",
+     ": Découvrez l’histoire et l’évolution de WordPress, pourquoi il est devenu la plateforme de choix pour les créateurs de contenu, et comment il se distingue des autres systèmes de gestion de contenu (CMS).",
+     "Installation et configuration",
+     ": Apprenez à installer WordPress sur un hébergement local et en ligne, à naviguer dans son tableau de bord, et à configurer les paramètres essentiels pour un démarrage réussi.",
+     "Principes de base de la publication",
+     ": Maîtrisez les outils de création de contenu de WordPress, y compris les articles et les pages, et découvrez comment organiser votre contenu avec des catégories et des étiquettes."
+    ]
+   },
+   {
+    "titre": "Module 2: Thèmes et Personnalisation Visuelle",
+    "points": [
+     "Sélection et installation de thèmes",
+     ": Explorez la vaste bibliothèque de thèmes WordPress pour trouver celui qui convient parfaitement à votre vision, apprenez à l’installer et à l’activer.",
+     "Personnalisation du thème",
+     ": Utilisez le personnalisateur de thème pour ajuster les couleurs, les polices, et les dispositions, créant ainsi une apparence unique pour votre site.",
+     "Widgets et Menus",
+     ": Intégrez des fonctionnalités supplémentaires à votre site avec des widgets, et créez des menus de navigation pour aider vos visiteurs à explorer votre site."
+    ]
+   },
+   {
+    "titre": "Module 3: Extensions et Fonctionnalités",
+    "points": [
+     "Introduction aux plugins",
+     ": Découvrez le rôle crucial des plugins dans l’extension des fonctionnalités de WordPress et comment choisir les bons pour votre site.",
+     "Installation et gestion des plugins",
+     ": Apprenez à installer, activer, et mettre à jour les plugins, tout en gérant les conflits potentiels entre eux.",
+     "Plugins essentiels",
+     ": Explorez quelques plugins incontournables pour la sécurité, le SEO, la sauvegarde, et l’amélioration de la performance de votre site."
+    ]
+   },
+   {
+    "titre": "Module 4: Gestion de Contenu Avancée",
+    "points": [
+     "Types de contenu personnalisés",
+     ": Créez des types de contenu sur mesure pour votre site, permettant une organisation et une présentation plus sophistiquées du contenu.",
+     "Champs personnalisés",
+     ": Apprenez à ajouter des informations supplémentaires et spécifiques à vos articles et pages avec des champs personnalisés.",
+     "Taxonomies personnalisées",
+     ": Organisez efficacement votre contenu avec des taxonomies personnalisées, au-delà des catégories et étiquettes standards."
+    ]
+   },
+   {
+    "titre": "Module 5: SEO et Analytiques",
+    "points": [
+     "Optimisation pour les moteurs de recherche",
+     ": Appliquez les meilleures pratiques de SEO pour améliorer la visibilité de votre site dans les résultats de recherche, y compris l’optimisation des titres, des descriptions, et l’utilisation des mots-clés.",
+     "Google Analytics",
+     ": Intégrez Google Analytics à votre site WordPress pour suivre et analyser le trafic de votre site, comprendre le comportement des visiteurs, et améliorer l’engagement.",
+     "Amélioration de la performance",
+     ": Augmentez la vitesse de chargement de votre site et optimisez l’expérience utilisateur en compressant les images, en utilisant des plugins de cache, et en minimisant les scripts."
+    ]
+   },
+   {
+    "titre": "Module 6: Sécurité et Maintenance",
+    "points": [
+     "Sécurisation de votre site WordPress",
+     ": Mettez en place des stratégies de sécurité robustes pour protéger votre site contre les logiciels malveillants, les hacks, et les autres vulnérabilités.",
+     "Sauvegarde et restauration",
+     ": Apprenez les meilleures pratiques pour sauvegarder régulièrement votre site et comment restaurer votre contenu en cas de problème.",
+     "Mise à jour et maintenance",
+     ": Développez une routine de maintenance pour garder votre site à jour avec les dernières versions"
+    ]
+   }
+  ],
+  "certification": "RS6560"
+ },
+ {
+  "slug": "formation-maitriser-canva",
+  "category": "bureautique",
+  "title": "Formation Maîtriser Canva pour sublimer votre communication",
+  "intro": "Créez des visuels professionnels et attractifs pour vos projets grâce à Canva. Apprenez à concevoir des présentations, des affiches, des publications pour les réseaux sociaux et bien plus encore, sans compétences en design. Maîtrisez cet outil accessible pour dynamiser votre communication visuelle.",
+  "image": "https://skills4mation.com/wp-content/uploads/2024/12/canva-1024x819.webp",
+  "niveau": "De Débutant à Avancé",
+  "tarif": "A partir de 900 € - Financement possible",
+  "objectif": "Maîtriser les fonctionnalités de Canva pour créer des supports de communication visuels professionnels et impactants.",
+  "duree": "A déterminer selon votre niveau et objectif",
+  "prerequis": "savoir utiliser Internet",
+  "objectifs": [
+   "1. Apprendre les fondamentaux du design graphique en utilisant Canva, en se familiarisant avec ses outils et fonctionnalités clés.",
+   "2. Maîtriser la création de visuels attractifs pour divers usages tels que les réseaux sociaux, les présentations d’entreprise, et les supports marketing.",
+   "3. S’exercer à utiliser les modèles de Canva, en les adaptant et en les personnalisant pour répondre à des besoins spécifiques.",
+   "4. Développer des compétences en intégration d’éléments graphiques et textuels pour créer des compositions harmonieuses et impactantes.",
+   "5. Explorer les techniques avancées de Canva, y compris l’animation et la vidéo, pour produire des contenus dynamiques et interactifs.",
+   "6. Renforcer la capacité à communiquer des messages clairs et engageants à travers le design visuel."
+  ],
+  "modalites": [
+   "Formation en présentiel ou en visioconférence avec un formateur dédié.​",
+   "Méthodes d’animation participatives : interactivité, exemples et cas pratiques.",
+   "Procédés pédagogiques adaptés au niveau des participants.​",
+   "Travaux pratiques adaptés à votre activité."
+  ],
+  "modules": [
+   {
+    "titre": "Module 1 : Introduction à Canva – Les bases de la conception graphique",
+    "points": [
+     "Comprendre l’importance des visuels dans la communication moderne.",
+     "Présentation de l’interface de Canva et de ses principales fonctionnalités.​",
+     "Création d’un compte Canva et personnalisation du profil.​"
+    ]
+   },
+   {
+    "titre": "Module 2 : Création de supports de communication – Utilisation des modèles et personnalisation",
+    "points": [
+     "Choisir et personnaliser des modèles préexistants adaptés à différents supports (réseaux sociaux, affiches, présentations).​",
+     "Modifier le texte, les images et autres éléments des modèles pour les adapter à votre identité visuelle.​",
+     "Adapter les formats aux différents supports de communication.​"
+    ]
+   },
+   {
+    "titre": "Module 3 : Techniques avancées de design – Création de visuels originaux",
+    "points": [
+     "Créer des designs originaux en important des éléments externes (images, logos).​",
+     "Utiliser les outils de retouche d’image de Canva pour améliorer vos visuels.​",
+     "Appliquer des animations pour dynamiser vos créations.​"
+    ]
+   },
+   {
+    "titre": "Module 4 : Collaboration et partage – Travailler en équipe sur Canva",
+    "points": [
+     "Utiliser les fonctionnalités de collaboration pour travailler en équipe sur des projets Canva.​",
+     "Partager vos créations avec des collaborateurs ou des clients pour recueillir des feedbacks.",
+     "Gérer les commentaires et les suggestions pour améliorer vos designs.​"
+    ]
+   },
+   {
+    "titre": "Module 5 : Exportation et diffusion – Optimiser vos visuels pour différents supports",
+    "points": [
+     "Exporter vos créations dans différents formats adaptés (JPEG, PNG, PDF).​",
+     "Optimiser la qualité et la taille des fichiers pour une utilisation en ligne ou en impression.​",
+     "Publier directement vos créations sur les réseaux sociaux depuis Canva."
+    ]
+   },
+   {
+    "titre": "Module 6 : Bonnes pratiques et tendances actuelles – Assurer une communication visuelle efficace",
+    "points": [
+     "Découvrir les tendances actuelles en matière de design graphique.​",
+     "Appliquer les principes de base du design pour assurer une communication visuelle cohérente et efficace.​",
+     "Éviter les erreurs courantes et adopter les bonnes pratiques pour maximiser l’impact de vos visuels.​",
+     "Ce parcours vise à équiper les participants des compétences nécessaires pour utiliser Canva de manière efficace, leur permettant ainsi d’améliorer significativement leur communication visuelle.​"
+    ]
+   }
+  ],
+  "certification": null
+ },
+ {
+  "slug": "formation-maitriser-les-reseaux-sociaux",
+  "category": "bureautique",
+  "title": "Formation Maîtriser les Réseaux Sociaux",
+  "intro": "Améliorez votre présence sur les réseaux sociaux tels qu’Instagram, LinkedIn, Facebook ou TikTok. Découvrez les stratégies pour optimiser votre visibilité, créer du contenu engageant, attirer votre audience cible et développer votre stratégie digitale pour vous démarquer en ligne.",
+  "image": "https://skills4mation.com/wp-content/uploads/2024/12/communication-1024x659.webp",
+  "niveau": "De Débutant à Avancé",
+  "tarif": "A partir de 900 € - Financement possible",
+  "objectif": "Maîtriser les fondamentaux des réseaux sociaux",
+  "duree": "A déterminer selon votre niveau et objectif",
+  "prerequis": "Aucun",
+  "objectifs": [
+   "Apprendre à élaborer une stratégie de communication adaptée à chaque réseau social.",
+   "Comprendre les spécificités et les algorithmes des principales plateformes sociales.",
+   "Développer des contenus engageants et optimisés pour attirer et fidéliser une audience ciblée.",
+   "Utiliser efficacement les outils d’analyse pour mesurer la performance et ajuster ses actions.",
+   "Concevoir des campagnes publicitaires percutantes pour atteindre des objectifs marketing précis."
+  ],
+  "modalites": [
+   "Formation en présentiel ou distanciel dans le cadre des sessions proposés par notre formateur",
+   "Méthodes d’animation participatives : interactivité, exemples et mise en pratiques",
+   "Procédés pédagogiques adaptés au niveau du/des participants",
+   "Travaux pratiques adaptés à votre activité"
+  ],
+  "modules": [
+   {
+    "titre": "Module 1 : Comprendre les fondamentaux des réseaux sociaux",
+    "points": [
+     "Explorer l’évolution et l’impact des réseaux sociaux dans la communication digitale.",
+     "Identifier les principales plateformes et leurs audiences cibles.",
+     "Reconnaître les opportunités et les défis liés à l’utilisation professionnelle des réseaux sociaux."
+    ]
+   },
+   {
+    "titre": "Module 2 : Élaborer une stratégie de communication sur les réseaux sociaux",
+    "points": [
+     "Définir des objectifs clairs et alignés avec une vision globale.",
+     "Analyser et segmenter une audience pour mieux répondre à ses attentes.",
+     "Concevoir un plan de contenu stratégique et cohérent."
+    ]
+   },
+   {
+    "titre": "Module 3 : Créer des contenus engageants et adaptés",
+    "points": [
+     "Apprendre à rédiger des textes captivants et optimisés pour chaque plateforme.",
+     "Découvrir les bases du design visuel pour des publications attrayantes.",
+     "Intégrer des formats multimédias (vidéos, stories, reels) pour maximiser l’impact."
+    ]
+   },
+   {
+    "titre": "Module 4 : Optimiser sa visibilité grâce aux algorithmes",
+    "points": [
+     "Comprendre les logiques d’algorithmes des principales plateformes sociales.",
+     "Utiliser les hashtags, mots-clés et tendances pour accroître la portée des contenus.",
+     "Analyser les horaires et les fréquences de publication pour maximiser l’engagement."
+    ]
+   },
+   {
+    "titre": "Module 5 : Gérer et engager une communauté en ligne",
+    "points": [
+     "Apprendre à interagir efficacement avec son audience pour renforcer les liens.",
+     "Gérer les commentaires et retours, y compris les situations sensibles ou conflictuelles.",
+     "Fidéliser une communauté en développant des relations authentiques et durables."
+    ]
+   },
+   {
+    "titre": "Module 6 : Mesurer la performance et optimiser les campagnes",
+    "points": [
+     "Utiliser des outils d’analyse pour suivre les indicateurs clés de performance (KPI).",
+     "Interpréter les données pour ajuster et améliorer les stratégies.",
+     "Développer des campagnes publicitaires ciblées et rentables sur les réseaux sociaux."
+    ]
+   }
+  ],
+  "certification": null
+ },
+ {
+  "slug": "formation-maitriser-les-logiciels-de-presentation-pao",
+  "category": "bureautique",
+  "title": "Formation Maîtriser les logiciels de présentation PAO (Powerpoint)",
+  "intro": "Créez des présentations professionnelles avec PowerPoint ou d’autres outils de présentation. Apprenez à structurer vos idées, ajouter des visuels impactants, animer vos diapositives et captiver votre audience. Cette formation vous aide à communiquer efficacement vos messages grâce à des présentations visuellement engageantes.",
+  "image": "https://skills4mation.com/wp-content/uploads/2024/12/5-1024x543.webp",
+  "niveau": "De Débutant à Avancé",
+  "tarif": "A partir de 900 € - Financement possible",
+  "objectif": "Acquisition des connaissances simples pour comprendre et utiliser les logiciels de présentation tant au niveau personnel que professionnel.",
+  "duree": "A déterminer selon votre niveau et objectif",
+  "prerequis": "Savoir utiliser un PC, avoir la suite Office",
+  "objectifs": [
+   "1. Évaluer les compétences fondamentales dans la conception et le formatage de présentations de diapositives.",
+   "2. Maîtriser l’art d’illustrer, de communiquer et de présenter efficacement des concepts.",
+   "3. Apprendre à condenser vos idées et à mettre en valeur chaque élément de contenu.",
+   "4. Acquérir la compétence d’utiliser et de personnaliser des modèles de présentation, ainsi que de créer de nouvelles diapositives.",
+   "5. Développer des compétences pour élaborer des présentations intégrales et captivantes.",
+   "6. Maîtriser l’application de transitions et d’animations pour dynamiser vos présentations.",
+   "À l’issue de cette formation, vous aurez acquis la capacité d’exploiter les fonctionnalités clés des logiciels de présentation"
+  ],
+  "modalites": [
+   "Formation en présentiel ou en visioconférence avec un formateur dédié.",
+   "Méthodes d’animation participatives : interactivité, exemples et cas pratiques",
+   "Procédés pédagogiques adaptés au niveau du/des participants",
+   "Travaux pratiques adaptés à votre activité"
+  ],
+  "modules": [
+   {
+    "titre": "Module 1 : Introduction aux logiciels de présentation – Premiers pas avec PowerPoint",
+    "points": [
+     "Découvrir l’interface de PowerPoint et ses principales fonctionnalités pour créer des présentations efficaces.",
+     "Apprendre à créer, enregistrer et organiser des diapositives pour structurer vos idées de manière claire.",
+     "Utiliser les modèles prédéfinis pour gagner du temps tout en conservant une esthétique professionnelle."
+    ]
+   },
+   {
+    "titre": "Module 2 : Maîtrise des diapositives – Structurer et organiser le contenu visuel",
+    "points": [
+     "Apprendre à ajouter et à formater du texte, des images et des formes pour enrichir vos présentations.",
+     "Maîtriser l’utilisation des dispositions de diapositives pour structurer les informations de manière logique.",
+     "Utiliser les outils d’alignement et de regroupement pour organiser les éléments visuels avec précision."
+    ]
+   },
+   {
+    "titre": "Module 3 : Animation et transitions – Donner du dynamisme à vos présentations",
+    "points": [
+     "Découvrir les animations pour rendre vos diapositives interactives et attrayantes.",
+     "Apprendre à utiliser les transitions pour passer d’une diapositive à l’autre avec fluidité et impact.",
+     "Maîtriser l’animation avancée pour synchroniser le contenu de vos diapositives avec votre discours."
+    ]
+   },
+   {
+    "titre": "Module 4 : Intégration de médias – Enrichir vos présentations avec des éléments multimédias",
+    "points": [
+     "Apprendre à insérer des vidéos, des sons, et des liens hypertextes pour capter l’attention de votre audience.",
+     "Utiliser les graphiques et tableaux pour visualiser des données complexes de manière claire et concise.",
+     "Maîtriser l’exportation de votre présentation avec les éléments multimédias intégrés pour garantir leur lecture sur tous supports."
+    ]
+   },
+   {
+    "titre": "Module 5 : Collaboration et révision – Travailler en équipe sur une présentation",
+    "points": [
+     "Utiliser les outils de révision pour ajouter des commentaires et apporter des modifications en équipe.",
+     "Apprendre à collaborer en temps réel sur des présentations partagées via OneDrive ou Google Drive.",
+     "Découvrir les options de suivi des modifications et de validation pour garantir la cohérence du contenu."
+    ]
+   },
+   {
+    "titre": "Module 6 : Présentation et diffusion – Parfaire votre communication orale et visuelle",
+    "points": [
+     "Maîtriser le mode présentateur pour gérer vos notes et vos diapositives de manière fluide pendant votre discours.",
+     "Apprendre à adapter votre présentation pour différents formats : en ligne, imprimée, ou vidéo.",
+     "Utiliser les options de diffusion (PDF, vidéo, enregistrement vocal) pour partager efficacement vos présentations avec votre audience."
+    ]
+   }
+  ],
+  "certification": "RS6564"
+ },
+ {
+  "slug": "formation-maitriser-lart-des-tableurs",
+  "category": "bureautique",
+  "title": "Formation Maîtriser l’art des tableurs",
+  "intro": "Apprenez à utiliser des tableurs comme Excel pour organiser, analyser et présenter vos données. Découvrez les formules, les graphiques, les tableaux croisés dynamiques et les fonctions avancées pour optimiser votre productivité et prendre des décisions basées sur des données claires.",
+  "image": "https://skills4mation.com/wp-content/uploads/2024/12/excel-1024x604.webp",
+  "niveau": "De Débutant à Avancé",
+  "tarif": "A partir de 900 € - Financement possible",
+  "objectif": "Acquisition des connaissances simples pour comprendre et utiliser l’outil Excel tant au niveau personnel que professionnel.",
+  "duree": "A déterminer selon votre niveau et objectif",
+  "prerequis": "Avoir des connaissances en fonction de calculs simples.",
+  "objectifs": [
+   "Maîtrise du Tri de Données : Apprenez à organiser méthodiquement les données d’une base, une compétence essentielle pour gérer et interpréter efficacement de grands ensembles d’informations.",
+   "Recherche Avancée avec Filtres : Développez l’aptitude à localiser des informations spécifiques à l’aide des filtres, une technique cruciale pour l’analyse de données rapide et précise.",
+   "Application des Sous-Totaux : Acquérez la compétence d’utiliser les sous-totaux pour une analyse segmentée et détaillée, améliorant la compréhension des tendances et des patterns dans les données.",
+   "Compétences en Calcul Mathématique : Renforcez votre capacité à effectuer des calculs mathématiques complexes, un atout indispensable pour toute analyse de données numériques.",
+   "Création de Graphiques et Tableaux : Maîtrisez l’utilisation de graphiques, tableaux et autres outils d’Excel pour visualiser les données de manière efficace et attrayante.",
+   "À l’issue de cette formation, vous aurez acquis les compétences nécessaires pour concevoir, gérer et exploiter des tableaux de calculs avancés sur tableur vous permettant d’analyser et de présenter des données de manière professionnelle et intuitive."
+  ],
+  "modalites": [
+   "Approche Intégrée et Contextualisée :",
+   "Ce cours est spécialement conçu pour lier les aspects techniques et pratique de la maîtrise des tableurs, assurant ainsi que les participants peuvent immédiatement mettre en pratique les compétences acquises dans leurs environnements professionnels.",
+   "Contenu Sur-Mesure :",
+   "Adaptation du contenu aux besoins spécifiques des participants, en fonction de leur domaine d’activité. Cela permet une pertinence accrue et une application directe des compétences en tableur.",
+   "Évaluation Continue et Feedback Personnalisé :",
+   "Des évaluations régulières et des retours constructifs sont intégrés tout au long du parcours pour suivre les progrès des participants et ajuster l’approche pédagogique si nécessaire."
+  ],
+  "modules": [
+   {
+    "titre": "Module 1 : Introduction aux tableurs et à leur interface",
+    "points": [
+     "Découverte de l’interface utilisateur : Exploration des menus, barres d’outils, et personnalisation de l’environnement de travail.",
+     "Création et gestion des fichiers : Apprendre à ouvrir, fermer, sauvegarder, et organiser les feuilles de calcul.",
+     "Saisie et formatage de base des données : Techniques de saisie rapide, utilisation des formats de cellules, et mise en place des styles pour améliorer la lisibilité des données."
+    ]
+   },
+   {
+    "titre": "Module 2 : Manipulation de données de base",
+    "points": [
+     "Fonctions essentielles : Utilisation des fonctions de base telles que SOMME, MOYENNE, et MAX pour le calcul de données.",
+     "Tri et filtrage des données : Techniques pour organiser et extraire les données pertinentes.",
+     "Introduction aux tableaux croisés dynamiques : Création simple de tableaux pour résumer et analyser des ensembles de données volumineux."
+    ]
+   },
+   {
+    "titre": "Module 3 : Formules avancées et fonctions",
+    "points": [
+     "Fonctions complexes et conditionnelles : Approfondissement avec des fonctions telles que SI, RECHERCHEV/H et les fonctions imbriquées.",
+     "Gestion des erreurs dans les formules : Techniques pour trouver et corriger les erreurs courantes dans les formules.",
+     "Automatisation des calculs : Utilisation de formules matricielles pour traiter des données en masse et simplifier les opérations complexes."
+    ]
+   },
+   {
+    "titre": "Module 4 : Analyse de données avancée",
+    "points": [
+     "Utilisation avancée des tableaux croisés dynamiques : Techniques pour personnaliser, grouper des données, et utiliser des segments pour une analyse détaillée.",
+     "Graphiques et visualisation de données : Création de graphiques avancés pour une représentation graphique des tendances et analyses.",
+     "Introduction à l’analyse prédictive : Bases de l’utilisation des fonctions statistiques et de modélisation pour prévoir des tendances."
+    ]
+   },
+   {
+    "titre": "Module 5 : Automatisation avec les macros",
+    "points": [
+     "Introduction aux macros : Bases de la création et de l’utilisation de macros pour automatiser des tâches répétitives.",
+     "Écriture de scripts simples en VBA : Techniques de programmation de base pour personnaliser des fonctions dans les tableurs.",
+     "Intégration et interaction avec d’autres applications : Automatiser le flux de travail entre les tableurs et d’autres logiciels de bureautique."
+    ]
+   },
+   {
+    "titre": "Module 6 : Collaboration et partage",
+    "points": [
+     "Techniques de partage et de protection des données : Méthodes pour partager des feuilles de calcul tout en protégeant les informations sensibles.",
+     "Collaboration en temps réel : Utilisation des outils de collaboration pour travailler simultanément sur des documents avec d’autres utilisateurs.",
+     "Préparation à l’audit et à la révision : Comment préparer des feuilles de calcul pour la révision par des tiers, incluant des annotations et le suivi des modifications."
+    ]
+   }
+  ],
+  "certification": "RS6563"
+ },
+ {
+  "slug": "formation-maitrisez-lart-du-referencement-naturel-seo",
+  "category": "bureautique",
+  "title": "Formation Maîtrisez l’Art du Référencement naturel SEO",
+  "intro": "Apprenez à optimiser votre site internet pour apparaître en tête des résultats de recherche grâce à notre formation “Maîtrisez l’Art du Référencement Naturel SEO”. Découvrez les stratégies SEO avancées, le fonctionnement des algorithmes des moteurs de recherche comme Google, l’optimisation on-page et off-page, l’utilisation des mots-clés, la création de contenu optimisé et le netlinking. Que vous soyez entrepreneur, freelance ou chargé de marketing, cette formation vous permettra d’augmenter la visibilité de votre site web et de générer plus de trafic organique.",
+  "image": "https://skills4mation.com/wp-content/uploads/2024/12/seo-1024x712.webp",
+  "niveau": "De Débutant à Avancé",
+  "tarif": "A partir de 2000 € - Financement possible",
+  "objectif": "Maîtriser les techniques de SEO",
+  "duree": "A déterminer selon votre niveau et objectif",
+  "prerequis": "Détenir un site internet que l’on souhaite référencer naturellement",
+  "objectifs": [
+   "Acquérir une expertise en référencement naturel",
+   "Examiner et évaluer le référencement actuel d’un site web",
+   "Fixer des buts spécifiques pour l’amélioration des contenus web",
+   "Créer un plan d’action détaillé pour l’optimisation du référencement du site",
+   "Implémenter les premières mesures efficaces pour renforcer le référencement",
+   "Après cette formation, vous serez en mesure d’optimiser votre présence sur les moteurs de recherche internet."
+  ],
+  "modalites": [
+   "Formation en présentiel ou en visioconférence avec un formateur dédié.",
+   "Méthodes d’animation participatives : interactivité, exemples et cas pratiques",
+   "Procédés pédagogiques adaptés au niveau du/des participants",
+   "Travaux pratiques adaptés à votre activité"
+  ],
+  "modules": [
+   {
+    "titre": "Module 1 : Les Fondations du SEO – Comprendre le fonctionnement des moteurs de recherche",
+    "points": [
+     "Décrypter les algorithmes des moteurs de recherche et leur impact sur le classement des sites.",
+     "Identifier les facteurs clés qui influencent le SEO : pertinence, popularité, et structure technique.",
+     "Comprendre le comportement des utilisateurs et l’importance de l’intention de recherche."
+    ]
+   },
+   {
+    "titre": "Module 2 : Recherche de mots-clés – L’art d’attirer du trafic qualifié",
+    "points": [
+     "Apprendre à identifier et sélectionner des mots-clés pertinents grâce à des outils spécialisés.",
+     "Analyser la concurrence et détecter les opportunités de mots-clés longue traîne.",
+     "Optimiser votre stratégie de mots-clés pour répondre aux besoins de votre audience cible."
+    ]
+   },
+   {
+    "titre": "Module 3 : L’optimisation on-page – Comment structurer et améliorer votre contenu",
+    "points": [
+     "Apprendre à rédiger des balises méta, titres et descriptions efficaces pour chaque page.",
+     "Optimiser le contenu en utilisant les mots-clés de manière stratégique tout en garantissant une expérience utilisateur fluide.",
+     "Maîtriser la structure des URL, des balises H1 à H6, et le maillage interne pour une meilleure indexation."
+    ]
+   },
+   {
+    "titre": "Module 4 : SEO technique – Les piliers d’une architecture web performante",
+    "points": [
+     "Comprendre les fondamentaux de l’indexation et du crawl pour garantir la visibilité de vos pages.",
+     "Optimiser la vitesse de chargement de vos pages et améliorer l’expérience mobile.",
+     "Identifier et corriger les erreurs techniques communes (fichiers robots.txt, plan de site XML, redirections)."
+    ]
+   },
+   {
+    "titre": "Module 5 : Création de liens – Développer une stratégie de backlinks solide",
+    "points": [
+     "Apprendre à bâtir une stratégie de netlinking pour renforcer l’autorité de votre site.",
+     "Découvrir les meilleures pratiques pour obtenir des backlinks de qualité et éviter les pénalités Google.",
+     "Surveiller et analyser les liens entrants pour optimiser votre profil de liens."
+    ]
+   },
+   {
+    "titre": "Module 6 : Mesurer et ajuster sa stratégie SEO – L’optimisation continue",
+    "points": [
+     "Utiliser Google Analytics et Google Search Console pour suivre les performances SEO.",
+     "Analyser les indicateurs clés de performance (KPI) pour ajuster et affiner votre stratégie SEO.",
+     "Tester, itérer et s’adapter aux mises à jour des algorithmes pour maintenir votre avantage concurrentiel."
+    ]
+   }
+  ],
+  "certification": null
+ },
+ {
+  "slug": "formation-prise-en-main-dun-pc-mac",
+  "category": "bureautique",
+  "title": "Formation Prise en main d’un PC/MAC",
+  "intro": "Découvrez les bases pour utiliser efficacement un ordinateur PC ou MAC. Apprenez à naviguer sur internet, gérer vos documents, utiliser des logiciels bureautiques et communiquer via les outils numériques. Cette formation vous permet d’acquérir les compétences essentielles pour devenir autonome dans l’usage quotidien d’un ordinateur.",
+  "image": "https://skills4mation.com/wp-content/uploads/2024/12/formation-prise-en-main-pc-mac-1024x944.webp",
+  "niveau": "De Débutant à Avancé",
+  "tarif": "A partir de 900 € - Financement possible",
+  "objectif": "Maîtriser les techniques de prise en main d’un PC/ MAC",
+  "duree": "A déterminer selon votre niveau et objectif",
+  "prerequis": "Savoir utiliser Internet",
+  "objectifs": [
+   "Acquérir une compréhension fondamentale de l’opération de votre ordinateur",
+   "Maîtriser l’utilisation de Windows ou Mac pour l’organisation de vos fichiers et dossiers",
+   "Explorer internet avec aisance",
+   "Reconnaître les éléments clés constituant un ordinateur",
+   "Manier efficacement le clavier et la souris",
+   "Appliquer les commandes de base d’un ordinateur",
+   "À la fin de cette formation, vous aurez les compétences nécessaires pour manœuvrer un ordinateur et tirer parti de ses multiples fonctionnalités."
+  ],
+  "modalites": [
+   "Formation en présentiel ou en visioconférence avec un formateur dédié.",
+   "Méthodes d’animation participatives : interactivité, exemples et cas pratiques",
+   "Procédés pédagogiques adaptés au niveau du/des participants",
+   "Travaux pratiques adaptés à votre activité"
+  ],
+  "modules": [
+   {
+    "titre": "Module 1 : Découverte de l’ordinateur – Comprendre le matériel et l’interface",
+    "points": [
+     "Explorer les composants d’un ordinateur (PC/Mac) : processeur, RAM, stockage, périphériques externes.",
+     "Découvrir les différences et les similitudes entre un PC et un Mac, et comprendre les bases de leur fonctionnement.",
+     "Apprendre à allumer, éteindre, et redémarrer correctement l’ordinateur, ainsi qu’à connecter des périphériques."
+    ]
+   },
+   {
+    "titre": "Module 2 : Naviguer dans le système d’exploitation – Windows vs macOS",
+    "points": [
+     "Apprendre à se repérer dans l’interface d’un PC (Windows) et d’un Mac (macOS) : bureau, barre des tâches, menus.",
+     "Gérer les dossiers, fichiers et applications : créer, renommer, déplacer et organiser ses documents.",
+     "Comprendre les bases de la personnalisation de l’interface utilisateur pour améliorer la productivité."
+    ]
+   },
+   {
+    "titre": "Module 3 : Utilisation des logiciels de base – Applications incontournables",
+    "points": [
+     "Prendre en main les logiciels essentiels comme le navigateur internet, les outils de traitement de texte et les clients email.",
+     "Apprendre à installer, désinstaller et mettre à jour les logiciels et applications sur PC et Mac.",
+     "Découvrir les différences entre les suites bureautiques : Microsoft Office, Google Workspace, iWork."
+    ]
+   },
+   {
+    "titre": "Module 4 : Gestion des fichiers et des sauvegardes – Sécuriser ses données",
+    "points": [
+     "Apprendre à organiser, stocker et rechercher efficacement des fichiers dans l’explorateur (Windows) ou le Finder (macOS).",
+     "Maîtriser les outils de sauvegarde automatique (Time Machine pour Mac, et solutions Windows) pour protéger ses données.",
+     "Découvrir le cloud computing et les solutions de stockage en ligne (iCloud, Google Drive, OneDrive)."
+    ]
+   },
+   {
+    "titre": "Module 5 : Sécurité informatique – Protéger son ordinateur et ses données",
+    "points": [
+     "Comprendre les bases de la sécurité informatique : antivirus, pare-feu, et mises à jour de sécurité.",
+     "Apprendre à détecter et à éviter les tentatives de phishing, malwares et autres menaces.",
+     "Configurer des mots de passe sécurisés et découvrir les avantages de l’authentification à deux facteurs."
+    ]
+   },
+   {
+    "titre": "Module 6 : Maintenance et dépannage de base – Garder son ordinateur performant",
+    "points": [
+     "Apprendre à effectuer les opérations de maintenance de base : nettoyage de disque, gestion des applications et mémoire.",
+     "Découvrir les outils de diagnostic pour identifier et résoudre les problèmes courants sur PC et Mac.",
+     "Maîtriser la réinitialisation du système et la restauration en cas de panne majeure ou d’infection."
+    ]
+   }
+  ],
+  "certification": null
+ },
+ {
+  "slug": "formation-en-sea-referencement-payant",
+  "category": "bureautique",
+  "title": "Formation SEA – Référencement Payant",
+  "intro": "Boostez instantanément votre visibilité grâce à notre formation “SEA – Référencement Payant”. Maîtrisez les outils publicitaires tels que Google Ads pour créer des campagnes PPC (Pay Per Click) efficaces. Apprenez à cibler les bons mots-clés, rédiger des annonces performantes, définir des budgets optimisés et analyser vos résultats pour maximiser votre retour sur investissement (ROI). Cette formation s’adresse aux professionnels souhaitant attirer un trafic qualifié, générer des conversions rapides et booster leurs ventes grâce à la publicité en ligne.",
+  "image": "https://skills4mation.com/wp-content/uploads/2024/12/formation-sea.webp",
+  "niveau": "De Débutant à Avancé",
+  "tarif": "A partir de 1490 € - Financement possible",
+  "objectif": "Maîtriser les techniques de SEA pour mener des campagnes performantes",
+  "duree": "A déterminer selon votre niveau et objectif",
+  "prerequis": "Détenir un site internet dont l’on souhaite booster la visibilité",
+  "objectifs": [
+   "Cerner les avantages de la publicité sur les moteurs de recherche pour sa notoriété",
+   "Développer son site web",
+   "Savoir mettre en place une stratégie ciblée via la publicité",
+   "Savoir créer des campagnes et des annonces efficaces",
+   "Se démarquer de la concurrence et développer sa notoriété",
+   "À l’issue de cette formation, vous serez capable de maîtriser la publicité sponsorisée sur Google."
+  ],
+  "modalites": [
+   "Formation en présentiel ou en visioconférence avec un formateur dédié.",
+   "Méthodes d’animation participatives : interactivité, exemples et cas pratiques",
+   "Procédés pédagogiques adaptés au niveau du/des participants",
+   "Travaux pratiques adaptés à votre activité"
+  ],
+  "modules": [
+   {
+    "titre": "Module 1 : Introduction au SEA – Comprendre les bases du référencement payant",
+    "points": [
+     "Découvrir les fondamentaux du SEA et son importance dans une stratégie marketing digitale.",
+     "Comprendre le fonctionnement des enchères et du Quality Score sur les plateformes comme Google Ads.",
+     "Différencier le SEA du SEO et identifier leurs complémentarités."
+    ]
+   },
+   {
+    "titre": "Module 2 : Recherche de mots-clés et ciblage – Attirer les bonnes audiences",
+    "points": [
+     "Maîtriser la recherche de mots-clés pour cibler les utilisateurs avec une intention d’achat élevée.",
+     "Comprendre les différents types de correspondances de mots-clés et leur impact sur les performances des annonces.",
+     "Mettre en place un ciblage géographique, démographique et comportemental efficace pour maximiser la pertinence."
+    ]
+   },
+   {
+    "titre": "Module 3 : Création d’annonces percutantes – Captez l’attention en quelques secondes",
+    "points": [
+     "Rédiger des annonces textuelles optimisées, captivantes et orientées conversion.",
+     "Utiliser les extensions d’annonces pour enrichir la visibilité et l’efficacité des campagnes.",
+     "Tester et optimiser les éléments d’une annonce (titres, descriptions, URLs) pour améliorer le taux de clics (CTR)."
+    ]
+   },
+   {
+    "titre": "Module 4 : Structure des campagnes – Maximisez l’efficacité de vos campagnes",
+    "points": [
+     "Apprendre à structurer vos campagnes SEA : compte, campagnes, groupes d’annonces et mots-clés.",
+     "Optimiser votre budget en répartissant judicieusement vos enchères sur des campagnes rentables.",
+     "Définir des objectifs clairs pour chaque campagne afin de mieux évaluer vos résultats et ajuster les actions."
+    ]
+   },
+   {
+    "titre": "Module 5 : Optimisation des performances – Améliorez vos résultats grâce à l’analyse",
+    "points": [
+     "Analyser les données clés (CTR, CPC, taux de conversion) pour identifier les points d’amélioration.",
+     "Utiliser les tests A/B pour optimiser vos annonces et pages de destination.",
+     "Réduire les coûts tout en maximisant les conversions avec l’optimisation du Quality Score et du coût par clic (CPC)."
+    ]
+   },
+   {
+    "titre": "Module 6 : Suivi et ajustement des campagnes – Pérennisez vos résultats SEA",
+    "points": [
+     "Apprendre à utiliser Google Analytics et Google Ads pour suivre les performances en temps réel.",
+     "Ajuster vos enchères et mots-clés en fonction des résultats et des changements de marché.",
+     "Adopter une stratégie de suivi et d’itération continue pour maintenir des campagnes rentables sur le long terme."
+    ]
+   }
+  ],
+  "certification": null
+ },
+ {
+  "slug": "formation-traitement-de-texte",
+  "category": "bureautique",
+  "title": "Formation Traitement de texte – de l’initiation au perfectionnement",
+  "intro": "Maîtrisez les outils de traitement de texte comme Microsoft Word pour rédiger, mettre en page et automatiser vos documents. Que vous soyez débutant ou en quête de perfectionnement, découvrez comment utiliser les styles, insérer des tableaux et créer des documents professionnels impeccables.",
+  "image": "https://skills4mation.com/wp-content/uploads/2024/12/bureautique-1024x895.webp",
+  "niveau": "De Débutant à Avancé",
+  "tarif": "A partir de 900 € - Financement possible",
+  "objectif": "Acquisition des connaissances simples pour comprendre et utiliser le traitement de texte tant au niveau personnel que professionnel.",
+  "duree": "A déterminer selon votre niveau et objectif",
+  "prerequis": "Savoir utiliser un PC, avoir la suite Office",
+  "objectifs": [
+   "1. Acquérir la compétence d’insérer divers éléments visuels tels que images, formes, dessins et photos dans vos documents.",
+   "2. Maîtriser la création et la gestion de tableaux complexes.",
+   "3. Développer des compétences en mise en forme et en mise en page de documents pour une présentation professionnelle.",
+   "4. Appliquer des techniques avancées pour enrichir et optimiser vos documents de traitement de texte.",
+   "5. Apprendre des stratégies pour améliorer l’efficacité et la productivité dans l’utilisation du traitement de texte.",
+   "À la fin de cette formation, vous aurez la capacité d’exploiter efficacement les fonctionnalités essentielles du traitement de texte."
+  ],
+  "modalites": [
+   "Formation en présentiel ou en visioconférence avec un formateur dédié.",
+   "Méthodes d’animation participatives : interactivité, exemples et cas pratiques",
+   "Procédés pédagogiques adaptés au niveau du/des participants",
+   "Travaux pratiques adaptés à votre activité"
+  ],
+  "modules": [
+   {
+    "titre": "Module 1 : Introduction au traitement de texte – Premiers pas avec les outils essentiels",
+    "points": [
+     "Découvrir l’interface d’un logiciel de traitement de texte (Microsoft Word, Google Docs) et ses principales fonctionnalités.",
+     "Apprendre à créer, enregistrer et organiser des documents pour une gestion efficace de vos fichiers.",
+     "Utiliser les fonctionnalités de base : saisie de texte, mise en forme simple, et correction automatique."
+    ]
+   },
+   {
+    "titre": "Module 2 : Mise en forme avancée – Structurer et embellir vos documents",
+    "points": [
+     "Maîtriser les options de mise en page : marges, interlignes, en-têtes et pieds de page.",
+     "Utiliser les styles pour uniformiser la présentation de vos titres, sous-titres et paragraphes.",
+     "Apprendre à insérer et formater des tableaux, images, graphiques et autres éléments visuels."
+    ]
+   },
+   {
+    "titre": "Module 3 : Collaboration et révision – Travailler efficacement en équipe",
+    "points": [
+     "Découvrir les fonctionnalités de suivi des modifications pour réviser et commenter des documents à plusieurs.",
+     "Apprendre à utiliser les outils de comparaison et de fusion pour gérer les versions multiples d’un document.",
+     "Partager et sécuriser vos documents grâce aux options de permissions et aux protections par mot de passe."
+    ]
+   },
+   {
+    "titre": "Module 4 : Gestion des longs documents – Organiser efficacement vos fichiers complexes",
+    "points": [
+     "Créer des tables des matières, index, et listes d’illustrations pour une navigation fluide dans de longs documents.",
+     "Apprendre à utiliser les sections pour différencier la mise en page dans différentes parties de votre document.",
+     "Maîtriser la numérotation automatique des pages, des chapitres et des annexes pour un document professionnel."
+    ]
+   },
+   {
+    "titre": "Module 5 : Automatisation des tâches répétitives – Gagner en productivité",
+    "points": [
+     "Utiliser les modèles de documents pour créer des courriers, rapports et présentations standardisés.",
+     "Maîtriser le publipostage pour automatiser l’envoi de courriers personnalisés en masse.",
+     "Utiliser les raccourcis clavier et les macros pour automatiser les tâches courantes et gagner du temps."
+    ]
+   },
+   {
+    "titre": "Module 6 : Exportation et diffusion – Préparer vos documents pour leur distribution",
+    "points": [
+     "Apprendre à exporter vos documents dans différents formats : PDF, .docx, .odt, et plus encore.",
+     "Maîtriser les options d’impression, d’exportation et de partage pour distribuer vos documents selon vos besoins.",
+     "Intégrer vos documents avec d’autres outils collaboratifs (Drive, Dropbox, OneDrive) pour une gestion centralisée des fichiers."
+    ]
+   }
+  ],
+  "certification": "RS6559"
+ },
+ {
+  "slug": "formation-en-outils-collaboratifs",
+  "category": "bureautique",
+  "title": "Formation outils collaboratifs",
+  "intro": "Apprenez à utiliser des outils tels que Slack, Trello et Microsoft Teams pour améliorer la collaboration d’équipe, la gestion de projet et la communication professionnelle. Découvrez comment fluidifier le travail en équipe, organiser les tâches et optimiser les échanges, que vous soyez en télétravail ou au bureau.",
+  "image": "https://skills4mation.com/wp-content/uploads/2024/12/formation-outil-collaboratif-684x1024.webp",
+  "niveau": "De Débutant à Avancé",
+  "tarif": "A partir de 900 € - Financement possible",
+  "objectif": "Améliorer la communication au sein de votre structure",
+  "duree": "A partir de 8 H de formation",
+  "prerequis": "Vouloir optimiser la communication au sein de sa structure",
+  "objectifs": [
+   "Appréhender la nature de la société collaborative contemporaine.",
+   "Développer une compréhension complète des divers outils collaboratifs et de leurs domaines d’application.",
+   "Acquérir une maîtrise approfondie du fonctionnement des outils collaboratifs.",
+   "Améliorer la productivité en renforçant l’efficacité de la collaboration.",
+   "Implémenter des outils partagés et établir une surveillance collective parmi les collaborateurs pour accroître l’efficacité.",
+   "À la fin de cette formation, vous aurez acquis les compétences nécessaires pour comprendre et utiliser efficacement les outils collaboratifs."
+  ],
+  "modalites": [
+   "Formation en présentiel ou en visioconférence avec un formateur dédié.",
+   "Méthodes d’animation participatives : interactivité, exemples et cas pratiques",
+   "Procédés pédagogiques adaptés au niveau du/des participants",
+   "Travaux pratiques adaptés à votre activité"
+  ],
+  "modules": [
+   {
+    "titre": "Module 1 : Introduction aux outils collaboratifs – Améliorer la productivité en équipe",
+    "points": [
+     "Comprendre les enjeux des outils collaboratifs dans le contexte du travail à distance et en présentiel.",
+     "Identifier les principaux outils du marché (Google Workspace, Microsoft 365, Slack, Trello) et leurs cas d’usage.",
+     "Découvrir les bénéfices d’une collaboration centralisée pour une meilleure gestion des projets et des équipes."
+    ]
+   },
+   {
+    "titre": "Module 2 : Gestion de projets avec des outils collaboratifs – Optimiser l’organisation et la communication",
+    "points": [
+     "Maîtriser la création, l’attribution et le suivi des tâches avec des outils comme Trello ou Asana.",
+     "Apprendre à structurer un projet en équipes et en phases pour garantir une coordination fluide.",
+     "Utiliser des tableaux de bord et des vues calendaires pour assurer le suivi des échéances et priorités."
+    ]
+   },
+   {
+    "titre": "Module 3 : Collaboration en temps réel – Créer et partager du contenu efficacement",
+    "points": [
+     "Co-créer des documents, feuilles de calcul et présentations en temps réel avec Google Docs et Microsoft Office en ligne.",
+     "Apprendre à gérer les autorisations et les partages pour une collaboration sécurisée et fluide.",
+     "Optimiser les révisions et le suivi des modifications pour faciliter l’approbation des projets en équipe."
+    ]
+   },
+   {
+    "titre": "Module 4 : Communication centralisée – Faciliter les échanges d’informations dans l’équipe",
+    "points": [
+     "Utiliser des outils de messagerie instantanée comme Slack et Microsoft Teams pour centraliser les discussions.",
+     "Mettre en place des canaux de communication dédiés pour les projets, équipes ou thématiques spécifiques.",
+     "Apprendre à organiser et archiver les conversations pour une récupération facile des informations."
+    ]
+   },
+   {
+    "titre": "Module 5 : Gestion des fichiers et des ressources – Améliorer l’accès et le partage de données",
+    "points": [
+     "Stocker et organiser les fichiers sur des plateformes cloud comme Google Drive ou OneDrive.",
+     "Apprendre à collaborer sur des fichiers partagés, avec des versions contrôlées et un accès multi-utilisateurs.",
+     "Intégrer des outils de gestion des ressources pour garantir la sécurité des données et la confidentialité."
+    ]
+   },
+   {
+    "titre": "Module 6 : Automatisation et optimisation des workflows collaboratifs – Gagner en efficacité",
+    "points": [
+     "Découvrir les outils d’automatisation des tâches répétitives (Zapier, Power Automate) pour améliorer la productivité.",
+     "Créer des workflows collaboratifs qui réduisent les frictions et les délais dans le traitement des tâches.",
+     "Analyser et ajuster les processus collaboratifs pour assurer une amélioration continue des performances en équipe."
+    ]
+   }
+  ],
+  "certification": null
+ },
+ {
+  "slug": "formation-prendre-la-parole-en-public-avec-aisance",
+  "category": "communication",
+  "title": "Formation Prendre la parole en public avec aisance",
+  "intro": "Apprenez à vous exprimer avec confiance et à captiver votre auditoire lors de vos prises de parole en public. Découvrez des techniques pour structurer vos discours, gérer le stress et développer votre présence scénique. À travers des exercices pratiques, gagnez en assurance pour transformer vos interventions en moments impactants et mémorables.",
+  "image": "https://skills4mation.com/wp-content/uploads/2024/12/1-1-1024x697.webp",
+  "niveau": "De Débutant à Avancé",
+  "tarif": "A partir de 1200 € - Financement possible",
+  "objectif": "Prendre la parole en public avec aisance",
+  "duree": "A partir de 7 H de formation",
+  "prerequis": "Aucun",
+  "objectifs": [
+   "Identifier les mécanismes de la peur de parler en public pour mieux les surmonter.",
+   "Structurer efficacement un discours pour capter et maintenir l’attention de l’auditoire.",
+   "Utiliser des techniques de communication non verbale pour renforcer le message oral.",
+   "Appliquer des méthodes de gestion du stress pour rester calme et confiant durant les interventions.",
+   "Pratiquer la prise de parole en différents contextes pour développer une aisance adaptable à toutes situations."
+  ],
+  "modalites": [
+   "Formation en présentiel dans le cadre des sessions proposés par notre formateur",
+   "Méthodes d’animation participatives : interactivité, exemples et mise en pratiques",
+   "Procédés pédagogiques adaptés au niveau du/des participants",
+   "Travaux pratiques adaptés à votre activité"
+  ],
+  "modules": [
+   {
+    "titre": "Module 1 : Fondations de la communication orale",
+    "points": [
+     "Comprendre les principes de base de la communication efficace.",
+     "Étudier le rôle de l’écoute active dans la réception et la transmission des messages.",
+     "Analyser les différentes composantes de la communication verbale et non verbale."
+    ]
+   },
+   {
+    "titre": "Module 2 : Structuration et organisation du discours",
+    "points": [
+     "Apprendre à organiser ses idées clairement et logiquement.",
+     "Développer des techniques pour construire une introduction captivante et une conclusion mémorable.",
+     "Exercer la création de transitions fluides pour maintenir l’engagement de l’audience."
+    ]
+   },
+   {
+    "titre": "Module 3 : Techniques de présentation visuelle",
+    "points": [
+     "Maîtriser l’usage des supports visuels pour renforcer le discours.",
+     "Intégrer efficacement les technologies de présentation comme PowerPoint ou Prezi.",
+     "Pratiquer la synergie entre expression orale et aides visuelles pour maximiser l’impact."
+    ]
+   },
+   {
+    "titre": "Module 4 : Gestion du trac et du stress",
+    "points": [
+     "Identifier les sources de stress liées à la prise de parole en public.",
+     "Appliquer des stratégies de relaxation et de préparation mentale avant les prises de parole.",
+     "Utiliser des exercices de respiration et de relaxation pour contrôler l’anxiété en temps réel."
+    ]
+   },
+   {
+    "titre": "Module 5 : Interaction et engagement de l’audience",
+    "points": [
+     "Techniques pour questionner et impliquer l’audience pour favoriser l’interaction.",
+     "Apprendre à lire et à répondre aux réactions de l’audience en temps réel.",
+     "Développer des compétences pour adapter le discours en fonction du feedback de l’audience."
+    ]
+   },
+   {
+    "titre": "Module 6 : Pratique et feedback",
+    "points": [
+     "Participer à des séances de pratique intensive pour affiner les techniques de prise de parole.",
+     "Recevoir et intégrer le feedback constructif pour améliorer la performance personnelle.",
+     "Organiser des sessions d’évaluation mutuelle pour renforcer l’apprentissage collaboratif et continuer le développement personnel."
+    ]
+   }
+  ],
+  "certification": null
+ },
+ {
+  "slug": "formation-produire-du-contenu-video-avec-votre-smartphone",
+  "category": "communication",
+  "title": "Formation Produire du contenu vidéo avec votre smartphone",
+  "intro": "Maîtrisez la création de vidéos professionnelles avec un simple smartphone. Apprenez les techniques de cadrage, montage et édition pour produire du contenu engageant et de qualité. Idéale pour les entrepreneurs, communicants ou indépendants, cette formation vous guide pour concevoir des vidéos percutantes, adaptées aux réseaux sociaux et aux besoins de votre stratégie de communication visuelle.",
+  "image": "https://skills4mation.com/wp-content/uploads/2024/12/2-1-1024x833.webp",
+  "niveau": "De Débutant à Avancé",
+  "tarif": "A partir de 1800 € - Financement possible",
+  "objectif": "Maîtriser la création et production de film sur son smartphone",
+  "duree": "A partir de 8 H de formation",
+  "prerequis": "Aucun",
+  "objectifs": [
+   "l’impact stratégique de la vidéo dans le marketing et la communication d’entreprise.",
+   "les techniques de cadrage, d’éclairage, de prise de son, ainsi que de gestion de l’exposition et de la mise au point avec un smartphone.",
+   "des scénarios et planifier de manière détaillée les aspects logistiques nécessaires à la production de vidéos.",
+   "des techniques de montage avancées sur smartphone, y compris l’intégration d’effets spéciaux et la correction des couleurs.",
+   "les vidéos pour le web et gérer les droits légaux associés à la diffusion de contenu vidéo commercial."
+  ],
+  "modalites": [
+   "Formation en présentiel dans le cadre des sessions proposés par notre formateur",
+   "Méthodes d’animation participatives : interactivité, exemples et mise en pratiques",
+   "Procédés pédagogiques adaptés au niveau du/des participants",
+   "Travaux pratiques adaptés à votre activité"
+  ],
+  "modules": [
+   {
+    "titre": "Module 1 : Principes fondamentaux de la vidéo promotionnelle",
+    "points": [
+     "Comprendre la valeur ajoutée de la vidéo",
+     ": Explorez comment la vidéo peut servir de puissant outil de communication et de marketing pour promouvoir votre entreprise.",
+     "Planification d’une action de communication vidéo",
+     ": Apprenez à concevoir une stratégie de communication vidéo ciblée et efficace en tenant compte de votre audience et de vos objectifs.",
+     "Avantages et inconvénients de l’utilisation d’un smartphone",
+     ": Discutez des points forts et des limites du smartphone comme outil de production vidéo pour les entreprises."
+    ]
+   },
+   {
+    "titre": "Module 2 : Préparation et scénarisation",
+    "points": [
+     "Styles et mises en scène",
+     ": Identifiez les différents styles de vidéo qui peuvent être créés avec un smartphone et déterminez quel style convient le mieux à vos besoins.",
+     "Écriture et préparation",
+     ": Techniques pour écrire un script convaincant et préparer efficacement votre tournage pour éviter les pièges courants.",
+     "Planifier un tournage",
+     ": Organisez les aspects logistiques de votre tournage, de la sélection des lieux à la coordination des horaires et des ressources."
+    ]
+   },
+   {
+    "titre": "Module 3 : Techniques de réalisation sur smartphone",
+    "points": [
+     "Basics de la technique caméra",
+     ": Maîtrisez les bases du cadrage, de l’éclairage et de la prise de son spécifiques aux smartphones.",
+     "Réalisation d’images et d’interviews",
+     ": Apprenez à capturer des images de qualité et à mener des interviews qui captent l’intérêt des spectateurs.",
+     "Gestion de l’exposition et de la mise au point",
+     ": Techniques pour contrôler l’exposition et la mise au point sur votre smartphone, garantissant ainsi la clarté et la qualité visuelle."
+    ]
+   },
+   {
+    "titre": "Module 4 : Montage et post-production",
+    "points": [
+     "Le montage sur smartphone",
+     ": Utilisez des applications de montage pour couper, assembler et dynamiser vos vidéos directement sur votre smartphone.",
+     "Effets spéciaux et transitions",
+     ": Intégrez des effets spéciaux et des transitions pour améliorer l’attrait visuel et la narration de votre vidéo.",
+     "Colorimétrie et finitions",
+     ": Techniques de correction des couleurs pour donner à votre vidéo un look professionnel et cohérent."
+    ]
+   },
+   {
+    "titre": "Module 5 : Optimisation pour le web et diffusion",
+    "points": [
+     "Formats et optimisation pour le web",
+     ": Découvrez les formats de vidéo les plus efficaces pour le web et apprenez à optimiser vos vidéos pour différents canaux de diffusion.",
+     "Valorisation et orchestration d’une campagne vidéo",
+     ": Stratégies pour mettre en valeur vos vidéos dans les campagnes de marketing numérique et maximiser leur impact.",
+     "Gestion des droits et aspects juridiques",
+     ": Comprenez les précautions juridiques nécessaires pour utiliser des vidéos dans un cadre commercial, y compris les droits d’auteur et le droit à l’image."
+    ]
+   },
+   {
+    "titre": "Module 6 : Analyse des performances et ajustements",
+    "points": [
+     "Analyse des retours et des données",
+     ": Méthodes pour évaluer l’efficacité de vos vidéos à travers des analyses de données et des retours d’audience.",
+     "Ajustements stratégiques",
+     ": Apprenez à ajuster votre contenu et votre approche en fonction des retours pour améliorer vos futures productions vidéo.",
+     "Développement de compétences continues",
+     ": Encouragez une amélioration continue en intégrant les dernières tendances et technologies en matière de vidéo mobile pour rester compétitif."
+    ]
+   }
+  ],
+  "certification": null
+ },
+ {
+  "slug": "formation-analyse-financiere",
+  "category": "creation-dentreprise",
+  "title": "Formation Analyse Financière",
+  "intro": "Analysez les performances financières de votre entreprise en apprenant à interpréter les bilans, anticiper les risques et identifier les leviers de croissance. Cette formation vous donne les outils pour prendre des décisions stratégiques basées sur des données fiables et concrètes.",
+  "image": "https://skills4mation.com/wp-content/uploads/2024/12/2-1024x708.webp",
+  "niveau": "De Débutant à Avancé",
+  "tarif": "A partir de 900 € - Financement possible",
+  "objectif": "Maîtriser les fondamentaux en termes d’analyse financière",
+  "duree": "A partir de 7 H de formation",
+  "prerequis": "Aucun",
+  "objectifs": [
+   "Acquérir les compétences nécessaires pour interpréter les états financiers d’une entreprise",
+   "Analyser les ratios financiers afin d’évaluer la performance économique et financière",
+   "Identifier les indicateurs clés pour mesurer la rentabilité et la solvabilité d’une organisation",
+   "Utiliser les outils d’analyse financière pour prendre des décisions stratégiques éclairées",
+   "Anticiper et prévenir les risques financiers à travers une gestion rigoureuse"
+  ],
+  "modalites": [
+   "Formation en présentiel ou distanciel dans le cadre des sessions proposés par notre formateur",
+   "Méthodes d’animation participatives : interactivité, exemples et mise en pratiques",
+   "Procédés pédagogiques adaptés au niveau du/des participants",
+   "Travaux pratiques adaptés à votre activité"
+  ],
+  "modules": [
+   {
+    "titre": "Module 1 : Introduction à l’analyse financière",
+    "points": [
+     "Comprendre les principes fondamentaux de l’analyse financière",
+     "Identifier les documents financiers de base (bilan, compte de résultat, flux de trésorerie)",
+     "Apprendre les rôles et responsabilités de l’analyste financier"
+    ]
+   },
+   {
+    "titre": "Module 2 : Analyse des états financiers",
+    "points": [
+     "Analyser et interpréter les bilans comptables pour évaluer la santé financière d’une entreprise",
+     "Examiner les comptes de résultat pour mesurer la rentabilité",
+     "Identifier les flux de trésorerie pour évaluer la liquidité et les besoins en financement"
+    ]
+   },
+   {
+    "titre": "Module 3 : Analyse des ratios financiers",
+    "points": [
+     "Calculer les ratios de rentabilité, de solvabilité et de liquidité",
+     "Interpréter les ratios financiers pour évaluer la performance d’une entreprise",
+     "Utiliser les ratios pour comparer les performances d’entreprises similaires dans un secteur"
+    ]
+   },
+   {
+    "titre": "Module 4 : Analyse de la rentabilité et de la solvabilité",
+    "points": [
+     "Analyser les marges bénéficiaires et les indicateurs de rentabilité",
+     "Évaluer la solvabilité à long terme d’une entreprise à travers les capitaux propres et les dettes",
+     "Utiliser l’effet de levier financier pour optimiser la structure du capital"
+    ]
+   },
+   {
+    "titre": "Module 5 : Prévision financière et gestion des risques",
+    "points": [
+     "Élaborer des prévisions financières à partir des données historiques",
+     "Identifier et évaluer les risques financiers potentiels",
+     "Mettre en place des stratégies pour atténuer les risques et optimiser les décisions financières"
+    ]
+   },
+   {
+    "titre": "Module 6 : Prise de décision stratégique à partir de l’analyse financière",
+    "points": [
+     "Utiliser les outils d’analyse financière pour appuyer la prise de décision stratégique",
+     "Formuler des recommandations d’investissement ou de financement basées sur les analyses",
+     "Intégrer l’analyse financière dans la gestion quotidienne de l’entreprise pour améliorer sa performance"
+    ]
+   }
+  ],
+  "certification": null
+ },
+ {
+  "slug": "formation-gestion-et-pilotage-dentreprise-tpe",
+  "category": "creation-dentreprise",
+  "title": "Formation Gestion et pilotage d’entreprise TPE",
+  "intro": "Apprenez à piloter une TPE avec des outils pratiques en gestion financière, budgétisation, trésorerie et planification stratégique. Développez les compétences nécessaires pour assurer la rentabilité, gérer les coûts et guider efficacement votre petite entreprise vers la réussite.",
+  "image": "https://skills4mation.com/wp-content/uploads/2024/12/3-1024x643.webp",
+  "niveau": "De Débutant à Avancé",
+  "tarif": "A partir de 1800 € - Financement possible",
+  "objectif": "Maîtriser les techniques de gestion de votre Business",
+  "duree": "A partir de 21 H de formation",
+  "prerequis": "Aucun",
+  "objectifs": [
+   "Maîtriser les techniques de réalisation des bilans pour évaluer et optimiser la rentabilité des activités d’une entreprise.",
+   "Calculer et analyser les seuils de rentabilité pour prendre des décisions financières éclairées.",
+   "Établir des stratégies de prix compétitives en tenant compte de la concurrence et du positionnement sur le marché.",
+   "Concevoir et suivre un calendrier budgétaire pour une gestion financière précise et proactive.",
+   "Développer et analyser les tableaux de bord financiers pour améliorer continuellement les performances de l’entreprise."
+  ],
+  "modalites": [
+   "Formation en présentiel ou distanciel selon vos convenances",
+   "Méthodes d’animation participatives : interactivité, exemples et mise en pratiques orienté sur les logiques de performance dans votre Business",
+   "Procédés pédagogiques adaptés au niveau du/des participants",
+   "Travaux pratiques adaptés à votre activité"
+  ],
+  "modules": [
+   {
+    "titre": "Module 1: Principes de comptabilité et analyse financière",
+    "points": [
+     "Comprendre et appliquer les méthodes de réalisation des bilans pour évaluer la rentabilité des activités.",
+     "Analyser les résultats à travers des indicateurs comme les marges sur coûts variables et les marges contributives.",
+     "Maîtriser le calcul du seuil de rentabilité pour déterminer le point où l’entreprise commence à générer des profits."
+    ]
+   },
+   {
+    "titre": "Module 2: Stratégies de prix et positionnement sur le marché",
+    "points": [
+     "Établir les prix de vente en tenant compte de la concurrence et du positionnement de l’entreprise.",
+     "Utiliser des approches stratégiques pour ajuster les prix en fonction des coûts directs et des objectifs de marge.",
+     "Analyser les impacts des décisions de tarification sur la rentabilité globale de l’entreprise."
+    ]
+   },
+   {
+    "titre": "Module 3: Planification et contrôle budgétaire",
+    "points": [
+     "Développer des compétences pour la création d’un calendrier budgétaire et la budgétisation des services.",
+     "Construire des plans d’actions en adéquation avec les budgets établis, en utilisant des outils comme les tableaux de bord.",
+     "Analyser et interpréter les écarts budgétaires, et proposer des actions correctives pour optimiser la gestion."
+    ]
+   },
+   {
+    "titre": "Module 4: Analyse financière approfondie",
+    "points": [
+     "Explorer les techniques avancées pour l’analyse des informations financières, incluant les soldes intermédiaires de gestion.",
+     "Évaluer la capacité d’autofinancement pour comprendre la liquidité et les capacités d’investissement de l’entreprise.",
+     "Utiliser les diagnostics financiers pour identifier les zones de risque et d’opportunité au sein de l’entreprise."
+    ]
+   },
+   {
+    "titre": "Module 5: Gestion des investissements et de la trésorerie",
+    "points": [
+     "Apprendre à gérer les finances liées aux investissements pour maximiser le retour sur investissement.",
+     "Optimiser la gestion de la trésorerie pour assurer la liquidité et la solvabilité à court terme.",
+     "Créer des plans d’action pour améliorer et pérenniser la situation financière de l’entreprise."
+    ]
+   },
+   {
+    "titre": "Module 6: Systèmes de pilotage et contrôle de gestion",
+    "points": [
+     "Animer et maintenir le système de pilotage budgétaire pour aligner la stratégie avec la performance opérationnelle.",
+     "Assurer la cohérence entre les budgets, les tableaux de bord et les plans d’actions.",
+     "Réaliser des analyses continues des performances par rapport aux prévisions, en ajustant les stratégies en temps réel pour maximiser l’efficacité et la rentabilité."
+    ]
+   }
+  ],
+  "certification": null
+ },
+ {
+  "slug": "programme-de-formation-certifiante",
+  "category": "creation-dentreprise",
+  "title": "Formation Programme de formation certifiante",
+  "intro": "",
+  "image": "https://skills4mation.com/wp-content/uploads/elementor/thumbs/formation-charge-de-projet-evenementiel-rbz81n8q8naxblzt800zg2t9pjmt39sad2c3o7uki8.png",
+  "niveau": "De Débutant à Avancé",
+  "tarif": "Objectif",
+  "objectif": "Management de la performance d’une équipe",
+  "duree": "42 heures (6 modules de 7h)",
+  "prerequis": "Objectif pédagogique",
+  "objectifs": [
+   "Fixer un cadre clair et des objectifs opérationnels en lien avec la stratégie de l’entreprise.",
+   "Adapter son style de management aux profils, compétences et motivations des collaborateurs.",
+   "Animer les rituels collectifs de performance et favoriser la co-construction.",
+   "Mener des entretiens individuels adaptés (suivi, feedback, recadrage, motivation, développement).",
+   "Prévenir et gérer les situations de tension ou de conflit.",
+   "Piloter l’activité grâce à des outils de suivi et ancrer une dynamique d’amélioration continue."
+  ],
+  "modalites": [
+   "Blended learning (e-learning, ateliers présentiels/visio, mises en situation filmées, accompagnement individuel)"
+  ],
+  "modules": [
+   {
+    "titre": "Module 1 – Définir le cadre et fixer des objectifs (7h)",
+    "points": [
+     "Décliner la stratégie en objectifs SMART.",
+     "Clarifier les rôles et responsabilités de chaque membre de l’équipe.",
+     "Construire des indicateurs de performance pertinents alignés sur la valeur créée.",
+     "Prendre en compte les spécificités individuelles (compétences, handicap, disponibilités, appétences).",
+     "Mise en pratique : atelier de déclinaison d’objectifs à partir d’un cas réel."
+    ]
+   },
+   {
+    "titre": "Module 2 – Adapter son style managérial (7h)",
+    "points": [
+     "Diagnostiquer la maturité et l’autonomie des collaborateurs (méthode Hersey-Blanchard).",
+     "Ajuster son style de leadership (directif, persuasif, participatif, délégatif).",
+     "Développer la motivation et l’engagement dans des contextes variés.",
+     "Adopter une posture managériale éthique et inclusive.",
+     "Mise en pratique : jeu de rôle sur l’ajustement du management selon le profil collaborateur."
+    ]
+   },
+   {
+    "titre": "Module 3 – Animer les rituels et réunions de performance (7h)",
+    "points": [
+     "Préparer et animer des réunions productives, orientées résultats.",
+     "Utiliser des outils collaboratifs pour faciliter la décision agile.",
+     "Favoriser l’expression de chacun et l’émergence d’idées innovantes.",
+     "Instaurer des rituels réguliers de pilotage et de partage de résultats.",
+     "Mise en pratique : animation d’une réunion de suivi de performance filmée et débriefée."
+    ]
+   },
+   {
+    "titre": "Module 4 – Conduire les entretiens individuels (7h)",
+    "points": [
+     "Préparer et structurer un entretien de performance.",
+     "Maîtriser les techniques de feedback constructif et de coaching.",
+     "Conduire différents types d’entretien : motivation, recadrage, développement, évaluation.",
+     "Élaborer avec le collaborateur un plan de développement de compétences.",
+     "Mise en pratique : simulation d’entretiens variés avec mise en situation."
+    ]
+   },
+   {
+    "titre": "Module 5 – Gérer les conflits et situations difficiles (7h)",
+    "points": [
+     "Détecter les signaux faibles de tensions.",
+     "Utiliser les techniques de communication non violente (CNV).",
+     "Mettre en place des outils de médiation et de négociation.",
+     "Maintenir un climat de confiance et d’engagement collectif.",
+     "Mise en pratique : résolution d’un cas de conflit en équipe avec feedback collectif."
+    ]
+   },
+   {
+    "titre": "Module 6 – Piloter l’activité et ancrer l’amélioration continue (7h)",
+    "points": [
+     "Mettre en place des tableaux de bord et KPIs adaptés.",
+     "Analyser les écarts et définir des plans d’action correctifs.",
+     "Formaliser les processus clés de l’équipe.",
+     "Installer une culture d’apprentissage et d’amélioration continue.",
+     "Mise en pratique : construction d’un tableau de bord et plan d’action d’équipe."
+    ]
+   }
+  ],
+  "certification": null
+ },
+ {
+  "slug": "formation-reussir-le-lancement-de-sa-start-up",
+  "category": "creation-dentreprise",
+  "title": "Formation Réussir le lancement de sa start Up!",
+  "intro": "Apprenez à transformer votre projet en start-up réussie. Découvrez les étapes clés : validation du concept, business plan, financement, développement de produit et lancement sur le marché. Cette formation pratique vous donne les outils pour structurer votre entreprise, attirer vos premiers clients et naviguer dans un environnement compétitif.",
+  "image": "https://skills4mation.com/wp-content/uploads/2024/12/1-1024x915.webp",
+  "niveau": "De Débutant à Avancé",
+  "tarif": "A partir de 1400 € - Financement possible",
+  "objectif": "réussir le lancement de sa Start Up",
+  "duree": "A déterminer selon votre niveau et objectif",
+  "prerequis": "Qvoir un projet de Start Up",
+  "objectifs": [
+   "– Comprendre l’écosystème entrepreneurial et les facteurs clés de succès d’une start-up.",
+   "– Élaborer un plan d’affaires solide et réaliste.",
+   "– Maîtriser les stratégies de financement et de levée de fonds.",
+   "– Développer des compétences en marketing et communication pour promouvoir efficacement la start-up.",
+   "– Apprendre à construire et gérer une équipe performante.",
+   "– Analyser le marché et adapter son offre aux besoins des clients.",
+   "– Anticiper et gérer les risques et les défis du lancement d’une entreprise.",
+   "Ce parcours offre les outils et connaissances essentiels pour transformer une idée innovante en une entreprise prospère. En vous inscrivant, vous franchirez une étape cruciale vers la réalisation de votre rêve entrepreneurial, équipé pour surmonter les défis et saisir les opportunités du monde des start-ups."
+  ],
+  "modalites": [
+   "Formation en présentiel ou en visioconférence avec un formateur dédié.",
+   "Méthodes d’animation participatives : interactivité, exemples et cas pratiques",
+   "Procédés pédagogiques adaptés au niveau du/des participants",
+   "Travaux pratiques adaptés à votre activité"
+  ],
+  "modules": [
+   {
+    "titre": "Programme",
+    "points": [
+     "1. Comprendre l’Écosystème Entrepreneurial",
+     "– Analyser le paysage actuel des start-ups et les tendances du marché.",
+     "– Identifier les défis et opportunités spécifiques aux start-ups.",
+     "– Comprendre les dynamiques de financement et d’investissement pour les jeunes entreprises.",
+     "Élaboration d’un Plan d’Affaires Efficace",
+     "– Développer un business model viable et innovant.",
+     "– Construire un plan financier robuste.",
+     "– Créer une proposition de valeur unique et un plan marketing stratégique.",
+     "Stratégies de Financement et Levée de Fonds",
+     "– Naviguer dans les différentes options de financement disponibles pour les start-ups.",
+     "– Préparer et présenter efficacement des pitchs aux investisseurs.",
+     "– Comprendre les aspects légaux et contractuels de la levée de fonds.",
+     "Marketing et Communication pour le Lancement",
+     "– Développer une stratégie de marketing digitale adaptée.",
+     "– Utiliser les réseaux sociaux et autres canaux de communication pour atteindre le public cible.",
+     "– Construire une marque forte et reconnaissable.",
+     "Gestion d’Équipe et Leadership",
+     "– Recruter et gérer une équipe talentueuse et motivée.",
+     "– Instaurer une culture d’entreprise positive et productive.",
+     "– Développer des compétences de leadership adaptées à un environnement de start-up.",
+     "Planification et Gestion des Risques",
+     "– Identifier et atténuer les risques potentiels liés au lancement de la start-up.",
+     "– Mettre en place des stratégies pour gérer les imprévus et les changements.",
+     "– Apprendre à pivoter et s’adapter dans un environnement en constante évolution.",
+     "Ce programme est conçu pour fournir aux entrepreneurs les compétences, les outils et les connaissances nécessaires pour transformer une idée innovante en une entreprise prospère."
+    ]
+   }
+  ],
+  "certification": null
+ },
+ {
+  "slug": "vente-b2b-developper-ses-competences-commerciales",
+  "category": "creation-dentreprise",
+  "title": "Formation Vente B2B – Développer ses compétences commerciales",
+  "intro": "",
+  "image": "https://skills4mation.com/wp-content/uploads/2025/09/formation-vente-b2b-vente-b2b-–-developper-ses-competences-commerciale.png",
+  "niveau": "Niveau 5 (équivalent Bac+2)",
+  "tarif": "A partir de À partir de 2 490 € () € - Financement possible",
+  "objectif": "Acquérir les compétences nécessaires pour vendre efficacement des produits ou services en B2B, en maîtrisant l'ensemble du processus de vente, de la prospection à la conclusion et au suivi",
+  "duree": "96 heures (12 semaines)",
+  "prerequis": "Minimum 2 ans d'expérience professionnelle",
+  "objectifs": [
+   "– Rédiger un argumentaire de prospection et de vente",
+   "– Développer et gérer un portefeuille de prospects",
+   "– Réaliser une approche diagnostic des besoins clients",
+   "– Conduire des entretiens de vente structurés",
+   "– Conclure des ventes en instaurant la confiance",
+   "– Mettre en place un processus de suivi des ventes"
+  ],
+  "modalites": [
+   "– Formation en distanciel",
+   "– Accompagnement personnalisé par un formateur expert",
+   "– Mises en situation professionnelles",
+   "– Accès à une plateforme pédagogique avec ressources numériques"
+  ],
+  "modules": [
+   {
+    "titre": "Module 1 : Comprendre les fondamentaux de la vente B2B",
+    "points": [
+     "Identifier les spécificités du cycle de vente en environnement B2B.",
+     "Différencier les typologies de clients et leurs processus décisionnels.",
+     "Intégrer les enjeux stratégiques de la vente complexe dans sa posture commerciale."
+    ]
+   },
+   {
+    "titre": "Module 2 : Préparer efficacement ses actions commerciales",
+    "points": [
+     "Analyser son portefeuille clients et segmenter ses cibles avec pertinence.",
+     "Construire un argumentaire commercial structuré et adapté à la cible B2B.",
+     "Définir des objectifs SMART pour ses rendez-vous et campagnes de prospection."
+    ]
+   },
+   {
+    "titre": "Module 3 : Prospecter et obtenir des rendez-vous qualifiés",
+    "points": [
+     "Développer des scripts d’appel et d’e-mails percutants pour capter l’attention.",
+     "Utiliser LinkedIn et les outils digitaux pour générer des leads en B2B.",
+     "Mettre en œuvre des relances efficaces sans être intrusif."
+    ]
+   },
+   {
+    "titre": "Module 4 : Mener un entretien de vente performant",
+    "points": [
+     "Créer une relation de confiance dès les premières minutes de l’échange.",
+     "Utiliser la méthode de découverte (QQOQCCP, SONCAS, SPIN…) pour qualifier les besoins.",
+     "Reformuler et structurer son offre en lien avec les attentes du client."
+    ]
+   },
+   {
+    "titre": "Module 5 : Argumenter, traiter les objections et conclure",
+    "points": [
+     "Adapter son discours de valeur en fonction des enjeux et profils clients.",
+     "Répondre aux objections avec assertivité et professionnalisme.",
+     "Saisir les signaux d’achat et conclure de manière engageante et naturelle."
+    ]
+   },
+   {
+    "titre": "Module 6 : Suivre, fidéliser et développer son portefeuille client",
+    "points": [
+     "Mettre en place un plan de suivi post-vente pour pérenniser la relation client.",
+     "Identifier les opportunités de ventes croisées ou additionnelles.",
+     "Construire une stratégie de fidélisation basée sur la satisfaction client."
+    ]
+   }
+  ],
+  "certification": null
+ },
+ {
+  "slug": "formation-maitriser-le-francais-professionnel-preparation-a-la-certification-le-robert",
+  "category": "langues",
+  "title": "Formation Formation Maîtriser le français professionnel – Préparation à la Certification Le Robert",
+  "intro": "",
+  "image": "https://skills4mation.com/wp-content/uploads/2025/10/image4.webp",
+  "niveau": "De Débutant à Avancé",
+  "tarif": "A partir de A partir de A partir de 800 € - Financement possible € - Financement possible € - Financement possible",
+  "objectif": "Améliorer ses compétences linguistiques pour un usage professionel",
+  "duree": "30 heures",
+  "prerequis": "Avoir des notions de base dans la langue cible et vouloir progresser",
+  "objectifs": [
+   "À l’issue de la formation, le participant sera capable de :",
+   "Identifier et corriger les fautes d’orthographe les plus courantes",
+   "Appliquer les règles de grammaire, d’accord et de conjugaison",
+   "Utiliser un vocabulaire adapté au monde professionnel",
+   "Structurer ses phrases avec clarté et précision",
+   "Réussir l’épreuve de Certification Le Robert dans de bonnes conditions"
+  ],
+  "modalites": [
+   "Tout professionnel souhaitant améliorer la qualité de son français écrit",
+   "Salariés, demandeurs d’emploi, indépendants",
+   "Niveau B1 minimum conseillé",
+   "Idéal pour : assistants, cadres, RH, commerciaux, communicants, formateurs…"
+  ],
+  "modules": [
+   {
+    "titre": "Module 1 – Diagnostic & objectifs personnalisés (2h)",
+    "points": [
+     ": Identifier ses forces et faiblesses pour personnaliser le parcours",
+     "Évaluation diagnostique basée sur les typologies d’erreurs",
+     "Présentation de la certification Le Robert : structure, attentes, scores",
+     ": Profil personnel d’apprentissage et plan de progression"
+    ]
+   },
+   {
+    "titre": "Module 2 – Orthographe d’usage et accords (6h)",
+    "points": [
+     ": Éliminer les fautes récurrentes à l’écrit",
+     "Pluriel des noms composés, homophones, accord du participe passé",
+     "Majuscules, accents, ponctuation, chiffres",
+     "Méthode de relecture active",
+     "Exercices",
+     ": Quiz interactifs, dictées à trous, séries d’entraînement type Le Robert"
+    ]
+   },
+   {
+    "titre": "Module 3 – Grammaire et syntaxe (6h)",
+    "points": [
+     ": Structurer correctement ses phrases",
+     "Conjugaison : modes, temps, valeurs",
+     "Pronoms, propositions subordonnées, emploi du conditionnel",
+     "Style écrit professionnel : cohérence et fluidité",
+     ": Exercices de transformation, phrases à corriger, compréhension grammaticale"
+    ]
+   },
+   {
+    "titre": "Module 4 – Vocabulaire et expression professionnelle (6h)",
+    "points": [
+     ": Enrichir son lexique et adapter sa langue au contexte de travail",
+     "Lexique de l’entreprise, connecteurs logiques, formules types",
+     "Expression de la nuance, de la cause, de l’opposition, du but",
+     "Éviter les tournures maladroites ou familières",
+     ": Glossaire personnalisé + fiches de reformulation"
+    ]
+   },
+   {
+    "titre": "Module 5 – Compréhension et traitement de textes professionnels (5h)",
+    "points": [
+     ": Lire, comprendre, analyser, reformuler",
+     "Analyse de mails, notes, consignes, procédures",
+     "Reformulation d’informations clés",
+     "Extractions et inférences",
+     ": Textes à trous, QCM, exercices de compréhension écrite"
+    ]
+   },
+   {
+    "titre": "Module 6 – Entraînement à la Certification Le Robert (5h)",
+    "points": [
+     ": Se préparer efficacement à l’examen officiel",
+     "Simulation d’épreuves en condition réelle (durée, environnement)",
+     "Astuces pour gagner du temps et éviter les pièges",
+     "Bilan personnalisé et dernières recommandations",
+     "Livrable final",
+     ": Rapport de progression + score prévisionnel"
+    ]
+   }
+  ],
+  "certification": null
+ },
+ {
+  "slug": "formation-le-francais-des-affaires",
+  "category": "langues",
+  "title": "Formation Le Français des affaires",
+  "intro": "Renforcez votre maîtrise du français professionnel pour exceller dans vos négociations, présentations et rédactions. Cette formation vous prépare à interagir avec aisance dans un environnement d’affaires francophone, que ce soit pour des échanges commerciaux, des courriers formels ou des présentations orales.",
+  "image": "https://skills4mation.com/wp-content/uploads/2024/12/5-1024x819.png",
+  "niveau": "De Débutant à Avancé",
+  "tarif": "A partir de 800 € - Financement possible",
+  "objectif": "Améliorer ses compétences linguistiques pour un usage professionel",
+  "duree": "A déterminer selon votre niveau et objectif",
+  "prerequis": "Avoir des notions de base dans la langue cible et vouloir progresser",
+  "objectifs": [
+   "Acquérir un vocabulaire spécifique au monde des affaires en français.",
+   "Améliorer la compréhension et l’expression orale dans un contexte professionnel.",
+   "Développer des compétences en rédaction de documents commerciaux en français.",
+   "Maîtriser la communication interculturelle dans un environnement d’affaires international.",
+   "Renforcer la capacité à négocier et à présenter en français.",
+   "Comprendre et utiliser des expressions idiomatiques et du jargon professionnel.",
+   "Améliorer l’écoute pour une meilleure compréhension des accents et dialectes variés.",
+   "Ce parcours de formation en français des Affaires est essentiel pour tout professionnel visant une carrière internationale. Il offre non seulement une maîtrise linguistique, mais aussi une compréhension culturelle approfondie, cruciale pour naviguer avec succès dans le monde globalisé des affaires."
+  ],
+  "modalites": [
+   "Acquérir un vocabulaire spécifique au monde des affaires en français.",
+   "Améliorer la compréhension et l’expression orale dans un contexte professionnel.",
+   "Développer des compétences en rédaction de documents commerciaux en français.",
+   "Maîtriser la communication interculturelle dans un environnement d’affaires international.",
+   "Renforcer la capacité à négocier et à présenter en français.",
+   "Comprendre et utiliser des expressions idiomatiques et du jargon professionnel."
+  ],
+  "modules": [
+   {
+    "titre": "Programme",
+    "points": [
+     "Dégager une problématique à partir d’un sujet donné :",
+     "– Identifier et synthétiser les points clés d’un document commercial.",
+     "– Analyser le contexte économique et culturel d’une situation d’affaires.",
+     "– Formuler clairement une problématique d’affaires en français",
+     "Construire un exposé structuré :",
+     "– Organiser logiquement des idées pour présenter un argumentaire convaincant.",
+     "– Utiliser des connecteurs logiques pour fluidifier la communication.",
+     "– Préparer et utiliser des supports visuels adaptés pour renforcer l’exposé.",
+     "S’exprimer de façon rigoureuse en français:",
+     "– Maîtriser la terminologie spécifique au secteur d’affaires pertinent.",
+     "– Pratiquer la prononciation et l’intonation professionnelle en français",
+     "– Appliquer les règles de grammaire et de syntaxe pour une expression précise.",
+     "Défendre ses positions de façon argumentée :",
+     "– Développer des arguments solides pour appuyer une proposition commerciale.",
+     "– Répondre de manière structurée et pertinente aux objections.",
+     "– Engager de façon constructive dans des débats et négociations en français",
+     "Mobiliser de façon pertinente un vocabulaire lié au français des affaires :",
+     "– Enrichir le lexique professionnel pour des contextes variés (finance, marketing, management…).",
+     "– Utiliser un langage adapté pour des discussions formelles et informelles.",
+     "– Comprendre et utiliser des expressions idiomatiques du monde des affaires.",
+     "Intégrer à bon escient dans le discours les faits d’actualité :",
+     "– Suivre et discuter des tendances et actualités économiques mondiales.",
+     "– Relier les faits d’actualité aux enjeux commerciaux et stratégiques.",
+     "– Critiquer et évaluer l’impact des événements mondiaux sur les affaires.",
+     "Chaque compétence ciblée vise à renforcer l’efficacité communicationnelle des apprenants dans des contextes professionnels internationaux, leur permettant ainsi de se positionner avantageusement dans la langue cible dans un contexte professionnel"
+    ]
+   }
+  ],
+  "certification": null
+ },
+ {
+  "slug": "formation-le-mandarin-des-affaires",
+  "category": "langues",
+  "title": "Formation Le Mandarin des affaires",
+  "intro": "Positionnez-vous comme un leader sur le marché asiatique avec notre formation “Le Mandarin des Affaires”. Apprenez à naviguer dans les interactions professionnelles, à négocier avec finesse et à établir des partenariats solides. Avec une pédagogie immersive et des outils adaptés au contexte des affaires internationales, cette formation vous prépare à exploiter le potentiel inestimable de la langue chinoise. Le mandarin est la clé de votre succès en Asie.",
+  "image": "https://skills4mation.com/wp-content/uploads/2024/12/2-1024x819.png",
+  "niveau": "De Débutant à Avancé",
+  "tarif": "A partir de 800 € - Financement possible",
+  "objectif": "Améliorer ses compétences linguistiques pour un usage professionel",
+  "duree": "A déterminer selon votre niveau et objectif",
+  "prerequis": "Avoir des notions de base dans la langue cible et vouloir progresser",
+  "objectifs": [
+   "Acquérir un vocabulaire spécifique au monde des affaires en mandarin.",
+   "Améliorer la compréhension et l’expression orale dans un contexte professionnel.",
+   "Développer des compétences en rédaction de documents commerciaux en mandarin.",
+   "Maîtriser la communication interculturelle dans un environnement d’affaires international.",
+   "Renforcer la capacité à négocier et à présenter en mandarin.",
+   "Comprendre et utiliser des expressions idiomatiques et du jargon professionnel.",
+   "Améliorer l’écoute pour une meilleure compréhension des accents et dialectes variés.",
+   "Ce parcours de formation en mandarin des Affaires est essentiel pour tout professionnel visant une carrière internationale. Il offre non seulement une maîtrise linguistique, mais aussi une compréhension culturelle approfondie, cruciale pour naviguer avec succès dans le monde globalisé des affaires."
+  ],
+  "modalites": [
+   "Formation en présentiel ou en visioconférence avec un formateur dédié.",
+   "Méthodes d’animation participatives : interactivité, exemples et cas pratiques",
+   "Procédés pédagogiques adaptés au niveau du/des participants",
+   "Travaux pratiques adaptés à votre activité"
+  ],
+  "modules": [
+   {
+    "titre": "Programme",
+    "points": [
+     "Dégager une problématique à partir d’un sujet donné :",
+     "– Identifier et synthétiser les points clés d’un document commercial.",
+     "– Analyser le contexte économique et culturel d’une situation d’affaires.",
+     "– Formuler clairement une problématique d’affaires en mandarin",
+     "Construire un exposé structuré :",
+     "– Organiser logiquement des idées pour présenter un argumentaire convaincant.",
+     "– Utiliser des connecteurs logiques pour fluidifier la communication.",
+     "– Préparer et utiliser des supports visuels adaptés pour renforcer l’exposé.",
+     "S’exprimer de façon rigoureuse en mandarin :",
+     "– Maîtriser la terminologie spécifique au secteur d’affaires pertinent.",
+     "– Pratiquer la prononciation et l’intonation professionnelle en mandarin",
+     "– Appliquer les règles de grammaire et de syntaxe pour une expression précise.",
+     "Défendre ses positions de façon argumentée :",
+     "– Développer des arguments solides pour appuyer une proposition commerciale.",
+     "– Répondre de manière structurée et pertinente aux objections.",
+     "– Engager de façon constructive dans des débats et négociations en mandarin",
+     "Mobiliser de façon pertinente un vocabulaire lié au mandarin des affaires :",
+     "– Enrichir le lexique professionnel pour des contextes variés (finance, marketing, management…).",
+     "– Utiliser un langage adapté pour des discussions formelles et informelles.",
+     "– Comprendre et utiliser des expressions idiomatiques du monde des affaires.",
+     "Intégrer à bon escient dans le discours les faits d’actualité :",
+     "– Suivre et discuter des tendances et actualités économiques mondiales.",
+     "– Relier les faits d’actualité aux enjeux commerciaux et stratégiques.",
+     "– Critiquer et évaluer l’impact des événements mondiaux sur les affaires.",
+     "Chaque compétence ciblée vise à renforcer l’efficacité communicationnelle des apprenants dans des contextes professionnels internationaux, leur permettant ainsi de se positionner avantageusement dans la langue cible dans un contexte professionel"
+    ]
+   }
+  ],
+  "certification": null
+ },
+ {
+  "slug": "formation-le-japonais-des-affaires",
+  "category": "langues",
+  "title": "Formation Le japonais des affaires",
+  "intro": "Plongez au cœur du business asiatique avec notre formation “Le Japonais des Affaires”. Apprenez à communiquer efficacement dans les environnements professionnels japonais, à exceller dans les négociations et à renforcer vos relations commerciales. Grâce à une approche immersive et pratique, développez des compétences linguistiques essentielles pour réussir dans un marché exigeant et dynamique. Le japonais est votre atout pour conquérir le marché asiatique.",
+  "image": "https://skills4mation.com/wp-content/uploads/2024/12/4-1024x819.png",
+  "niveau": "De Débutant à Avancé",
+  "tarif": "A partir de 800 € - Financement possible",
+  "objectif": "Améliorer ses compétences linguistiques pour un usage professionel",
+  "duree": "A déterminer selon votre niveau et objectif",
+  "prerequis": "Avoir des notions de base dans la langue cible et vouloir progresser",
+  "objectifs": [
+   "Acquérir un vocabulaire spécifique au monde des affaires en Japonais .",
+   "Améliorer la compréhension et l’expression orale dans un contexte professionnel.",
+   "Développer des compétences en rédaction de documents commerciaux en Japonais .",
+   "Maîtriser la communication interculturelle dans un environnement d’affaires international.",
+   "Renforcer la capacité à négocier et à présenter en Japonais .",
+   "Comprendre et utiliser des expressions idiomatiques et du jargon professionnel.",
+   "Améliorer l’écoute pour une meilleure compréhension des accents et dialectes variés.",
+   "Ce parcours de formation en Japonais des Affaires est essentiel pour tout professionnel visant une carrière internationale. Il offre non seulement une maîtrise linguistique, mais aussi une compréhension culturelle approfondie, cruciale pour naviguer avec succès dans le monde globalisé des affaires."
+  ],
+  "modalites": [
+   "Formation en présentiel ou en visioconférence avec un formateur dédié.",
+   "Méthodes d’animation participatives : interactivité, exemples et cas pratiques",
+   "Procédés pédagogiques adaptés au niveau du/des participants",
+   "Travaux pratiques adaptés à votre activité"
+  ],
+  "modules": [
+   {
+    "titre": "Programme",
+    "points": [
+     "Dégager une problématique à partir d’un sujet donné :",
+     "– Identifier et synthétiser les points clés d’un document commercial.",
+     "– Analyser le contexte économique et culturel d’une situation d’affaires.",
+     "– Formuler clairement une problématique d’affaires en japonais",
+     "Construire un exposé structuré :",
+     "– Organiser logiquement des idées pour présenter un argumentaire convaincant.",
+     "– Utiliser des connecteurs logiques pour fluidifier la communication.",
+     "– Préparer et utiliser des supports visuels adaptés pour renforcer l’exposé.",
+     "S’exprimer de façon rigoureuse en Italien:",
+     "– Maîtriser la terminologie spécifique au secteur d’affaires pertinent.",
+     "– Pratiquer la prononciation et l’intonation professionnelle en japonais",
+     "– Appliquer les règles de grammaire et de syntaxe pour une expression précise.",
+     "Défendre ses positions de façon argumentée :",
+     "– Développer des arguments solides pour appuyer une proposition commerciale.",
+     "– Répondre de manière structurée et pertinente aux objections.",
+     "– Engager de façon constructive dans des débats et négociations en japonais",
+     "Mobiliser de façon pertinente un vocabulaire lié à l’Italien des affaires :",
+     "– Enrichir le lexique professionnel pour des contextes variés (finance, marketing, management…).",
+     "– Utiliser un langage adapté pour des discussions formelles et informelles.",
+     "– Comprendre et utiliser des expressions idiomatiques du monde des affaires.",
+     "Intégrer à bon escient dans le discours les faits d’actualité :",
+     "– Suivre et discuter des tendances et actualités économiques mondiales.",
+     "– Relier les faits d’actualité aux enjeux commerciaux et stratégiques.",
+     "– Critiquer et évaluer l’impact des événements mondiaux sur les affaires.",
+     "Chaque compétence ciblée vise à renforcer l’efficacité communicationnelle des apprenants dans des contextes professionnels internationaux, leur permettant ainsi de se positionner avantageusement dans la langue cible dans un contexte professionnel"
+    ]
+   }
+  ],
+  "certification": null
+ },
+ {
+  "slug": "formation-le-portugais-des-affaires",
+  "category": "langues",
+  "title": "Formation Le portugais des affaires",
+  "intro": "Explorez de nouveaux horizons avec notre formation “Le Portugais des Affaires”. Développez votre maîtrise linguistique pour exceller dans les négociations, présentations et échanges professionnels. Ce programme interactif et immersif est conçu pour vous aider à établir des connexions solides sur les marchés lusophones. Le portugais est votre atout stratégique pour élargir votre réseau et vos opportunités commerciales.",
+  "image": "https://skills4mation.com/wp-content/uploads/2024/12/1-1024x819.png",
+  "niveau": "De Débutant à Avancé",
+  "tarif": "A partir de 800 € - Financement possible",
+  "objectif": "Améliorer ses compétences linguistiques pour un usage professionel",
+  "duree": "A déterminer selon votre niveau et objectif",
+  "prerequis": "Avoir des notions de base dans la langue cible et vouloir progresser",
+  "objectifs": [
+   "Acquérir un vocabulaire spécifique au monde des affaires en portugais.",
+   "Améliorer la compréhension et l’expression orale dans un contexte professionnel.",
+   "Développer des compétences en rédaction de documents commerciaux en portugais.",
+   "Maîtriser la communication interculturelle dans un environnement d’affaires international.",
+   "Renforcer la capacité à négocier et à présenter en portugais.",
+   "Comprendre et utiliser des expressions idiomatiques et du jargon professionnel.",
+   "Améliorer l’écoute pour une meilleure compréhension des accents et dialectes variés.",
+   "Ce parcours de formation en portugais des Affaires est essentiel pour tout professionnel visant une carrière internationale. Il offre non seulement une maîtrise linguistique, mais aussi une compréhension culturelle approfondie, cruciale pour naviguer avec succès dans le monde globalisé des affaires."
+  ],
+  "modalites": [
+   "Formation en présentiel ou en visioconférence avec un formateur dédié.",
+   "Méthodes d’animation participatives : interactivité, exemples et cas pratiques",
+   "Procédés pédagogiques adaptés au niveau du/des participants",
+   "Travaux pratiques adaptés à votre activité"
+  ],
+  "modules": [
+   {
+    "titre": "Programme",
+    "points": [
+     "Dégager une problématique à partir d’un sujet donné :",
+     "– Identifier et synthétiser les points clés d’un document commercial.",
+     "– Analyser le contexte économique et culturel d’une situation d’affaires.",
+     "– Formuler clairement une problématique d’affaires en le portugais.",
+     "Construire un exposé structuré :",
+     "– Organiser logiquement des idées pour présenter un argumentaire convaincant.",
+     "– Utiliser des connecteurs logiques pour fluidifier la communication.",
+     "– Préparer et utiliser des supports visuels adaptés pour renforcer l’exposé.",
+     "S’exprimer de façon rigoureuse en portugais :",
+     "– Maîtriser la terminologie spécifique au secteur d’affaires pertinent.",
+     "– Pratiquer la prononciation et l’intonation professionnelle en portugais.",
+     "– Appliquer les règles de grammaire et de syntaxe pour une expression précise.",
+     "Défendre ses positions de façon argumentée :",
+     "– Développer des arguments solides pour appuyer une proposition commerciale.",
+     "– Répondre de manière structurée et pertinente aux objections.",
+     "– Engager de façon constructive dans des débats et négociations en portugais.",
+     "Mobiliser de façon pertinente un vocabulaire lié au portugais des affaires :",
+     "– Enrichir le lexique professionnel pour des contextes variés (finance, marketing, management…).",
+     "– Utiliser un langage adapté pour des discussions formelles et informelles.",
+     "– Comprendre et utiliser des expressions idiomatiques du monde des affaires.",
+     "Intégrer à bon escient dans le discours les faits d’actualité :",
+     "– Suivre et discuter des tendances et actualités économiques mondiales.",
+     "– Relier les faits d’actualité aux enjeux commerciaux et stratégiques.",
+     "– Critiquer et évaluer l’impact des événements mondiaux sur les affaires.",
+     "Chaque compétence ciblée vise à renforcer l’efficacité communicationnelle des apprenants dans des contextes professionnels internationaux, leur permettant ainsi de se positionner avantageusement dans la langue cible dans un contexte professionnel"
+    ]
+   }
+  ],
+  "certification": null
+ },
+ {
+  "slug": "formation-lallemand-des-affaires",
+  "category": "langues",
+  "title": "Formation L’allemand des affaires",
+  "intro": "Apprenez à naviguer dans un environnement professionnel germanophone grâce à une maîtrise efficace de l’allemand des affaires. Développez vos compétences en communication écrite et orale, préparez vos réunions, négociations et échanges formels pour créer des partenariats solides sur le marché germanophone.",
+  "image": "https://skills4mation.com/wp-content/uploads/2024/12/7-1024x819.png",
+  "niveau": "De Débutant à Avancé",
+  "tarif": "A partir de 800 € - Financement possible",
+  "objectif": "Améliorer ses compétences linguistiques pour un usage professionel",
+  "duree": "A déterminer selon votre niveau et objectif",
+  "prerequis": "Avoir des notions de base dans la langue cible et vouloir progresser",
+  "objectifs": [
+   "Acquérir un vocabulaire spécifique au monde des affaires en allemand.",
+   "Améliorer la compréhension et l’expression orale dans un contexte professionnel.",
+   "Développer des compétences en rédaction de documents commerciaux en allemand.",
+   "Maîtriser la communication interculturelle dans un environnement d’affaires international.",
+   "Renforcer la capacité à négocier et à présenter en allemand.",
+   "Comprendre et utiliser des expressions idiomatiques et du jargon professionnel.",
+   "Améliorer l’écoute pour une meilleure compréhension des accents et dialectes variés.",
+   "Ce parcours de formation en Allemand des Affaires est essentiel pour tout professionnel visant une carrière internationale. Il offre non seulement une maîtrise linguistique, mais aussi une compréhension culturelle approfondie, cruciale pour naviguer avec succès dans le monde globalisé des affaires."
+  ],
+  "modalites": [
+   "Formation en présentiel ou en visioconférence avec un formateur dédié.",
+   "Méthodes d’animation participatives : interactivité, exemples et cas pratiques",
+   "Procédés pédagogiques adaptés au niveau du/des participants",
+   "Travaux pratiques adaptés à votre activité"
+  ],
+  "modules": [
+   {
+    "titre": "Programme",
+    "points": [
+     "Dégager une problématique à partir d’un sujet donné :",
+     "– Identifier et synthétiser les points clés d’un document commercial.",
+     "– Analyser le contexte économique et culturel d’une situation d’affaires.",
+     "– Formuler clairement une problématique d’affaires en allemand.",
+     "Construire un exposé structuré :",
+     "– Organiser logiquement des idées pour présenter un argumentaire convaincant.",
+     "– Utiliser des connecteurs logiques pour fluidifier la communication.",
+     "– Préparer et utiliser des supports visuels adaptés pour renforcer l’exposé.",
+     "S’exprimer de façon rigoureuse en allemand :",
+     "– Maîtriser la terminologie spécifique au secteur d’affaires pertinent.",
+     "– Pratiquer la prononciation et l’intonation professionnelle en allemand.",
+     "– Appliquer les règles de grammaire et de syntaxe pour une expression précise.",
+     "Défendre ses positions de façon argumentée :",
+     "– Développer des arguments solides pour appuyer une proposition commerciale.",
+     "– Répondre de manière structurée et pertinente aux objections.",
+     "– Engager de façon constructive dans des débats et négociations en allemand.",
+     "Mobiliser de façon pertinente un vocabulaire lié à l’allemand des affaires :",
+     "– Enrichir le lexique professionnel pour des contextes variés (finance, marketing, management…).",
+     "– Utiliser un langage adapté pour des discussions formelles et informelles.",
+     "– Comprendre et utiliser des expressions idiomatiques du monde des affaires.",
+     "Intégrer à bon escient dans le discours les faits d’actualité :",
+     "– Suivre et discuter des tendances et actualités économiques mondiales.",
+     "– Relier les faits d’actualité aux enjeux commerciaux et stratégiques.",
+     "– Critiquer et évaluer l’impact des événements mondiaux sur les affaires.",
+     "Chaque compétence ciblée vise à renforcer l’efficacité communicationnelle des apprenants dans des contextes professionnels internationaux, leur permettant ainsi de se positionner avantageusement dans le monde des affaires globalisé"
+    ]
+   }
+  ],
+  "certification": null
+ },
+ {
+  "slug": "formation-langlais-des-affaires",
+  "category": "langues",
+  "title": "Formation L’anglais des affaires",
+  "intro": "Améliorez vos compétences en anglais professionnel pour exceller dans les négociations internationales, présentations et échanges. Cette formation immersive vous prépare à interagir avec confiance dans un environnement commercial globalisé, tout en renforçant votre impact dans les affaires.",
+  "image": "https://skills4mation.com/wp-content/uploads/2024/12/6-1024x819.png",
+  "niveau": "De Débutant à Avancé",
+  "tarif": "A partir de 800 € - Financement possible",
+  "objectif": "Améliorer ses compétences linguistiques en langue anglaise pour un usage professionel",
+  "duree": "A partir de 8 H de formation",
+  "prerequis": "Avoir des notions de base dans la langue cible et vouloir progresser",
+  "objectifs": [
+   "Acquérir un vocabulaire spécifique au monde des affaires en anglais.",
+   "Améliorer la compréhension et l’expression orale dans un contexte professionnel.",
+   "Développer des compétences en rédaction de documents commerciaux en anglais.",
+   "Maîtriser la communication interculturelle dans un environnement d’affaires international.",
+   "Renforcer la capacité à négocier et à présenter en anglais.",
+   "Comprendre et utiliser des expressions idiomatiques et du jargon professionnel.",
+   "Améliorer l’écoute pour une meilleure compréhension des accents et dialectes variés.",
+   "Ce parcours de formation en Anglais des Affaires est essentiel pour tout professionnel visant une carrière internationale. Il offre non seulement une maîtrise linguistique, mais aussi une compréhension culturelle approfondie, cruciale pour naviguer avec succès dans le monde globalisé des affaires."
+  ],
+  "modalites": [
+   "Approche Intégrée et Contextualisée",
+   ": Le cours est spécifiquement conçu pour intégrer les aspects linguistiques et professionnels, assurant que les apprenants peuvent appliquer immédiatement les compétences acquises dans leurs environnements de travail.",
+   "Contenu Sur-Mesure",
+   ": Adaptation du contenu aux besoins spécifiques des participants en fonction de leur secteur professionnel, permettant une pertinence accrue et une application directe des compétences linguistiques.",
+   "Évaluation Continue et Feedback Personnalisé",
+   ": Des évaluations régulières et des retours constructifs sont intégrés tout au long du parcours pour suivre les progrès des apprenants et ajuster l’approche pédagogique si nécessaire."
+  ],
+  "modules": [
+   {
+    "titre": "Module 1 : Fondamentaux de la Grammaire et de la Syntaxe en Anglais des Affaires",
+    "points": [
+     "Introduction aux structures grammaticales clés adaptées au contexte professionnel.",
+     "Analyse et révision des temps verbaux utilisés dans le langage des affaires.",
+     "Exercices pratiques sur les erreurs courantes en grammaire et comment les éviter dans un contexte professionnel."
+    ]
+   },
+   {
+    "titre": "Module 2 : Vocabulaire Spécifique à votre Secteur d’activité",
+    "points": [
+     "Acquisition de terminologies et expressions clés liées au secteur d’activité des apprenants.",
+     "Utilisation de vocabulaire dans des simulations de scénarios professionnels.",
+     "Stratégies d’élargissement du vocabulaire pour une communication efficace et précise."
+    ]
+   },
+   {
+    "titre": "Module 3 : Communication Écrite Professionnelle",
+    "points": [
+     "Techniques de rédaction de documents professionnels tels que les e-mails, les propositions et les rapports.",
+     "Focus sur la clarté, la concision et la formalité adaptées au public cible.",
+     "Ateliers de révision et d’amélioration de documents pour renforcer l’exactitude et le professionnalisme."
+    ]
+   },
+   {
+    "titre": "Module 4 : Compétences en Communication Orale",
+    "points": [
+     "Pratiques de présentation et de négociation en anglais, avec feedback personnalisé.",
+     "Techniques pour améliorer la prononciation et l’intonation dans un contexte professionnel.",
+     "Jeux de rôle pour simuler des réunions, des conférences téléphoniques, et des interactions clientèles."
+    ]
+   },
+   {
+    "titre": "Module 5 : Compréhension et Production en Contexte Professionnel",
+    "points": [
+     "Exercices intensifs de compréhension écrite et orale à partir de matériaux authentiques.",
+     "Production de réponses écrites et orales en situation réelle, adaptées à des contextes professionnels variés.",
+     "Techniques pour améliorer la rapidité et l’efficacité de la compréhension en milieu professionnel."
+    ]
+   },
+   {
+    "titre": "Module 6 : Sensibilisation Culturelle et Nuances Linguistiques",
+    "points": [
+     "Exploration des différences culturelles dans les affaires entre les pays anglophones et le pays des apprenants.",
+     "Discussion sur les faux-pas culturels à éviter et comment interagir respectueusement dans des environnements internationaux.",
+     "Approfondissement des subtilités linguistiques qui influencent la communication et la perception en anglais des affaires."
+    ]
+   }
+  ],
+  "certification": null
+ },
+ {
+  "slug": "formation-lespagnol-des-affaires",
+  "category": "langues",
+  "title": "Formation L’espagnol des affaires",
+  "intro": "Développez votre présence internationale avec notre formation “L’Espagnol des Affaires”. Maîtrisez les compétences linguistiques essentielles pour naviguer dans les négociations, correspondances et présentations professionnelles. Ce programme pratique et interactif vous permettra de communiquer efficacement et de créer des relations solides sur les marchés hispanophones. L’espagnol est votre passeport pour des opportunités professionnelles exceptionnelles.",
+  "image": "https://skills4mation.com/wp-content/uploads/2024/12/formation-espagnol-1024x819.png",
+  "niveau": "De Débutant à Avancé",
+  "tarif": "A partir de 800 € - Financement possible",
+  "objectif": "Améliorer ses compétences linguistiques pour un usage professionnel",
+  "duree": "A déterminer selon votre niveau et objectif",
+  "prerequis": "Avoir des notions de base dans la langue cible et vouloir progresser",
+  "objectifs": [
+   "Acquérir un vocabulaire spécifique au monde des affaires en espagnol.",
+   "Améliorer la compréhension et l’expression orale dans un contexte professionnel.",
+   "Développer des compétences en rédaction de documents commerciaux en espagnol.",
+   "Maîtriser la communication interculturelle dans un environnement d’affaires international.",
+   "Renforcer la capacité à négocier et à présenter en espagnol.",
+   "Comprendre et utiliser des expressions idiomatiques et du jargon professionnel.",
+   "Améliorer l’écoute pour une meilleure compréhension des accents et dialectes variés.",
+   "Ce parcours de formation en espagnol des Affaires est essentiel pour tout professionnel visant une carrière internationale. Il offre non seulement une maîtrise linguistique, mais aussi une compréhension culturelle approfondie, cruciale pour naviguer avec succès dans le monde globalisé des affaires."
+  ],
+  "modalites": [
+   "Formation en présentiel ou en visioconférence avec un formateur dédié.",
+   "Méthodes d’animation participatives : interactivité, exemples et cas pratiques",
+   "Procédés pédagogiques adaptés au niveau du/des participants",
+   "Travaux pratiques adaptés à votre activité"
+  ],
+  "modules": [
+   {
+    "titre": "Programme",
+    "points": [
+     "Dégager une problématique à partir d’un sujet donné :",
+     "– Identifier et synthétiser les points clés d’un document commercial.",
+     "– Analyser le contexte économique et culturel d’une situation d’affaires.",
+     "– Formuler clairement une problématique d’affaires en espagnol",
+     "Construire un exposé structuré :",
+     "– Organiser logiquement des idées pour présenter un argumentaire convaincant.",
+     "– Utiliser des connecteurs logiques pour fluidifier la communication.",
+     "– Préparer et utiliser des supports visuels adaptés pour renforcer l’exposé.",
+     "S’exprimer de façon rigoureuse en espagnol:",
+     "– Maîtriser la terminologie spécifique au secteur d’affaires pertinent.",
+     "– Pratiquer la prononciation et l’intonation professionnelle en espagnol",
+     "– Appliquer les règles de grammaire et de syntaxe pour une expression précise.",
+     "Défendre ses positions de façon argumentée :",
+     "– Développer des arguments solides pour appuyer une proposition commerciale.",
+     "– Répondre de manière structurée et pertinente aux objections.",
+     "– Engager de façon constructive dans des débats et négociations en espagnol",
+     "Mobiliser de façon pertinente un vocabulaire lié à l’espagnol des affaires :",
+     "– Enrichir le lexique professionnel pour des contextes variés (finance, marketing, management…).",
+     "– Utiliser un langage adapté pour des discussions formelles et informelles.",
+     "– Comprendre et utiliser des expressions idiomatiques du monde des affaires.",
+     "Intégrer à bon escient dans le discours les faits d’actualité :",
+     "– Suivre et discuter des tendances et actualités économiques mondiales.",
+     "– Relier les faits d’actualité aux enjeux commerciaux et stratégiques.",
+     "– Critiquer et évaluer l’impact des événements mondiaux sur les affaires.",
+     "Chaque compétence ciblée vise à renforcer l’efficacité communicationnelle des apprenants dans des contextes professionnels internationaux, leur permettant ainsi de se positionner avantageusement dans la langue cible dans un contexte professionnel"
+    ]
+   }
+  ],
+  "certification": null
+ },
+ {
+  "slug": "formation-litalien-des-affaires",
+  "category": "langues",
+  "title": "Formation L’italien des affaires",
+  "intro": "Entrez dans l’élite des affaires européennes avec notre formation “L’Italien des Affaires”. Maîtrisez la langue pour réussir vos négociations, présentations et correspondances dans un contexte professionnel. Grâce à des méthodes pratiques et immersives, développez vos compétences pour tisser des relations solides et conquérir les marchés italiens. L’italien est votre clé pour renforcer votre impact sur la scène internationale.",
+  "image": "https://skills4mation.com/wp-content/uploads/2024/12/3-1024x819.png",
+  "niveau": "De Débutant à Avancé",
+  "tarif": "A partir de 800 € - Financement possible",
+  "objectif": "Améliorer ses compétences linguistiques pour un usage professionel",
+  "duree": "A déterminer selon votre niveau et objectif",
+  "prerequis": "Avoir des notions de base dans la langue cible et vouloir progresser",
+  "objectifs": [
+   "Acquérir un vocabulaire spécifique au monde des affaires en Italien.",
+   "Améliorer la compréhension et l’expression orale dans un contexte professionnel.",
+   "Développer des compétences en rédaction de documents commerciaux en Italien.",
+   "Maîtriser la communication interculturelle dans un environnement d’affaires international.",
+   "Renforcer la capacité à négocier et à présenter en Italien.",
+   "Comprendre et utiliser des expressions idiomatiques et du jargon professionnel.",
+   "Améliorer l’écoute pour une meilleure compréhension des accents et dialectes variés.",
+   "Ce parcours de formation en Italien des Affaires est essentiel pour tout professionnel visant une carrière internationale. Il offre non seulement une maîtrise linguistique, mais aussi une compréhension culturelle approfondie, cruciale pour naviguer avec succès dans le monde globalisé des affaires."
+  ],
+  "modalites": [
+   "Formation en présentiel ou en visioconférence avec un formateur dédié.",
+   "Méthodes d’animation participatives : interactivité, exemples et cas pratiques",
+   "Procédés pédagogiques adaptés au niveau du/des participants",
+   "Travaux pratiques adaptés à votre activité"
+  ],
+  "modules": [
+   {
+    "titre": "Programme",
+    "points": [
+     "Dégager une problématique à partir d’un sujet donné :",
+     "– Identifier et synthétiser les points clés d’un document commercial.",
+     "– Analyser le contexte économique et culturel d’une situation d’affaires.",
+     "– Formuler clairement une problématique d’affaires en Italien",
+     "Construire un exposé structuré :",
+     "– Organiser logiquement des idées pour présenter un argumentaire convaincant.",
+     "– Utiliser des connecteurs logiques pour fluidifier la communication.",
+     "– Préparer et utiliser des supports visuels adaptés pour renforcer l’exposé.",
+     "S’exprimer de façon rigoureuse en Italien:",
+     "– Maîtriser la terminologie spécifique au secteur d’affaires pertinent.",
+     "– Pratiquer la prononciation et l’intonation professionnelle en Italien",
+     "– Appliquer les règles de grammaire et de syntaxe pour une expression précise.",
+     "Défendre ses positions de façon argumentée :",
+     "– Développer des arguments solides pour appuyer une proposition commerciale.",
+     "– Répondre de manière structurée et pertinente aux objections.",
+     "– Engager de façon constructive dans des débats et négociations en Italien",
+     "Mobiliser de façon pertinente un vocabulaire lié à l’Italien des affaires :",
+     "– Enrichir le lexique professionnel pour des contextes variés (finance, marketing, management…).",
+     "– Utiliser un langage adapté pour des discussions formelles et informelles.",
+     "– Comprendre et utiliser des expressions idiomatiques du monde des affaires.",
+     "Intégrer à bon escient dans le discours les faits d’actualité :",
+     "– Suivre et discuter des tendances et actualités économiques mondiales.",
+     "– Relier les faits d’actualité aux enjeux commerciaux et stratégiques.",
+     "– Critiquer et évaluer l’impact des événements mondiaux sur les affaires.",
+     "Chaque compétence ciblée vise à renforcer l’efficacité communicationnelle des apprenants dans des contextes professionnels internationaux, leur permettant ainsi de se positionner avantageusement dans la langue cible dans un contexte professionnel"
+    ]
+   }
+  ],
+  "certification": null
+ },
+ {
+  "slug": "charge-de-projet-evenementiel-bloc-de-competence-rncp34927bc03-bloc-de-competence-3-piloter-un-projet-evenementiel",
+  "category": "metier-specifique",
+  "title": "Formation Chargé de projet événementiel – Bloc de compétence : RNCP34927BC03 – Bloc de compétence 3 : Piloter un projet événementiel",
+  "intro": "",
+  "image": "https://skills4mation.com/wp-content/uploads/2025/05/formation-charge-de-projet-evenementiel.png",
+  "niveau": "Niveau 6 (équivalent Bac+3/4) – Titre certifié RNCP",
+  "tarif": "A partir de à partir de 2 490 € () € - Financement possible",
+  "objectif": "Acquérir les compétences nécessaires pour piloter, organiser et évaluer un projet événementiel, de la conception à la réalisation, en intégrant les dimensions budgétaires, logistiques, techniques et humaines.",
+  "duree": "100 heures",
+  "prerequis": "Niveau 4 (Bac) minimum OU titre de niveau 5 (Bac+2) OU expérience de 3 ans dans la communication avec validation du certificateur",
+  "objectifs": [
+   "Acquérir les compétences nécessaires pour piloter, organiser et évaluer un projet événementiel, de la conception à la réalisation, en intégrant les dimensions budgétaires, logistiques, techniques et humaines."
+  ],
+  "modalites": [
+   "– Formation en distanciel",
+   "– Accompagnement personnalisé par un formateur expert",
+   "– Mises en situation professionnelles",
+   "– Accès à une plateforme pédagogique avec ressources numériques"
+  ],
+  "modules": [
+   {
+    "titre": "Module 1 : Concevoir un événement écoresponsable et structuré",
+    "points": [
+     "Apprendre à planifier un événement dans une logique de durabilité, de communication visuelle et de maîtrise budgétaire.",
+     "• Intégrer les principes de l’éco-conception dans la création d’un événement.",
+     "• Créer des supports de communication numériques à l’aide d’outils graphiques professionnels.",
+     "• Développer un site web événementiel en respectant les standards écoresponsables.",
+     "• Sélectionner des prestataires et intervenants selon des critères de qualité et de cohérence avec le projet.",
+     "• Organiser la logistique d’un événement via un calendrier détaillé et un plan opérationnel."
+    ]
+   },
+   {
+    "titre": "Module 2 : Déployer une stratégie de communication événementielle efficace",
+    "points": [
+     "Mettre en place une communication multicanal adaptée aux objectifs de l’événement et aux publics visés.",
+     "• Identifier les besoins du client et formuler des objectifs de communication pertinents.",
+     "• Exploiter les réseaux sociaux et les leviers digitaux pour promouvoir l’événement.",
+     "• Concevoir des actions de fidélisation comme des offres VIP ou des suivis personnalisés post-événement.",
+     "• Intégrer une approche interculturelle dans la communication événementielle.",
+     "• Élaborer un plan d’actions clair et structuré pour assurer la visibilité de l’événement."
+    ]
+   },
+   {
+    "titre": "Module 3 : Coordonner les acteurs et piloter l’exécution du projet",
+    "points": [
+     "Savoir gérer les priorités, superviser les équipes et piloter les relations avec les partenaires.",
+     "• Hiérarchiser les actions à mener selon les enjeux et les délais du projet.",
+     "• Identifier, engager et animer les partenaires clés de l’événement.",
+     "• Planifier et conduire les réunions avec les prestataires en assurant le suivi budgétaire.",
+     "• Superviser et coordonner les équipes dans un esprit de collaboration et d’écoute active.",
+     "• Gérer les conflits et améliorer la performance collective dans un contexte de pression opérationnelle."
+    ]
+   },
+   {
+    "titre": "Module 4 : Suivre les retombées et évaluer l’impact de l’événement",
+    "points": [
+     "Mesurer l’efficacité du projet et proposer des axes d’amélioration pour les futurs événements.",
+     "• Utiliser un tableau de bord pour analyser les écarts entre objectifs et résultats.",
+     "• Suivre rigoureusement le budget événementiel et contrôler les dépenses.",
+     "• Identifier les risques et mettre en place des mesures correctives tout au long du projet.",
+     "• Réaliser un plan d’implantation technique en coordination avec les prestataires.",
+     "• Organiser un débriefing post-événement et proposer un plan d’amélioration basé sur les retours participants."
+    ]
+   }
+  ],
+  "certification": null
+ },
+ {
+  "slug": "formation-prothesiste-ongulaire",
+  "category": "metier-specifique",
+  "title": "Formation Créer son cabinet de prothésiste ongulaire",
+  "intro": "Apprenez à maîtriser les techniques de prothésie ongulaire et à créer votre propre activité professionnelle. Cette formation vous enseigne à réaliser des poses d’ongles impeccables, à utiliser les produits adaptés et à développer des compétences en gestion d’entreprise. Lancez votre cabinet avec confiance et bâtissez une clientèle fidèle grâce à des services de qualité.",
+  "image": "https://skills4mation.com/wp-content/uploads/2024/12/formation-protestiste-ongulaire.webp",
+  "niveau": "De Débutant à Avancé",
+  "tarif": "A partir de 1400 € - Financement possible",
+  "objectif": "créer, lancer et gérer efficacement leur propre entreprise de prothésie ongulaire, en maîtrisant à la fois les compétences techniques et les compétences entrepreneuriales nécessaires pour réussir dans ce domaine.",
+  "duree": "A partir de 35 H de formation",
+  "prerequis": "Aucun",
+  "objectifs": [
+   "Acquérir les compétences techniques nécessaires à la réalisation de prothèses ongulaires de qualité professionnelle.",
+   "Maîtriser les bases de la gestion d’entreprise adaptées au secteur de la prothésie ongulaire.",
+   "Élaborer un plan d’affaires solide pour lancer et développer son propre salon de prothésie ongulaire.",
+   "Apprendre à fidéliser une clientèle en utilisant des techniques de marketing spécifiques à la beauté des ongles.",
+   "Savoir gérer les aspects administratifs, financiers et juridiques d’une entreprise de prothésie ongulaire."
+  ],
+  "modalites": [
+   "Formation en présentiel selon vos convenances",
+   "Méthodes d’animation participatives : interactivité, exemples et mise en pratiques orienté selon votre projet professionnel",
+   "Procédés pédagogiques adaptés au niveau du/des participants",
+   "Travaux pratiques adaptés à votre activité"
+  ],
+  "modules": [
+   {
+    "titre": "Programme",
+    "points": [
+     "• 9h-9h30 Accueil du Stagiaire / Présentation / Déroulement de la semaine de Formation / Questions",
+     "• 9h30-12h Théorie : les critères de choix de son statut juridique, fiscal et social",
+     "-Comprendre les caractéristiques des différents statuts juridiques, leurs régimes fiscaux et sociaux.",
+     "-Préparer efficacement son immatriculation et son organisation administrative et comptable",
+     "– Mettre en place son organisation administrative et comptable",
+     "– Appréhender le processus concret lors de la création effective de son entreprise.",
+     "– Organiser la gestion de son temps, de ses méthodes et ses outils",
+     "– Organiser ses différentes prestations et ses temps de réalisation",
+     "• 12h-13h Pause déjeuner",
+     "• 13h-16h30 Théorie : Définir sa stratégie commerciale",
+     "-Mettre en place sa stratégie commerciale et définir ses prestations",
+     "Construire des outils de communication efficace",
+     "-Savoir construire un plan d’action communication en fonction des réseaux sociaux",
+     "– Savoir concevoir des supports efficaces avec des outils numériques",
+     "– Fidéliser sa clientèle",
+     "– Savoir traiter les objections, Analyse des besoins de la cliente",
+     "– Améliorer sa performance commerciale",
+     "– Outils d’aide à la prise de rendez-vous, logiciels de caisse et d’encaissement…",
+     "• 16h30-17h Bilan journée/Echanges et Conseils /Réponses aux questions des Stagiaires",
+     "• 9h-9h30 Accueil du Stagiaire / Déroulement de la journée de Formation",
+     "• 9h30-12H00 Théorie : Etude du Livret",
+     "-Organisation Espace de Travail",
+     "-Anatomie de l’ongle, Caractéristique des ongles, Hygiène",
+     "– Présentation des Produits et du matériel",
+     "– Maîtriser l’utilisation de la Ponceuse et adapter le choix des embouts",
+     "– Comprendre et analyser l’architecture de l’ongle, les alignements, les parallèles",
+     "– Protocoles Pose Complète avec rallongement CHABLON",
+     "– Protocole Remplissage (dépose de la couleur sur la construction, identifier les causes des décollements et les supprimer, préparation de l’ongle naturel, pose de gel, limage sur 1 doigt, pose de la couleur et finition) – Etapes de la manucure Express",
+     "• 12h-13h Pause déjeuner",
+     "• 13h-16h30 Théorie : Suite Etude du Livret",
+     "-Découpe et Positionnement du Chablo",
+     "– Etude des différentes Formes possible en clientèle",
+     "– Protocole dépose Gel à la ponceuse (Savoir comment enlever la totalité de la matière sur l’ongle naturel, quel matériel choisir, savoir respecter à 100% les tissus et la plaque et les erreurs à ne pas faire pour ne pas créer de dégâts irréversibles",
+     "-Protocole Gainage Gel et Astuces",
+     "– Protocole Renfort en semi permanent et application couleur (Savoir réaliser un vsp en lissage ou ou correction architecturale en vsp renforcé pour un alignement parfait avec une rubber",
+     "base, maîtriser la pose de la couleur vsp au niveau des cuticules et pose de la finition parfaite)",
+     "• 16h30-17h Bilan journée/Echanges et Conseils /Réponses aux questions des Stagiaires",
+     "• 9h-9h15 Accueil du Stagiaire et débriefing de la journée précédente",
+     "• 9h15-9h30 Démonstration par la formatrice d’un rallongement au chablon sur 1 doigt (Préparation de",
+     "la plaque et des cuticules, découpe et positionnement du chablon en fonction de la forme souhaitée ,",
+     "pose de gel sur l’extension et réalisation de la construction , limage, pose de la couleur et finition)",
+     "• 9h30-10h30 Pratique par le stagiaire sur soi-même",
+     "• 10h30-10h45 Démonstration par la formatrice d’un Remplissage, Gainage Gel et d’un renfort Semi",
+     "permanent",
+     "• 10h45-12h Pratique par le Stagiaire sur soi-même",
+     "• 12h-13h Pause déjeuner",
+     "• 13h-16h30 Pratique d’une Pose Complète avec Rallongement (4 formes différentes) par le Stagiaire sur",
+     "• 16h30-17h Evaluation /Bilan journée/Echanges et Conseils /Réponses aux questions des Stagiaires",
+     "• 9h-9h15 Accueil du Stagiaire et débriefing de la journée précédente",
+     "• 9h15-10h30 Démonstration par la formatrice Nail Art Divers (French, Marbré, Babyboomer, Incrustation",
+     "de paillettes et bijou d’ongle)",
+     "• 10h30-12h Pratique par le Stagiaire (Apprentissage et maîtrise du tracé de la French aux proportions",
+     "parfaites au liner ; Apprentissage et maîtriser le fondu des gels babyboomer, Savoir réaliser une",
+     "composition harmonieuse d’un bijou d’ongle ; Apprentissage et maîtrise de l’effet Marbré)",
+     "• 12h-13h Pause déjeuner",
+     "• 13h-16h30 Théorie : Digitaliser",
+     "– Web et Réseaux sociaux :",
+     "-Connaître et comprendre les outils digitaux",
+     "– Être en mesure de mettre en place une stratégie sur les réseaux sociaux pour se développer en ligne.",
+     "– Être en mesure de faire des choix dans la mise en œuvre d’un développement en ligne (site vitrine et e-commerce).",
+     "– Communiquer, développer son activité avec Facebook, Instagram et LinkedIn…",
+     "– Obtenir des pistes pour développer son activité sur ces réseaux.",
+     "– Être en mesure de créer une page Facebook Pro.",
+     "• 16h30-17h Evaluation /Bilan journée/Echanges et Conseils /Réponses aux questions des Stagiaires",
+     "• 9h-9h15 Accueil du Stagiaire et débriefing de la journée précédente",
+     "• 9h15-11h30 Pratique : Gainage Gel sur modèle par le stagiaire. Nettoyage et rangement des postes de",
+     "travail pour les prises de photos",
+     "• 11h30-12h Evaluation de la réalisation de l’élève dans sa totalité puis correction / Echanges et conseils de la formatrice / Atelier Photo : Prise en Photos du travail de l’élève avec conseils pour mise en valeur",
+     "du travail (luminosité, fond, position,…)",
+     "• 12h-13h Pause déjeuner",
+     "• 13h-16h30 Théorie : Savoir Gérer, Pérenniser l’activité",
+     "– Maîtriser sa rentabilité, s’approprier le modèle économique de son entreprise",
+     "– Comprendre les conditions de viabilité du projet (seuil de rentabilité, coûts de revient, etc.)",
+     "– Savoir mettre en place des tableaux de bord sous Excel afin de mieux suivre, piloter, la rentabilité de son activité et définir des actions.",
+     "• 16h30-17h Questions et Echanges / Photo de groupe et Remise des certificats"
+    ]
+   }
+  ],
+  "certification": null
+ },
+ {
+  "slug": "formation-de-formateur",
+  "category": "metier-specifique",
+  "title": "Formation De Formation",
+  "intro": "Devenez un professionnel de la formation en apprenant à concevoir, animer et évaluer des sessions pédagogiques adaptées à vos apprenants. Maîtrisez les techniques de communication, de gestion de groupe et les outils modernes pour capter l’attention et garantir des apprentissages efficaces. Ce programme s’adresse aux futurs formateurs ainsi qu’aux professionnels cherchant à perfectionner leurs pratiques pédagogiques.",
+  "image": "https://skills4mation.com/wp-content/uploads/2024/12/formation-1-809x1024.webp",
+  "niveau": "De Débutant à Avancé",
+  "tarif": "A partir de 1400 € - Financement possible",
+  "objectif": "devenir un formateur inspirant et pédagogue",
+  "duree": "A partir de 14 H de formation",
+  "prerequis": "Aucun",
+  "objectifs": [
+   "Acquérir les techniques fondamentales de conception de programmes pédagogiques efficaces.",
+   "Maîtriser les méthodes d’animation de groupe pour favoriser l’engagement des apprenants.",
+   "Utiliser des outils numériques pour enrichir et dynamiser les formations.",
+   "Adapter les contenus pédagogiques en fonction des besoins et des profils des apprenants.",
+   "Évaluer les compétences des apprenants à travers des outils et techniques d’évaluation adaptés."
+  ],
+  "modalites": [
+   "Formation en Distanciel ou présentiel selon vos convenances",
+   "Méthodes d’animation participatives : interactivité, exemples et mise en pratiques orienté selon votre projet professionnel",
+   "Procédés pédagogiques adaptés au niveau du/des participants",
+   "Travaux pratiques adaptés à votre activité"
+  ],
+  "modules": [
+   {
+    "titre": "Module 1 : Introduction à la formation et rôle du formateur",
+    "points": [
+     "Identifier les rôles et responsabilités du formateur dans différents contextes d’apprentissage.",
+     "Comprendre les enjeux de la formation professionnelle et ses objectifs.",
+     "Explorer les compétences clés nécessaires pour devenir un formateur efficace."
+    ]
+   },
+   {
+    "titre": "Module 2 : Conception pédagogique d’un programme de formation",
+    "points": [
+     "Analyser les besoins des apprenants pour construire des objectifs pédagogiques clairs et mesurables.",
+     "Élaborer un parcours pédagogique structuré et progressif.",
+     "Sélectionner les outils et ressources pédagogiques adaptés à la formation."
+    ]
+   },
+   {
+    "titre": "Module 3 : Méthodes et techniques d’animation",
+    "points": [
+     "Maîtriser les techniques d’animation de groupe pour favoriser l’interaction et l’engagement.",
+     "Utiliser la pédagogie active pour rendre les sessions de formation dynamiques et participatives.",
+     "Gérer la diversité des profils apprenants au sein d’un groupe."
+    ]
+   },
+   {
+    "titre": "Module 4 : Utilisation des outils numériques en formation",
+    "points": [
+     "Découvrir les outils numériques essentiels pour enrichir et dynamiser les sessions de formation.",
+     "Intégrer des plateformes de e-learning et des ressources multimédias dans les formations.",
+     "Faciliter l’interaction en ligne et en présentiel avec des outils collaboratifs."
+    ]
+   },
+   {
+    "titre": "Module 5 : Évaluation des acquis et des compétences",
+    "points": [
+     "Concevoir des évaluations formatives et sommatives adaptées aux objectifs pédagogiques.",
+     "Utiliser des méthodes variées pour évaluer les compétences des apprenants.",
+     "Analyser les résultats des évaluations pour ajuster et améliorer les contenus de formation."
+    ]
+   },
+   {
+    "titre": "Module 6 : Développement professionnel et posture du formateur",
+    "points": [
+     "Réfléchir à son positionnement en tant que formateur et à l’amélioration continue de ses pratiques.",
+     "Mettre en place des stratégies pour gérer les situations difficiles en formation.",
+     "Favoriser son développement professionnel à travers la veille pédagogique et l’auto-évaluation."
+    ]
+   }
+  ],
+  "certification": null
+ },
+ {
+  "slug": "formation-mao-production-musicale-avec-cubase",
+  "category": "metier-specifique",
+  "title": "Formation MAO – Production musicale avec Cubase",
+  "intro": "Apprenez à composer, enregistrer et produire de la musique avec le logiciel Cubase. Cette formation vous plonge dans les fondamentaux de la production musicale, de l’enregistrement audio à l’utilisation des effets créatifs et du mixage professionnel. Idéale pour musiciens, compositeurs ou créateurs de contenu, elle vous aide à structurer vos projets musicaux et à transformer vos idées en morceaux finalisés.",
+  "image": "https://skills4mation.com/wp-content/uploads/2024/12/formation-production-musicale-1024x916.webp",
+  "niveau": "De Débutant à Avancé",
+  "tarif": "A partir de 2400 € - Financement possible",
+  "objectif": "Devenir autonome en production musicale sur Cubase.",
+  "duree": "A partir de 35 H de formation",
+  "prerequis": "Aucun",
+  "objectifs": [
+   "L’objectif de cette formation est de vous rendre pleinement autonome dans la production musicale en utilisant Cubase, en vous dotant des compétences nécessaires pour transformer votre vision artistique en réalité.",
+   "Vous apprendrez à créer des sections rythmiques complexes, à l’aide de boîtes à rythmes ou de samples personnalisés, et à enregistrer avec précision toutes sources audio.",
+   "Vous maîtriserez l’art d’intégrer des sons, des mélodies et des ambiances grâce aux instruments virtuels, en les contrôlant via un clavier maître ou des grilles d’édition.",
+   "L’application d’effets créatifs enrichira vos projets de nuances uniques, tandis que l’utilisation habile des automations révèlera le potentiel dynamique de vos compositions.",
+   "En somme, cette formation vous équipe pour surmonter les défis techniques et libérer votre créativité musicale, quel que soit le genre."
+  ],
+  "modalites": [
+   "Approche Pédagogie :",
+   "La formation est composée d’explications et démonstrations de fonctionnalités accompagnées de méthodologie professionnelle, et d’exercices pratiques permettant la mise en application des notions abordées dans des situations concrètes de production. Durant toute la durée de la formation, un suivi continu des stagiaires est opéré par le formateur et supervisé par le responsable pédagogique afin de valider les acquis et apporter un suivi personnalisé si besoin.",
+   "Uniquement en distanciel",
+   "Matériel nécessaire",
+   "le matériel de l’apprenant est utilisé et sa configuration optimisée",
+   "Tous nos formateurs sont certifiés Steinberg"
+  ],
+  "modules": [
+   {
+    "titre": "Programme",
+    "points": [
+     "Votre Home Studio",
+     "Analyser et optimiser le matériel pour votre studio",
+     "Configurer le logiciel et l’équipement",
+     "Recevoir des conseils sur le matériel adapté",
+     "Installer et paramétrer les logiciels nécessaires",
+     "CONFIGURATION SYSTÈME ET CRÉATION D’UN PROJET",
+     "Configurer l’audio, le MIDI, et les connexions VST",
+     "Optimiser les performances du système",
+     "Créer et paramétrer un nouveau projet",
+     "Se familiariser avec l’interface de projet, y compris l’inspecteur, l’édition, et le transport",
+     "TEMPO DU PROJET",
+     "Gérer le transport, le tempo, et la signature rythmique",
+     "Éditer et utiliser la piste tempo",
+     "Maîtriser le tap tempo",
+     "IMPORTER UN FICHIER",
+     "Utiliser le menu d’importation",
+     "Comprendre les formats compatibles",
+     "Importer des fichiers audio et vidéo",
+     "ENREGISTREMENT AUDIO AVEC CUBASE",
+     "Ajouter et configurer des pistes audio",
+     "Explorer les méthodes et modes d’enregistrement",
+     "Utiliser les fonctions Punch in/out et Pre/Post Roll",
+     "Maîtriser les fonctions de copie, collage, duplication, et découpe",
+     "Appliquer les fades in/out et crossfade",
+     "Gérer les enveloppes d’événement",
+     "TRAITEMENTS ET FONCTIONS AUDIO",
+     "Appliquer des effets via des plug-ins",
+     "Utiliser l’historique des traitements et détecter les silences",
+     "Analyser le spectre audio",
+     "EFFETS AUDIO DE CUBASE",
+     "Utiliser et éditer les effets audio",
+     "Gérer les effets externes et les plug-ins",
+     "L’ÉDITEUR D’ÉCHANTILLONS DE CUBASE",
+     "Pratiquer le warping audio",
+     "Travailler avec des repères et des tranches audio",
+     "Utiliser VariAudio pour la correction de hauteur",
+     "LA MEDIA BAY",
+     "Naviguer dans la Media Bay",
+     "Pré-écouter et gérer les fichiers",
+     "ÉDITION DU TEMPO ET DE LA MESURE",
+     "Calculer et détecter le tempo",
+     "Utiliser l’outil Time Warp pour aligner l’audio sur le tempo",
+     "PISTE ARRANGEUR (ORDRE DE LECTURE)",
+     "Configurer et utiliser la piste Arrangeur",
+     "Exploiter le mode Live",
+     "COMPOSITION MIDI AVEC CUBASE",
+     "Créer des pistes Instrument et composer en MIDI",
+     "Enregistrer des boucles MIDI et utiliser un clavier maître",
+     "INSTRUMENTS VIRTUELS DANS CUBASE",
+     "Activer et utiliser les VSTi",
+     "Gérer les instruments multicanaux et geler les VSTi",
+     "QUANTIFICATION DE DONNÉES MIDI",
+     "Appliquer la quantification MIDI",
+     "Gérer les paramètres de quantification",
+     "PARAMÈTRES ET EFFETS MIDI EN TEMPS RÉEL",
+     "Maîtriser l’Inspecteur et les effets MIDI",
+     "Gérer les plug-ins MIDI",
+     "LES CONTRÔLEURS",
+     "Utiliser et configurer différents contrôleurs MIDI",
+     "LA CONSOLE DE VOIES DE CUBASE",
+     "Configurer et utiliser la console de mixage",
+     "Comprendre le routing, les inserts, et les auxiliaires",
+     "AUTOMATISATION",
+     "Appliquer et gérer l’automation dans Cubase",
+     "Travailler avec les courbes d’automation",
+     "MARQUEURS",
+     "Utiliser la piste et la palette Marqueurs efficacement",
+     "LES BATTERIES VIRTUELLES",
+     "Paramétrer et utiliser différents logiciels de batterie virtuelle",
+     "EXPORTER UN PROJET",
+     "Exporter des projets dans différents format"
+    ]
+   }
+  ],
+  "certification": null
+ },
+ {
+  "slug": "formation-photographie",
+  "category": "metier-specifique",
+  "title": "Formation Photographie – Maîtrisez l’art de la photographie",
+  "intro": "Perfectionnez vos compétences en photographie en explorant les techniques avancées de prise de vue. Apprenez à maîtriser la lumière, la composition et les réglages essentiels pour capturer des clichés de qualité professionnelle. Découvrez l’art de la photographie portrait, paysage et événementielle pour raconter des histoires visuelles uniques. Que vous soyez débutant ou amateur confirmé, cette formation vous guide vers l’excellence artistique.",
+  "image": "https://skills4mation.com/wp-content/uploads/2024/12/formation-photographe.webp",
+  "niveau": "De Débutant à Avancé",
+  "tarif": "A partir de 1400 € - Financement possible",
+  "objectif": "Maîtrisez l’art de la photographie",
+  "duree": "A déterminer selon votre niveau et objectif",
+  "prerequis": "Aucun",
+  "objectifs": [
+   "À l’issue de cette formation, vous serez capable de",
+   "Maîtriser les fonctionnalités avancées de votre appareil photo et choisir les réglages optimaux pour chaque situation",
+   "Composer des images esthétiquement équilibrées en appliquant les principes fondamentaux de la composition photographique",
+   "Manipuler la lumière naturelle et artificielle pour créer l’ambiance désirée dans vos photographies",
+   "Utiliser les logiciels de post-traitement pour retoucher et sublimer vos images de manière professionnelle",
+   "Développer un style photographique personnel et construire un portfolio cohérent reflétant votre créativité"
+  ],
+  "modalites": [
+   "Formation en Distanciel ou présentiel selon vos convenances",
+   "Méthodes d’animation participatives : interactivité, exemples et mise en pratiques orienté selon votre projet professionnel",
+   "Procédés pédagogiques adaptés au niveau du/des participants",
+   "Travaux pratiques adaptés à votre activité"
+  ],
+  "modules": [
+   {
+    "titre": "Module 1 : Fondamentaux de la photographie",
+    "points": [
+     "• Comprendre le fonctionnement d’un appareil photo et ses composants essentiels",
+     "• Maîtriser l’exposition : ouverture, vitesse d’obturation et sensibilité ISO",
+     "• Explorer les différents types d’objectifs et leur utilisation"
+    ]
+   },
+   {
+    "titre": "Module 2 : Composition et cadrage",
+    "points": [
+     "• Appliquer les règles de composition (règle des tiers, lignes directrices, symétrie)",
+     "• Utiliser la profondeur de champ pour créer des images percutantes",
+     "• Expérimenter avec différents angles de vue et perspectives"
+    ]
+   },
+   {
+    "titre": "Module 3 : Maîtrise de la lumière",
+    "points": [
+     "• Comprendre et manipuler la lumière naturelle dans diverses conditions",
+     "• Utiliser l’éclairage artificiel : flash, studio et éclairage continu",
+     "• Créer des ambiances lumineuses pour différents genres photographiques"
+    ]
+   },
+   {
+    "titre": "Module 4 : Genres photographiques",
+    "points": [
+     "• Pratiquer la photographie de paysage et d’architecture",
+     "• Maîtriser les techniques du portrait et de la photographie de groupe",
+     "• Explorer la photographie de rue et le reportage"
+    ]
+   },
+   {
+    "titre": "Module 5 : Post-traitement et retouche",
+    "points": [
+     "• Utiliser les logiciels de traitement d’image (Lightroom, Photoshop)",
+     "• Appliquer les techniques de base de retouche et de correction colorimétrique",
+     "• Développer un flux de travail efficace pour le traitement des images"
+    ]
+   },
+   {
+    "titre": "Module 6 : Développement professionnel",
+    "points": [
+     "• Construire un portfolio cohérent et attractif",
+     "• Comprendre les aspects juridiques et éthiques de la photographie",
+     "• Explorer les opportunités de carrière et les stratégies de marketing pour photographes"
+    ]
+   }
+  ],
+  "certification": null
+ },
+ {
+  "slug": "formation-couture-creative",
+  "category": "metier-specifique",
+  "title": "Formation couture créative",
+  "intro": "Explorez votre créativité et développez vos compétences en couture pour concevoir des pièces uniques et personnalisées. Apprenez des techniques de patronage, de découpe et d’assemblage adaptées à tous niveaux. Que vous souhaitiez créer des vêtements, des accessoires ou des objets décoratifs, cette formation vous offre les outils nécessaires pour réussir dans le domaine textile.",
+  "image": "https://skills4mation.com/wp-content/uploads/2024/12/formation-couture-1024x688.webp",
+  "niveau": "De Débutant à Avancé",
+  "tarif": "A partir de 900 € - Financement possible",
+  "objectif": "maîtriser les techniques de couture",
+  "duree": "A partir de 7 H de formation",
+  "prerequis": "Aucun",
+  "objectifs": [
+   "Maîtriser les techniques fondamentales de la couture, de la coupe à la confection.",
+   "Explorer les différents matériaux et textiles pour enrichir ses créations.",
+   "Développer sa créativité en design de mode pour concevoir des pièces uniques.",
+   "Appliquer les normes de qualité et de finition dans la réalisation de vêtements.",
+   "Préparer un portfolio professionnel pour présenter ses œuvres à des potentiels employeurs ou clients."
+  ],
+  "modalites": [
+   "Formation en présentiel dans le cadre des sessions proposés par notre formateur",
+   "Méthodes d’animation participatives : interactivité, exemples et mise en pratiques",
+   "Procédés pédagogiques adaptés au niveau du/des participants",
+   "Travaux pratiques adaptés à votre activité"
+  ],
+  "modules": [
+   {
+    "titre": "Module 1: Initiation à la couture",
+    "points": [
+     "Découvrir les outils de base et leur utilisation pour la couture.",
+     "Apprendre les techniques de base de couture à la main et à la machine.",
+     "Réaliser des projets simples pour pratiquer les points de couture essentiels."
+    ]
+   },
+   {
+    "titre": "Module 2: Matériaux et textiles",
+    "points": [
+     "Identifier et sélectionner les différents types de tissus adaptés à divers projets de couture.",
+     "Comprendre les propriétés des textiles pour optimiser leur utilisation dans la création.",
+     "Expérimenter avec des matériaux innovants pour enrichir le répertoire créatif."
+    ]
+   },
+   {
+    "titre": "Module 3: Techniques avancées de couture",
+    "points": [
+     "Maîtriser des techniques de couture complexes telles que les plis, les fronces et les zips.",
+     "Apprendre à ajuster des patrons pour le sur-mesure.",
+     "Effectuer des finitions professionnelles pour améliorer la qualité des créations."
+    ]
+   },
+   {
+    "titre": "Module 4: Design et création de mode",
+    "points": [
+     "Explorer les principes de design en mode, incluant la couleur, la forme et la texture.",
+     "Développer une collection capsule en appliquant les méthodes de brainstorming et de moodboarding.",
+     "Concevoir et réaliser des pièces de vêtements à partir des esquisses initiales."
+    ]
+   },
+   {
+    "titre": "Module 5: Innovation et couture durable",
+    "points": [
+     "Intégrer des pratiques de couture durable dans les projets de création.",
+     "Utiliser des techniques de recyclage et de réutilisation pour minimiser l’impact environnemental.",
+     "Expérimenter avec la technologie textile pour innover dans les créations de mode."
+    ]
+   },
+   {
+    "titre": "Module 6: Préparation professionnelle et portfolio",
+    "points": [
+     "Développer un portfolio de projets de couture qui reflète les compétences et la créativité.",
+     "Préparer des présentations efficaces pour les interviews et les rencontres avec des clients.",
+     "Explorer les carrières potentielles dans l’industrie de la mode et se préparer pour le marché du travail."
+    ]
+   }
+  ],
+  "certification": null
+ },
+ {
+  "slug": "formation-oenologie",
+  "category": "metier-specifique",
+  "title": "Formation Œnologie",
+  "intro": "Explorez le monde du vin avec cette formation qui vous initie à la dégustation, aux accords mets-vins et aux subtilités des grands crus. Parfait pour les passionnés ou professionnels, ce programme vous aide à comprendre les régions viticoles, identifier les arômes et développer une véritable expertise œnologique.",
+  "image": "https://skills4mation.com/wp-content/uploads/2024/12/formation-oeneulogie-830x1024.webp",
+  "niveau": "De Débutant à Avancé",
+  "tarif": "A partir de 1400 € - Financement possible",
+  "objectif": "être en capacité de déguster le vin et de reconnaitre ses propriétés organoleptique",
+  "duree": "A partir de 14 H de formation",
+  "prerequis": "Aucun",
+  "objectifs": [
+   "À l’issue de cette formation, vous serez capable de :",
+   "Identifier et décrire les caractéristiques organoleptiques des principaux cépages et appellations",
+   "Maîtriser les techniques de dégustation professionnelle et d’analyse sensorielle des vins",
+   "Expliquer les processus de vinification et leur impact sur les qualités du vin",
+   "Recommander des accords mets-vins pertinents en fonction des profils aromatiques",
+   "Évaluer la qualité et le potentiel de garde d’un vin à partir de ses propriétés organoleptique"
+  ],
+  "modalites": [
+   "Formation en Distanciel ou présentiel selon vos convenances",
+   "Méthodes d’animation participatives : interactivité, exemples et mise en pratiques orienté selon votre projet professionnel",
+   "Procédés pédagogiques adaptés au niveau du/des participants",
+   "Travaux pratiques adaptés à votre activité"
+  ],
+  "modules": [
+   {
+    "titre": "Module 1 : Introduction à l’œnologie et aux fondamentaux du vin",
+    "points": [
+     "• Explorer l’histoire du vin et son importance culturelle",
+     "• Comprendre les principes de base de la viticulture et de la vinification",
+     "• Découvrir les principales régions viticoles du monde et leurs caractéristiques"
+    ]
+   },
+   {
+    "titre": "Module 2 : Techniques de dégustation professionnelle",
+    "points": [
+     "• Maîtriser l’analyse visuelle, olfactive et gustative d’un vin",
+     "• Développer un vocabulaire précis pour décrire les vins",
+     "• S’entraîner à la reconnaissance des arômes et des saveurs"
+    ]
+   },
+   {
+    "titre": "Module 3 : Cépages et terroirs",
+    "points": [
+     "• Identifier les principaux cépages et leurs caractéristiques organoleptiques",
+     "• Comprendre l’influence du terroir sur les qualités du vin",
+     "• Analyser les spécificités des grandes appellations françaises et internationales"
+    ]
+   },
+   {
+    "titre": "Module 4 : Vinification et élevage",
+    "points": [
+     "• Approfondir les différentes méthodes de vinification (rouge, blanc, rosé)",
+     "• Étudier l’impact des techniques d’élevage sur le profil du vin",
+     "• Explorer les vins spéciaux (vins effervescents, vins doux naturels, vins de liqueur)"
+    ]
+   },
+   {
+    "titre": "Module 5 : Accords mets et vins",
+    "points": [
+     "• Comprendre les principes fondamentaux des accords mets-vins",
+     "• Expérimenter différentes combinaisons et analyser leur synergie",
+     "• Élaborer des menus harmonieux en associant les plats et les vins"
+    ]
+   },
+   {
+    "titre": "Module 6 : Conservation et service du vin",
+    "points": [
+     "• Maîtriser les conditions optimales de conservation et de vieillissement des vins",
+     "• Apprendre les techniques de service adaptées à chaque type de vin",
+     "• Gérer une cave personnelle ou professionnelle"
+    ]
+   }
+  ],
+  "certification": null
+ },
+ {
+  "slug": "formation-animer-une-equipe",
+  "category": "rh-management",
+  "title": "Formation Animer une équipe",
+  "intro": "Renforcez votre leadership en apprenant à animer, motiver et fédérer vos équipes. Développez vos compétences en communication, gestion des conflits et cohésion d’équipe pour transformer vos collaborateurs en forces performantes et créatives.",
+  "image": "https://skills4mation.com/wp-content/uploads/2024/12/formation-animer-une-equipe.webp",
+  "niveau": "De Débutant à Avancé",
+  "tarif": "A partir de 1400 € - Financement possible",
+  "objectif": "Savoir animer une équipe de manière bienveillante et efficace",
+  "duree": "A déterminer selon votre niveau et objectif",
+  "prerequis": "Aucun",
+  "objectifs": [
+   "– Développer des compétences en leadership dynamique et motivant.",
+   "– Maîtriser les techniques de communication pour renforcer la cohésion d’équipe.",
+   "– Apprendre à créer et maintenir un environnement de travail stimulant et positif.",
+   "– Acquérir des méthodes pour encourager la créativité et l’innovation au sein de l’équipe.",
+   "– Renforcer les capacités en résolution de conflits et en gestion de la diversité.",
+   "– Élaborer des stratégies pour la reconnaissance et la valorisation des performances individuelles et collectives.",
+   "– Cultiver une culture d’équipe axée sur la collaboration et l’engagement.",
+   "Conclusion :",
+   "Ce parcours “Animer son Équipe” est conçu pour transformer les managers en leaders inspirants, capables de dynamiser et d’unifier leurs équipes. En adoptant ces compétences essentielles, les participants deviendront des moteurs de changement positif, stimulant la performance et l’innovation au sein de leurs organisations"
+  ],
+  "modalites": [
+   "Formation en présentiel ou en visioconférence avec un formateur dédié.",
+   "Méthodes d’animation participatives : interactivité, exemples et cas pratiques",
+   "Procédés pédagogiques adaptés au niveau du/des participants",
+   "Travaux pratiques adaptés à votre activité"
+  ],
+  "modules": [
+   {
+    "titre": "Programme",
+    "points": [
+     "Développer un Leadership Dynamique et Motivant",
+     "– Identifier et affiner son propre style de leadership.",
+     "– Inspirer et motiver les membres de l’équipe à travers une vision claire.",
+     "– Encourager l’engagement et la responsabilisation au sein de l’équipe.",
+     "Maîtrise des Techniques de Communication",
+     "– Utiliser efficacement la communication verbale et non verbale.",
+     "– Appliquer des méthodes de communication pour renforcer la confiance et la transparence.",
+     "– Gérer les communications dans des situations difficiles ou conflictuelles.",
+     "Création d’un Environnement de Travail Positif",
+     "– Favoriser un climat de travail ouvert et inclusif.",
+     "– Développer des stratégies pour maintenir la motivation et le bien-être de l’équipe.",
+     "– Gérer l’équilibre entre la pression du travail et la santé mentale de l’équipe.",
+     "Encouragement de la Créativité et de l’Innovation",
+     "– Stimuler la pensée créative et l’innovation dans les projets d’équipe.",
+     "– Mettre en place des ateliers et des sessions de brainstorming efficaces.",
+     "– Encourager l’expérimentation et la prise de risques calculés.",
+     "Gestion des Conflits et Diversité",
+     "– Appliquer des techniques de résolution de conflits.",
+     "– Reconnaître et valoriser la diversité au sein de l’équipe.",
+     "– Développer des compétences en médiation et en empathie.",
+     "Reconnaissance et Valorisation des Performances",
+     "– Mettre en place des systèmes de reconnaissance des efforts et des succès.",
+     "– Fournir des retours constructifs et motivants.",
+     "– Célébrer les réussites collectives et individuelles.",
+     "Cultiver une Culture de Collaboration",
+     "– Encourager la collaboration et le travail d’équipe.",
+     "– Développer des stratégies pour améliorer l’engagement des employés.",
+     "– Construire et maintenir des relations interpersonnelles solides au sein de l’équipe."
+    ]
+   }
+  ],
+  "certification": null
+ },
+ {
+  "slug": "formation-coaching-systemique-dequipe",
+  "category": "rh-management",
+  "title": "Formation Coaching Systémique d’Equipe",
+  "intro": "Adoptez une approche innovante pour accompagner vos équipes grâce au coaching systémique. Apprenez à naviguer dans les dynamiques collectives, identifier les forces et les blocages d’une équipe et stimuler la performance collaborative. En utilisant des méthodes concrètes comme celles d’Alain Cardon et Claude Arribas école Anse-Metasysteme, facilitez la communication, le développement et l’engagement pour des résultats durables.",
+  "image": "https://skills4mation.com/wp-content/uploads/2024/12/formation-coaching-systemique-equipe.webp",
+  "niveau": "De Débutant à Avancé",
+  "tarif": "A partir de 6000 € - Financement possible",
+  "objectif": "Faire de vous un Coach systémique et/ou un manager-coach en capacité d’améliorer les capacités d’une équipe",
+  "duree": "A partir de 35 H de formation",
+  "prerequis": "Un échange avec le formateur",
+  "objectifs": [
+   "Comprendre les principes fondamentaux du coaching systémique d’équipe.",
+   "Appliquer des outils et techniques systémiques pour améliorer la dynamique d’équipe.",
+   "Diagnostiquer et intervenir dans les systèmes d’équipe pour faciliter le changement et la transformation.",
+   "Développer des stratégies pour renforcer la communication et la résolution de conflits au sein des équipes.",
+   "Accompagner les équipes dans le développement de leur leadership et l’atteinte de leurs objectifs.",
+   "Intégrer le coaching systémique dans les plans de développement organisationnel."
+  ],
+  "modalites": [
+   "Formation en hybride (présentiel en occitanie et online pour ceux qui ne peuvent se déplacer) dans le cadre des sessions proposés par notre formateur",
+   "Méthodes d’animation participatives : interactivité, exemples et cas pratiques",
+   "Procédés pédagogiques adaptés au niveau du/des participants",
+   "Travaux pratiques adaptés à votre activité"
+  ],
+  "modules": [
+   {
+    "titre": "Module 1 : Introduction au Coaching Systémique d’Équipe",
+    "points": [
+     "Principes du coaching systémique.",
+     "Les bases de la dynamique d’équipe.",
+     "Introduction aux outils systémiques."
+    ]
+   },
+   {
+    "titre": "Module 2 : Diagnostique Systémique des Équipes",
+    "points": [
+     "Techniques de diagnostic pour équipes.",
+     "Analyse des patterns de comportement d’équipe.",
+     "Stratégies d’intervention précoce."
+    ]
+   },
+   {
+    "titre": "Module 3 : Outils et Techniques pour le Coaching d’Équipe",
+    "points": [
+     "Application des outils systémiques.",
+     "Techniques de facilitation et médiation d’équipe.",
+     "Gestion des conflits et amélioration de la communication."
+    ]
+   },
+   {
+    "titre": "Module 4 : Leadership et Développement d’Équipe",
+    "points": [
+     "Renforcement des compétences en leadership d’équipe.",
+     "Développement de la cohésion et de la collaboration.",
+     "Techniques pour encourager l’innovation et la créativité."
+    ]
+   },
+   {
+    "titre": "Module 5 : Adaptation au Changement et Gestion de la Transition",
+    "points": [
+     "Stratégies pour accompagner les équipes à travers le changement.",
+     "Gestion de la transition et résilience d’équipe.",
+     "Création d’une culture d’apprentissage et d’amélioration continue."
+    ]
+   },
+   {
+    "titre": "Module 6 : Coaching d’Équipe Avancé et Supervision",
+    "points": [
+     "Techniques avancées de coaching d’équipe.",
+     "Supervision de cas de coaching d’équipe.",
+     "Évaluation et feedback pour le développement continu."
+    ]
+   }
+  ],
+  "certification": null
+ },
+ {
+  "slug": "formation-developper-ses-competences-manageriales",
+  "category": "rh-management",
+  "title": "Formation Développer ses Compétences Managériales",
+  "intro": "Développez vos compétences managériales pour devenir un leader inspirant et performant. Apprenez à communiquer efficacement, prendre des décisions stratégiques et guider vos équipes vers l’atteinte des objectifs. Cette formation vous aide à maîtriser les outils modernes du management.",
+  "image": "https://skills4mation.com/wp-content/uploads/2024/12/formation-ingenierie-de-projet-1.webp",
+  "niveau": "De Débutant à Avancé",
+  "tarif": "A partir de 1400 € - Financement possible",
+  "objectif": "Améliorer son approche managériale",
+  "duree": "A déterminer selon votre niveau et objectif",
+  "prerequis": "Aucun",
+  "objectifs": [
+   "Objectifs pédagogiques du parcours “Diriger avec Impact : Développer ses Compétences Managériales” :",
+   "– Cultiver un leadership efficace et inspirant.",
+   "– Améliorer les compétences en communication interpersonnelle et en gestion d’équipe.",
+   "– Renforcer les capacités en prise de décision stratégique.",
+   "– Développer une compréhension approfondie de la dynamique de l’équipe et de la motivation des employés.",
+   "– Appliquer des stratégies pour gérer le changement et favoriser l’innovation.",
+   "– Maîtriser les techniques de délégation et d’autonomisation des collaborateurs.",
+   "– Accroître l’intelligence émotionnelle pour une meilleure gestion des relations professionnelles.",
+   "Ce parcours est conçu pour transformer les professionnels en leaders visionnaires et efficaces, capables de guider leurs équipes vers le succès. En acquérant ces compétences essentielles, les participants se positionnent non seulement comme des managers compétents, mais aussi comme des moteurs de changement et d’innovation dans leurs organisations."
+  ],
+  "modalites": [
+   "Formation en présentiel ou en visioconférence avec un formateur dédié.",
+   "Méthodes d’animation participatives : interactivité, exemples et cas pratiques",
+   "Procédés pédagogiques adaptés au niveau du/des participants",
+   "Travaux pratiques adaptés à votre activité"
+  ],
+  "modules": [
+   {
+    "titre": "Programme",
+    "points": [
+     "Cultiver un Leadership Efficace et Inspirant",
+     "– Identifier et développer son style de leadership personnel.",
+     "– Inspirer et motiver les équipes à travers un leadership exemplaire.",
+     "– Encourager l’innovation et la créativité au sein des équipes.",
+     "Amélioration des Compétences en Communication Interpersonnelle",
+     "– Pratiquer l’écoute active pour une meilleure compréhension des besoins de l’équipe.",
+     "– Utiliser des techniques de communication assertive.",
+     "– Gérer efficacement les conflits internes.",
+     "Renforcement des Capacités en Prise de Décision Stratégique",
+     "– Analyser les situations complexes pour des prises de décision éclairées.",
+     "– Appliquer des modèles stratégiques pour la résolution de problèmes.",
+     "– Intégrer la pensée critique dans le processus décisionnel.",
+     "Développement de la Compréhension de la Dynamique d’Équipe",
+     "– Identifier et valoriser les divers talents au sein d’une équipe.",
+     "– Construire et maintenir une dynamique d’équipe positive et productive.",
+     "– Gérer la diversité et favoriser un environnement inclusif.",
+     "Stratégies pour Gérer le Changement et Favoriser l’Innovation",
+     "– Conduire le changement de manière stratégique et empathique.",
+     "– Créer un environnement propice à l’innovation et à la prise de risque calculée.",
+     "– Encourager et soutenir l’initiative et l’autonomie des employés.",
+     "Maîtrise des Techniques de Délégation et d’Autonomisation",
+     "– Développer des stratégies de délégation efficaces.",
+     "– Encourager l’autonomie et la responsabilisation des collaborateurs.",
+     "– Suivre et évaluer les performances suite à la délégation.",
+     "Accroître l’Intelligence Émotionnelle pour la Gestion des Relations",
+     "– Reconnaître et gérer ses propres émotions et celles des autres.",
+     "– Appliquer l’intelligence émotionnelle dans le leadership.",
+     "– Utiliser l’empathie pour renforcer les relations professionnelles."
+    ]
+   }
+  ],
+  "certification": null
+ },
+ {
+  "slug": "formation-gestion-des-conflits",
+  "category": "rh-management",
+  "title": "Formation Gestion des conflits en situation professionnelle",
+  "intro": "Apprenez à identifier, prévenir et résoudre les conflits professionnels grâce à des techniques de communication assertive, d’écoute active et de négociation raisonnée. Découvrez comment analyser les origines d’un désaccord, appliquer des stratégies de médiation et transformer les tensions en opportunités de croissance collective. Ce programme combine théorie et pratique pour améliorer le climat organisationnel et développer vos compétences en gestion d’équipe.",
+  "image": "https://skills4mation.com/wp-content/uploads/2024/12/formation-gestion-conflit-843x1024.webp",
+  "niveau": "De Débutant à Avancé",
+  "tarif": "A partir de 1400 € - Financement possible",
+  "objectif": "Gestion des conflits de manière constructive",
+  "duree": "A partir de 14 H de formation",
+  "prerequis": "Aucun",
+  "objectifs": [
+   "Identifier les différents types de conflits et leurs origines dans un contexte professionnel",
+   "Mettre en œuvre des techniques de communication assertive pour désamorcer les tensions",
+   "Appliquer des stratégies de médiation efficaces pour faciliter la résolution des conflits",
+   "Développer une approche proactive pour prévenir l’escalade des désaccords au sein d’une équipe",
+   "Élaborer un plan d’action personnalisé pour gérer les conflits futurs et améliorer le climat organisationnel"
+  ],
+  "modalites": [
+   "Formation en Distanciel ou présentiel selon vos convenances",
+   "Méthodes d’animation participatives : interactivité, exemples et mise en pratiques orienté selon votre projet professionnel",
+   "Procédés pédagogiques adaptés au niveau du/des participants",
+   "Travaux pratiques adaptés à votre activité"
+  ],
+  "modules": [
+   {
+    "titre": "Module 1 : Comprendre les fondamentaux du conflit",
+    "points": [
+     "• Explorer les différents types de conflits et leurs origines",
+     "• Analyser le cycle de vie d’un conflit et ses impacts sur l’environnement professionnel",
+     "• Identifier les signes précurseurs et les comportements associés aux situations conflictuelles"
+    ]
+   },
+   {
+    "titre": "Module 2 : Développer une communication efficace en situation de conflit",
+    "points": [
+     "• Maîtriser les techniques d’écoute active et d’empathie",
+     "• Pratiquer la communication non-violente et l’assertivité",
+     "• Adapter son style de communication en fonction des personnalités et des contextes"
+    ]
+   },
+   {
+    "titre": "Module 3 : Techniques de résolution de conflits",
+    "points": [
+     "• Appliquer la méthode des intérêts mutuels pour trouver des solutions gagnant-gagnant",
+     "• Utiliser la négociation raisonnée pour désamorcer les tensions",
+     "• Mettre en œuvre des stratégies de médiation efficaces"
+    ]
+   },
+   {
+    "titre": "Module 4 : Gestion des émotions dans les conflits",
+    "points": [
+     "• Reconnaître et gérer ses propres émotions face aux situations conflictuelles",
+     "• Développer son intelligence émotionnelle pour mieux comprendre les autres",
+     "• Utiliser des techniques de régulation émotionnelle pour maintenir son calme et son objectivité"
+    ]
+   },
+   {
+    "titre": "Module 5 : Prévention et anticipation des conflits",
+    "points": [
+     "• Créer un environnement de travail propice à la collaboration et au dialogue ouvert",
+     "• Mettre en place des systèmes de feedback constructif et de résolution précoce des désaccords",
+     "• Élaborer des protocoles de gestion des conflits adaptés à la culture de l’entreprise"
+    ]
+   },
+   {
+    "titre": "Module 6 : Leadership et gestion d’équipe en situation de conflit",
+    "points": [
+     "• Développer un style de leadership adapté à la gestion des conflits",
+     "• Faciliter la résolution de conflits au sein d’une équipe",
+     "• Transformer les conflits en opportunités d’apprentissage et de croissance pour l’équipe"
+    ]
+   }
+  ],
+  "certification": null
+ },
+ {
+  "slug": "formation-gestion-des-priorites",
+  "category": "rh-management",
+  "title": "Formation Gestion des priorités",
+  "intro": "Améliorez votre organisation personnelle et optimisez votre productivité grâce à des méthodes de gestion du temps éprouvées. Apprenez à identifier les tâches prioritaires, distinguer l’urgent de l’important et établir des plans d’action clairs pour atteindre vos objectifs. Transformez vos journées surchargées en moments structurés et efficaces, tout en réduisant le stress lié aux délais.",
+  "image": "https://skills4mation.com/wp-content/uploads/2024/12/formation-gestion-des-priorites.webp",
+  "niveau": "De Débutant à Avancé",
+  "tarif": "A partir de 1400 € - Financement possible",
+  "objectif": "Mieux gérer ses priorités dans le cadre’ de son activité professionelle",
+  "duree": "A déterminer selon votre niveau et objectif",
+  "prerequis": "Aucun",
+  "objectifs": [
+   "Identifier et classer efficacement les priorités professionnelles.",
+   "Appliquer des techniques de gestion du temps pour améliorer la productivité.",
+   "Maîtriser des outils et méthodes pour l’organisation des tâches.",
+   "Développer des stratégies pour gérer le stress lié à la surcharge de travail.",
+   "Renforcer les compétences en prise de décision rapide et efficace.",
+   "Cultiver la flexibilité et l’adaptabilité face aux changements de priorités.",
+   "Améliorer la communication interpersonnelle pour une gestion efficace des attentes.",
+   "Ce parcours “Gestion des Priorités” est un levier crucial pour tout professionnel aspirant à exceller dans un environnement dynamique et exigeant. En acquérant ces compétences essentielles, les participants se positionnent non seulement comme des gestionnaires de tâches compétents, mais aussi comme des leaders stratégiques capables d’orienter leur carrière et leur organisation vers le succès."
+  ],
+  "modalites": [
+   "Formation en présentiel ou en visioconférence avec un formateur dédié.",
+   "Méthodes d’animation participatives : interactivité, exemples et cas pratiques",
+   "Procédés pédagogiques adaptés au niveau du/des participants",
+   "Travaux pratiques adaptés à votre activité"
+  ],
+  "modules": [
+   {
+    "titre": "Programme",
+    "points": [
+     "Identifier et Classer les Priorités Professionnelles",
+     "– Comprendre et définir clairement les objectifs professionnels et personnels.",
+     "– Distinguer entre les tâches urgentes et importantes.",
+     "– Utiliser des outils de planification pour hiérarchiser les activités.",
+     "Appliquer les Techniques de Gestion du Temps",
+     "– Planifier efficacement les tâches quotidiennes et à long terme.",
+     "– Adopter des méthodes de gestion du temps comme la méthode Pomodoro ou la matrice Eisenhower.",
+     "– Évaluer et ajuster régulièrement les stratégies de gestion du temps.",
+     "Maîtriser des Outils et Méthodes d’Organisation des Tâches",
+     "– Utiliser des logiciels de gestion de tâches et des applications de calendrier.",
+     "– Développer des checklists et des systèmes de suivi des tâches.",
+     "– Prioriser les tâches en fonction de leur impact et des délais.",
+     "Développer des Stratégies pour Gérer le Stress",
+     "– Appliquer des techniques de relaxation et de gestion du stress.",
+     "– Identifier les signes de surmenage et mettre en place des stratégies préventives.",
+     "– Équilibrer les charges de travail pour maintenir une performance optimale.",
+     "Renforcer les Compétences en Prise de Décision",
+     "– Analyser rapidement les informations pour prendre des décisions efficaces.",
+     "– Gérer les dilemmes et les situations ambigües.",
+     "– Exercer un jugement critique pour évaluer les conséquences des choix.",
+     "Cultiver la Flexibilité et l’Adaptabilité",
+     "– Adapter les plans et les stratégies face à des changements imprévus.",
+     "– Développer une mentalité ouverte pour accepter et intégrer les retours d’information.",
+     "– Réajuster les priorités en fonction de l’évolution du contexte professionnel.",
+     "Améliorer la Communication Interpersonnelle",
+     "– Négocier et communiquer efficacement les priorités avec les parties prenantes.",
+     "– Établir des attentes claires avec les collaborateurs et les supérieurs.",
+     "– Gérer les conflits liés aux priorités et aux délais de manière constructive."
+    ]
+   }
+  ],
+  "certification": null
+ },
+ {
+  "slug": "formation-gestion-des-emotions",
+  "category": "rh-management",
+  "title": "Formation Gestion des émotions",
+  "intro": "Renforcez votre intelligence émotionnelle pour mieux gérer vos réactions et celles des autres dans un contexte professionnel. Apprenez à identifier vos émotions, les transformer en leviers positifs et maintenir votre calme en situation de stress ou de conflit. Cette formation vous donne des outils pratiques pour renforcer votre bien-être, vos relations professionnelles et votre efficacité au quotidien.",
+  "image": "https://skills4mation.com/wp-content/uploads/2024/12/formation-939x1024.webp",
+  "niveau": "De Débutant à Avancé",
+  "tarif": "A partir de 1400 € - Financement possible",
+  "objectif": "Prendre le contrôle de ses émotions",
+  "duree": "A partir de 14 H de formation",
+  "prerequis": "Aucun",
+  "objectifs": [
+   "Acquérir des techniques pour identifier et comprendre ses émotions.",
+   "Développer des stratégies pour gérer efficacement le stress et les situations difficiles.",
+   "Renforcer son intelligence émotionnelle pour améliorer les relations interpersonnelles.",
+   "Appliquer des méthodes pour réguler ses émotions dans un contexte professionnel.",
+   "Intégrer des pratiques de bien-être pour favoriser un équilibre émotionnel durable."
+  ],
+  "modalites": [
+   "Formation en Distanciel ou présentiel selon vos convenances",
+   "Méthodes d’animation participatives : interactivité, exemples et mise en pratiques orienté selon votre projet professionnel",
+   "Procédés pédagogiques adaptés au niveau du/des participants",
+   "Travaux pratiques adaptés à votre activité"
+  ],
+  "modules": [
+   {
+    "titre": "Module 1 : Comprendre les émotions",
+    "points": [
+     "• Explorez la nature et la fonction des émotions dans notre vie quotidienne",
+     "• Identifiez les différentes catégories d’émotions et leurs manifestations physiques",
+     "• Découvrez le lien entre pensées, émotions et comportements"
+    ]
+   },
+   {
+    "titre": "Module 2 : Développer l’intelligence émotionnelle",
+    "points": [
+     "• Apprenez à reconnaître et nommer vos propres émotions avec précision",
+     "• Cultivez l’empathie pour mieux comprendre les émotions des autres",
+     "• Pratiquez l’auto-régulation émotionnelle dans diverses situations"
+    ]
+   },
+   {
+    "titre": "Module 3 : Techniques de gestion du stress",
+    "points": [
+     "• Maîtrisez les techniques de respiration pour calmer rapidement le système nerveux",
+     "• Intégrez la méditation de pleine conscience dans votre routine quotidienne",
+     "• Adoptez des stratégies de restructuration cognitive pour gérer les pensées stressantes"
+    ]
+   },
+   {
+    "titre": "Module 4 : Communication émotionnelle efficace",
+    "points": [
+     "• Développez une communication assertive pour exprimer vos besoins et limites",
+     "• Apprenez à donner et recevoir du feedback émotionnel de manière constructive",
+     "• Pratiquez l’écoute active pour améliorer vos relations interpersonnelles"
+    ]
+   },
+   {
+    "titre": "Module 5 : Gestion des émotions difficiles",
+    "points": [
+     "• Explorez des techniques pour faire face à la colère de manière saine et productive",
+     "• Apprenez à surmonter l’anxiété et la peur par des exercices pratiques",
+     "• Développez des stratégies pour gérer la tristesse et prévenir la dépression"
+    ]
+   },
+   {
+    "titre": "Module 6 : Intégration et pratique avancée",
+    "points": [
+     "• Créez votre boîte à outils personnalisée de gestion des émotions",
+     "• Mettez en pratique vos compétences à travers des jeux de rôle et des simulations",
+     "• Élaborez un plan d’action pour intégrer la gestion des émotions dans votre vie quotidienne"
+    ]
+   }
+  ],
+  "certification": null
+ },
+ {
+  "slug": "formation-ingenierie-de-projet",
+  "category": "rh-management",
+  "title": "Formation Ingénierie de projet",
+  "intro": "Développez vos compétences en gestion de projet pour planifier, organiser et piloter efficacement vos initiatives. Découvrez les outils de planification, les techniques de gestion des risques et l’optimisation des ressources pour garantir le respect des délais et des objectifs. Cette formation vous donne les clés pour structurer vos projets, mobiliser vos équipes et mener vos ambitions à bien dans un environnement exigeant.",
+  "image": "https://skills4mation.com/wp-content/uploads/2024/12/formation-ingenierie-de-projet.webp",
+  "niveau": "De Débutant à Avancé",
+  "tarif": "A partir de 1400 € - Financement possible",
+  "objectif": "être en capacité de réaliser des projets complexe",
+  "duree": "A partir de 14 H de formation",
+  "prerequis": "Aucun",
+  "objectifs": [
+   "Les objectifs pédagogiques de la formation “Ingénierie de projet” sont les suivants :",
+   "Acquérir les compétences nécessaires pour planifier et structurer un projet de manière efficace",
+   "Maîtriser les outils de gestion de projet pour suivre les délais, les coûts et les ressources",
+   "Développer des techniques de communication pour coordonner les équipes et les parties prenantes",
+   "Anticiper et gérer les risques liés à l’exécution des projets",
+   "Analyser et évaluer les résultats d’un projet afin d’assurer son succès et ses retombées"
+  ],
+  "modalites": [
+   "Formation en Distanciel ou présentiel selon vos convenances",
+   "Méthodes d’animation participatives : interactivité, exemples et mise en pratiques orienté selon votre projet professionnel",
+   "Procédés pédagogiques adaptés au niveau du/des participants",
+   "Travaux pratiques adaptés à votre activité"
+  ],
+  "modules": [
+   {
+    "titre": "Module 1 : Introduction à l’ingénierie de projet",
+    "points": [
+     "Comprendre les principes fondamentaux de la gestion de projet",
+     "Identifier les différentes phases du cycle de vie d’un projet",
+     "Découvrir les rôles et responsabilités d’un ingénieur de projet"
+    ]
+   },
+   {
+    "titre": "Module 2 : Planification et structuration de projet",
+    "points": [
+     "Apprendre à définir les objectifs et livrables d’un projet",
+     "Élaborer un plan de projet détaillé avec des échéances et des ressources allouées",
+     "Mettre en place des outils de planification (diagrammes de Gantt, PERT, etc.)"
+    ]
+   },
+   {
+    "titre": "Module 3 : Gestion des ressources et des équipes",
+    "points": [
+     "Maîtriser la gestion des ressources humaines, matérielles et financières",
+     "Développer des compétences de leadership pour coordonner efficacement une équipe",
+     "Optimiser l’allocation des ressources et gérer les conflits internes"
+    ]
+   },
+   {
+    "titre": "Module 4 : Suivi et contrôle de projet",
+    "points": [
+     "Mettre en place des indicateurs de performance pour suivre l’avancement du projet",
+     "Gérer les écarts entre le plan initial et la réalité du terrain",
+     "Utiliser des outils de reporting pour communiquer les résultats aux parties prenantes"
+    ]
+   },
+   {
+    "titre": "Module 5 : Gestion des risques et résolution des problèmes",
+    "points": [
+     "Identifier, analyser et anticiper les risques liés au projet",
+     "Mettre en place un plan de gestion des risques pour minimiser les impacts",
+     "Développer des stratégies de résolution de problèmes en cas d’imprévus"
+    ]
+   },
+   {
+    "titre": "Module 6 : Clôture et évaluation de projet",
+    "points": [
+     "Apprendre à formaliser la clôture d’un projet et la remise des livrables",
+     "Analyser les résultats du projet pour évaluer son succès",
+     "Capitaliser sur les leçons apprises pour améliorer les futurs projets"
+    ]
+   }
+  ],
+  "certification": null
+ },
+ {
+  "slug": "formation-innover-grace-au-design-thinking",
+  "category": "rh-management",
+  "title": "Formation Innover grâce au Design Thinking",
+  "intro": "Développez votre capacité à innover en utilisant le Design Thinking. Apprenez à résoudre des problèmes complexes en impliquant vos équipes dans une démarche centrée sur l’empathie, la créativité et la collaboration. Maîtrisez les étapes du processus : immersion, idéation, prototypage et test, pour transformer vos défis en opportunités concrètes d’innovation.",
+  "image": "https://skills4mation.com/wp-content/uploads/2024/12/formation-design-thinking.webp",
+  "niveau": "De Débutant à Avancé",
+  "tarif": "A partir de 2400 € - Financement possible",
+  "objectif": "Améliorer votre capacité d’innovation grâce à l’intelligence collective",
+  "duree": "A partir de 10 H de formation",
+  "prerequis": "Aucun",
+  "objectifs": [
+   "Comprendre les fondements et les principes du Design Thinking.",
+   "Apprendre à appliquer le processus du Design Thinking à des problèmes réels.",
+   "Développer des compétences d’empathie pour mieux comprendre les utilisateurs.",
+   "Stimuler la créativité et l’innovation au sein des équipes.",
+   "Maîtriser les techniques de prototypage rapide et de tests d’idées."
+  ],
+  "modalites": [
+   "Formation pour des groupes entre 4 et 12 personnes.",
+   "Formation en présentiel ou à distance",
+   "Méthodes d’animation participatives : interactivité, exemples et cas pratiques",
+   "Procédés pédagogiques adaptés au niveau du/des participants",
+   "Travaux pratiques adaptés à votre activité"
+  ],
+  "modules": [
+   {
+    "titre": "Module 1 : Introduction au Design Thinking",
+    "points": [
+     "Définir le Design Thinking et ses principes clés.",
+     "Comprendre l’importance de l’empathie dans le processus créatif.",
+     "Explorer l’histoire et l’évolution du Design Thinking."
+    ]
+   },
+   {
+    "titre": "Module 2 : L’Empathie comme Fondement de l’Innovation",
+    "points": [
+     "Apprendre à mener des recherches basées sur l’empathie.",
+     "Techniques pour observer et interpréter les besoins des utilisateurs.",
+     "Construire des personas et des parcours utilisateurs."
+    ]
+   },
+   {
+    "titre": "Module 3 : Idéation et Créativité",
+    "points": [
+     "Techniques de brainstorming et de pensée divergente.",
+     "Organiser des sessions d’idéation efficaces.",
+     "Sélectionner et affiner les idées."
+    ]
+   },
+   {
+    "titre": "Module 4 : Prototypage et Tests",
+    "points": [
+     "Principes du prototypage rapide.",
+     "Construire des prototypes fonctionnels.",
+     "Tester les prototypes avec les utilisateurs et collecter des feedbacks."
+    ]
+   },
+   {
+    "titre": "Module 5 : Implémentation et Itération",
+    "points": [
+     "Stratégies pour l’implémentation des solutions.",
+     "Approches itératives pour le développement de produits/services.",
+     "Gérer le feedback et l’évolution du projet."
+    ]
+   },
+   {
+    "titre": "Module 6 : Design Thinking dans le Leadership et la Culture d’Entreprise",
+    "points": [
+     "Intégrer le Design Thinking dans les stratégies d’entreprise.",
+     "Cultiver une culture d’innovation.",
+     "Cas d’étude : entreprises ayant réussi grâce au Design Thinking."
+    ]
+   }
+  ],
+  "certification": null
+ },
+ {
+  "slug": "formation-maitriser-la-methode-aec-disc",
+  "category": "rh-management",
+  "title": "Formation Maîtriser la méthode AEC DISC",
+  "intro": "Découvrez la méthode AEC DISC pour améliorer votre communication interpersonnelle et la gestion des dynamiques d’équipe. Apprenez à analyser les profils comportementaux, anticiper les besoins des collaborateurs et adapter votre approche pour optimiser les interactions. Cette formation est idéale pour les managers, les coachs et toute personne souhaitant renforcer son leadership et sa capacité d’adaptation.",
+  "image": "https://skills4mation.com/wp-content/uploads/2024/12/formation-disc.webp",
+  "niveau": "De Débutant à Avancé",
+  "tarif": "A partir de 1200 € - Financement possible",
+  "objectif": "Améliorer ses compétences interpersonnelles",
+  "duree": "A partir de 7 H de formation",
+  "prerequis": "Aucun",
+  "objectifs": [
+   "Comprendre les fondements théoriques et pratiques de la méthode AEC DISC.",
+   "Analyser les différents styles de comportement et communication selon le modèle DISC.",
+   "Adapter sa communication et son management aux profils DISC identifiés.",
+   "Résoudre les conflits et améliorer la cohésion d’équipe en utilisant les principes AEC DISC.",
+   "Développer des stratégies personnalisées pour optimiser le leadership et l’efficacité organisationnelle."
+  ],
+  "modalites": [
+   "Formation en présentiel dans le cadre des sessions proposés par notre formateur",
+   "Méthodes d’animation participatives : interactivité, exemples et mise en pratiques",
+   "Procédés pédagogiques adaptés au niveau du/des participants",
+   "Travaux pratiques adaptés à votre activité"
+  ],
+  "modules": [
+   {
+    "titre": "Module 1: Introduction à la méthode AEC DISC",
+    "points": [
+     "Découvrir les origines et les principes fondamentaux de la méthode AEC DISC.",
+     "Comprendre les quatre dimensions du modèle DISC : Dominance, Influence, Stabilité, Conformité.",
+     "Identifier les applications de la méthode DISC dans différents contextes professionnels."
+    ]
+   },
+   {
+    "titre": "Module 2: Analyse comportementale avec DISC",
+    "points": [
+     "Apprendre à évaluer et à classifier les comportements selon les catégories DISC.",
+     "Utiliser des outils d’analyse comportementale pour observer et comprendre les interactions au sein d’une équipe.",
+     "Pratiquer l’interprétation des profils DISC à travers des études de cas et des simulations."
+    ]
+   },
+   {
+    "titre": "Module 3: Communication efficace grâce au DISC",
+    "points": [
+     "Adapter sa communication aux différents profils DISC pour améliorer l’efficacité des échanges.",
+     "Développer des compétences en écoute active adaptées aux différents types de comportement.",
+     "Gérer les feedbacks constructifs en fonction des profils comportementaux DISC."
+    ]
+   },
+   {
+    "titre": "Module 4: Gestion des conflits avec la méthode DISC",
+    "points": [
+     "Identifier les sources potentielles de conflits entre différents profils DISC.",
+     "Appliquer des stratégies de résolution de conflits adaptées aux spécificités comportementales.",
+     "Simuler des scénarios de gestion de conflits pour renforcer l’apprentissage et la compréhension."
+    ]
+   },
+   {
+    "titre": "Module 5: Leadership et management selon DISC",
+    "points": [
+     "Évaluer l’impact des styles de leadership DISC sur la performance de l’équipe.",
+     "Développer des techniques de management adaptatives pour motiver et engager divers profils comportementaux.",
+     "Créer des plans de développement personnel et professionnel basés sur l’analyse DISC."
+    ]
+   },
+   {
+    "titre": "Module 6: Synthèse et mise en application de la méthode AEC DISC",
+    "points": [
+     "Intégrer les compétences acquises à travers un projet final qui simule une situation réelle de gestion d’équipe.",
+     "Analyser et discuter des retours d’expérience des participants pour consolider les connaissances.",
+     "Planifier la continuation du développement des compétences DISC au-delà de la formation."
+    ]
+   }
+  ],
+  "certification": null
+ },
+ {
+  "slug": "formation-intelligence-collective",
+  "category": "rh-management",
+  "title": "Formation Résoudre les problèmes grâce à l’intelligence collective",
+  "intro": "Mobilisez le potentiel de votre équipe pour résoudre des défis grâce à l’intelligence collective. Découvrez des techniques comme l’Action Learning, la co-création et la facilitation pour stimuler l’innovation et renforcer la collaboration. Transformez vos réunions et échanges en véritables leviers de résolution de problèmes et d’amélioration continue.",
+  "image": "https://skills4mation.com/wp-content/uploads/2024/12/formation-intelligence.webp",
+  "niveau": "De Débutant à Avancé",
+  "tarif": "A partir de 2400 € - Financement possible",
+  "objectif": "Améliorer votre capacité de résolution de problème grâce à l’intelligence collective",
+  "duree": "A partir de 10 H de formation",
+  "prerequis": "Aucun",
+  "objectifs": [
+   "Développer une compréhension approfondie de l’intelligence collective et de ses avantages.",
+   "Apprendre à faciliter des ateliers d’intelligence collective efficacement.",
+   "Maîtriser des techniques de créativité et d’innovation collaboratives.",
+   "Renforcer la cohésion et la dynamique d’équipe.",
+   "Améliorer la prise de décision collective et la résolution de problèmes.",
+   "Au programme",
+   "Le mindset collaboratif – expérimentation du cadre de liberté et de responsabilité, identification des freins et des leviers collaboratifs sur la base d’expériences.",
+   "Introduction et expérimentation/ animation d’ateliers de co-développement “action learning” sur un sujet concret.",
+   "Présentation et expérimentation des réunions de triage / gestion par tension comme puissant format pour cultiver l’entraide et activer l’intelligence collective pour résoudre des problèmes.",
+   "Pratique de la “sollicitation d’avis” un outil consultatif du collectif qui permet la décentralisation de pouvoir et de l’économie de temps collectif."
+  ],
+  "modalites": [
+   "Formation pour des groupes entre 4 et 12 personnes.",
+   "Formation en présentiel ou à distance",
+   "Méthodes d’animation participatives : interactivité, exemples et cas pratiques",
+   "Procédés pédagogiques adaptés au niveau du/des participants",
+   "Travaux pratiques adaptés à votre activité"
+  ],
+  "modules": [
+   {
+    "titre": "Module 1 : Fondements de l’Intelligence Collective",
+    "points": [
+     "Comprendre les principes de l’intelligence collective.",
+     "Identifier les bénéfices de l’intelligence collective dans la résolution de problèmes.",
+     "Explorer les conditions nécessaires pour cultiver l’intelligence collective."
+    ]
+   },
+   {
+    "titre": "Module 2 : Techniques de Facilitation pour l’Intelligence Collective",
+    "points": [
+     "Maîtriser des techniques de facilitation pour maximiser la participation et l’engagement.",
+     "Apprendre à gérer la diversité des perspectives pour enrichir la réflexion collective.",
+     "Pratiquer la mise en place d’un environnement propice à la créativité et à l’innovation."
+    ]
+   },
+   {
+    "titre": "Module 3 : l’action Learning et Innovation Collaborative",
+    "points": [
+     "Introduire les principes de l’",
+     "action Learning",
+     "comme outil de résolution de problèmes.",
+     "Expérimenter avec des méthodes de brainstorming et de prototypage rapide.",
+     "Développer une culture d’innovation ouverte et collaborative."
+    ]
+   },
+   {
+    "titre": "Module 4 : Communication et Dynamiques d’Équipe",
+    "points": [
+     "Renforcer les compétences de communication pour une collaboration efficace.",
+     "Comprendre et améliorer les dynamiques d’équipe.",
+     "Encourager une culture de feedback constructif et de soutien mutuel."
+    ]
+   },
+   {
+    "titre": "Module 5 : Prise de Décision et Résolution de Problèmes en Équipe",
+    "points": [
+     "Explorer des méthodes de prise de décision collaborative.",
+     "Appliquer l’intelligence collective à la résolution de problèmes concrets.",
+     "Évaluer et mesurer l’impact des solutions co-créées."
+    ]
+   },
+   {
+    "titre": "Module 6 : Cas Pratiques et Application",
+    "points": [
+     "Mettre en pratique les compétences et connaissances acquises à travers des études de cas.",
+     "Faciliter des sessions d’intelligence collective sur des problématiques réelles.",
+     "Analyser et réfléchir sur les processus et résultats obtenus"
+    ]
+   }
+  ],
+  "certification": null
+ },
+ {
+  "slug": "formation-reinventer-les-reunions-dequipe",
+  "category": "rh-management",
+  "title": "Formation réinventer les réunions d’équipe",
+  "intro": "Apprenez à organiser des réunions efficaces, productives et engageantes pour vos équipes. Explorez des techniques pour structurer vos sessions, favoriser la prise de décision et dynamiser la participation. Cette formation vous aide à transformer vos réunions en outils puissants pour le suivi de projet, la communication interne et le travail collaboratif.",
+  "image": "https://skills4mation.com/wp-content/uploads/2024/12/formation-reunion.webp",
+  "niveau": "De Débutant à Avancé",
+  "tarif": "A partir de 2400 € - Financement possible",
+  "objectif": "Améliorer l’efficacité de vos réunions grâce à l’intelligence collective",
+  "duree": "A partir de 12 H - Formation pour des groupes entre 4 et 12 personnes.",
+  "prerequis": "Aucun",
+  "objectifs": [
+   "Identifier les lacunes des formats de réunion traditionnels et explorer des alternatives innovantes.",
+   "Appliquer des techniques de facilitation pour engager tous les participants.",
+   "Concevoir des réunions d’équipe qui favorisent la collaboration, l’innovation et l’efficacité.",
+   "Utiliser des outils et des technologies pour renforcer l’interaction et la productivité des réunions.",
+   "Mesurer l’efficacité des réunions et ajuster les pratiques en conséquence."
+  ],
+  "modalites": [
+   "Formation en présentiel ou en visioconférence avec un formateur dédié.",
+   "Méthodes d’animation participatives essentiellement basées sur la pratique",
+   "Procédés pédagogiques adaptés au niveau du/des participants",
+   "Travaux pratiques adaptés à votre activité"
+  ],
+  "modules": [
+   {
+    "titre": "Module 1 : Diagnostiquer les Défis des Réunions Actuelles",
+    "points": [
+     "Comprendre les problèmes communs des réunions d’équipe.",
+     "Identifier les besoins spécifiques de votre équipe.",
+     "Évaluer l’efficacité des réunions actuelles.",
+     "Évaluer la nécessité des réunions et explorer les alternatives."
+    ]
+   },
+   {
+    "titre": "Module 2 : Principes de Réunions collaboratives et efficaces",
+    "points": [
+     "Fixer des objectifs précis et clarifier les attentes de chaque réunion.",
+     "Planifier l’agenda avec une intention stratégique.",
+     "Poser et maintenir un cadre de communication propice aux échanges ouverts et constructifs.",
+     "Créer de la cohésion en équipe en favorisant une communication transparente et respectueuse."
+    ]
+   },
+   {
+    "titre": "Module 3 : Techniques de Facilitation Interactives",
+    "points": [
+     "Apprendre à faciliter les réunions de manière interactive et engageante.",
+     "Intégrer des méthodes qui stimulent la créativité et maximisent la participation active de tous les membres de l’équipe. Intégrer des pauses actives et des techniques de brainstorming.",
+     "Utiliser des méthodes pour gérer les divergences d’opinions."
+    ]
+   },
+   {
+    "titre": "Module 4 : Créer l’Engagement du collectif",
+    "points": [
+     "Établir des rôles et des responsabilités clairs pour encourager la co-responsabilité dans la réussite des réunions.",
+     "Favoriser un sentiment de propriété et d’engagement envers les résultats des réunions.",
+     "Découvrir les techniques pour prendre des décisions de manière collective et engageante.",
+     "Sortir avec un plan d’action précis et validé par tous grâce à des processus décisionnels inclusifs."
+    ]
+   },
+   {
+    "titre": "Module 5 : Technologies et Outils pour des Réunions Productives",
+    "points": [
+     "Sélectionner et utiliser des outils digitaux pour améliorer la collaboration.",
+     "Exploiter les plateformes de gestion de projet pour le suivi des actions.",
+     "Optimiser la communication pré et post-réunion."
+    ]
+   },
+   {
+    "titre": "Module 6 : Évaluation et Amélioration Continue des Réunions",
+    "points": [
+     "Mettre en place des mécanismes de feedback pour les réunions.",
+     "Analyser les données pour mesurer l’efficacité des réunions.",
+     "Ajuster les pratiques en fonction des retours et des résultats obtenus."
+    ]
+   }
+  ],
+  "certification": null
+ },
+ {
+  "slug": "formation-financer-un-projet-culturel",
+  "category": "rse",
+  "title": "Formation Financer un projet culturel",
+  "intro": "Maîtrisez les stratégies pour financer vos projets culturels. Apprenez à mobiliser des fonds, convaincre vos partenaires et coordonner des ressources pour réaliser vos ambitions artistiques. Cette formation vous guide dans le monde du financement culturel pour concrétiser vos idées.",
+  "image": "https://skills4mation.com/wp-content/uploads/2024/12/1-1-1024x819.png",
+  "niveau": "De Débutant à Avancé",
+  "tarif": "A partir de 1400 € - Financement possible",
+  "objectif": "être en capacité de demander des financements pour tout projetà dimension culturel",
+  "duree": "A partir de 14 H de formation",
+  "prerequis": "Aucun",
+  "objectifs": [
+   "Comprendre les différentes sources de financement disponibles pour les projets culturels.",
+   "Élaborer des propositions de financement convaincantes en alignant les besoins du projet avec les attentes des bailleurs de fonds.",
+   "Développer des stratégies de recherche et d’identification des financeurs potentiels pour maximiser les opportunités de financement.",
+   "Gérer et suivre les fonds obtenus en assurant une utilisation efficace et conforme aux attentes des partenaires financiers.",
+   "Évaluer l’impact des financements reçus et ajuster les stratégies pour optimiser les futures demandes de fonds."
+  ],
+  "modalites": [
+   "Formation en Distanciel ou présentiel selon vos convenances",
+   "Méthodes d’animation participatives : interactivité, exemples et mise en pratiques orienté selon votre projet professionnel",
+   "Procédés pédagogiques adaptés au niveau du/des participants",
+   "Travaux pratiques adaptés à votre activité"
+  ],
+  "modules": [
+   {
+    "titre": "Module 1 : Introduction aux Sources de Financement Culturel",
+    "points": [
+     "Identifier les principales sources de financement disponibles pour les projets culturels, telles que les subventions, les mécénats et les campagnes de crowdfunding.",
+     "Analyser les avantages et les contraintes de chaque source de financement pour choisir les plus adaptées à vos projets.",
+     "Découvrir les tendances actuelles en matière de financement culturel et comment elles peuvent influencer vos stratégies de levée de fonds."
+    ]
+   },
+   {
+    "titre": "Module 2 : Élaboration de Propositions de Financement",
+    "points": [
+     "Rédiger des propositions de financement percutantes en structurant clairement les objectifs, le budget et les bénéfices du projet.",
+     "Adapter les propositions aux attentes spécifiques des bailleurs de fonds pour augmenter vos chances de succès.",
+     "Utiliser des techniques de présentation efficaces pour capter l’attention des financeurs et démontrer la valeur de votre projet."
+    ]
+   },
+   {
+    "titre": "Module 3 : Recherche et Identification des Financeurs",
+    "points": [
+     "Développer des stratégies pour rechercher et identifier les financeurs potentiels qui correspondent à vos projets culturels.",
+     "Utiliser des outils et des ressources pour évaluer les opportunités de financement et cibler les bailleurs de fonds les plus pertinents.",
+     "Créer un réseau de contacts et de partenaires qui peuvent soutenir et promouvoir vos demandes de financement."
+    ]
+   },
+   {
+    "titre": "Module 4 : Gestion et Suivi des Fonds",
+    "points": [
+     "Mettre en place des processus de gestion des fonds obtenus pour assurer leur utilisation conforme aux exigences des financeurs.",
+     "Suivre et évaluer les dépenses en fonction du budget approuvé pour garantir la transparence et l’efficacité des fonds.",
+     "Communiquer régulièrement avec les bailleurs de fonds pour fournir des mises à jour et maintenir une relation positive."
+    ]
+   },
+   {
+    "titre": "Module 5 : Évaluation de l’Impact des Financements",
+    "points": [
+     "Mesurer l’impact des financements reçus en utilisant des indicateurs de performance et des outils d’évaluation appropriés.",
+     "Analyser les résultats obtenus pour déterminer l’efficacité des fonds et leur contribution aux objectifs du projet.",
+     "Adapter les stratégies de financement futures en fonction des leçons apprises et des feedbacks des financeurs."
+    ]
+   },
+   {
+    "titre": "Module 6 : Optimisation des Stratégies de Financement",
+    "points": [
+     "Réviser et améliorer les stratégies de demande de financement en tenant compte des évaluations et des résultats précédents.",
+     "Explorer des approches innovantes et des tendances émergentes dans le financement culturel pour diversifier vos sources de fonds.",
+     "Préparer des plans de financement à long terme pour garantir la durabilité et le succès continu de vos projets culturels."
+    ]
+   }
+  ],
+  "certification": null
+ },
+ {
+  "slug": "formation-le-mecenat-dentreprise",
+  "category": "rse",
+  "title": "Formation Le mécénat d’entreprise",
+  "intro": "Développez des projets de mécénat d’entreprise efficaces et stratégiques. Apprenez à structurer vos partenariats, aligner vos valeurs avec des actions concrètes et maximiser l’impact sociétal de vos initiatives pour renforcer votre engagement auprès des causes sociales.",
+  "image": "https://skills4mation.com/wp-content/uploads/2024/12/3-1024x643.webp",
+  "niveau": "De Débutant à Avancé",
+  "tarif": "A partir de 1400 € - Financement possible",
+  "objectif": "être en capacité de mettre en place un mécénat au sein de votre structure",
+  "duree": "A partir de 14 H de formation",
+  "prerequis": "Aucun",
+  "objectifs": [
+   "Comprendre les fondamentaux du mécénat et ses enjeux pour les entreprises.",
+   "Identifier et analyser les opportunités de mécénat en fonction des objectifs stratégiques de l’entreprise.",
+   "Concevoir et développer des projets de mécénat en alignant les intérêts de l’entreprise et des bénéficiaires.",
+   "Évaluer l’impact des initiatives de mécénat et optimiser les partenariats pour maximiser les résultats.",
+   "Communiquer efficacement sur les projets de mécénat pour renforcer l’image et la réputation de l’entreprise."
+  ],
+  "modalites": [
+   "Formation en Distanciel ou présentiel selon vos convenances",
+   "Méthodes d’animation participatives : interactivité, exemples et mise en pratiques orienté selon votre projet professionnel",
+   "Procédés pédagogiques adaptés au niveau du/des participants",
+   "Travaux pratiques adaptés à votre activité"
+  ],
+  "modules": [
+   {
+    "titre": "Module 1 : Introduction au Mécénat et à ses Enjeux",
+    "points": [
+     "Définir le mécénat et distinguer ses formes principales, telles que le mécénat financier, matériel et de compétence.",
+     "Identifier les bénéfices du mécénat pour les entreprises et les associations bénéficiaires.",
+     "Explorer les tendances actuelles et les défis du mécénat dans le contexte économique et social."
+    ]
+   },
+   {
+    "titre": "Module 2 : Stratégie de Mécénat et Alignement avec les Objectifs d’Entreprise",
+    "points": [
+     "Analyser les objectifs stratégiques de l’entreprise pour aligner les projets de mécénat avec sa vision et ses valeurs.",
+     "Identifier les causes et projets qui correspondent aux intérêts et à la mission de l’entreprise.",
+     "Établir des critères de sélection pour choisir les initiatives de mécénat les plus pertinentes et impactantes."
+    ]
+   },
+   {
+    "titre": "Module 3 : Conception de Projets de Mécénat",
+    "points": [
+     "Développer des propositions de projets de mécénat en définissant les objectifs, les bénéficiaires et les ressources nécessaires.",
+     "Créer des plans de mise en œuvre détaillés, y compris les étapes, les partenaires et les indicateurs de succès.",
+     "Prévoir des stratégies de gestion des ressources et de coordination avec les parties prenantes pour assurer la réussite des projets."
+    ]
+   },
+   {
+    "titre": "Module 4 : Mise en Œuvre et Gestion des Initiatives de Mécénat",
+    "points": [
+     "Exécuter les projets de mécénat selon le plan établi en gérant les ressources et les délais de manière efficace.",
+     "Collaborer avec les bénéficiaires et les partenaires pour assurer une coordination fluide et atteindre les objectifs fixés.",
+     "Résoudre les problèmes et ajuster les stratégies en fonction des feedbacks et des résultats observés."
+    ]
+   },
+   {
+    "titre": "Module 5 : Évaluation de l’Impact et Optimisation des Initiatives",
+    "points": [
+     "Mesurer l’impact des projets de mécénat en utilisant des indicateurs de performance et des outils d’évaluation adaptés.",
+     "Analyser les résultats obtenus pour déterminer l’efficacité des initiatives et leur contribution aux objectifs de l’entreprise.",
+     "Adapter les projets futurs en fonction des leçons apprises et des opportunités d’amélioration identifiées."
+    ]
+   },
+   {
+    "titre": "Module 6 : Communication et Valorisation des Projets de Mécénat",
+    "points": [
+     "Élaborer des stratégies de communication pour promouvoir les initiatives de mécénat auprès des parties prenantes internes et externes.",
+     "Créer des supports de communication, tels que des rapports, des études de cas et des témoignages, pour valoriser les projets réalisés.",
+     "Gérer la réputation de l’entreprise en utilisant les succès des projets de mécénat pour renforcer son image de marque et son engagement social."
+    ]
+   }
+  ],
+  "certification": null
+ },
+ {
+  "slug": "formation-reduire-lempreinte-carbone-dans-son-entreprise",
+  "category": "rse",
+  "title": "Formation Réduire l’empreinte carbone dans son entreprise",
+  "intro": "Adoptez des solutions concrètes pour réduire l’empreinte carbone de votre entreprise. Apprenez à identifier vos principaux impacts environnementaux, optimiser vos ressources et mettre en place des pratiques durables pour allier rentabilité et transition écologique.",
+  "image": "https://skills4mation.com/wp-content/uploads/2024/12/4-1-1024x819.png",
+  "niveau": "De Débutant à Avancé",
+  "tarif": "A partir de 1800 € - Financement possible",
+  "objectif": "Améliorer ses compétences et la prise de conscience de son entreprise de son emprunte carbone",
+  "duree": "A déterminer selon votre niveau et objectif",
+  "prerequis": "Avoir une entreprise désireuse de tendre vers une approche décarbonée",
+  "objectifs": [
+   "– Comprendre le concept d’empreinte carbone et son impact sur l’environnement.",
+   "– Identifier les principales sources d’émissions de carbone dans les opérations d’entreprise.",
+   "– Développer des stratégies pour réduire efficacement les émissions de carbone.",
+   "– Mettre en œuvre des pratiques durables pour minimiser l’empreinte carbone.",
+   "– Analyser et mesurer l’efficacité des initiatives de réduction du carbone.",
+   "– Sensibiliser et former le personnel aux pratiques de réduction du carbone.",
+   "– Promouvoir l’innovation dans l’adoption de technologies et procédés écologiques.",
+   "Ce parcours offre une occasion unique de transformer votre entreprise en leader de la durabilité, en adoptant des pratiques qui réduisent significativement l’empreinte carbone. En intégrant ces stratégies, vous positionnerez votre organisation à l’avant-garde de l’innovation écologique et du développement durable."
+  ],
+  "modalites": [
+   "Formation en présentiel ou en visioconférence avec un formateur dédié.",
+   "Méthodes d’animation participatives : interactivité, exemples et cas pratiques",
+   "Procédés pédagogiques adaptés au niveau du/des participants",
+   "Travaux pratiques adaptés à votre activité"
+  ],
+  "modules": [
+   {
+    "titre": "Programme",
+    "points": [
+     "Comprendre le Concept d’Empreinte Carbone",
+     "– Identifier les composants clés de l’empreinte carbone et leur impact environnemental.",
+     "– Analyser les tendances globales et industrielles en matière d’émissions de carbone.",
+     "– Évaluer comment les activités de l’entreprise contribuent à l’empreinte carbone globale.",
+     "Identifier les Sources d’Émissions de Carbone dans l’Entreprise",
+     "– Examiner les processus opérationnels et leur contribution aux émissions de carbone.",
+     "– Identifier les sources indirectes d’émissions de carbone liées à la chaîne d’approvisionnement.",
+     "– Effectuer un audit carbone pour quantifier les émissions spécifiques à l’entreprise.",
+     "Développer des Stratégies de Réduction du Carbone",
+     "– Planifier et mettre en œuvre des initiatives de réduction des émissions de carbone.",
+     "– Intégrer des technologies et des processus à faible émission de carbone.",
+     "– Créer des objectifs de réduction du carbone alignés sur les normes internationales.",
+     "Mettre en Œuvre des Pratiques Durables",
+     "– Adopter des pratiques de gestion durable dans les opérations quotidiennes.",
+     "– Promouvoir l’utilisation d’énergies renouvelables et de ressources efficaces.",
+     "– Intégrer le recyclage et la réutilisation dans les processus de l’entreprise.",
+     "Analyser l’Efficacité des Initiatives de Réduction du Carbone",
+     "– Utiliser des outils et des méthodes pour mesurer l’impact des initiatives écologiques.",
+     "– Analyser les données pour optimiser les stratégies de réduction du carbone.",
+     "– Rapporter les progrès et les défis dans la réduction de l’empreinte carbone.",
+     "Sensibiliser et Former le Personnel",
+     "– Éduquer les employés sur l’importance de la réduction de l’empreinte carbone.",
+     "– Encourager la participation active des employés dans les initiatives écologiques.",
+     "– Intégrer la durabilité dans la culture et les valeurs de l’entreprise.",
+     "Promouvoir l’Innovation Écologique",
+     "– Explorer et adopter des technologies vertes et des innovations écologiques.",
+     "– Encourager la recherche et le développement dans les solutions durables.",
+     "– Collaborer avec des partenaires externes pour renforcer les initiatives de durabilité.",
+     "Ce programme vise à doter les participants de compétences pratiques pour réduire l’empreinte carbone de leur entreprise, en favorisant l’innovation et la responsabilité environnementale."
+    ]
+   }
+  ],
+  "certification": null
+ },
+ {
+  "slug": "formation-leconomie-circulaire-dans-son-processus-de-production",
+  "category": "rse",
+  "title": "Formation l’économie circulaire dans son processus de production",
+  "intro": "Intégrez les principes de l’économie circulaire dans vos processus de production pour optimiser vos méthodes, réduire les déchets et adopter des pratiques durables. Découvrez comment allier efficacité économique et impact environnemental positif pour moderniser votre entreprise.",
+  "image": "https://skills4mation.com/wp-content/uploads/2024/12/3-1-1024x819.png",
+  "niveau": "De Débutant à Avancé",
+  "tarif": "A partir de 1800 € - Financement possible",
+  "objectif": "Améliorer ses compétences et son approche de l’économie circulaire",
+  "duree": "A déterminer selon votre niveau et objectif",
+  "prerequis": "Avoir un projet de production",
+  "objectifs": [
+   "Comprendre les principes fondamentaux de l’économie circulaire et leur application dans la production.",
+   "Analyser les cycles de vie des produits pour optimiser la réutilisation et le recyclage.",
+   "Intégrer des stratégies de réduction des déchets dans les processus de production.",
+   "Développer des méthodes de production innovantes axées sur la durabilité.",
+   "Évaluer l’impact environnemental et économique des pratiques de production actuelles.",
+   "Mettre en œuvre des solutions de production circulaire adaptées aux besoins spécifiques de l’entreprise.",
+   "Cultiver une culture d’entreprise axée sur la durabilité et l’innovation.",
+   "En rejoignant ce parcours, vous enrichirez vos compétences tout en contribuant à un avenir durable. Ce programme vous place à la pointe de la production responsable, soutenant la préservation des ressources et la protection de l’environnement. Vous vous joindrez à un effort mondial pour une croissance plus verte, ouvrant des opportunités pour votre entreprise et la société."
+  ],
+  "modalites": [
+   "Formation en présentiel ou en visioconférence avec un formateur dédié.",
+   "Méthodes d’animation participatives : interactivité, exemples et cas pratiques",
+   "Procédés pédagogiques adaptés au niveau du/des participants",
+   "Travaux pratiques adaptés à votre activité"
+  ],
+  "modules": [
+   {
+    "titre": "Programme",
+    "points": [
+     "Comprendre les Principes Fondamentaux de l’Économie Circulaire",
+     "– Identifier et expliquer les concepts clés de l’économie circulaire.",
+     "– Analyser les différences entre les modèles économiques linéaires et circulaires.",
+     "– Évaluer les bénéfices environnementaux et économiques de l’économie circulaire.",
+     "Analyser les Cycles de Vie des Produits",
+     "– Étudier le cycle de vie complet des produits pour identifier les opportunités de réutilisation et de recyclage.",
+     "– Développer des compétences en éco-conception pour minimiser les déchets dès la conception.",
+     "– Appliquer des méthodes d’analyse du cycle de vie pour mesurer l’impact environnemental.",
+     "Intégrer des Stratégies de Réduction des Déchets",
+     "– Planifier et mettre en œuvre des stratégies de réduction des déchets dans les processus de production.",
+     "– Adapter les processus de production pour maximiser l’efficacité des ressources.",
+     "– Innover dans la gestion des déchets pour transformer les déchets en ressources.",
+     "Développer des Méthodes de Production Innovantes",
+     "– Concevoir des processus de production qui favorisent la circularité.",
+     "– Intégrer des technologies propres et durables dans la production.",
+     "– Promouvoir l’innovation dans les pratiques de production pour une durabilité accrue.",
+     "Évaluer l’Impact Environnemental et Économique",
+     "– Analyser l’empreinte environnementale des processus de production actuels.",
+     "– Calculer le retour sur investissement des initiatives de production circulaire.",
+     "– Mettre en place des indicateurs de performance pour suivre les progrès vers la circularité.",
+     "Mettre en Œuvre des Solutions Circulaires Spécifiques",
+     "– Sélectionner et appliquer des solutions de production circulaire adaptées à l’entreprise.",
+     "– Former et mobiliser les équipes autour des pratiques circulaires.",
+     "– Créer des partenariats stratégiques pour renforcer la circularité dans la chaîne de valeur.",
+     "Cultiver une Culture d’Entreprise Axée sur la Durabilité",
+     "– Sensibiliser et former le personnel aux principes de l’économie circulaire.",
+     "– Intégrer la durabilité dans la mission et les valeurs de l’entreprise.",
+     "– Encourager l’innovation et la créativité pour une production plus durable.",
+     "Ce programme vise à doter les participants des compétences nécessaires pour transformer les processus de production en intégrant l’économie circulaire, favorisant ainsi la durabilité et l’efficacité à long terme."
+    ]
+   }
+  ],
+  "certification": null
+ },
+ {
+  "slug": "formation-batir-et-piloter-votre-plan-daction-commercial",
+  "category": "ventes",
+  "title": "Formation Bâtir et Piloter votre Plan d’Action Commercial",
+  "intro": "Développez votre stratégie commerciale en apprenant à bâtir, déployer et piloter un plan d’action efficace. Analysez vos objectifs, mettez en place des actions ciblées et mesurez vos résultats pour améliorer la croissance de votre entreprise.",
+  "image": "https://skills4mation.com/wp-content/uploads/2024/12/formation-piloter-votre-plan-daction-commercial.webp",
+  "niveau": "De Débutant à Avancé",
+  "tarif": "A partir de 2400 € - Financement possible",
+  "objectif": "Optimiser les revenus de votre CHR",
+  "duree": "A partir de 18 H de formation",
+  "prerequis": "Aucun",
+  "objectifs": [
+   "Analyser le marché et identifier les opportunités commerciales.",
+   "Définir des objectifs commerciaux SMART.",
+   "Élaborer des stratégies commerciales adaptées et innovantes.",
+   "Mettre en œuvre le plan d’action avec efficacité.",
+   "Mesurer et analyser les performances commerciales.",
+   "Ajuster le plan d’action en fonction des retours et des évolutions du marché.",
+   "Renforcer les compétences de leadership et de gestion d’équipe.",
+   "Valeur ajoutée:",
+   "Grâce à une pédagogie innovante et des études de cas réels, ce parcours est une opportunité unique de se projeter dans des situations concrètes, d’optimiser ses pratiques commerciales et de devenir un acteur clé du succès de son entreprise. Rejoignez-nous pour une aventure d’apprentissage qui marquera un tournant dans votre carrière professionnelle."
+  ],
+  "modalites": [
+   "Formation en présentiel ou en visioconférence avec un formateur dédié.",
+   "Méthodes d’animation participatives : interactivité, exemples et cas pratiques",
+   "Procédés pédagogiques adaptés au niveau du/des participants",
+   "Travaux pratiques adaptés à votre activité"
+  ],
+  "modules": [
+   {
+    "titre": "Module 1: Introduction au Plan d’Action Commercial",
+    "points": [
+     "Comprendre la nécessité d’un plan d’action commercial.",
+     "Identifier les composantes clés d’un plan d’action efficace.",
+     "Distinguer les différents types de stratégies commerciales."
+    ]
+   },
+   {
+    "titre": "Module 2: Analyse de Marché et Identification des Opportunités",
+    "points": [
+     "Réaliser une analyse de marché complète.",
+     "Identifier et évaluer les opportunités commerciales.",
+     "Utiliser des outils d’analyse SWOT pour évaluer la position concurrentielle."
+    ]
+   },
+   {
+    "titre": "Module 3: Définition des Objectifs Commerciaux",
+    "points": [
+     "Formuler des objectifs commerciaux SMART.",
+     "Aligner les objectifs commerciaux avec la stratégie globale de l’entreprise.",
+     "Planifier les étapes clés pour atteindre ces objectifs."
+    ]
+   },
+   {
+    "titre": "Module 4: Stratégies de Mise en Œuvre",
+    "points": [
+     "Développer des stratégies de vente et de marketing ciblées.",
+     "Intégrer les technologies et outils digitaux dans le plan d’action.",
+     "Planifier les ressources nécessaires (humaines, financières, matérielles)."
+    ]
+   },
+   {
+    "titre": "Module 5: Pilotage et Suivi du Plan d’Action",
+    "points": [
+     "Mettre en place des indicateurs de performance clés (KPIs).",
+     "Utiliser les données pour piloter et ajuster les stratégies.",
+     "Organiser des revues de performances régulières."
+    ]
+   },
+   {
+    "titre": "Module 6: Leadership et Gestion d’Équipe",
+    "points": [
+     "Renforcer les compétences de leadership pour diriger l’équipe commerciale.",
+     "Développer des techniques de motivation et d’engagement de l’équipe.",
+     "Gérer efficacement les conflits et favoriser un environnement de travail positif."
+    ]
+   },
+   {
+    "titre": "Module 7: Adaptation et Ajustement Stratégique",
+    "points": [
+     "Analyser les retours et les données de performance pour ajuster le plan.",
+     "Anticiper les évolutions du marché et adapter les stratégies en conséquence.",
+     "Innover dans l’approche commerciale pour maintenir l’avantage compétitif."
+    ]
+   }
+  ],
+  "certification": null
+ },
+ {
+  "slug": "formation-lart-du-closing",
+  "category": "ventes",
+  "title": "Formation L’art du Closing",
+  "intro": "Apprenez les techniques de closing pour conclure vos négociations commerciales avec succès. Découvrez comment persuader vos interlocuteurs, lever les freins et finaliser vos ventes. Cette formation s’adresse aux professionnels souhaitant améliorer leurs compétences commerciales et optimiser leurs performances.",
+  "image": "https://skills4mation.com/wp-content/uploads/2024/12/formation-art-du-closing.webp",
+  "niveau": "De Débutant à Avancé",
+  "tarif": "A partir de 900 € - Financement possible",
+  "objectif": "Maîtriser l’art du Closing pour augmenter vos taux de conversions",
+  "duree": "A déterminer selon votre niveau et objectif",
+  "prerequis": "Aucun",
+  "objectifs": [
+   "– Comprendre les Fondamentaux du Closing.",
+   "– Développer des Techniques de Persuasion Efficaces.",
+   "– Maîtriser les Stratégies de Closing.",
+   "– Gestion des Objections.",
+   "– Renforcer la Confiance et l’Assurance en Soi.",
+   "– Pratique et Mise en Situation Réelle.",
+   "– Analyse et Auto-évaluation.",
+   "– Ethique et Responsabilité dans le Closing.",
+   "Ce parcours vise à équiper les participants avec les outils et les compétences nécessaires pour exceller dans l’art du closing, leur permettant ainsi d’améliorer significativement leurs performances de vente."
+  ],
+  "modalites": [
+   "Formation en présentiel ou en visioconférence avec un formateur dédié.",
+   "Méthodes d’animation participatives : interactivité, exemples et cas pratiques",
+   "Procédés pédagogiques adaptés au niveau du/des participants",
+   "Travaux pratiques adaptés à votre activité"
+  ],
+  "modules": [
+   {
+    "titre": "Module 1 : Introduction au closing – Les bases de la conclusion de vente",
+    "points": [
+     "Comprendre le rôle crucial du closing dans le processus de vente et ses objectifs principaux.",
+     "Identifier les différentes étapes du cycle de vente et comment le closing s’intègre dans ce processus.",
+     "Apprendre à reconnaître les signes d’achat et à préparer efficacement la phase de conclusion."
+    ]
+   },
+   {
+    "titre": "Module 2 : Techniques de closing – Méthodes et approches efficaces",
+    "points": [
+     "Découvrir les principales techniques de closing : la méthode de la supposition, l’alternative, et la technique de l’urgence.",
+     "Apprendre à utiliser les techniques de closing adaptées en fonction du type de prospect et du contexte de vente.",
+     "Maîtriser l’art de la négociation pour surmonter les objections et conclure avec succès."
+    ]
+   },
+   {
+    "titre": "Module 3 : Gestion des objections – Transformer les résistances en opportunités",
+    "points": [
+     "Identifier les objections courantes et comprendre leurs origines pour mieux y répondre.",
+     "Apprendre des techniques pour répondre efficacement aux objections et convertir les résistances en opportunités de vente.",
+     "Utiliser des questions ouvertes et des reformulations pour clarifier et résoudre les préoccupations des prospects."
+    ]
+   },
+   {
+    "titre": "Module 4 : Construire une proposition irrésistible – Créer de la valeur perçue",
+    "points": [
+     "Apprendre à élaborer des propositions de valeur claires et convaincantes adaptées aux besoins du prospect.",
+     "Maîtriser la personnalisation des offres pour aligner les bénéfices de vos produits ou services avec les attentes spécifiques du client.",
+     "Utiliser des démonstrations et des preuves sociales pour renforcer la crédibilité de votre proposition."
+    ]
+   },
+   {
+    "titre": "Module 5 : Techniques de persuasion – Influencer et convaincre le prospect",
+    "points": [
+     "Découvrir les principes de la persuasion et comment les appliquer pour influencer positivement les décisions d’achat.",
+     "Apprendre à utiliser des techniques de communication persuasive, telles que les appels émotionnels et les arguments rationnels.",
+     "Maîtriser l’art de créer une connexion personnelle avec le prospect pour renforcer l’impact de votre discours de closing."
+    ]
+   },
+   {
+    "titre": "Module 6 : Finalisation de la vente – Assurer la réussite du closing",
+    "points": [
+     "Apprendre à finaliser la vente avec des actions concrètes : signature du contrat, gestion des modalités de paiement, et mise en place des prochaines étapes.",
+     "Découvrir les meilleures pratiques pour le suivi après la vente, assurer une satisfaction client et encourager des recommandations.",
+     "Analyser les résultats de vos opérations de closing pour identifier les réussites et les points à améliorer, afin d’optimiser vos futures ventes."
+    ]
+   }
+  ],
+  "certification": null
+ },
+ {
+  "slug": "formation-reussir-sa-prospection-telephonique",
+  "category": "ventes",
+  "title": "Formation Réussir sa prospection téléphonique",
+  "intro": "Maîtrisez les techniques pour réussir votre prospection téléphonique. Apprenez à capter l’attention, surmonter les objections et conclure des ventes efficacement. Développez vos compétences en communication téléphonique, renforcez votre confiance et transformez chaque appel en opportunité commerciale.",
+  "image": "https://skills4mation.com/wp-content/uploads/2024/12/formation-prospection-telephonique.webp",
+  "niveau": "De Débutant à Avancé",
+  "tarif": "A partir de 1800 € - Financement possible",
+  "objectif": "Améliorer ses performances dans le cadre de sa prospection téléphonique",
+  "duree": "A déterminer selon votre niveau et objectif",
+  "prerequis": "Savoir utiliser un PC, avoir la suite Office",
+  "objectifs": [
+   "Développer des Compétences en Communication Verbale",
+   "Maîtrise des Scripts de Prospection",
+   "Gestion des Objections",
+   "Ecoute Active",
+   "Utilisation des Outils et Technologies",
+   "Évaluation et Amélioration des Performances",
+   "Connaissance des Aspects Légaux et Éthiques",
+   "Ce parcours est conçu pour transformer les participants en experts de la prospection téléphonique, capables de générer des leads de qualité et de booster les ventes grâce à une communication téléphonique efficace et respectueuse."
+  ],
+  "modalites": [
+   "Formation en présentiel ou en visioconférence avec un formateur dédié.",
+   "Méthodes d’animation participatives : interactivité, exemples et cas pratiques",
+   "Procédés pédagogiques adaptés au niveau du/des participants",
+   "Travaux pratiques adaptés à votre activité"
+  ],
+  "modules": [
+   {
+    "titre": "Module 1 : Les bases de la prospection téléphonique – Comprendre les fondamentaux",
+    "points": [
+     "Découvrir les objectifs et les enjeux de la prospection téléphonique pour générer des opportunités commerciales.",
+     "Comprendre l’importance de la préparation : cibler les bons prospects, analyser leurs besoins, et définir les objectifs de l’appel.",
+     "Maîtriser les outils indispensables pour une prospection efficace : CRM, scripts, et argumentaires."
+    ]
+   },
+   {
+    "titre": "Module 2 : Structurer un appel de prospection – Captiver dès le premier contact",
+    "points": [
+     "Apprendre à soigner l’introduction de l’appel pour créer une première impression positive et capter l’attention du prospect.",
+     "Découvrir les techniques pour structurer un appel : phases d’introduction, découverte des besoins, argumentation et conclusion.",
+     "Gérer les objections courantes et savoir rebondir avec des réponses convaincantes et adaptées."
+    ]
+   },
+   {
+    "titre": "Module 3 : Techniques d’écoute active – Comprendre les besoins du prospect",
+    "points": [
+     "Maîtriser l’écoute active pour mieux comprendre les attentes et les besoins réels du prospect.",
+     "Apprendre à poser des questions ouvertes pour favoriser le dialogue et récolter des informations pertinentes.",
+     "Savoir reformuler les propos du prospect pour clarifier et valider sa compréhension tout en renforçant la relation."
+    ]
+   },
+   {
+    "titre": "Module 4 : Adapter son discours et son ton – Créer un impact positif",
+    "points": [
+     "Comprendre l’importance de l’adaptation du discours en fonction du profil du prospect (décideurs, acheteurs, partenaires).",
+     "Apprendre à utiliser un ton assertif, respectueux et dynamique pour susciter l’engagement et la confiance.",
+     "Gérer les silences, les hésitations et savoir ajuster le rythme de la conversation pour maintenir l’intérêt du prospect."
+    ]
+   },
+   {
+    "titre": "Module 5 : Conclure efficacement – Transformer l’appel en opportunité",
+    "points": [
+     "Apprendre à détecter les signaux d’achat et à proposer une offre adaptée en fonction des besoins exprimés.",
+     "Maîtriser les techniques de closing : proposition d’une rencontre, envoi d’un devis ou d’informations complémentaires.",
+     "Savoir conclure l’appel avec des engagements clairs et un suivi bien défini pour entretenir la relation avec le prospect."
+    ]
+   },
+   {
+    "titre": "Module 6 : Suivi et analyse des performances – Optimiser sa prospection",
+    "points": [
+     "Mettre en place un suivi rigoureux des appels grâce aux outils CRM et à la gestion des relances.",
+     "Analyser les résultats de ses appels (taux de transformation, qualité des échanges) pour identifier les axes d’amélioration.",
+     "Adapter et affiner ses techniques de prospection en fonction des retours terrain et des objectifs commerciaux atteints."
+    ]
+   }
+  ],
+  "certification": null
+ },
+ {
+  "slug": "formation-vente-conseil",
+  "category": "ventes",
+  "title": "Formation Vente Conseil",
+  "intro": "Maîtrisez les techniques de vente conseil pour répondre aux besoins de vos clients tout en optimisant vos performances. Apprenez à écouter, proposer des solutions adaptées et fidéliser durablement votre clientèle. Cette formation pratique renforce votre expertise en relation client et stratégie de vente.",
+  "image": "https://skills4mation.com/wp-content/uploads/2024/12/formation-vente-conseil-679x1024.webp",
+  "niveau": "De Débutant à Avancé",
+  "tarif": "A partir de 900 € - Financement possible",
+  "objectif": "Maîtriser les fondamentaux de la vente conseil",
+  "duree": "A déterminer selon votre niveau et objectif",
+  "prerequis": "Aucun",
+  "objectifs": [
+   "Acquérir les techniques de vente conseil adaptées aux besoins spécifiques des clients",
+   "Développer des stratégies de négociation efficaces pour améliorer les performances commerciales",
+   "Maîtriser l’art de la relation client pour fidéliser et renforcer la satisfaction",
+   "Apprendre à adapter son discours commercial en fonction des objections et attentes des clients",
+   "Utiliser des outils de vente pour analyser les besoins et proposer des solutions personnalisées"
+  ],
+  "modalites": [
+   "Formation en présentiel ou distanciel dans le cadre des sessions proposés par notre formateur",
+   "Méthodes d’animation participatives : interactivité, exemples et mise en pratiques",
+   "Procédés pédagogiques adaptés au niveau du/des participants",
+   "Travaux pratiques adaptés à votre activité"
+  ],
+  "modules": [
+   {
+    "titre": "Module 1 : Introduction à la vente conseil",
+    "points": [
+     "Comprendre les principes fondamentaux de la vente conseil",
+     "Identifier les différences entre vente traditionnelle et vente conseil",
+     "Reconnaître l’importance de la personnalisation dans le processus de vente"
+    ]
+   },
+   {
+    "titre": "Module 2 : Analyse des besoins du client",
+    "points": [
+     "Apprendre à poser les bonnes questions pour cerner les attentes du client",
+     "Identifier les motivations d’achat et les freins potentiels",
+     "Utiliser l’écoute active pour capter les besoins implicites"
+    ]
+   },
+   {
+    "titre": "Module 3 : Techniques de persuasion et argumentation",
+    "points": [
+     "Maîtriser les techniques de persuasion pour influencer positivement la décision d’achat",
+     "Structurer un argumentaire commercial percutant en fonction du profil client",
+     "Répondre efficacement aux objections pour transformer les hésitations en opportunités"
+    ]
+   },
+   {
+    "titre": "Module 4 : Négociation commerciale",
+    "points": [
+     "Préparer et structurer une négociation en vue d’un accord gagnant-gagnant",
+     "Développer des stratégies de concession tout en défendant ses marges",
+     "Utiliser les outils de négociation pour anticiper et répondre aux objections du client"
+    ]
+   },
+   {
+    "titre": "Module 5 : Fidélisation et suivi client",
+    "points": [
+     "Mettre en place des techniques de fidélisation pour maximiser la rétention client",
+     "Créer une relation de confiance durable avec le client à travers le conseil personnalisé",
+     "Élaborer un plan de suivi post-vente pour garantir la satisfaction et les ventes additionnelles"
+    ]
+   },
+   {
+    "titre": "Module 6 : Digitalisation de la vente conseil",
+    "points": [
+     "Comprendre l’impact des outils digitaux sur la vente et le conseil",
+     "Utiliser les outils CRM et de marketing automation pour personnaliser l’approche client",
+     "Intégrer les réseaux sociaux dans la stratégie de vente conseil pour attirer et fidéliser des clients"
+    ]
+   }
+  ],
+  "certification": null
+ }
+];
+
+export const categoryLabel = (slug: string) =>
+  CATEGORIES.find((c) => c.slug === slug)?.label ?? slug;
+
+export const formationsByCategory = (slug: string) =>
+  FORMATIONS.filter((f) => f.category === slug);
