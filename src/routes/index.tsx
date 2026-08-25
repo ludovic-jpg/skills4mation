@@ -14,9 +14,12 @@ import {
   Wallet,
 } from "lucide-react";
 
+import apprenantsDuo from "@/assets/apprenants-duo.jpg";
 import entreeApprenant from "@/assets/entree-apprenant.jpg";
 import entreeFormateur from "@/assets/entree-formateur.jpg";
+import formatriceTablette from "@/assets/formatrice-tablette.jpg";
 import homeHero from "@/assets/home-hero.jpg";
+import peopleEquipe from "@/assets/people-equipe.jpg";
 import { QualiopiBadge } from "@/components/Brand";
 import { EvaluationBudget } from "@/components/site/EvaluationBudget";
 import { PublicLayout } from "@/components/site/PublicLayout";
@@ -211,6 +214,17 @@ function Accueil() {
             niveau réel et à vos disponibilités personnelles.
           </p>
 
+          <img
+            src={formatriceTablette}
+            alt="Formatrice souriante animant une session de formation professionnelle en petit groupe"
+            width={1408}
+            height={1008}
+            loading="lazy"
+            className="mt-8 h-64 w-full rounded-3xl object-cover shadow-soft sm:h-80"
+          />
+
+
+
           <div className="mt-10 grid gap-5 lg:grid-cols-3">
             {APPRENANTS.map((item) => (
               <Card key={item.titre} className="rounded-2xl border-border/70 shadow-soft">
@@ -282,8 +296,17 @@ function Accueil() {
             </div>
           </div>
 
-          <Card className="h-fit rounded-3xl border-border/70 shadow-soft">
+          <Card className="h-fit overflow-hidden rounded-3xl border-border/70 p-0 shadow-soft">
+            <img
+              src={apprenantsDuo}
+              alt="Deux apprenants souriants échangeant sur leur projet de formation devant un ordinateur"
+              width={1408}
+              height={1008}
+              loading="lazy"
+              className="h-52 w-full object-cover"
+            />
             <CardContent className="p-6 sm:p-8">
+
               <MessagesSquare className="size-6 text-secondary" aria-hidden />
               <h3 className="mt-4 text-lg font-semibold">Un accompagnement très proactif</h3>
               <p className="mt-3 text-sm text-muted-foreground">
@@ -322,25 +345,36 @@ function Accueil() {
       </section>
 
       <section className="section-shell py-16 lg:py-20">
-        <Card className="rounded-3xl border-none bg-gradient-hero text-primary-foreground shadow-elevated">
-          <CardContent className="p-8 sm:p-12">
-            <h2 className="max-w-2xl text-3xl font-semibold text-primary-foreground sm:text-4xl">
-              Prêt à avancer ? Choisissez votre porte d'entrée.
-            </h2>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <Button asChild variant="cta" size="lg">
-                <Link to="/catalogue">Voir les formations</Link>
-              </Button>
-              <Button asChild variant="onDark" size="lg">
-                <Link to="/portage-qualiopi">Découvrir le portage Qualiopi</Link>
-              </Button>
-            </div>
-            <p className="mt-4 text-sm text-primary-foreground/75">
-              Une question ? Écrivez-nous, nous répondons sous 48 h ouvrées.
-            </p>
-          </CardContent>
+        <Card className="overflow-hidden rounded-3xl border-none bg-gradient-hero text-primary-foreground shadow-elevated">
+          <div className="grid items-center gap-0 lg:grid-cols-[1.1fr_0.9fr]">
+            <CardContent className="p-8 sm:p-12">
+              <h2 className="max-w-2xl text-3xl font-semibold text-primary-foreground sm:text-4xl">
+                Prêt à avancer ? Choisissez votre porte d'entrée.
+              </h2>
+              <div className="mt-8 flex flex-wrap gap-3">
+                <Button asChild variant="cta" size="lg">
+                  <Link to="/catalogue">Voir les formations</Link>
+                </Button>
+                <Button asChild variant="onDark" size="lg">
+                  <Link to="/portage-qualiopi">Découvrir le portage Qualiopi</Link>
+                </Button>
+              </div>
+              <p className="mt-4 text-sm text-primary-foreground/75">
+                Une question ? Écrivez-nous, nous répondons sous 48 h ouvrées.
+              </p>
+            </CardContent>
+            <img
+              src={peopleEquipe}
+              alt="Apprenants et formateurs souriants travaillant ensemble autour d'un ordinateur portable"
+              width={1600}
+              height={1008}
+              loading="lazy"
+              className="h-64 w-full object-cover lg:h-full"
+            />
+          </div>
         </Card>
       </section>
+
     </PublicLayout>
   );
 }

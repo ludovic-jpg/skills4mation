@@ -5,6 +5,7 @@ import { z } from "zod";
 import { BadgeCheck, Banknote, FolderCheck, HeartHandshake } from "lucide-react";
 
 import { PageHero, PublicLayout } from "@/components/site/PublicLayout";
+import formateurWebapp from "@/assets/formateur-webapp.jpg";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -168,7 +169,16 @@ function PoleFormateur() {
       />
 
       <section className="section-shell py-14">
+        <img
+          src={formateurWebapp}
+          alt="Formateur indépendant souriant préparant ses dossiers sur le portail Skills4mation"
+          width={1600}
+          height={1104}
+          loading="lazy"
+          className="mb-10 h-64 w-full rounded-3xl object-cover shadow-soft sm:h-80"
+        />
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+
           {ATOUTS.map((item) => (
             <Card key={item.titre} className="rounded-2xl border-border/70 shadow-soft">
               <CardContent className="p-6">

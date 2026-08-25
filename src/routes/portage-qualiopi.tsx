@@ -29,6 +29,9 @@ import {
   Wallet,
 } from "lucide-react";
 
+import formateurWebapp from "@/assets/formateur-webapp.jpg";
+import formatriceTablette from "@/assets/formatrice-tablette.jpg";
+import peopleEquipe from "@/assets/people-equipe.jpg";
 import portageHero from "@/assets/portage-hero.jpg";
 import { QualiopiBadge } from "@/components/Brand";
 import { PortailMockup } from "@/components/site/PortailMockup";
@@ -429,6 +432,26 @@ function PortageQualiopi() {
           10 jours ouvrés à réception des fonds.
         </p>
 
+        <div className="mt-10 grid items-center gap-6 lg:grid-cols-2">
+          <img
+            src={formateurWebapp}
+            alt="Formateur souriant utilisant le portail administratif Skills4mation sur son ordinateur"
+            width={1600}
+            height={1104}
+            loading="lazy"
+            className="h-72 w-full rounded-3xl object-cover shadow-elevated sm:h-96"
+          />
+          <img
+            src={formatriceTablette}
+            alt="Formatrice consultant ses dossiers de formation sur tablette entre deux sessions"
+            width={1408}
+            height={1008}
+            loading="lazy"
+            className="h-72 w-full rounded-3xl object-cover shadow-elevated sm:h-96"
+          />
+        </div>
+
+
         <div className="mt-10 grid gap-5 lg:grid-cols-3">
           {SERVICE_AAS.map((item) => (
             <Card key={item.titre} className="rounded-2xl border-border/70 shadow-soft">
@@ -589,6 +612,16 @@ function PortageQualiopi() {
               </Card>
             ))}
           </div>
+
+          <img
+            src={peopleEquipe}
+            alt="Formateurs indépendants souriants échangeant autour du réseau Skills4mation"
+            width={1600}
+            height={1008}
+            loading="lazy"
+            className="mt-10 h-64 w-full rounded-3xl object-cover shadow-soft sm:h-80"
+          />
+
         </div>
       </section>
 
