@@ -45,17 +45,27 @@ function CatalogueIndex() {
   return (
     <PublicLayout>
       <section className="bg-gradient-hero py-16 text-primary-foreground">
-        <div className="section-shell max-w-3xl">
-          <p className="eyebrow text-cta">Catalogue</p>
-          <h1 className="mt-3 text-4xl font-semibold text-primary-foreground sm:text-5xl">
-            Notre catalogue de formations
-          </h1>
-          <p className="mt-4 text-base text-primary-foreground/80">
-            Découvrez notre catalogue complet de formations professionnelles : digital, RH, langues,
-            bien-être, RSE… Trouvez la formation qui propulsera votre carrière avec Skills4mation.
-          </p>
+        <div className="section-shell grid items-center gap-10 lg:grid-cols-[1.1fr_0.9fr]">
+          <div className="max-w-3xl">
+            <p className="eyebrow text-cta">Catalogue</p>
+            <h1 className="mt-3 text-4xl font-semibold text-primary-foreground sm:text-5xl">
+              Notre catalogue de formations
+            </h1>
+            <p className="mt-4 text-base text-primary-foreground/80">
+              Découvrez notre catalogue complet de formations professionnelles : digital, RH, langues,
+              bien-être, RSE… Trouvez la formation qui propulsera votre carrière avec Skills4mation.
+            </p>
+          </div>
+          <img
+            src={apprenantsDuo}
+            alt="Deux apprenants souriants explorant le catalogue de formations Skills4mation"
+            width={1408}
+            height={1008}
+            className="h-64 w-full rounded-3xl object-cover shadow-elevated sm:h-72"
+          />
         </div>
       </section>
+
 
       <section className="section-shell py-12">
         <div className="relative max-w-md">
