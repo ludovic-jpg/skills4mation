@@ -214,6 +214,17 @@ function Accueil() {
             niveau réel et à vos disponibilités personnelles.
           </p>
 
+          <img
+            src={formatriceTablette}
+            alt="Formatrice souriante animant une session de formation professionnelle en petit groupe"
+            width={1408}
+            height={1008}
+            loading="lazy"
+            className="mt-8 h-64 w-full rounded-3xl object-cover shadow-soft sm:h-80"
+          />
+
+
+
           <div className="mt-10 grid gap-5 lg:grid-cols-3">
             {APPRENANTS.map((item) => (
               <Card key={item.titre} className="rounded-2xl border-border/70 shadow-soft">
