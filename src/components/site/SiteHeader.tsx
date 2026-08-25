@@ -9,13 +9,13 @@ import { useAuth } from "@/hooks/useAuth";
 
 const NAV = [
   { to: "/", hash: undefined, label: "Accueil" },
-  { to: "/", hash: "portage", label: "Portage Qualiopi" },
   { to: "/catalogue", hash: undefined, label: "Catalogue" },
-  { to: "/", hash: "etapes", label: "Comment ça marche" },
-  { to: "/", hash: "tarifs", label: "Tarifs" },
   { to: "/", hash: "apprenants", label: "Apprenants" },
+  { to: "/portage-qualiopi", hash: undefined, label: "Espace formateur" },
+  { to: "/portage-qualiopi", hash: "etapes", label: "Comment ça marche" },
+  { to: "/portage-qualiopi", hash: "tarifs", label: "Tarifs" },
   { to: "/", hash: "projet", label: "Mon projet" },
-  { to: "/", hash: "faq", label: "Ressources" },
+  { to: "/portage-qualiopi", hash: "faq", label: "Ressources" },
   { to: "/contact", hash: undefined, label: "Contact" },
 ] as const;
 
@@ -45,7 +45,7 @@ export function SiteHeader() {
 
         <div className="flex items-center gap-2">
           <Button asChild variant="ghost" size="sm" className="hidden 2xl:inline-flex">
-            <Link to="/" hash="simulateur">
+            <Link to="/portage-qualiopi" hash="tarifs">
               Simuler ma rémunération
             </Link>
           </Button>
@@ -77,8 +77,8 @@ export function SiteHeader() {
                   </Link>
                 ))}
                 <Link
-                  to="/"
-                  hash="simulateur"
+                  to="/portage-qualiopi"
+                  hash="tarifs"
                   onClick={() => setOpen(false)}
                   className="rounded-lg px-3 py-3 text-sm font-medium hover:bg-accent"
                 >
