@@ -285,8 +285,17 @@ function Accueil() {
             </div>
           </div>
 
-          <Card className="h-fit rounded-3xl border-border/70 shadow-soft">
+          <Card className="h-fit overflow-hidden rounded-3xl border-border/70 p-0 shadow-soft">
+            <img
+              src={apprenantsDuo}
+              alt="Deux apprenants souriants échangeant sur leur projet de formation devant un ordinateur"
+              width={1408}
+              height={1008}
+              loading="lazy"
+              className="h-52 w-full object-cover"
+            />
             <CardContent className="p-6 sm:p-8">
+
               <MessagesSquare className="size-6 text-secondary" aria-hidden />
               <h3 className="mt-4 text-lg font-semibold">Un accompagnement très proactif</h3>
               <p className="mt-3 text-sm text-muted-foreground">
