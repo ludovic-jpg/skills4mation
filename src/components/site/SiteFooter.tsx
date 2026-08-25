@@ -42,12 +42,12 @@ export function SiteFooter() {
           <p className="mb-3 font-semibold">Navigation</p>
           <ul className="space-y-2 text-primary-foreground/75">
             <li>
-              <Link to="/" hash="portage">
+              <Link to="/portage-qualiopi" hash="portage">
                 Portage Qualiopi
               </Link>
             </li>
             <li>
-              <Link to="/" hash="tarifs">
+              <Link to="/portage-qualiopi" hash="tarifs">
                 Tarifs
               </Link>
             </li>
