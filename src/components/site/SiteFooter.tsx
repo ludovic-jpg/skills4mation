@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { Linkedin, Mail, Twitter } from "lucide-react";
 
-import { QualiopiBadge } from "@/components/Brand";
+import { CharteDeontologieBadge, QualiopiBadge } from "@/components/Brand";
 
 export function SiteFooter() {
   return (
@@ -88,7 +88,10 @@ export function SiteFooter() {
             <li>CGV / CGU</li>
             <li>Charte déontologique</li>
           </ul>
-          <QualiopiBadge className="mt-5" />
+          <div className="mt-5 flex flex-wrap gap-3">
+            <QualiopiBadge />
+            <CharteDeontologieBadge />
+          </div>
         </div>
       </div>
 
