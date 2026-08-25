@@ -322,25 +322,36 @@ function Accueil() {
       </section>
 
       <section className="section-shell py-16 lg:py-20">
-        <Card className="rounded-3xl border-none bg-gradient-hero text-primary-foreground shadow-elevated">
-          <CardContent className="p-8 sm:p-12">
-            <h2 className="max-w-2xl text-3xl font-semibold text-primary-foreground sm:text-4xl">
-              Prêt à avancer ? Choisissez votre porte d'entrée.
-            </h2>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <Button asChild variant="cta" size="lg">
-                <Link to="/catalogue">Voir les formations</Link>
-              </Button>
-              <Button asChild variant="onDark" size="lg">
-                <Link to="/portage-qualiopi">Découvrir le portage Qualiopi</Link>
-              </Button>
-            </div>
-            <p className="mt-4 text-sm text-primary-foreground/75">
-              Une question ? Écrivez-nous, nous répondons sous 48 h ouvrées.
-            </p>
-          </CardContent>
+        <Card className="overflow-hidden rounded-3xl border-none bg-gradient-hero text-primary-foreground shadow-elevated">
+          <div className="grid items-center gap-0 lg:grid-cols-[1.1fr_0.9fr]">
+            <CardContent className="p-8 sm:p-12">
+              <h2 className="max-w-2xl text-3xl font-semibold text-primary-foreground sm:text-4xl">
+                Prêt à avancer ? Choisissez votre porte d'entrée.
+              </h2>
+              <div className="mt-8 flex flex-wrap gap-3">
+                <Button asChild variant="cta" size="lg">
+                  <Link to="/catalogue">Voir les formations</Link>
+                </Button>
+                <Button asChild variant="onDark" size="lg">
+                  <Link to="/portage-qualiopi">Découvrir le portage Qualiopi</Link>
+                </Button>
+              </div>
+              <p className="mt-4 text-sm text-primary-foreground/75">
+                Une question ? Écrivez-nous, nous répondons sous 48 h ouvrées.
+              </p>
+            </CardContent>
+            <img
+              src={peopleEquipe}
+              alt="Apprenants et formateurs souriants travaillant ensemble autour d'un ordinateur portable"
+              width={1600}
+              height={1008}
+              loading="lazy"
+              className="h-64 w-full object-cover lg:h-full"
+            />
+          </div>
         </Card>
       </section>
+
     </PublicLayout>
   );
 }
