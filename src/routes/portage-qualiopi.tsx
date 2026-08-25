@@ -1,5 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import {
+  Archive,
+  Award,
   BadgeEuro,
   Building2,
   CalendarClock,
@@ -7,25 +9,32 @@ import {
   Compass,
   FileCheck2,
   FileSignature,
+  FolderCheck,
   GraduationCap,
   Handshake,
   LayoutDashboard,
   LineChart,
+  MonitorSmartphone,
   Network,
+  PenTool,
   Quote,
   Receipt,
   ScrollText,
   ShieldCheck,
   Sparkles,
+  Timer,
   UserCheck,
+  UserCog,
   Users,
   Wallet,
 } from "lucide-react";
 
 import portageHero from "@/assets/portage-hero.jpg";
 import { QualiopiBadge } from "@/components/Brand";
+import { PortailMockup } from "@/components/site/PortailMockup";
 import { PublicLayout } from "@/components/site/PublicLayout";
 import { SimulateurCommission } from "@/components/site/SimulateurCommission";
+
 import {
   Accordion,
   AccordionContent,
