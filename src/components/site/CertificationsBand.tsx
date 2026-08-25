@@ -1,8 +1,16 @@
-import { Users } from "lucide-react";
+import { Users, type LucideIcon } from "lucide-react";
 
 import { CERT_LOGOS } from "@/components/Brand";
 
-const CERTIFICATIONS = [
+type Certification = {
+  logo?: string;
+  alt?: string;
+  icon?: LucideIcon;
+  titre: string;
+  texte: string;
+};
+
+const CERTIFICATIONS: Certification[] = [
   {
     logo: CERT_LOGOS.qualiopi,
     alt: "Qualiopi — processus certifié, République française",
