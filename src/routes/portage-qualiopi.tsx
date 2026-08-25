@@ -221,6 +221,65 @@ const TEMOIGNAGES = [
   { nom: "[Prénom, fonction]", texte: "[Témoignage à compléter]" },
 ];
 
+const SERVICE_AAS = [
+  {
+    icon: MonitorSmartphone,
+    titre: "Portail administratif dédié",
+    texte:
+      "Une web app pour constituer l'ensemble de vos dossiers formation en 48h, conformes et certifiés Qualiopi.",
+  },
+  {
+    icon: LayoutDashboard,
+    titre: "Publiez vos parcours de formation",
+    texte:
+      "Créez vos programmes, publiez-les au catalogue Skills4mation et recevez des demandes qualifiées.",
+  },
+  {
+    icon: Award,
+    titre: "Programme Ambassadeur",
+    texte:
+      "Un vrai réseau de recommandation : suivi de vos dossiers, KPI de recommandation et avantages associés.",
+  },
+];
+
+const WEBAPP_ETAPES = [
+  {
+    icon: UserCog,
+    titre: "Modification de votre profil formateur",
+    texte: "Expertises, tarifs, CV, références : votre vitrine reste à jour en quelques clics.",
+  },
+  {
+    icon: FolderCheck,
+    titre: "Constitution de vos pièces administratives et pédagogiques",
+    texte: "Conventions, programmes, émargements, évaluations : générés et contrôlés par nos soins.",
+  },
+  {
+    icon: PenTool,
+    titre: "Signature de vos documents",
+    texte: "Signature électronique horodatée pour vous, vos stagiaires et vos clients.",
+  },
+  {
+    icon: Archive,
+    titre: "Archivage prêt pour l'audit",
+    texte: "Chaque dossier est conservé et retrouvable instantanément en cas de contrôle Qualiopi.",
+  },
+];
+
+const AMBASSADEUR = [
+  "Parrainez des formateurs et des clients depuis votre espace",
+  "Suivi en temps réel de vos recommandations et de leur statut",
+  "Mise en avant au catalogue et priorité sur les projets du réseau",
+  "Co-animations et montée en compétences avec les experts portés",
+];
+
+const KPI = [
+  { valeur: "48h", label: "Dossier prêt" },
+  { valeur: "10 j", label: "Paiement ouvrés" },
+  { valeur: "100 %", label: "Conformité" },
+  { valeur: "4,8/5", label: "Satisfaction" },
+];
+
+
 function PortageQualiopi() {
   return (
     <PublicLayout>
