@@ -5,6 +5,7 @@ import { z } from "zod";
 import { BadgeCheck, Banknote, FolderCheck, HeartHandshake } from "lucide-react";
 
 import { PageHero, PublicLayout } from "@/components/site/PublicLayout";
+import formateurWebapp from "@/assets/formateur-webapp.jpg";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
