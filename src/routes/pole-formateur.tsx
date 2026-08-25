@@ -254,6 +254,45 @@ function PoleFormateur() {
                     placeholder="Parcours, publics formés, volume d'activité souhaité…"
                   />
                 </div>
+
+                <div className="grid gap-3 rounded-2xl bg-muted/50 p-4">
+                  <div>
+                    <p className="text-sm font-semibold">Vos trois pièces obligatoires</p>
+                    <p className="mt-1 text-xs text-muted-foreground">
+                      CV, parcours de formation et déroulé pédagogique : ces trois documents sont
+                      requis pour envoyer votre candidature. Ils sont transmis de façon confidentielle
+                      à l'équipe Skills4mation.
+                    </p>
+                  </div>
+                  {PIECES.map((piece) => {
+                    const file = files[piece.name];
+                    return (
+                      <div key={piece.name} className="grid gap-2">
+                        <Label htmlFor={piece.name}>
+                          {piece.label} <span className="text-destructive">*</span>
+                        </Label>
+                        <input
+                          id={piece.name}
+                          type="file"
+                          accept={ACCEPT}
+                          aria-invalid={!!errors[piece.name]}
+                          onChange={(event) => {
+                            const selected = event.target.files?.[0];
+                            setFiles((prev) => ({ ...prev, [piece.name]: selected }));
+                          }}
+                          className="w-full rounded-lg border border-border bg-background p-2 text-sm file:mr-3 file:rounded-md file:border-0 file:bg-primary file:px-3 file:py-1.5 file:text-sm file:font-semibold file:text-primary-foreground"
+                        />
+                        <p className="text-xs text-muted-foreground">
+                          {file ? `${file.name} · prêt à être envoyé` : piece.hint}
+                        </p>
+                        {errors[piece.name] ? (
+                          <p className="text-xs text-destructive">{errors[piece.name]}</p>
+                        ) : null}
+                      </div>
+                    );
+                  })}
+                </div>
+
                 <Button type="submit" variant="cta" size="lg" disabled={sending}>
                   {sending ? "Envoi…" : "Envoyer ma candidature"}
                 </Button>
@@ -261,6 +300,7 @@ function PoleFormateur() {
                   Les données transmises sont utilisées uniquement dans le cadre de l'étude de votre
                   candidature.
                 </p>
+
               </form>
             )}
           </CardContent>
