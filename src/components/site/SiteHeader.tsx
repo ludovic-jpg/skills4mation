@@ -77,8 +77,8 @@ export function SiteHeader() {
                   </Link>
                 ))}
                 <Link
-                  to="/"
-                  hash="simulateur"
+                  to="/portage-qualiopi"
+                  hash="tarifs"
                   onClick={() => setOpen(false)}
                   className="rounded-lg px-3 py-3 text-sm font-medium hover:bg-accent"
                 >
