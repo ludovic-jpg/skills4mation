@@ -589,6 +589,16 @@ function PortageQualiopi() {
               </Card>
             ))}
           </div>
+
+          <img
+            src={peopleEquipe}
+            alt="Formateurs indépendants souriants échangeant autour du réseau Skills4mation"
+            width={1600}
+            height={1008}
+            loading="lazy"
+            className="mt-10 h-64 w-full rounded-3xl object-cover shadow-soft sm:h-80"
+          />
+
         </div>
       </section>
 
