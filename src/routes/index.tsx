@@ -14,9 +14,12 @@ import {
   Wallet,
 } from "lucide-react";
 
+import apprenantsDuo from "@/assets/apprenants-duo.jpg";
 import entreeApprenant from "@/assets/entree-apprenant.jpg";
 import entreeFormateur from "@/assets/entree-formateur.jpg";
+import formatriceTablette from "@/assets/formatrice-tablette.jpg";
 import homeHero from "@/assets/home-hero.jpg";
+import peopleEquipe from "@/assets/people-equipe.jpg";
 import { QualiopiBadge } from "@/components/Brand";
 import { EvaluationBudget } from "@/components/site/EvaluationBudget";
 import { PublicLayout } from "@/components/site/PublicLayout";
