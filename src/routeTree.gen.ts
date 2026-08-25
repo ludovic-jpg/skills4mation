@@ -20,9 +20,12 @@ import { Route as PortageQualiopiRouteImport } from './routes/portage-qualiopi'
 import { Route as CatalogueIndexRouteImport } from './routes/catalogue.index'
 import { Route as AppAdminIndexRouteImport } from './routes/_app.admin.index'
 import { Route as AppEspaceIndexRouteImport } from './routes/_app.espace.index'
+import { Route as AppEspaceCandidatureRouteImport } from './routes/_app.espace.candidature'
 import { Route as AppEspaceProfilRouteImport } from './routes/_app.espace.profil'
 import { Route as CatalogueCategoryIndexRouteImport } from './routes/catalogue.$category.index'
 import { Route as CatalogueCategorySlugRouteImport } from './routes/catalogue.$category.$slug'
+import { Route as AppEspaceDossiersIndexRouteImport } from './routes/_app.espace.dossiers.index'
+import { Route as AppEspaceDossiersIdRouteImport } from './routes/_app.espace.dossiers.$id'
 import { Route as AppEspaceDossiersNewRouteImport } from './routes/_app.espace.dossiers.new'
 
 const IndexRoute = IndexRouteImport.update({
@@ -79,6 +82,11 @@ const AppEspaceIndexRoute = AppEspaceIndexRouteImport.update({
   path: '/espace/',
   getParentRoute: () => AppRoute,
 } as any)
+const AppEspaceCandidatureRoute = AppEspaceCandidatureRouteImport.update({
+  id: '/espace/candidature',
+  path: '/espace/candidature',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppEspaceProfilRoute = AppEspaceProfilRouteImport.update({
   id: '/espace/profil',
   path: '/espace/profil',
@@ -93,6 +101,16 @@ const CatalogueCategorySlugRoute = CatalogueCategorySlugRouteImport.update({
   id: '/catalogue/$category/$slug',
   path: '/catalogue/$category/$slug',
   getParentRoute: () => rootRouteImport,
+} as any)
+const AppEspaceDossiersIndexRoute = AppEspaceDossiersIndexRouteImport.update({
+  id: '/espace/dossiers/',
+  path: '/espace/dossiers/',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppEspaceDossiersIdRoute = AppEspaceDossiersIdRouteImport.update({
+  id: '/espace/dossiers/$id',
+  path: '/espace/dossiers/$id',
+  getParentRoute: () => AppRoute,
 } as any)
 const AppEspaceDossiersNewRoute = AppEspaceDossiersNewRouteImport.update({
   id: '/espace/dossiers/new',
@@ -109,12 +127,15 @@ export interface FileRoutesByFullPath {
   '/pole-formateur': typeof PoleFormateurRoute
   '/portage-qualiopi': typeof PortageQualiopiRoute
   '/catalogue/': typeof CatalogueIndexRoute
+  '/espace/candidature': typeof AppEspaceCandidatureRoute
   '/espace/profil': typeof AppEspaceProfilRoute
   '/catalogue/$category/$slug': typeof CatalogueCategorySlugRoute
   '/admin/': typeof AppAdminIndexRoute
   '/espace/': typeof AppEspaceIndexRoute
   '/catalogue/$category/': typeof CatalogueCategoryIndexRoute
+  '/espace/dossiers/$id': typeof AppEspaceDossiersIdRoute
   '/espace/dossiers/new': typeof AppEspaceDossiersNewRoute
+  '/espace/dossiers/': typeof AppEspaceDossiersIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -125,12 +146,15 @@ export interface FileRoutesByTo {
   '/pole-formateur': typeof PoleFormateurRoute
   '/portage-qualiopi': typeof PortageQualiopiRoute
   '/catalogue': typeof CatalogueIndexRoute
+  '/espace/candidature': typeof AppEspaceCandidatureRoute
   '/espace/profil': typeof AppEspaceProfilRoute
   '/catalogue/$category/$slug': typeof CatalogueCategorySlugRoute
   '/admin': typeof AppAdminIndexRoute
   '/espace': typeof AppEspaceIndexRoute
   '/catalogue/$category': typeof CatalogueCategoryIndexRoute
+  '/espace/dossiers/$id': typeof AppEspaceDossiersIdRoute
   '/espace/dossiers/new': typeof AppEspaceDossiersNewRoute
+  '/espace/dossiers': typeof AppEspaceDossiersIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -143,12 +167,15 @@ export interface FileRoutesById {
   '/pole-formateur': typeof PoleFormateurRoute
   '/portage-qualiopi': typeof PortageQualiopiRoute
   '/catalogue/': typeof CatalogueIndexRoute
+  '/_app/espace/candidature': typeof AppEspaceCandidatureRoute
   '/_app/espace/profil': typeof AppEspaceProfilRoute
   '/catalogue/$category/$slug': typeof CatalogueCategorySlugRoute
   '/_app/admin/': typeof AppAdminIndexRoute
   '/_app/espace/': typeof AppEspaceIndexRoute
   '/catalogue/$category/': typeof CatalogueCategoryIndexRoute
+  '/_app/espace/dossiers/$id': typeof AppEspaceDossiersIdRoute
   '/_app/espace/dossiers/new': typeof AppEspaceDossiersNewRoute
+  '/_app/espace/dossiers/': typeof AppEspaceDossiersIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -161,12 +188,15 @@ export interface FileRouteTypes {
     | '/pole-formateur'
     | '/portage-qualiopi'
     | '/catalogue/'
+    | '/espace/candidature'
     | '/espace/profil'
     | '/catalogue/$category/$slug'
     | '/admin/'
     | '/espace/'
     | '/catalogue/$category/'
+    | '/espace/dossiers/$id'
     | '/espace/dossiers/new'
+    | '/espace/dossiers/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -177,12 +207,15 @@ export interface FileRouteTypes {
     | '/pole-formateur'
     | '/portage-qualiopi'
     | '/catalogue'
+    | '/espace/candidature'
     | '/espace/profil'
     | '/catalogue/$category/$slug'
     | '/admin'
     | '/espace'
     | '/catalogue/$category'
+    | '/espace/dossiers/$id'
     | '/espace/dossiers/new'
+    | '/espace/dossiers'
   id:
     | '__root__'
     | '/'
@@ -194,12 +227,15 @@ export interface FileRouteTypes {
     | '/pole-formateur'
     | '/portage-qualiopi'
     | '/catalogue/'
+    | '/_app/espace/candidature'
     | '/_app/espace/profil'
     | '/catalogue/$category/$slug'
     | '/_app/admin/'
     | '/_app/espace/'
     | '/catalogue/$category/'
+    | '/_app/espace/dossiers/$id'
     | '/_app/espace/dossiers/new'
+    | '/_app/espace/dossiers/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -295,6 +331,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppEspaceIndexRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/espace/candidature': {
+      id: '/_app/espace/candidature'
+      path: '/espace/candidature'
+      fullPath: '/espace/candidature'
+      preLoaderRoute: typeof AppEspaceCandidatureRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/_app/espace/profil': {
       id: '/_app/espace/profil'
       path: '/espace/profil'
@@ -316,6 +359,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CatalogueCategorySlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_app/espace/dossiers/': {
+      id: '/_app/espace/dossiers/'
+      path: '/espace/dossiers'
+      fullPath: '/espace/dossiers/'
+      preLoaderRoute: typeof AppEspaceDossiersIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/espace/dossiers/$id': {
+      id: '/_app/espace/dossiers/$id'
+      path: '/espace/dossiers/$id'
+      fullPath: '/espace/dossiers/$id'
+      preLoaderRoute: typeof AppEspaceDossiersIdRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/_app/espace/dossiers/new': {
       id: '/_app/espace/dossiers/new'
       path: '/espace/dossiers/new'
@@ -327,17 +384,23 @@ declare module '@tanstack/react-router' {
 }
 
 interface AppRouteChildren {
+  AppEspaceCandidatureRoute: typeof AppEspaceCandidatureRoute
   AppEspaceProfilRoute: typeof AppEspaceProfilRoute
   AppAdminIndexRoute: typeof AppAdminIndexRoute
   AppEspaceIndexRoute: typeof AppEspaceIndexRoute
+  AppEspaceDossiersIdRoute: typeof AppEspaceDossiersIdRoute
   AppEspaceDossiersNewRoute: typeof AppEspaceDossiersNewRoute
+  AppEspaceDossiersIndexRoute: typeof AppEspaceDossiersIndexRoute
 }
 
 const AppRouteChildren: AppRouteChildren = {
+  AppEspaceCandidatureRoute: AppEspaceCandidatureRoute,
   AppEspaceProfilRoute: AppEspaceProfilRoute,
   AppAdminIndexRoute: AppAdminIndexRoute,
   AppEspaceIndexRoute: AppEspaceIndexRoute,
+  AppEspaceDossiersIdRoute: AppEspaceDossiersIdRoute,
   AppEspaceDossiersNewRoute: AppEspaceDossiersNewRoute,
+  AppEspaceDossiersIndexRoute: AppEspaceDossiersIndexRoute,
 }
 
 const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)

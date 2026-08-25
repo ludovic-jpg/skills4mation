@@ -8,7 +8,7 @@ export type DossierStatut =
   | "archive";
 
 export type BudgetStatut = "en_attente" | "en_cours_etude" | "validee" | "refusee";
-export type CandidatureStatut = "en_attente" | "valide" | "refuse";
+export type CandidatureStatut = "en_attente" | "en_cours" | "valide" | "refuse";
 
 type Tone = "neutral" | "info" | "teal" | "cta" | "success" | "danger";
 
@@ -30,8 +30,9 @@ export const BUDGET_STATUTS: Record<BudgetStatut, { label: string; tone: Tone }>
 };
 
 export const CANDIDATURE_STATUTS: Record<CandidatureStatut, { label: string; tone: Tone }> = {
-  en_attente: { label: "En attente", tone: "neutral" },
-  valide: { label: "Validée", tone: "success" },
+  en_attente: { label: "Reçue", tone: "neutral" },
+  en_cours: { label: "En cours d'étude", tone: "info" },
+  valide: { label: "Acceptée", tone: "success" },
   refuse: { label: "Refusée", tone: "danger" },
 };
 
