@@ -17,7 +17,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { supabase } from "@/integrations/supabase/client";
-import { CRM_PIPELINE, dossierNom, type CrmStatut } from "@/lib/crm";
+import { CRM_PIPELINE, CRM_STATUTS, dossierNom, type CrmStatut } from "@/lib/crm";
 import { formatDate } from "@/lib/statuts";
 
 export const Route = createFileRoute("/_app/espace/dossiers/")({
