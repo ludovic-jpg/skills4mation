@@ -16,6 +16,7 @@ import { Route as ConfidentialiteRouteImport } from './routes/confidentialite'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as MentionsLegalesRouteImport } from './routes/mentions-legales'
 import { Route as PoleFormateurRouteImport } from './routes/pole-formateur'
+import { Route as PortageQualiopiRouteImport } from './routes/portage-qualiopi'
 import { Route as CatalogueIndexRouteImport } from './routes/catalogue.index'
 import { Route as AppAdminIndexRouteImport } from './routes/_app.admin.index'
 import { Route as AppEspaceIndexRouteImport } from './routes/_app.espace.index'
@@ -56,6 +57,11 @@ const MentionsLegalesRoute = MentionsLegalesRouteImport.update({
 const PoleFormateurRoute = PoleFormateurRouteImport.update({
   id: '/pole-formateur',
   path: '/pole-formateur',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PortageQualiopiRoute = PortageQualiopiRouteImport.update({
+  id: '/portage-qualiopi',
+  path: '/portage-qualiopi',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CatalogueIndexRoute = CatalogueIndexRouteImport.update({
@@ -101,6 +107,7 @@ export interface FileRoutesByFullPath {
   '/contact': typeof ContactRoute
   '/mentions-legales': typeof MentionsLegalesRoute
   '/pole-formateur': typeof PoleFormateurRoute
+  '/portage-qualiopi': typeof PortageQualiopiRoute
   '/catalogue/': typeof CatalogueIndexRoute
   '/espace/profil': typeof AppEspaceProfilRoute
   '/catalogue/$category/$slug': typeof CatalogueCategorySlugRoute
@@ -116,6 +123,7 @@ export interface FileRoutesByTo {
   '/contact': typeof ContactRoute
   '/mentions-legales': typeof MentionsLegalesRoute
   '/pole-formateur': typeof PoleFormateurRoute
+  '/portage-qualiopi': typeof PortageQualiopiRoute
   '/catalogue': typeof CatalogueIndexRoute
   '/espace/profil': typeof AppEspaceProfilRoute
   '/catalogue/$category/$slug': typeof CatalogueCategorySlugRoute
@@ -133,6 +141,7 @@ export interface FileRoutesById {
   '/contact': typeof ContactRoute
   '/mentions-legales': typeof MentionsLegalesRoute
   '/pole-formateur': typeof PoleFormateurRoute
+  '/portage-qualiopi': typeof PortageQualiopiRoute
   '/catalogue/': typeof CatalogueIndexRoute
   '/_app/espace/profil': typeof AppEspaceProfilRoute
   '/catalogue/$category/$slug': typeof CatalogueCategorySlugRoute
@@ -150,6 +159,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/mentions-legales'
     | '/pole-formateur'
+    | '/portage-qualiopi'
     | '/catalogue/'
     | '/espace/profil'
     | '/catalogue/$category/$slug'
@@ -165,6 +175,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/mentions-legales'
     | '/pole-formateur'
+    | '/portage-qualiopi'
     | '/catalogue'
     | '/espace/profil'
     | '/catalogue/$category/$slug'
@@ -181,6 +192,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/mentions-legales'
     | '/pole-formateur'
+    | '/portage-qualiopi'
     | '/catalogue/'
     | '/_app/espace/profil'
     | '/catalogue/$category/$slug'
@@ -198,6 +210,7 @@ export interface RootRouteChildren {
   ContactRoute: typeof ContactRoute
   MentionsLegalesRoute: typeof MentionsLegalesRoute
   PoleFormateurRoute: typeof PoleFormateurRoute
+  PortageQualiopiRoute: typeof PortageQualiopiRoute
   CatalogueIndexRoute: typeof CatalogueIndexRoute
   CatalogueCategorySlugRoute: typeof CatalogueCategorySlugRoute
   CatalogueCategoryIndexRoute: typeof CatalogueCategoryIndexRoute
@@ -252,6 +265,13 @@ declare module '@tanstack/react-router' {
       path: '/pole-formateur'
       fullPath: '/pole-formateur'
       preLoaderRoute: typeof PoleFormateurRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/portage-qualiopi': {
+      id: '/portage-qualiopi'
+      path: '/portage-qualiopi'
+      fullPath: '/portage-qualiopi'
+      preLoaderRoute: typeof PortageQualiopiRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/catalogue/': {
@@ -330,6 +350,7 @@ const rootRouteChildren: RootRouteChildren = {
   ContactRoute: ContactRoute,
   MentionsLegalesRoute: MentionsLegalesRoute,
   PoleFormateurRoute: PoleFormateurRoute,
+  PortageQualiopiRoute: PortageQualiopiRoute,
   CatalogueIndexRoute: CatalogueIndexRoute,
   CatalogueCategorySlugRoute: CatalogueCategorySlugRoute,
   CatalogueCategoryIndexRoute: CatalogueCategoryIndexRoute,
