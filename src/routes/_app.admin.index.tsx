@@ -158,7 +158,17 @@ function AdminCandidatures() {
                       {c.message}
                     </p>
                   ) : null}
+                  <div className="mt-3 flex flex-wrap items-center gap-2">
+                    {PIECES.map((piece) => (
+                      <PieceLink
+                        key={piece.key}
+                        label={piece.label}
+                        path={(c[piece.key] as string | null) ?? null}
+                      />
+                    ))}
+                  </div>
                 </div>
+
                 <div className="flex shrink-0 flex-wrap items-start gap-2">
                   <Button
                     variant="teal"
