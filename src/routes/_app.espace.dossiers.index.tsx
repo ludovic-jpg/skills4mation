@@ -88,7 +88,7 @@ function MesDossiers() {
             <SelectItem value="tous">Tous les dossiers actifs</SelectItem>
             {CRM_PIPELINE.map((statut) => (
               <SelectItem key={statut} value={statut}>
-                {statut === "brouillon" ? "Brouillon" : statut}
+                {CRM_STATUTS[statut].label}
               </SelectItem>
             ))}
             <SelectItem value="refuse">Refusé / Annulé</SelectItem>
