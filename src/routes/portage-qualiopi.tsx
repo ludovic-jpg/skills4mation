@@ -29,6 +29,9 @@ import {
   Wallet,
 } from "lucide-react";
 
+import formateurWebapp from "@/assets/formateur-webapp.jpg";
+import formatriceTablette from "@/assets/formatrice-tablette.jpg";
+import peopleEquipe from "@/assets/people-equipe.jpg";
 import portageHero from "@/assets/portage-hero.jpg";
 import { QualiopiBadge } from "@/components/Brand";
 import { PortailMockup } from "@/components/site/PortailMockup";
