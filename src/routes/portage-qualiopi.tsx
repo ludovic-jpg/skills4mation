@@ -1,5 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import {
+  Archive,
+  Award,
   BadgeEuro,
   Building2,
   CalendarClock,
@@ -7,25 +9,32 @@ import {
   Compass,
   FileCheck2,
   FileSignature,
+  FolderCheck,
   GraduationCap,
   Handshake,
   LayoutDashboard,
   LineChart,
+  MonitorSmartphone,
   Network,
+  PenTool,
   Quote,
   Receipt,
   ScrollText,
   ShieldCheck,
   Sparkles,
+  Timer,
   UserCheck,
+  UserCog,
   Users,
   Wallet,
 } from "lucide-react";
 
 import portageHero from "@/assets/portage-hero.jpg";
 import { QualiopiBadge } from "@/components/Brand";
+import { PortailMockup } from "@/components/site/PortailMockup";
 import { PublicLayout } from "@/components/site/PublicLayout";
 import { SimulateurCommission } from "@/components/site/SimulateurCommission";
+
 import {
   Accordion,
   AccordionContent,
@@ -212,6 +221,65 @@ const TEMOIGNAGES = [
   { nom: "[Prénom, fonction]", texte: "[Témoignage à compléter]" },
 ];
 
+const SERVICE_AAS = [
+  {
+    icon: MonitorSmartphone,
+    titre: "Portail administratif dédié",
+    texte:
+      "Une web app pour constituer l'ensemble de vos dossiers formation en 48h, conformes et certifiés Qualiopi.",
+  },
+  {
+    icon: LayoutDashboard,
+    titre: "Publiez vos parcours de formation",
+    texte:
+      "Créez vos programmes, publiez-les au catalogue Skills4mation et recevez des demandes qualifiées.",
+  },
+  {
+    icon: Award,
+    titre: "Programme Ambassadeur",
+    texte:
+      "Un vrai réseau de recommandation : suivi de vos dossiers, KPI de recommandation et avantages associés.",
+  },
+];
+
+const WEBAPP_ETAPES = [
+  {
+    icon: UserCog,
+    titre: "Modification de votre profil formateur",
+    texte: "Expertises, tarifs, CV, références : votre vitrine reste à jour en quelques clics.",
+  },
+  {
+    icon: FolderCheck,
+    titre: "Constitution de vos pièces administratives et pédagogiques",
+    texte: "Conventions, programmes, émargements, évaluations : générés et contrôlés par nos soins.",
+  },
+  {
+    icon: PenTool,
+    titre: "Signature de vos documents",
+    texte: "Signature électronique horodatée pour vous, vos stagiaires et vos clients.",
+  },
+  {
+    icon: Archive,
+    titre: "Archivage prêt pour l'audit",
+    texte: "Chaque dossier est conservé et retrouvable instantanément en cas de contrôle Qualiopi.",
+  },
+];
+
+const AMBASSADEUR = [
+  "Parrainez des formateurs et des clients depuis votre espace",
+  "Suivi en temps réel de vos recommandations et de leur statut",
+  "Mise en avant au catalogue et priorité sur les projets du réseau",
+  "Co-animations et montée en compétences avec les experts portés",
+];
+
+const KPI = [
+  { valeur: "48h", label: "Dossier prêt" },
+  { valeur: "10 j", label: "Paiement ouvrés" },
+  { valeur: "100 %", label: "Conformité" },
+  { valeur: "4,8/5", label: "Satisfaction" },
+];
+
+
 function PortageQualiopi() {
   return (
     <PublicLayout>
@@ -348,7 +416,126 @@ function PortageQualiopi() {
         </div>
       </section>
 
+      <section id="portail" className="section-shell scroll-mt-24 py-16 lg:py-20">
+        <p className="eyebrow">Portage Qualiopi as a Service</p>
+        <h2 className="mt-3 max-w-3xl text-3xl font-semibold sm:text-4xl">
+          Un portail administratif pour monter vos dossiers formation en 48h, certifiés Qualiopi
+        </h2>
+        <p className="mt-5 max-w-3xl text-muted-foreground">
+          Notre web app centralise tout votre portage : profil formateur, pièces administratives et
+          pédagogiques, signature électronique, archivage prêt pour l'audit, publication de vos
+          parcours de formation, suivi de vos dossiers et de vos KPI de recommandation. Une solution
+          sur mesure pour vous faciliter le suivi de vos dossiers formation — et un paiement sous
+          10 jours ouvrés à réception des fonds.
+        </p>
+
+        <div className="mt-10 grid gap-5 lg:grid-cols-3">
+          {SERVICE_AAS.map((item) => (
+            <Card key={item.titre} className="rounded-2xl border-border/70 shadow-soft">
+              <CardContent className="p-6">
+                <span className="inline-flex rounded-xl bg-accent p-3 text-accent-foreground">
+                  <item.icon className="size-5" />
+                </span>
+                <h3 className="mt-4 text-base font-semibold">{item.titre}</h3>
+                <p className="mt-2 text-sm text-muted-foreground">{item.texte}</p>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+
+        <div className="mt-12 grid items-start gap-8 lg:grid-cols-[1.15fr_1fr]">
+          <PortailMockup />
+          <div>
+            <p className="eyebrow">Aperçu de la web app</p>
+            <h3 className="mt-3 text-2xl font-semibold">
+              Tout votre dossier formation, du profil à l'archivage
+            </h3>
+            <ul className="mt-6 space-y-4">
+              {WEBAPP_ETAPES.map((item) => (
+                <li key={item.titre} className="flex gap-4">
+                  <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-gradient-teal text-primary-foreground">
+                    <item.icon className="size-5" />
+                  </span>
+                  <div>
+                    <p className="text-sm font-semibold">{item.titre}</p>
+                    <p className="mt-1 text-sm text-muted-foreground">{item.texte}</p>
+                  </div>
+                </li>
+              ))}
+            </ul>
+            <div className="mt-8 rounded-2xl border border-border/70 bg-card p-5 shadow-soft">
+              <p className="flex items-center gap-2 text-sm font-semibold">
+                <Timer className="size-5 text-secondary" aria-hidden /> Paiement sous 10 jours
+                ouvrés
+              </p>
+              <p className="mt-2 text-sm text-muted-foreground">
+                Votre rémunération est reversée sous 10 jours ouvrés à réception des fonds du
+                financeur — suivi du règlement visible dans votre espace.
+              </p>
+            </div>
+            <div className="mt-6 flex flex-wrap gap-3">
+              <Button asChild variant="cta" size="lg">
+                <Link to="/pole-formateur">Accéder au portail formateur</Link>
+              </Button>
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-12 grid gap-5 lg:grid-cols-2">
+          <Card className="rounded-3xl border-none bg-gradient-hero text-primary-foreground shadow-elevated">
+            <CardContent className="p-8">
+              <Award className="size-8 text-cta" aria-hidden />
+              <h3 className="mt-5 text-2xl font-semibold text-primary-foreground">
+                Programme Ambassadeur
+              </h3>
+              <p className="mt-3 text-primary-foreground/85">
+                Recommandez des formateurs et des clients, suivez vos recommandations dans votre
+                tableau de bord et débloquez des avantages selon votre niveau : mise en avant au
+                catalogue, co-animations, priorité sur les appels d'offres du réseau.
+              </p>
+              <ul className="mt-6 space-y-2 text-sm text-primary-foreground/85">
+                {AMBASSADEUR.map((item) => (
+                  <li key={item} className="flex items-start gap-2">
+                    <Users className="mt-0.5 size-4 shrink-0 text-cta" aria-hidden />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </CardContent>
+          </Card>
+
+          <Card className="rounded-3xl border-border/70 shadow-soft">
+            <CardContent className="p-8">
+              <LineChart className="size-8 text-secondary" aria-hidden />
+              <h3 className="mt-5 text-2xl font-semibold">Suivi des dossiers & KPI</h3>
+              <p className="mt-3 text-muted-foreground">
+                Un vrai réseau de recommandation, piloté par les chiffres : avancement de chaque
+                dossier, taux de conformité, satisfaction stagiaires, recommandations générées et
+                reçues.
+              </p>
+              <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
+                {KPI.map((item) => (
+                  <div
+                    key={item.label}
+                    className="rounded-2xl border border-border/70 bg-muted/40 p-4"
+                  >
+                    <p className="text-xl font-semibold">{item.valeur}</p>
+                    <p className="mt-1 text-[11px] uppercase tracking-wide text-muted-foreground">
+                      {item.label}
+                    </p>
+                  </div>
+                ))}
+              </div>
+              <p className="mt-5 text-xs text-muted-foreground">
+                Indicateurs illustratifs de l'interface de suivi.
+              </p>
+            </CardContent>
+          </Card>
+        </div>
+      </section>
+
       <section id="tarifs" className="section-shell scroll-mt-24 py-16 lg:py-20">
+
         <p className="eyebrow">Tarifs</p>
         <h2 className="mt-3 max-w-2xl text-3xl font-semibold sm:text-4xl">
           Une tarification simple et transparente
