@@ -13,6 +13,11 @@ export type Profile = {
   date_naissance: string | null;
   siret: string | null;
   telephone: string | null;
+  adresse: string | null;
+  numero_nda: string | null;
+  cv_url: string | null;
+  deroule_pedagogique_url: string | null;
+  parcours_formation: string | null;
   statut_candidature: CandidatureStatut;
 };
 

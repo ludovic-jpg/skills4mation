@@ -16,39 +16,77 @@ export type Database = {
     Tables: {
       candidatures: {
         Row: {
+          adresse: string | null
+          commentaire_admin: string | null
           created_at: string
+          cv_url: string | null
+          date_naissance: string | null
+          deroule_pedagogique_url: string | null
           email: string
           expertise: string | null
           id: string
           message: string | null
           nom: string
+          numero_nda: string | null
+          parcours_formation: string | null
           prenom: string
+          profile_id: string | null
+          siret: string | null
           statut: Database["public"]["Enums"]["candidature_statut"]
           telephone: string | null
+          traitee_at: string | null
         }
         Insert: {
+          adresse?: string | null
+          commentaire_admin?: string | null
           created_at?: string
+          cv_url?: string | null
+          date_naissance?: string | null
+          deroule_pedagogique_url?: string | null
           email: string
           expertise?: string | null
           id?: string
           message?: string | null
           nom: string
+          numero_nda?: string | null
+          parcours_formation?: string | null
           prenom: string
+          profile_id?: string | null
+          siret?: string | null
           statut?: Database["public"]["Enums"]["candidature_statut"]
           telephone?: string | null
+          traitee_at?: string | null
         }
         Update: {
+          adresse?: string | null
+          commentaire_admin?: string | null
           created_at?: string
+          cv_url?: string | null
+          date_naissance?: string | null
+          deroule_pedagogique_url?: string | null
           email?: string
           expertise?: string | null
           id?: string
           message?: string | null
           nom?: string
+          numero_nda?: string | null
+          parcours_formation?: string | null
           prenom?: string
+          profile_id?: string | null
+          siret?: string | null
           statut?: Database["public"]["Enums"]["candidature_statut"]
           telephone?: string | null
+          traitee_at?: string | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "candidatures_profile_id_fkey"
+            columns: ["profile_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       demandes_budget: {
         Row: {
@@ -175,38 +213,100 @@ export type Database = {
           },
         ]
       }
+      dossier_historique: {
+        Row: {
+          ancien_statut: Database["public"]["Enums"]["crm_statut"] | null
+          auteur_id: string | null
+          commentaire: string | null
+          created_at: string
+          dossier_id: string
+          id: string
+          nouveau_statut: Database["public"]["Enums"]["crm_statut"]
+        }
+        Insert: {
+          ancien_statut?: Database["public"]["Enums"]["crm_statut"] | null
+          auteur_id?: string | null
+          commentaire?: string | null
+          created_at?: string
+          dossier_id: string
+          id?: string
+          nouveau_statut: Database["public"]["Enums"]["crm_statut"]
+        }
+        Update: {
+          ancien_statut?: Database["public"]["Enums"]["crm_statut"] | null
+          auteur_id?: string | null
+          commentaire?: string | null
+          created_at?: string
+          dossier_id?: string
+          id?: string
+          nouveau_statut?: Database["public"]["Enums"]["crm_statut"]
+        }
+        Relationships: [
+          {
+            foreignKeyName: "dossier_historique_dossier_id_fkey"
+            columns: ["dossier_id"]
+            isOneToOne: false
+            referencedRelation: "dossiers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       dossiers: {
         Row: {
           archived_at: string | null
+          commentaire_admin: string | null
           created_at: string
+          date_debut: string | null
+          date_fin: string | null
           documents_json: Json
+          dossier_nom: string | null
           drive_folder_url: string | null
           entreprise_nom: string | null
+          entreprise_siret: string | null
           formateur_id: string
           id: string
           statut: Database["public"]["Enums"]["dossier_statut"]
+          statut_crm: Database["public"]["Enums"]["crm_statut"]
+          tally_submission_id: string | null
+          titre_formation: string | null
           updated_at: string
         }
         Insert: {
           archived_at?: string | null
+          commentaire_admin?: string | null
           created_at?: string
+          date_debut?: string | null
+          date_fin?: string | null
           documents_json?: Json
+          dossier_nom?: string | null
           drive_folder_url?: string | null
           entreprise_nom?: string | null
+          entreprise_siret?: string | null
           formateur_id: string
           id?: string
           statut?: Database["public"]["Enums"]["dossier_statut"]
+          statut_crm?: Database["public"]["Enums"]["crm_statut"]
+          tally_submission_id?: string | null
+          titre_formation?: string | null
           updated_at?: string
         }
         Update: {
           archived_at?: string | null
+          commentaire_admin?: string | null
           created_at?: string
+          date_debut?: string | null
+          date_fin?: string | null
           documents_json?: Json
+          dossier_nom?: string | null
           drive_folder_url?: string | null
           entreprise_nom?: string | null
+          entreprise_siret?: string | null
           formateur_id?: string
           id?: string
           statut?: Database["public"]["Enums"]["dossier_statut"]
+          statut_crm?: Database["public"]["Enums"]["crm_statut"]
+          tally_submission_id?: string | null
+          titre_formation?: string | null
           updated_at?: string
         }
         Relationships: []
@@ -270,11 +370,16 @@ export type Database = {
       }
       profiles: {
         Row: {
+          adresse: string | null
           created_at: string
+          cv_url: string | null
           date_naissance: string | null
+          deroule_pedagogique_url: string | null
           email: string
           id: string
           nom: string
+          numero_nda: string | null
+          parcours_formation: string | null
           photo_url: string | null
           prenom: string
           siret: string | null
@@ -283,11 +388,16 @@ export type Database = {
           updated_at: string
         }
         Insert: {
+          adresse?: string | null
           created_at?: string
+          cv_url?: string | null
           date_naissance?: string | null
+          deroule_pedagogique_url?: string | null
           email?: string
           id: string
           nom?: string
+          numero_nda?: string | null
+          parcours_formation?: string | null
           photo_url?: string | null
           prenom?: string
           siret?: string | null
@@ -296,11 +406,16 @@ export type Database = {
           updated_at?: string
         }
         Update: {
+          adresse?: string | null
           created_at?: string
+          cv_url?: string | null
           date_naissance?: string | null
+          deroule_pedagogique_url?: string | null
           email?: string
           id?: string
           nom?: string
+          numero_nda?: string | null
+          parcours_formation?: string | null
           photo_url?: string | null
           prenom?: string
           siret?: string | null
@@ -349,7 +464,17 @@ export type Database = {
     Enums: {
       app_role: "formateur" | "admin"
       budget_statut: "en_attente" | "en_cours_etude" | "validee" | "refusee"
-      candidature_statut: "en_attente" | "valide" | "refuse"
+      candidature_statut: "en_attente" | "valide" | "refuse" | "en_cours"
+      crm_statut:
+        | "brouillon"
+        | "demande_validation"
+        | "dossier_valide"
+        | "demande_financement"
+        | "accord_financement"
+        | "finalisation_administrative"
+        | "paiement"
+        | "paiement_formateur"
+        | "refuse"
       document_type: "signe" | "accord_financement" | "qualiopi_final"
       dossier_statut:
         | "brouillon"
@@ -488,7 +613,18 @@ export const Constants = {
     Enums: {
       app_role: ["formateur", "admin"],
       budget_statut: ["en_attente", "en_cours_etude", "validee", "refusee"],
-      candidature_statut: ["en_attente", "valide", "refuse"],
+      candidature_statut: ["en_attente", "valide", "refuse", "en_cours"],
+      crm_statut: [
+        "brouillon",
+        "demande_validation",
+        "dossier_valide",
+        "demande_financement",
+        "accord_financement",
+        "finalisation_administrative",
+        "paiement",
+        "paiement_formateur",
+        "refuse",
+      ],
       document_type: ["signe", "accord_financement", "qualiopi_final"],
       dossier_statut: [
         "brouillon",
