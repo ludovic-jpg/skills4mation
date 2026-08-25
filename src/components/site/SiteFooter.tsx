@@ -5,7 +5,7 @@ import { QualiopiBadge } from "@/components/Brand";
 
 export function SiteFooter() {
   return (
-    <footer className="mt-24 bg-primary text-primary-foreground">
+    <footer className="bg-primary text-primary-foreground">
       <div className="section-shell grid gap-10 py-14 md:grid-cols-4">
         <div className="md:col-span-2">
           <p className="font-display text-xl font-semibold">Skills4mation</p>
