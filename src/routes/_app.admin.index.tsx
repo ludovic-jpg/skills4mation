@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { FileText } from "lucide-react";
 import { toast } from "sonner";
 
 import { AppShell } from "@/components/app/AppShell";
@@ -25,7 +26,48 @@ type Candidature = {
   message: string | null;
   statut: CandidatureStatut;
   created_at: string;
+  cv_url: string | null;
+  parcours_formation_url: string | null;
+  deroule_pedagogique_url: string | null;
 };
+
+const PIECES: { key: keyof Candidature; label: string }[] = [
+  { key: "cv_url", label: "CV" },
+  { key: "parcours_formation_url", label: "Parcours de formation" },
+  { key: "deroule_pedagogique_url", label: "Déroulé pédagogique" },
+];
+
+function PieceLink({ label, path }: { label: string; path: string | null }) {
+  async function open() {
+    if (!path) return;
+    const { data, error } = await supabase.storage
+      .from("candidatures")
+      .createSignedUrl(path, 60 * 10);
+    if (error || !data) {
+      toast.error("Document inaccessible.");
+      return;
+    }
+    window.open(data.signedUrl, "_blank", "noopener,noreferrer");
+  }
+
+  if (!path) {
+    return (
+      <span className="rounded-full bg-muted px-3 py-1 text-xs text-muted-foreground">
+        {label} manquant
+      </span>
+    );
+  }
+  return (
+    <button
+      type="button"
+      onClick={() => void open()}
+      className="inline-flex items-center gap-1.5 rounded-full border border-border px-3 py-1 text-xs font-semibold transition-colors hover:bg-muted"
+    >
+      <FileText className="size-3.5" /> {label}
+    </button>
+  );
+}
+
 
 function AdminCandidatures() {
   const { isAdmin, loading } = useAuth();
@@ -116,7 +158,17 @@ function AdminCandidatures() {
                       {c.message}
                     </p>
                   ) : null}
+                  <div className="mt-3 flex flex-wrap items-center gap-2">
+                    {PIECES.map((piece) => (
+                      <PieceLink
+                        key={piece.key}
+                        label={piece.label}
+                        path={(c[piece.key] as string | null) ?? null}
+                      />
+                    ))}
+                  </div>
                 </div>
+
                 <div className="flex shrink-0 flex-wrap items-start gap-2">
                   <Button
                     variant="teal"
