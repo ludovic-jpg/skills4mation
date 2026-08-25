@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 
+import { CertificationsBand } from "@/components/site/CertificationsBand";
 import { SiteFooter } from "@/components/site/SiteFooter";
 import { SiteHeader } from "@/components/site/SiteHeader";
 
@@ -8,10 +9,12 @@ export function PublicLayout({ children }: { children: ReactNode }) {
     <div className="flex min-h-screen flex-col">
       <SiteHeader />
       <main className="flex-1">{children}</main>
+      <CertificationsBand />
       <SiteFooter />
     </div>
   );
 }
+
 
 export function PageHero({
   eyebrow,
