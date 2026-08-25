@@ -29,6 +29,7 @@ export type Database = {
           nom: string
           numero_nda: string | null
           parcours_formation: string | null
+          parcours_formation_url: string | null
           prenom: string
           profile_id: string | null
           siret: string | null
@@ -50,6 +51,7 @@ export type Database = {
           nom: string
           numero_nda?: string | null
           parcours_formation?: string | null
+          parcours_formation_url?: string | null
           prenom: string
           profile_id?: string | null
           siret?: string | null
@@ -71,6 +73,7 @@ export type Database = {
           nom?: string
           numero_nda?: string | null
           parcours_formation?: string | null
+          parcours_formation_url?: string | null
           prenom?: string
           profile_id?: string | null
           siret?: string | null
