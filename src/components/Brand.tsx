@@ -1,7 +1,8 @@
 import { Link } from "@tanstack/react-router";
-import { ShieldCheck } from "lucide-react";
 
+import charteLogo from "@/assets/charte-deontologie.png.asset.json";
 import logoWordmark from "@/assets/logo-skills4mation.png.asset.json";
+import qualiopiLogo from "@/assets/qualiopi.png.asset.json";
 import { cn } from "@/lib/utils";
 
 export function Logo({ variant = "dark" }: { variant?: "dark" | "light" }) {
@@ -24,22 +25,49 @@ export function Logo({ variant = "dark" }: { variant?: "dark" | "light" }) {
 }
 
 
-/** Badge de certification. Remplacer par le fichier officiel Qualiopi fourni par le client. */
+export const CERT_LOGOS = { qualiopi: qualiopiLogo.url, charte: charteLogo.url };
+
+/** Logo officiel Qualiopi — processus certifié (République française). */
 export function QualiopiBadge({ className }: { className?: string }) {
   return (
     <div
       className={cn(
-        "inline-flex items-center gap-3 rounded-xl border border-secondary/30 bg-card px-4 py-3 shadow-soft",
+        "inline-flex items-center gap-3 rounded-xl border border-border bg-white px-4 py-3 shadow-soft",
         className,
       )}
     >
-      <ShieldCheck className="size-6 text-secondary" aria-hidden />
-      <div className="text-left leading-tight">
-        <p className="text-sm font-semibold text-primary">Certifié Qualiopi</p>
-        <p className="text-[11px] text-muted-foreground">
-          Actions de formation · Portage de formation
-        </p>
-      </div>
+      <img
+        src={qualiopiLogo.url}
+        alt="Qualiopi — processus certifié, République française"
+        width={640}
+        height={360}
+        loading="lazy"
+        className="h-12 w-auto object-contain"
+      />
+      <span className="sr-only">
+        Certification Qualiopi délivrée au titre des actions de formation
+      </span>
+    </div>
+  );
+}
+
+/** Logo « Entreprise de formation respectant la charte de déontologie ». */
+export function CharteDeontologieBadge({ className }: { className?: string }) {
+  return (
+    <div
+      className={cn(
+        "inline-flex items-center gap-3 rounded-xl border border-border bg-white px-4 py-3 shadow-soft",
+        className,
+      )}
+    >
+      <img
+        src={charteLogo.url}
+        alt="Entreprise de formation respectant la charte de déontologie"
+        width={660}
+        height={360}
+        loading="lazy"
+        className="h-12 w-auto object-contain"
+      />
     </div>
   );
 }
