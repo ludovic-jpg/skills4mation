@@ -19,6 +19,7 @@ import { Route as PoleFormateurRouteImport } from './routes/pole-formateur'
 import { Route as PortageQualiopiRouteImport } from './routes/portage-qualiopi'
 import { Route as CatalogueIndexRouteImport } from './routes/catalogue.index'
 import { Route as AppAdminIndexRouteImport } from './routes/_app.admin.index'
+import { Route as AppAdminDossiersRouteImport } from './routes/_app.admin.dossiers'
 import { Route as AppEspaceIndexRouteImport } from './routes/_app.espace.index'
 import { Route as AppEspaceCandidatureRouteImport } from './routes/_app.espace.candidature'
 import { Route as AppEspaceProfilRouteImport } from './routes/_app.espace.profil'
@@ -77,6 +78,11 @@ const AppAdminIndexRoute = AppAdminIndexRouteImport.update({
   path: '/admin/',
   getParentRoute: () => AppRoute,
 } as any)
+const AppAdminDossiersRoute = AppAdminDossiersRouteImport.update({
+  id: '/admin/dossiers',
+  path: '/admin/dossiers',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppEspaceIndexRoute = AppEspaceIndexRouteImport.update({
   id: '/espace/',
   path: '/espace/',
@@ -127,6 +133,7 @@ export interface FileRoutesByFullPath {
   '/pole-formateur': typeof PoleFormateurRoute
   '/portage-qualiopi': typeof PortageQualiopiRoute
   '/catalogue/': typeof CatalogueIndexRoute
+  '/admin/dossiers': typeof AppAdminDossiersRoute
   '/espace/candidature': typeof AppEspaceCandidatureRoute
   '/espace/profil': typeof AppEspaceProfilRoute
   '/catalogue/$category/$slug': typeof CatalogueCategorySlugRoute
@@ -146,6 +153,7 @@ export interface FileRoutesByTo {
   '/pole-formateur': typeof PoleFormateurRoute
   '/portage-qualiopi': typeof PortageQualiopiRoute
   '/catalogue': typeof CatalogueIndexRoute
+  '/admin/dossiers': typeof AppAdminDossiersRoute
   '/espace/candidature': typeof AppEspaceCandidatureRoute
   '/espace/profil': typeof AppEspaceProfilRoute
   '/catalogue/$category/$slug': typeof CatalogueCategorySlugRoute
@@ -167,6 +175,7 @@ export interface FileRoutesById {
   '/pole-formateur': typeof PoleFormateurRoute
   '/portage-qualiopi': typeof PortageQualiopiRoute
   '/catalogue/': typeof CatalogueIndexRoute
+  '/_app/admin/dossiers': typeof AppAdminDossiersRoute
   '/_app/espace/candidature': typeof AppEspaceCandidatureRoute
   '/_app/espace/profil': typeof AppEspaceProfilRoute
   '/catalogue/$category/$slug': typeof CatalogueCategorySlugRoute
@@ -188,6 +197,7 @@ export interface FileRouteTypes {
     | '/pole-formateur'
     | '/portage-qualiopi'
     | '/catalogue/'
+    | '/admin/dossiers'
     | '/espace/candidature'
     | '/espace/profil'
     | '/catalogue/$category/$slug'
@@ -207,6 +217,7 @@ export interface FileRouteTypes {
     | '/pole-formateur'
     | '/portage-qualiopi'
     | '/catalogue'
+    | '/admin/dossiers'
     | '/espace/candidature'
     | '/espace/profil'
     | '/catalogue/$category/$slug'
@@ -227,6 +238,7 @@ export interface FileRouteTypes {
     | '/pole-formateur'
     | '/portage-qualiopi'
     | '/catalogue/'
+    | '/_app/admin/dossiers'
     | '/_app/espace/candidature'
     | '/_app/espace/profil'
     | '/catalogue/$category/$slug'
@@ -324,6 +336,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppAdminIndexRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/admin/dossiers': {
+      id: '/_app/admin/dossiers'
+      path: '/admin/dossiers'
+      fullPath: '/admin/dossiers'
+      preLoaderRoute: typeof AppAdminDossiersRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/_app/espace/': {
       id: '/_app/espace/'
       path: '/espace'
@@ -384,6 +403,7 @@ declare module '@tanstack/react-router' {
 }
 
 interface AppRouteChildren {
+  AppAdminDossiersRoute: typeof AppAdminDossiersRoute
   AppEspaceCandidatureRoute: typeof AppEspaceCandidatureRoute
   AppEspaceProfilRoute: typeof AppEspaceProfilRoute
   AppAdminIndexRoute: typeof AppAdminIndexRoute
@@ -394,6 +414,7 @@ interface AppRouteChildren {
 }
 
 const AppRouteChildren: AppRouteChildren = {
+  AppAdminDossiersRoute: AppAdminDossiersRoute,
   AppEspaceCandidatureRoute: AppEspaceCandidatureRoute,
   AppEspaceProfilRoute: AppEspaceProfilRoute,
   AppAdminIndexRoute: AppAdminIndexRoute,

@@ -84,11 +84,11 @@ function AdminDossiers() {
       if (cible === "refuse" && !commentaire.trim()) {
         throw new Error("commentaire");
       }
-      const patch: Record<string, unknown> = {
+      const patch = {
         statut_crm: cible,
         commentaire_admin: commentaire.trim() || null,
+        ...(cible === "paiement_formateur" ? { archived_at: null } : {}),
       };
-      if (cible === "paiement_formateur") patch["archived_at"] = null;
       const { error } = await supabase.from("dossiers").update(patch).eq("id", row.id);
       if (error) throw error;
       const { error: histError } = await supabase.from("dossier_historique").insert({
