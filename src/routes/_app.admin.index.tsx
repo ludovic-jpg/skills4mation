@@ -25,7 +25,48 @@ type Candidature = {
   message: string | null;
   statut: CandidatureStatut;
   created_at: string;
+  cv_url: string | null;
+  parcours_formation_url: string | null;
+  deroule_pedagogique_url: string | null;
 };
+
+const PIECES: { key: keyof Candidature; label: string }[] = [
+  { key: "cv_url", label: "CV" },
+  { key: "parcours_formation_url", label: "Parcours de formation" },
+  { key: "deroule_pedagogique_url", label: "Déroulé pédagogique" },
+];
+
+function PieceLink({ label, path }: { label: string; path: string | null }) {
+  async function open() {
+    if (!path) return;
+    const { data, error } = await supabase.storage
+      .from("candidatures")
+      .createSignedUrl(path, 60 * 10);
+    if (error || !data) {
+      toast.error("Document inaccessible.");
+      return;
+    }
+    window.open(data.signedUrl, "_blank", "noopener,noreferrer");
+  }
+
+  if (!path) {
+    return (
+      <span className="rounded-full bg-muted px-3 py-1 text-xs text-muted-foreground">
+        {label} manquant
+      </span>
+    );
+  }
+  return (
+    <button
+      type="button"
+      onClick={() => void open()}
+      className="inline-flex items-center gap-1.5 rounded-full border border-border px-3 py-1 text-xs font-semibold transition-colors hover:bg-muted"
+    >
+      <FileText className="size-3.5" /> {label}
+    </button>
+  );
+}
+
 
 function AdminCandidatures() {
   const { isAdmin, loading } = useAuth();
