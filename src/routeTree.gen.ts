@@ -12,16 +12,19 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppRouteImport } from './routes/_app'
 import { Route as AuthRouteImport } from './routes/auth'
-import { Route as ConfidentialiteRouteImport } from './routes/confidentialite'
+import { Route as CodeDeontologiqueRouteImport } from './routes/code-deontologique'
 import { Route as ContactRouteImport } from './routes/contact'
+import { Route as EvaluerDroitFormationRouteImport } from './routes/evaluer-droit-formation'
 import { Route as MentionsLegalesRouteImport } from './routes/mentions-legales'
 import { Route as PoleFormateurRouteImport } from './routes/pole-formateur'
+import { Route as PolitiqueDeConfidentialiteRouteImport } from './routes/politique-de-confidentialite'
 import { Route as PortageQualiopiRouteImport } from './routes/portage-qualiopi'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as BlogIndexRouteImport } from './routes/blog.index'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 import { Route as CatalogueIndexRouteImport } from './routes/catalogue.index'
 import { Route as AppAdminIndexRouteImport } from './routes/_app.admin.index'
+import { Route as AppAdminDemandesRouteImport } from './routes/_app.admin.demandes'
 import { Route as AppAdminDossiersRouteImport } from './routes/_app.admin.dossiers'
 import { Route as AppEspaceIndexRouteImport } from './routes/_app.espace.index'
 import { Route as AppEspaceCandidatureRouteImport } from './routes/_app.espace.candidature'
@@ -46,14 +49,19 @@ const AuthRoute = AuthRouteImport.update({
   path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ConfidentialiteRoute = ConfidentialiteRouteImport.update({
-  id: '/confidentialite',
-  path: '/confidentialite',
+const CodeDeontologiqueRoute = CodeDeontologiqueRouteImport.update({
+  id: '/code-deontologique',
+  path: '/code-deontologique',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ContactRoute = ContactRouteImport.update({
   id: '/contact',
   path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EvaluerDroitFormationRoute = EvaluerDroitFormationRouteImport.update({
+  id: '/evaluer-droit-formation',
+  path: '/evaluer-droit-formation',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MentionsLegalesRoute = MentionsLegalesRouteImport.update({
@@ -66,6 +74,12 @@ const PoleFormateurRoute = PoleFormateurRouteImport.update({
   path: '/pole-formateur',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PolitiqueDeConfidentialiteRoute =
+  PolitiqueDeConfidentialiteRouteImport.update({
+    id: '/politique-de-confidentialite',
+    path: '/politique-de-confidentialite',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const PortageQualiopiRoute = PortageQualiopiRouteImport.update({
   id: '/portage-qualiopi',
   path: '/portage-qualiopi',
@@ -94,6 +108,11 @@ const CatalogueIndexRoute = CatalogueIndexRouteImport.update({
 const AppAdminIndexRoute = AppAdminIndexRouteImport.update({
   id: '/admin/',
   path: '/admin/',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAdminDemandesRoute = AppAdminDemandesRouteImport.update({
+  id: '/admin/demandes',
+  path: '/admin/demandes',
   getParentRoute: () => AppRoute,
 } as any)
 const AppAdminDossiersRoute = AppAdminDossiersRouteImport.update({
@@ -145,15 +164,18 @@ const AppEspaceDossiersNewRoute = AppEspaceDossiersNewRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
-  '/confidentialite': typeof ConfidentialiteRoute
+  '/code-deontologique': typeof CodeDeontologiqueRoute
   '/contact': typeof ContactRoute
+  '/evaluer-droit-formation': typeof EvaluerDroitFormationRoute
   '/mentions-legales': typeof MentionsLegalesRoute
   '/pole-formateur': typeof PoleFormateurRoute
+  '/politique-de-confidentialite': typeof PolitiqueDeConfidentialiteRoute
   '/portage-qualiopi': typeof PortageQualiopiRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/blog/': typeof BlogIndexRoute
   '/catalogue/': typeof CatalogueIndexRoute
+  '/admin/demandes': typeof AppAdminDemandesRoute
   '/admin/dossiers': typeof AppAdminDossiersRoute
   '/espace/candidature': typeof AppEspaceCandidatureRoute
   '/espace/profil': typeof AppEspaceProfilRoute
@@ -168,15 +190,18 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
-  '/confidentialite': typeof ConfidentialiteRoute
+  '/code-deontologique': typeof CodeDeontologiqueRoute
   '/contact': typeof ContactRoute
+  '/evaluer-droit-formation': typeof EvaluerDroitFormationRoute
   '/mentions-legales': typeof MentionsLegalesRoute
   '/pole-formateur': typeof PoleFormateurRoute
+  '/politique-de-confidentialite': typeof PolitiqueDeConfidentialiteRoute
   '/portage-qualiopi': typeof PortageQualiopiRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/blog': typeof BlogIndexRoute
   '/catalogue': typeof CatalogueIndexRoute
+  '/admin/demandes': typeof AppAdminDemandesRoute
   '/admin/dossiers': typeof AppAdminDossiersRoute
   '/espace/candidature': typeof AppEspaceCandidatureRoute
   '/espace/profil': typeof AppEspaceProfilRoute
@@ -193,15 +218,18 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_app': typeof AppRouteWithChildren
   '/auth': typeof AuthRoute
-  '/confidentialite': typeof ConfidentialiteRoute
+  '/code-deontologique': typeof CodeDeontologiqueRoute
   '/contact': typeof ContactRoute
+  '/evaluer-droit-formation': typeof EvaluerDroitFormationRoute
   '/mentions-legales': typeof MentionsLegalesRoute
   '/pole-formateur': typeof PoleFormateurRoute
+  '/politique-de-confidentialite': typeof PolitiqueDeConfidentialiteRoute
   '/portage-qualiopi': typeof PortageQualiopiRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/blog/': typeof BlogIndexRoute
   '/catalogue/': typeof CatalogueIndexRoute
+  '/_app/admin/demandes': typeof AppAdminDemandesRoute
   '/_app/admin/dossiers': typeof AppAdminDossiersRoute
   '/_app/espace/candidature': typeof AppEspaceCandidatureRoute
   '/_app/espace/profil': typeof AppEspaceProfilRoute
@@ -218,15 +246,18 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/auth'
-    | '/confidentialite'
+    | '/code-deontologique'
     | '/contact'
+    | '/evaluer-droit-formation'
     | '/mentions-legales'
     | '/pole-formateur'
+    | '/politique-de-confidentialite'
     | '/portage-qualiopi'
     | '/sitemap.xml'
     | '/blog/$slug'
     | '/blog/'
     | '/catalogue/'
+    | '/admin/demandes'
     | '/admin/dossiers'
     | '/espace/candidature'
     | '/espace/profil'
@@ -241,15 +272,18 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/auth'
-    | '/confidentialite'
+    | '/code-deontologique'
     | '/contact'
+    | '/evaluer-droit-formation'
     | '/mentions-legales'
     | '/pole-formateur'
+    | '/politique-de-confidentialite'
     | '/portage-qualiopi'
     | '/sitemap.xml'
     | '/blog/$slug'
     | '/blog'
     | '/catalogue'
+    | '/admin/demandes'
     | '/admin/dossiers'
     | '/espace/candidature'
     | '/espace/profil'
@@ -265,15 +299,18 @@ export interface FileRouteTypes {
     | '/'
     | '/_app'
     | '/auth'
-    | '/confidentialite'
+    | '/code-deontologique'
     | '/contact'
+    | '/evaluer-droit-formation'
     | '/mentions-legales'
     | '/pole-formateur'
+    | '/politique-de-confidentialite'
     | '/portage-qualiopi'
     | '/sitemap.xml'
     | '/blog/$slug'
     | '/blog/'
     | '/catalogue/'
+    | '/_app/admin/demandes'
     | '/_app/admin/dossiers'
     | '/_app/espace/candidature'
     | '/_app/espace/profil'
@@ -290,10 +327,12 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AppRoute: typeof AppRouteWithChildren
   AuthRoute: typeof AuthRoute
-  ConfidentialiteRoute: typeof ConfidentialiteRoute
+  CodeDeontologiqueRoute: typeof CodeDeontologiqueRoute
   ContactRoute: typeof ContactRoute
+  EvaluerDroitFormationRoute: typeof EvaluerDroitFormationRoute
   MentionsLegalesRoute: typeof MentionsLegalesRoute
   PoleFormateurRoute: typeof PoleFormateurRoute
+  PolitiqueDeConfidentialiteRoute: typeof PolitiqueDeConfidentialiteRoute
   PortageQualiopiRoute: typeof PortageQualiopiRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   BlogSlugRoute: typeof BlogSlugRoute
@@ -326,11 +365,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/confidentialite': {
-      id: '/confidentialite'
-      path: '/confidentialite'
-      fullPath: '/confidentialite'
-      preLoaderRoute: typeof ConfidentialiteRouteImport
+    '/code-deontologique': {
+      id: '/code-deontologique'
+      path: '/code-deontologique'
+      fullPath: '/code-deontologique'
+      preLoaderRoute: typeof CodeDeontologiqueRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/contact': {
@@ -338,6 +377,13 @@ declare module '@tanstack/react-router' {
       path: '/contact'
       fullPath: '/contact'
       preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/evaluer-droit-formation': {
+      id: '/evaluer-droit-formation'
+      path: '/evaluer-droit-formation'
+      fullPath: '/evaluer-droit-formation'
+      preLoaderRoute: typeof EvaluerDroitFormationRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/mentions-legales': {
@@ -352,6 +398,13 @@ declare module '@tanstack/react-router' {
       path: '/pole-formateur'
       fullPath: '/pole-formateur'
       preLoaderRoute: typeof PoleFormateurRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/politique-de-confidentialite': {
+      id: '/politique-de-confidentialite'
+      path: '/politique-de-confidentialite'
+      fullPath: '/politique-de-confidentialite'
+      preLoaderRoute: typeof PolitiqueDeConfidentialiteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/portage-qualiopi': {
@@ -394,6 +447,13 @@ declare module '@tanstack/react-router' {
       path: '/admin'
       fullPath: '/admin/'
       preLoaderRoute: typeof AppAdminIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/admin/demandes': {
+      id: '/_app/admin/demandes'
+      path: '/admin/demandes'
+      fullPath: '/admin/demandes'
+      preLoaderRoute: typeof AppAdminDemandesRouteImport
       parentRoute: typeof AppRoute
     }
     '/_app/admin/dossiers': {
@@ -463,6 +523,7 @@ declare module '@tanstack/react-router' {
 }
 
 interface AppRouteChildren {
+  AppAdminDemandesRoute: typeof AppAdminDemandesRoute
   AppAdminDossiersRoute: typeof AppAdminDossiersRoute
   AppEspaceCandidatureRoute: typeof AppEspaceCandidatureRoute
   AppEspaceProfilRoute: typeof AppEspaceProfilRoute
@@ -474,6 +535,7 @@ interface AppRouteChildren {
 }
 
 const AppRouteChildren: AppRouteChildren = {
+  AppAdminDemandesRoute: AppAdminDemandesRoute,
   AppAdminDossiersRoute: AppAdminDossiersRoute,
   AppEspaceCandidatureRoute: AppEspaceCandidatureRoute,
   AppEspaceProfilRoute: AppEspaceProfilRoute,
@@ -490,10 +552,12 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AppRoute: AppRouteWithChildren,
   AuthRoute: AuthRoute,
-  ConfidentialiteRoute: ConfidentialiteRoute,
+  CodeDeontologiqueRoute: CodeDeontologiqueRoute,
   ContactRoute: ContactRoute,
+  EvaluerDroitFormationRoute: EvaluerDroitFormationRoute,
   MentionsLegalesRoute: MentionsLegalesRoute,
   PoleFormateurRoute: PoleFormateurRoute,
+  PolitiqueDeConfidentialiteRoute: PolitiqueDeConfidentialiteRoute,
   PortageQualiopiRoute: PortageQualiopiRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   BlogSlugRoute: BlogSlugRoute,

@@ -2,6 +2,7 @@ import {
   FilePlus2,
   FolderKanban,
   Folders,
+  Inbox,
   LayoutDashboard,
   UserCog,
   Users,
@@ -24,6 +25,7 @@ export const CANDIDAT_NAV: NavItem[] = [
 
 export const ADMIN_NAV: NavItem[] = [
   { to: "/admin", label: "Candidatures", icon: Users },
+  { to: "/admin/demandes", label: "Toutes les demandes", icon: Inbox },
   { to: "/admin/dossiers", label: "CRM dossiers", icon: FolderKanban },
   { to: "/espace", label: "Espace formateur", icon: Folders },
 ];

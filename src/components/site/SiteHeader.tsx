@@ -10,7 +10,7 @@ import { useAuth } from "@/hooks/useAuth";
 const NAV = [
   { to: "/", hash: undefined, label: "Accueil" },
   { to: "/catalogue", hash: undefined, label: "Catalogue" },
-  { to: "/", hash: "apprenants", label: "Apprenants" },
+  { to: "/evaluer-droit-formation", hash: undefined, label: "Mes droits formation" },
   { to: "/portage-qualiopi", hash: undefined, label: "Espace formateur" },
   { to: "/portage-qualiopi", hash: "etapes", label: "Comment ça marche" },
   { to: "/portage-qualiopi", hash: "tarifs", label: "Tarifs" },

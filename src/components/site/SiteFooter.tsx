@@ -86,10 +86,19 @@ export function SiteFooter() {
               <Link to="/mentions-legales">Mentions légales</Link>
             </li>
             <li>
-              <Link to="/confidentialite">Politique de confidentialité</Link>
+              <Link to="/politique-de-confidentialite">Politique de confidentialité</Link>
             </li>
-            <li>CGV / CGU</li>
-            <li>Charte déontologique</li>
+            <li>
+              <Link to="/politique-de-confidentialite" hash="cookies">
+                Politique de cookies (UE)
+              </Link>
+            </li>
+            <li>
+              <Link to="/code-deontologique">Code déontologique</Link>
+            </li>
+            <li>
+              <Link to="/evaluer-droit-formation">Évaluer mes droits formation</Link>
+            </li>
           </ul>
           <div className="mt-5 flex flex-wrap gap-3">
             <QualiopiBadge />

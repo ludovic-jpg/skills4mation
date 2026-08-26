@@ -27,8 +27,10 @@ export const Route = createFileRoute("/sitemap.xml")({
             changefreq: "monthly" as const,
             priority: "0.7",
           })),
+          { path: "/evaluer-droit-formation", changefreq: "monthly", priority: "0.9" },
           { path: "/mentions-legales", changefreq: "yearly", priority: "0.2" },
-          { path: "/confidentialite", changefreq: "yearly", priority: "0.2" },
+          { path: "/politique-de-confidentialite", changefreq: "yearly", priority: "0.2" },
+          { path: "/code-deontologique", changefreq: "yearly", priority: "0.3" },
           ...CATEGORIES.map((c) => ({
             path: `/catalogue/${c.slug}`,
             changefreq: "monthly" as const,
