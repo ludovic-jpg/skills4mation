@@ -84,7 +84,31 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           "Skills4mation, organisme de formation certifié Qualiopi : portage administratif et pédagogique pour formateurs indépendants.",
       },
       { property: "og:type", content: "website" },
+      { property: "og:site_name", content: "Skills4mation" },
+      { property: "og:locale", content: "fr_FR" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "robots", content: "index, follow" },
+      { name: "author", content: "Skills4mation" },
+    ],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "EducationalOrganization",
+          name: "Skills4mation",
+          url: "https://train-grow-connect.lovable.app",
+          logo: "https://train-grow-connect.lovable.app/favicon.png",
+          description:
+            "Organisme de formation certifié Qualiopi : portage administratif et pédagogique pour formateurs indépendants et parcours sur mesure pour apprenants.",
+          email: "contact@skills4mation.com",
+          address: {
+            "@type": "PostalAddress",
+            addressLocality: "Rixheim",
+            addressCountry: "FR",
+          },
+        }),
+      },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
