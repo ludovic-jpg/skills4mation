@@ -106,13 +106,13 @@ function Accueil() {
           <div>
             <p className="eyebrow text-cta">Formation professionnelle · Certifié Qualiopi</p>
             <h1 className="mt-4 text-4xl font-semibold text-primary-foreground sm:text-5xl lg:text-6xl">
-              Deux façons d'entrer dans l'univers Skills4mation
+              Skills4mation, votre vecteur de réussite
             </h1>
-            <p className="mt-5 max-w-xl text-lg text-primary-foreground/85">
-              Vous voulez vous former auprès du formateur de votre choix, ou vous voulez former sous
-              une certification Qualiopi sans créer votre organisme ? Dans les deux cas, nous
-              construisons le parcours avec vous et prenons en charge l'administratif.
-            </p>
+            <div className="mt-5 max-w-xl space-y-4 text-lg text-primary-foreground/85">
+              <p>Vous voulez vous former auprès du formateur de votre choix ?</p>
+              <p>Vous souhaitez former les apprenants de votre choix, sans tracas ?</p>
+              <p>Skills4mation est le vecteur de la réussite de vos espaces de formation.</p>
+            </div>
             <div className="mt-8 flex flex-wrap gap-3">
               <Button asChild variant="cta" size="lg">
                 <Link to="/catalogue">Je veux me former</Link>
