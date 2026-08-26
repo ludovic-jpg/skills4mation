@@ -19,6 +19,7 @@ import { Route as PoleFormateurRouteImport } from './routes/pole-formateur'
 import { Route as PortageQualiopiRouteImport } from './routes/portage-qualiopi'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as BlogIndexRouteImport } from './routes/blog.index'
+import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 import { Route as CatalogueIndexRouteImport } from './routes/catalogue.index'
 import { Route as AppAdminIndexRouteImport } from './routes/_app.admin.index'
 import { Route as AppAdminDossiersRouteImport } from './routes/_app.admin.dossiers'
@@ -78,6 +79,11 @@ const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
 const BlogIndexRoute = BlogIndexRouteImport.update({
   id: '/blog/',
   path: '/blog/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BlogSlugRoute = BlogSlugRouteImport.update({
+  id: '/blog/$slug',
+  path: '/blog/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CatalogueIndexRoute = CatalogueIndexRouteImport.update({
@@ -145,6 +151,7 @@ export interface FileRoutesByFullPath {
   '/pole-formateur': typeof PoleFormateurRoute
   '/portage-qualiopi': typeof PortageQualiopiRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/blog/$slug': typeof BlogSlugRoute
   '/blog/': typeof BlogIndexRoute
   '/catalogue/': typeof CatalogueIndexRoute
   '/admin/dossiers': typeof AppAdminDossiersRoute
@@ -167,6 +174,7 @@ export interface FileRoutesByTo {
   '/pole-formateur': typeof PoleFormateurRoute
   '/portage-qualiopi': typeof PortageQualiopiRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/blog/$slug': typeof BlogSlugRoute
   '/blog': typeof BlogIndexRoute
   '/catalogue': typeof CatalogueIndexRoute
   '/admin/dossiers': typeof AppAdminDossiersRoute
@@ -191,6 +199,7 @@ export interface FileRoutesById {
   '/pole-formateur': typeof PoleFormateurRoute
   '/portage-qualiopi': typeof PortageQualiopiRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/blog/$slug': typeof BlogSlugRoute
   '/blog/': typeof BlogIndexRoute
   '/catalogue/': typeof CatalogueIndexRoute
   '/_app/admin/dossiers': typeof AppAdminDossiersRoute
@@ -215,6 +224,7 @@ export interface FileRouteTypes {
     | '/pole-formateur'
     | '/portage-qualiopi'
     | '/sitemap.xml'
+    | '/blog/$slug'
     | '/blog/'
     | '/catalogue/'
     | '/admin/dossiers'
@@ -237,6 +247,7 @@ export interface FileRouteTypes {
     | '/pole-formateur'
     | '/portage-qualiopi'
     | '/sitemap.xml'
+    | '/blog/$slug'
     | '/blog'
     | '/catalogue'
     | '/admin/dossiers'
@@ -260,6 +271,7 @@ export interface FileRouteTypes {
     | '/pole-formateur'
     | '/portage-qualiopi'
     | '/sitemap.xml'
+    | '/blog/$slug'
     | '/blog/'
     | '/catalogue/'
     | '/_app/admin/dossiers'
@@ -284,6 +296,7 @@ export interface RootRouteChildren {
   PoleFormateurRoute: typeof PoleFormateurRoute
   PortageQualiopiRoute: typeof PortageQualiopiRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  BlogSlugRoute: typeof BlogSlugRoute
   BlogIndexRoute: typeof BlogIndexRoute
   CatalogueIndexRoute: typeof CatalogueIndexRoute
   CatalogueCategorySlugRoute: typeof CatalogueCategorySlugRoute
@@ -360,6 +373,13 @@ declare module '@tanstack/react-router' {
       path: '/blog'
       fullPath: '/blog/'
       preLoaderRoute: typeof BlogIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/blog/$slug': {
+      id: '/blog/$slug'
+      path: '/blog/$slug'
+      fullPath: '/blog/$slug'
+      preLoaderRoute: typeof BlogSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/catalogue/': {
@@ -476,6 +496,7 @@ const rootRouteChildren: RootRouteChildren = {
   PoleFormateurRoute: PoleFormateurRoute,
   PortageQualiopiRoute: PortageQualiopiRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
+  BlogSlugRoute: BlogSlugRoute,
   BlogIndexRoute: BlogIndexRoute,
   CatalogueIndexRoute: CatalogueIndexRoute,
   CatalogueCategorySlugRoute: CatalogueCategorySlugRoute,
