@@ -120,7 +120,7 @@ function MentionsLegales() {
           <p className="leading-relaxed">
             Les modalités de collecte et de traitement des données personnelles sont détaillées dans
             notre{" "}
-            <a className="font-medium text-primary underline" href="/confidentialite">
+            <a className="font-medium text-primary underline" href="/politique-de-confidentialite">
               politique de confidentialité
             </a>
             . Toute demande d'accès, de rectification ou de suppression peut être adressée à
