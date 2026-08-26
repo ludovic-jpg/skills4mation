@@ -12,13 +12,13 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppRouteImport } from './routes/_app'
 import { Route as AuthRouteImport } from './routes/auth'
-import { Route as BlogRouteImport } from './routes/blog'
 import { Route as ConfidentialiteRouteImport } from './routes/confidentialite'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as MentionsLegalesRouteImport } from './routes/mentions-legales'
 import { Route as PoleFormateurRouteImport } from './routes/pole-formateur'
 import { Route as PortageQualiopiRouteImport } from './routes/portage-qualiopi'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as BlogIndexRouteImport } from './routes/blog.index'
 import { Route as CatalogueIndexRouteImport } from './routes/catalogue.index'
 import { Route as AppAdminIndexRouteImport } from './routes/_app.admin.index'
 import { Route as AppAdminDossiersRouteImport } from './routes/_app.admin.dossiers'
@@ -43,11 +43,6 @@ const AppRoute = AppRouteImport.update({
 const AuthRoute = AuthRouteImport.update({
   id: '/auth',
   path: '/auth',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const BlogRoute = BlogRouteImport.update({
-  id: '/blog',
-  path: '/blog',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ConfidentialiteRoute = ConfidentialiteRouteImport.update({
@@ -78,6 +73,11 @@ const PortageQualiopiRoute = PortageQualiopiRouteImport.update({
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
   path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BlogIndexRoute = BlogIndexRouteImport.update({
+  id: '/blog/',
+  path: '/blog/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CatalogueIndexRoute = CatalogueIndexRouteImport.update({
@@ -139,13 +139,13 @@ const AppEspaceDossiersNewRoute = AppEspaceDossiersNewRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
-  '/blog': typeof BlogRoute
   '/confidentialite': typeof ConfidentialiteRoute
   '/contact': typeof ContactRoute
   '/mentions-legales': typeof MentionsLegalesRoute
   '/pole-formateur': typeof PoleFormateurRoute
   '/portage-qualiopi': typeof PortageQualiopiRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/blog/': typeof BlogIndexRoute
   '/catalogue/': typeof CatalogueIndexRoute
   '/admin/dossiers': typeof AppAdminDossiersRoute
   '/espace/candidature': typeof AppEspaceCandidatureRoute
@@ -161,13 +161,13 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
-  '/blog': typeof BlogRoute
   '/confidentialite': typeof ConfidentialiteRoute
   '/contact': typeof ContactRoute
   '/mentions-legales': typeof MentionsLegalesRoute
   '/pole-formateur': typeof PoleFormateurRoute
   '/portage-qualiopi': typeof PortageQualiopiRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/blog': typeof BlogIndexRoute
   '/catalogue': typeof CatalogueIndexRoute
   '/admin/dossiers': typeof AppAdminDossiersRoute
   '/espace/candidature': typeof AppEspaceCandidatureRoute
@@ -185,13 +185,13 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_app': typeof AppRouteWithChildren
   '/auth': typeof AuthRoute
-  '/blog': typeof BlogRoute
   '/confidentialite': typeof ConfidentialiteRoute
   '/contact': typeof ContactRoute
   '/mentions-legales': typeof MentionsLegalesRoute
   '/pole-formateur': typeof PoleFormateurRoute
   '/portage-qualiopi': typeof PortageQualiopiRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/blog/': typeof BlogIndexRoute
   '/catalogue/': typeof CatalogueIndexRoute
   '/_app/admin/dossiers': typeof AppAdminDossiersRoute
   '/_app/espace/candidature': typeof AppEspaceCandidatureRoute
@@ -209,13 +209,13 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/auth'
-    | '/blog'
     | '/confidentialite'
     | '/contact'
     | '/mentions-legales'
     | '/pole-formateur'
     | '/portage-qualiopi'
     | '/sitemap.xml'
+    | '/blog/'
     | '/catalogue/'
     | '/admin/dossiers'
     | '/espace/candidature'
@@ -231,13 +231,13 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/auth'
-    | '/blog'
     | '/confidentialite'
     | '/contact'
     | '/mentions-legales'
     | '/pole-formateur'
     | '/portage-qualiopi'
     | '/sitemap.xml'
+    | '/blog'
     | '/catalogue'
     | '/admin/dossiers'
     | '/espace/candidature'
@@ -254,13 +254,13 @@ export interface FileRouteTypes {
     | '/'
     | '/_app'
     | '/auth'
-    | '/blog'
     | '/confidentialite'
     | '/contact'
     | '/mentions-legales'
     | '/pole-formateur'
     | '/portage-qualiopi'
     | '/sitemap.xml'
+    | '/blog/'
     | '/catalogue/'
     | '/_app/admin/dossiers'
     | '/_app/espace/candidature'
@@ -278,13 +278,13 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AppRoute: typeof AppRouteWithChildren
   AuthRoute: typeof AuthRoute
-  BlogRoute: typeof BlogRoute
   ConfidentialiteRoute: typeof ConfidentialiteRoute
   ContactRoute: typeof ContactRoute
   MentionsLegalesRoute: typeof MentionsLegalesRoute
   PoleFormateurRoute: typeof PoleFormateurRoute
   PortageQualiopiRoute: typeof PortageQualiopiRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  BlogIndexRoute: typeof BlogIndexRoute
   CatalogueIndexRoute: typeof CatalogueIndexRoute
   CatalogueCategorySlugRoute: typeof CatalogueCategorySlugRoute
   CatalogueCategoryIndexRoute: typeof CatalogueCategoryIndexRoute
@@ -311,13 +311,6 @@ declare module '@tanstack/react-router' {
       path: '/auth'
       fullPath: '/auth'
       preLoaderRoute: typeof AuthRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/blog': {
-      id: '/blog'
-      path: '/blog'
-      fullPath: '/blog'
-      preLoaderRoute: typeof BlogRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/confidentialite': {
@@ -360,6 +353,13 @@ declare module '@tanstack/react-router' {
       path: '/sitemap.xml'
       fullPath: '/sitemap.xml'
       preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/blog/': {
+      id: '/blog/'
+      path: '/blog'
+      fullPath: '/blog/'
+      preLoaderRoute: typeof BlogIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/catalogue/': {
@@ -470,13 +470,13 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AppRoute: AppRouteWithChildren,
   AuthRoute: AuthRoute,
-  BlogRoute: BlogRoute,
   ConfidentialiteRoute: ConfidentialiteRoute,
   ContactRoute: ContactRoute,
   MentionsLegalesRoute: MentionsLegalesRoute,
   PoleFormateurRoute: PoleFormateurRoute,
   PortageQualiopiRoute: PortageQualiopiRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
+  BlogIndexRoute: BlogIndexRoute,
   CatalogueIndexRoute: CatalogueIndexRoute,
   CatalogueCategorySlugRoute: CatalogueCategorySlugRoute,
   CatalogueCategoryIndexRoute: CatalogueCategoryIndexRoute,
