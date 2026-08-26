@@ -15,6 +15,7 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as CodeDeontologiqueRouteImport } from './routes/code-deontologique'
 import { Route as ConfidentialiteRouteImport } from './routes/confidentialite'
 import { Route as ContactRouteImport } from './routes/contact'
+import { Route as EvaluerDroitFormationRouteImport } from './routes/evaluer-droit-formation'
 import { Route as MentionsLegalesRouteImport } from './routes/mentions-legales'
 import { Route as PoleFormateurRouteImport } from './routes/pole-formateur'
 import { Route as PolitiqueDeConfidentialiteRouteImport } from './routes/politique-de-confidentialite'
@@ -61,6 +62,11 @@ const ConfidentialiteRoute = ConfidentialiteRouteImport.update({
 const ContactRoute = ContactRouteImport.update({
   id: '/contact',
   path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EvaluerDroitFormationRoute = EvaluerDroitFormationRouteImport.update({
+  id: '/evaluer-droit-formation',
+  path: '/evaluer-droit-formation',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MentionsLegalesRoute = MentionsLegalesRouteImport.update({
@@ -161,6 +167,7 @@ export interface FileRoutesByFullPath {
   '/code-deontologique': typeof CodeDeontologiqueRoute
   '/confidentialite': typeof ConfidentialiteRoute
   '/contact': typeof ContactRoute
+  '/evaluer-droit-formation': typeof EvaluerDroitFormationRoute
   '/mentions-legales': typeof MentionsLegalesRoute
   '/pole-formateur': typeof PoleFormateurRoute
   '/politique-de-confidentialite': typeof PolitiqueDeConfidentialiteRoute
@@ -186,6 +193,7 @@ export interface FileRoutesByTo {
   '/code-deontologique': typeof CodeDeontologiqueRoute
   '/confidentialite': typeof ConfidentialiteRoute
   '/contact': typeof ContactRoute
+  '/evaluer-droit-formation': typeof EvaluerDroitFormationRoute
   '/mentions-legales': typeof MentionsLegalesRoute
   '/pole-formateur': typeof PoleFormateurRoute
   '/politique-de-confidentialite': typeof PolitiqueDeConfidentialiteRoute
@@ -213,6 +221,7 @@ export interface FileRoutesById {
   '/code-deontologique': typeof CodeDeontologiqueRoute
   '/confidentialite': typeof ConfidentialiteRoute
   '/contact': typeof ContactRoute
+  '/evaluer-droit-formation': typeof EvaluerDroitFormationRoute
   '/mentions-legales': typeof MentionsLegalesRoute
   '/pole-formateur': typeof PoleFormateurRoute
   '/politique-de-confidentialite': typeof PolitiqueDeConfidentialiteRoute
@@ -240,6 +249,7 @@ export interface FileRouteTypes {
     | '/code-deontologique'
     | '/confidentialite'
     | '/contact'
+    | '/evaluer-droit-formation'
     | '/mentions-legales'
     | '/pole-formateur'
     | '/politique-de-confidentialite'
@@ -265,6 +275,7 @@ export interface FileRouteTypes {
     | '/code-deontologique'
     | '/confidentialite'
     | '/contact'
+    | '/evaluer-droit-formation'
     | '/mentions-legales'
     | '/pole-formateur'
     | '/politique-de-confidentialite'
@@ -291,6 +302,7 @@ export interface FileRouteTypes {
     | '/code-deontologique'
     | '/confidentialite'
     | '/contact'
+    | '/evaluer-droit-formation'
     | '/mentions-legales'
     | '/pole-formateur'
     | '/politique-de-confidentialite'
@@ -318,6 +330,7 @@ export interface RootRouteChildren {
   CodeDeontologiqueRoute: typeof CodeDeontologiqueRoute
   ConfidentialiteRoute: typeof ConfidentialiteRoute
   ContactRoute: typeof ContactRoute
+  EvaluerDroitFormationRoute: typeof EvaluerDroitFormationRoute
   MentionsLegalesRoute: typeof MentionsLegalesRoute
   PoleFormateurRoute: typeof PoleFormateurRoute
   PolitiqueDeConfidentialiteRoute: typeof PolitiqueDeConfidentialiteRoute
@@ -372,6 +385,13 @@ declare module '@tanstack/react-router' {
       path: '/contact'
       fullPath: '/contact'
       preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/evaluer-droit-formation': {
+      id: '/evaluer-droit-formation'
+      path: '/evaluer-droit-formation'
+      fullPath: '/evaluer-droit-formation'
+      preLoaderRoute: typeof EvaluerDroitFormationRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/mentions-legales': {
@@ -534,6 +554,7 @@ const rootRouteChildren: RootRouteChildren = {
   CodeDeontologiqueRoute: CodeDeontologiqueRoute,
   ConfidentialiteRoute: ConfidentialiteRoute,
   ContactRoute: ContactRoute,
+  EvaluerDroitFormationRoute: EvaluerDroitFormationRoute,
   MentionsLegalesRoute: MentionsLegalesRoute,
   PoleFormateurRoute: PoleFormateurRoute,
   PolitiqueDeConfidentialiteRoute: PolitiqueDeConfidentialiteRoute,

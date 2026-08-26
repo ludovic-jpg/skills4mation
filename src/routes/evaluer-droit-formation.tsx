@@ -249,10 +249,10 @@ function EvaluerDroitFormation() {
             <Card className="mt-8 rounded-3xl border-border/70 shadow-soft">
               <CardContent className="p-6 sm:p-8">
                 <form onSubmit={onSubmit} className="grid gap-5 sm:grid-cols-2">
-                  <Champ label="Prénom *" name="prenom" error={errors.prenom} />
-                  <Champ label="Nom *" name="nom" error={errors.nom} />
-                  <Champ label="Email *" name="email" type="email" error={errors.email} />
-                  <Champ label="Téléphone" name="telephone" error={errors.telephone} />
+                  <Champ label="Prénom *" name="prenom" error={errors["prenom"]} />
+                  <Champ label="Nom *" name="nom" error={errors["nom"]} />
+                  <Champ label="Email *" name="email" type="email" error={errors["email"]} />
+                  <Champ label="Téléphone" name="telephone" error={errors["telephone"]} />
 
                   <div>
                     <Label htmlFor="statut_pro">Votre statut professionnel</Label>
@@ -273,7 +273,7 @@ function EvaluerDroitFormation() {
                   <Champ
                     label="Formation ou domaine visé"
                     name="formation_visee"
-                    error={errors.formation_visee}
+                    error={errors["formation_visee"]}
                   />
 
                   <div className="sm:col-span-2">
@@ -285,9 +285,9 @@ function EvaluerDroitFormation() {
                       className="mt-2"
                       placeholder="Reconversion, montée en compétences, évolution interne, création d'activité…"
                     />
-                    {errors.objectif_professionnel ? (
+                    {errors["objectif_professionnel"] ? (
                       <p className="mt-1 text-xs text-destructive">
-                        {errors.objectif_professionnel}
+                        {errors["objectif_professionnel"]}
                       </p>
                     ) : null}
                   </div>
@@ -295,12 +295,12 @@ function EvaluerDroitFormation() {
                   <Champ
                     label="Votre situation actuelle (employeur, secteur…)"
                     name="situation"
-                    error={errors.situation}
+                    error={errors["situation"]}
                   />
                   <Champ
                     label="Vos disponibilités"
                     name="disponibilites"
-                    error={errors.disponibilites}
+                    error={errors["disponibilites"]}
                     placeholder="Soirs, semaine, 100 % distanciel…"
                   />
 
@@ -322,7 +322,7 @@ function EvaluerDroitFormation() {
                   <Champ
                     label="Budget estimé"
                     name="budget_estime"
-                    error={errors.budget_estime}
+                    error={errors["budget_estime"]}
                     placeholder="Ex. 1 500 – 3 000 €"
                   />
                   <div className="sm:col-span-2">
@@ -358,9 +358,9 @@ function Champ({
 }: {
   label: string;
   name: string;
-  type?: string;
-  error?: string;
-  placeholder?: string;
+  type?: string | undefined;
+  error?: string | undefined;
+  placeholder?: string | undefined;
 }) {
   return (
     <div>
