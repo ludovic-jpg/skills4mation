@@ -2,6 +2,7 @@ import {
   FilePlus2,
   FolderKanban,
   Folders,
+  Inbox,
   LayoutDashboard,
   UserCog,
   Users,
