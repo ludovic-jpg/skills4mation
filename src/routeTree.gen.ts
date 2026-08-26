@@ -17,6 +17,7 @@ import { Route as ConfidentialiteRouteImport } from './routes/confidentialite'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as MentionsLegalesRouteImport } from './routes/mentions-legales'
 import { Route as PoleFormateurRouteImport } from './routes/pole-formateur'
+import { Route as PolitiqueDeConfidentialiteRouteImport } from './routes/politique-de-confidentialite'
 import { Route as PortageQualiopiRouteImport } from './routes/portage-qualiopi'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as BlogIndexRouteImport } from './routes/blog.index'
@@ -72,6 +73,12 @@ const PoleFormateurRoute = PoleFormateurRouteImport.update({
   path: '/pole-formateur',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PolitiqueDeConfidentialiteRoute =
+  PolitiqueDeConfidentialiteRouteImport.update({
+    id: '/politique-de-confidentialite',
+    path: '/politique-de-confidentialite',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const PortageQualiopiRoute = PortageQualiopiRouteImport.update({
   id: '/portage-qualiopi',
   path: '/portage-qualiopi',
@@ -156,6 +163,7 @@ export interface FileRoutesByFullPath {
   '/contact': typeof ContactRoute
   '/mentions-legales': typeof MentionsLegalesRoute
   '/pole-formateur': typeof PoleFormateurRoute
+  '/politique-de-confidentialite': typeof PolitiqueDeConfidentialiteRoute
   '/portage-qualiopi': typeof PortageQualiopiRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/blog/$slug': typeof BlogSlugRoute
@@ -180,6 +188,7 @@ export interface FileRoutesByTo {
   '/contact': typeof ContactRoute
   '/mentions-legales': typeof MentionsLegalesRoute
   '/pole-formateur': typeof PoleFormateurRoute
+  '/politique-de-confidentialite': typeof PolitiqueDeConfidentialiteRoute
   '/portage-qualiopi': typeof PortageQualiopiRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/blog/$slug': typeof BlogSlugRoute
@@ -206,6 +215,7 @@ export interface FileRoutesById {
   '/contact': typeof ContactRoute
   '/mentions-legales': typeof MentionsLegalesRoute
   '/pole-formateur': typeof PoleFormateurRoute
+  '/politique-de-confidentialite': typeof PolitiqueDeConfidentialiteRoute
   '/portage-qualiopi': typeof PortageQualiopiRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/blog/$slug': typeof BlogSlugRoute
@@ -232,6 +242,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/mentions-legales'
     | '/pole-formateur'
+    | '/politique-de-confidentialite'
     | '/portage-qualiopi'
     | '/sitemap.xml'
     | '/blog/$slug'
@@ -256,6 +267,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/mentions-legales'
     | '/pole-formateur'
+    | '/politique-de-confidentialite'
     | '/portage-qualiopi'
     | '/sitemap.xml'
     | '/blog/$slug'
@@ -281,6 +293,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/mentions-legales'
     | '/pole-formateur'
+    | '/politique-de-confidentialite'
     | '/portage-qualiopi'
     | '/sitemap.xml'
     | '/blog/$slug'
@@ -307,6 +320,7 @@ export interface RootRouteChildren {
   ContactRoute: typeof ContactRoute
   MentionsLegalesRoute: typeof MentionsLegalesRoute
   PoleFormateurRoute: typeof PoleFormateurRoute
+  PolitiqueDeConfidentialiteRoute: typeof PolitiqueDeConfidentialiteRoute
   PortageQualiopiRoute: typeof PortageQualiopiRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   BlogSlugRoute: typeof BlogSlugRoute
@@ -372,6 +386,13 @@ declare module '@tanstack/react-router' {
       path: '/pole-formateur'
       fullPath: '/pole-formateur'
       preLoaderRoute: typeof PoleFormateurRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/politique-de-confidentialite': {
+      id: '/politique-de-confidentialite'
+      path: '/politique-de-confidentialite'
+      fullPath: '/politique-de-confidentialite'
+      preLoaderRoute: typeof PolitiqueDeConfidentialiteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/portage-qualiopi': {
@@ -515,6 +536,7 @@ const rootRouteChildren: RootRouteChildren = {
   ContactRoute: ContactRoute,
   MentionsLegalesRoute: MentionsLegalesRoute,
   PoleFormateurRoute: PoleFormateurRoute,
+  PolitiqueDeConfidentialiteRoute: PolitiqueDeConfidentialiteRoute,
   PortageQualiopiRoute: PortageQualiopiRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   BlogSlugRoute: BlogSlugRoute,
