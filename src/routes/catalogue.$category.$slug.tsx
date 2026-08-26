@@ -22,6 +22,8 @@ export const Route = createFileRoute("/catalogue/$category/$slug")({
     }
     const f = loaderData.formation;
     const description = f.intro.slice(0, 155) || `Programme de la formation ${f.title}.`;
+    const base = "https://train-grow-connect.lovable.app";
+    const url = `${base}/catalogue/${f.category}/${f.slug}`;
     return {
       meta: [
         { title: `${f.title} — Skills4mation` },
@@ -30,12 +32,49 @@ export const Route = createFileRoute("/catalogue/$category/$slug")({
         { name: "twitter:card", content: "summary_large_image" },
         { property: "og:title", content: `${f.title} — Skills4mation` },
         { property: "og:description", content: description },
+        { property: "og:url", content: url },
         ...(f.image
           ? [
               { property: "og:image", content: f.image },
               { name: "twitter:image", content: f.image },
             ]
           : []),
+      ],
+      links: [{ rel: "canonical", href: url }],
+      scripts: [
+        {
+          type: "application/ld+json",
+          children: JSON.stringify({
+            "@context": "https://schema.org",
+            "@graph": [
+              {
+                "@type": "Course",
+                name: f.title,
+                description,
+                url,
+                provider: {
+                  "@type": "Organization",
+                  name: "Skills4mation",
+                  url: base,
+                },
+                ...(f.duree ? { timeRequired: f.duree } : {}),
+              },
+              {
+                "@type": "BreadcrumbList",
+                itemListElement: [
+                  { "@type": "ListItem", position: 1, name: "Catalogue", item: `${base}/catalogue` },
+                  {
+                    "@type": "ListItem",
+                    position: 2,
+                    name: categoryLabel(f.category),
+                    item: `${base}/catalogue/${f.category}`,
+                  },
+                  { "@type": "ListItem", position: 3, name: f.title, item: url },
+                ],
+              },
+            ],
+          }),
+        },
       ],
     };
   },
