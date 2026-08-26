@@ -197,12 +197,12 @@ function PoleFormateur() {
         </div>
       </section>
 
-      <section className="section-shell pb-20">
+      <section id="candidature" className="section-shell pb-20 scroll-mt-24">
         <Card className="rounded-3xl border-border/70 shadow-soft">
           <CardContent className="grid gap-10 p-8 lg:grid-cols-[1fr_1.1fr] lg:p-10">
             <div>
               <p className="eyebrow">Candidature</p>
-              <h2 className="mt-3 text-3xl font-semibold">Rejoindre le réseau</h2>
+              <h2 className="mt-3 text-3xl font-semibold">Rejoindre Skills4mation</h2>
               <p className="mt-4 text-sm text-muted-foreground">
                 Votre candidature est étudiée par l'équipe Skills4mation. Une fois validée, votre
                 accès à l'espace formateur est activé : vous pouvez alors monter vos dossiers de
