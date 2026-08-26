@@ -40,7 +40,7 @@ const PROFILS = [
   "Indépendant(e) / TNS",
   "Dirigeant(e) / employeur",
   "En recherche d'emploi / transition",
-  "Formateur(trice) — portage Qualiopi",
+  "Entreprise de formation / conseil",
   "Autre",
 ];
 
