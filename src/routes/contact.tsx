@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -40,7 +40,7 @@ const PROFILS = [
   "Indépendant(e) / TNS",
   "Dirigeant(e) / employeur",
   "En recherche d'emploi / transition",
-  "Formateur(trice) — portage Qualiopi",
+  "Entreprise de formation / conseil",
   "Autre",
 ];
 
@@ -122,6 +122,22 @@ function Contact() {
             </CardContent>
           </Card>
         ))}
+      </section>
+
+      <section className="section-shell pb-4">
+        <Card className="rounded-2xl border-cta/40 bg-cta/10 shadow-soft">
+          <CardContent className="flex flex-wrap items-center justify-between gap-4 p-6">
+            <p className="max-w-2xl text-sm font-medium">
+              Vous êtes formateur et souhaitez rejoindre Skills4mation ? Déposez directement votre
+              candidature.
+            </p>
+            <Button asChild variant="cta">
+              <Link to="/pole-formateur" hash="candidature">
+                Déposer ma candidature
+              </Link>
+            </Button>
+          </CardContent>
+        </Card>
       </section>
 
       <section id="formulaire" className="section-shell scroll-mt-24 pb-20">

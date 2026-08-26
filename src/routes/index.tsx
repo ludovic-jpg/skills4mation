@@ -21,7 +21,7 @@ import formatriceTablette from "@/assets/formatrice-tablette.jpg";
 import homeHero from "@/assets/home-hero.jpg";
 import peopleEquipe from "@/assets/people-equipe.jpg";
 import { QualiopiBadge } from "@/components/Brand";
-import { EvaluationBudget } from "@/components/site/EvaluationBudget";
+import { DiagnosticExpress } from "@/components/site/DiagnosticExpress";
 import { PublicLayout } from "@/components/site/PublicLayout";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -110,8 +110,8 @@ function Accueil() {
             </h1>
             <p className="mt-5 max-w-xl text-lg text-primary-foreground/85">
               Vous voulez vous former auprès du formateur de votre choix, ou vous voulez former sous
-              une certification Qualiopi sans créer votre organisme ? Choisissez votre entrée : nous
-              construisons le reste avec vous.
+              une certification Qualiopi sans créer votre organisme ? Dans les deux cas, nous
+              construisons le parcours avec vous et prenons en charge l'administratif.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Button asChild variant="cta" size="lg">
@@ -165,7 +165,7 @@ function Accueil() {
               <div className="mt-7">
                 <Button asChild variant="cta" size="lg">
                   <Link to="/catalogue">
-                    Découvrir le catalogue <ArrowRight className="size-4" />
+                    Voir les formations <ArrowRight className="size-4" />
                   </Link>
                 </Button>
               </div>
@@ -256,13 +256,13 @@ function Accueil() {
                 </p>
                 <div className="mt-auto pt-7">
                   <Button asChild variant="cta" size="lg">
-                    <Link to="/catalogue">Explorer le catalogue</Link>
+                    <Link to="/catalogue">Voir les formations</Link>
                   </Button>
                 </div>
               </CardContent>
             </Card>
 
-            <EvaluationBudget />
+            <DiagnosticExpress />
           </div>
         </div>
       </section>
