@@ -47,9 +47,9 @@ import {
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 
-const TITRE = "Portage Qualiopi pour formateurs indépendants | Espace Formateur Skills4mation";
+const TITRE = "Portage Qualiopi Formation et Bilan de Compétences | Skills4mation";
 const DESCRIPTION =
-  "Formez sous la certification Qualiopi de Skills4mation : conventions en 48h, accès aux financements OPCO, autonomie pédagogique totale. 99 € HT/an + 20 % de commission.";
+  "Portage Qualiopi pour vos actions de formation et vos bilans de compétences : conventions en 48h, accès aux financements OPCO, autonomie pédagogique totale. 99 € HT/an + 20 % de commission.";
 
 const FAQ = [
   {
@@ -302,7 +302,7 @@ function PortageQualiopi() {
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Button asChild variant="cta" size="lg">
-                <Link to="/pole-formateur">Devenir partenaire porté</Link>
+                <Link to="/pole-formateur" hash="candidature">Rejoindre Skills4mation</Link>
               </Button>
               <Button asChild variant="onDark" size="lg">
                 <Link to="/portage-qualiopi" hash="tarifs">
@@ -691,7 +691,7 @@ function PortageQualiopi() {
             </h2>
             <div className="mt-8 flex flex-wrap gap-3">
               <Button asChild variant="cta" size="lg">
-                <Link to="/pole-formateur">Devenir partenaire porté</Link>
+                <Link to="/pole-formateur" hash="candidature">Rejoindre Skills4mation</Link>
               </Button>
               <Button asChild variant="onDark" size="lg">
                 <Link to="/contact">Nous contacter</Link>

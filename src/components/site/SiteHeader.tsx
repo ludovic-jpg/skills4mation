@@ -53,7 +53,7 @@ export function SiteHeader() {
             <Link to={espaceTo}>Espace formateur</Link>
           </Button>
           <Button asChild variant="cta" size="sm">
-            <Link to="/pole-formateur">Devenir partenaire porté</Link>
+            <Link to="/pole-formateur" hash="candidature">Rejoindre Skills4mation</Link>
           </Button>
 
           <Sheet open={open} onOpenChange={setOpen}>

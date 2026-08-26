@@ -65,7 +65,7 @@ export function SiteFooter() {
               </Link>
             </li>
             <li>
-              <Link to="/pole-formateur">Devenir partenaire porté</Link>
+              <Link to="/pole-formateur" hash="candidature">Rejoindre Skills4mation</Link>
             </li>
             <li>
               <Link to="/contact">Contact</Link>
