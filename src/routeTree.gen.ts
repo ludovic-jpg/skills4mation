@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppRouteImport } from './routes/_app'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as CodeDeontologiqueRouteImport } from './routes/code-deontologique'
 import { Route as ConfidentialiteRouteImport } from './routes/confidentialite'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as MentionsLegalesRouteImport } from './routes/mentions-legales'
@@ -44,6 +45,11 @@ const AppRoute = AppRouteImport.update({
 const AuthRoute = AuthRouteImport.update({
   id: '/auth',
   path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CodeDeontologiqueRoute = CodeDeontologiqueRouteImport.update({
+  id: '/code-deontologique',
+  path: '/code-deontologique',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ConfidentialiteRoute = ConfidentialiteRouteImport.update({
@@ -145,6 +151,7 @@ const AppEspaceDossiersNewRoute = AppEspaceDossiersNewRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/code-deontologique': typeof CodeDeontologiqueRoute
   '/confidentialite': typeof ConfidentialiteRoute
   '/contact': typeof ContactRoute
   '/mentions-legales': typeof MentionsLegalesRoute
@@ -168,6 +175,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/code-deontologique': typeof CodeDeontologiqueRoute
   '/confidentialite': typeof ConfidentialiteRoute
   '/contact': typeof ContactRoute
   '/mentions-legales': typeof MentionsLegalesRoute
@@ -193,6 +201,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_app': typeof AppRouteWithChildren
   '/auth': typeof AuthRoute
+  '/code-deontologique': typeof CodeDeontologiqueRoute
   '/confidentialite': typeof ConfidentialiteRoute
   '/contact': typeof ContactRoute
   '/mentions-legales': typeof MentionsLegalesRoute
@@ -218,6 +227,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/auth'
+    | '/code-deontologique'
     | '/confidentialite'
     | '/contact'
     | '/mentions-legales'
@@ -241,6 +251,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/auth'
+    | '/code-deontologique'
     | '/confidentialite'
     | '/contact'
     | '/mentions-legales'
@@ -265,6 +276,7 @@ export interface FileRouteTypes {
     | '/'
     | '/_app'
     | '/auth'
+    | '/code-deontologique'
     | '/confidentialite'
     | '/contact'
     | '/mentions-legales'
@@ -290,6 +302,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AppRoute: typeof AppRouteWithChildren
   AuthRoute: typeof AuthRoute
+  CodeDeontologiqueRoute: typeof CodeDeontologiqueRoute
   ConfidentialiteRoute: typeof ConfidentialiteRoute
   ContactRoute: typeof ContactRoute
   MentionsLegalesRoute: typeof MentionsLegalesRoute
@@ -324,6 +337,13 @@ declare module '@tanstack/react-router' {
       path: '/auth'
       fullPath: '/auth'
       preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/code-deontologique': {
+      id: '/code-deontologique'
+      path: '/code-deontologique'
+      fullPath: '/code-deontologique'
+      preLoaderRoute: typeof CodeDeontologiqueRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/confidentialite': {
@@ -490,6 +510,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AppRoute: AppRouteWithChildren,
   AuthRoute: AuthRoute,
+  CodeDeontologiqueRoute: CodeDeontologiqueRoute,
   ConfidentialiteRoute: ConfidentialiteRoute,
   ContactRoute: ContactRoute,
   MentionsLegalesRoute: MentionsLegalesRoute,
