@@ -15,6 +15,7 @@ export const Route = createFileRoute("/catalogue/$category/")({
     const label = categoryLabel(params.category);
     const title = `Formations ${label} — Skills4mation`;
     const description = `Toutes nos formations professionnelles ${label} : objectifs pédagogiques, programme, durée et modalités de financement.`;
+    const url = `https://train-grow-connect.lovable.app/catalogue/${params.category}`;
     return {
       meta: [
         { title },
@@ -23,7 +24,9 @@ export const Route = createFileRoute("/catalogue/$category/")({
         { name: "twitter:card", content: "summary_large_image" },
         { property: "og:title", content: title },
         { property: "og:description", content: description },
+        { property: "og:url", content: url },
       ],
+      links: [{ rel: "canonical", href: url }],
     };
   },
   component: CategoryPage,

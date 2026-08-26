@@ -12,3 +12,8 @@ Allow: /
 
 User-agent: *
 Allow: /
+Disallow: /auth
+Disallow: /espace
+Disallow: /admin
+
+Sitemap: https://train-grow-connect.lovable.app/sitemap.xml

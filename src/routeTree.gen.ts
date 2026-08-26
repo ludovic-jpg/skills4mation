@@ -17,6 +17,7 @@ import { Route as ContactRouteImport } from './routes/contact'
 import { Route as MentionsLegalesRouteImport } from './routes/mentions-legales'
 import { Route as PoleFormateurRouteImport } from './routes/pole-formateur'
 import { Route as PortageQualiopiRouteImport } from './routes/portage-qualiopi'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as CatalogueIndexRouteImport } from './routes/catalogue.index'
 import { Route as AppAdminIndexRouteImport } from './routes/_app.admin.index'
 import { Route as AppAdminDossiersRouteImport } from './routes/_app.admin.dossiers'
@@ -66,6 +67,11 @@ const PoleFormateurRoute = PoleFormateurRouteImport.update({
 const PortageQualiopiRoute = PortageQualiopiRouteImport.update({
   id: '/portage-qualiopi',
   path: '/portage-qualiopi',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CatalogueIndexRoute = CatalogueIndexRouteImport.update({
@@ -132,6 +138,7 @@ export interface FileRoutesByFullPath {
   '/mentions-legales': typeof MentionsLegalesRoute
   '/pole-formateur': typeof PoleFormateurRoute
   '/portage-qualiopi': typeof PortageQualiopiRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/catalogue/': typeof CatalogueIndexRoute
   '/admin/dossiers': typeof AppAdminDossiersRoute
   '/espace/candidature': typeof AppEspaceCandidatureRoute
@@ -152,6 +159,7 @@ export interface FileRoutesByTo {
   '/mentions-legales': typeof MentionsLegalesRoute
   '/pole-formateur': typeof PoleFormateurRoute
   '/portage-qualiopi': typeof PortageQualiopiRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/catalogue': typeof CatalogueIndexRoute
   '/admin/dossiers': typeof AppAdminDossiersRoute
   '/espace/candidature': typeof AppEspaceCandidatureRoute
@@ -174,6 +182,7 @@ export interface FileRoutesById {
   '/mentions-legales': typeof MentionsLegalesRoute
   '/pole-formateur': typeof PoleFormateurRoute
   '/portage-qualiopi': typeof PortageQualiopiRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/catalogue/': typeof CatalogueIndexRoute
   '/_app/admin/dossiers': typeof AppAdminDossiersRoute
   '/_app/espace/candidature': typeof AppEspaceCandidatureRoute
@@ -196,6 +205,7 @@ export interface FileRouteTypes {
     | '/mentions-legales'
     | '/pole-formateur'
     | '/portage-qualiopi'
+    | '/sitemap.xml'
     | '/catalogue/'
     | '/admin/dossiers'
     | '/espace/candidature'
@@ -216,6 +226,7 @@ export interface FileRouteTypes {
     | '/mentions-legales'
     | '/pole-formateur'
     | '/portage-qualiopi'
+    | '/sitemap.xml'
     | '/catalogue'
     | '/admin/dossiers'
     | '/espace/candidature'
@@ -237,6 +248,7 @@ export interface FileRouteTypes {
     | '/mentions-legales'
     | '/pole-formateur'
     | '/portage-qualiopi'
+    | '/sitemap.xml'
     | '/catalogue/'
     | '/_app/admin/dossiers'
     | '/_app/espace/candidature'
@@ -259,6 +271,7 @@ export interface RootRouteChildren {
   MentionsLegalesRoute: typeof MentionsLegalesRoute
   PoleFormateurRoute: typeof PoleFormateurRoute
   PortageQualiopiRoute: typeof PortageQualiopiRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   CatalogueIndexRoute: typeof CatalogueIndexRoute
   CatalogueCategorySlugRoute: typeof CatalogueCategorySlugRoute
   CatalogueCategoryIndexRoute: typeof CatalogueCategoryIndexRoute
@@ -320,6 +333,13 @@ declare module '@tanstack/react-router' {
       path: '/portage-qualiopi'
       fullPath: '/portage-qualiopi'
       preLoaderRoute: typeof PortageQualiopiRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/catalogue/': {
@@ -435,6 +455,7 @@ const rootRouteChildren: RootRouteChildren = {
   MentionsLegalesRoute: MentionsLegalesRoute,
   PoleFormateurRoute: PoleFormateurRoute,
   PortageQualiopiRoute: PortageQualiopiRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
   CatalogueIndexRoute: CatalogueIndexRoute,
   CatalogueCategorySlugRoute: CatalogueCategorySlugRoute,
   CatalogueCategoryIndexRoute: CatalogueCategoryIndexRoute,

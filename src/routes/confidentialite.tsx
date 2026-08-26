@@ -13,7 +13,11 @@ export const Route = createFileRoute("/confidentialite")({
       },
       { property: "og:title", content: "Politique de confidentialité — Skills4mation" },
       { property: "og:description", content: "Traitement et protection de vos données." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { property: "og:url", content: "https://train-grow-connect.lovable.app/confidentialite" },
     ],
+    links: [{ rel: "canonical", href: "https://train-grow-connect.lovable.app/confidentialite" }],
   }),
   component: Confidentialite,
 });

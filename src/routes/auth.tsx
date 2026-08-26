@@ -23,6 +23,7 @@ export const Route = createFileRoute("/auth")({
       },
       { property: "og:title", content: "Connexion espace formateur — Skills4mation" },
       { property: "og:description", content: "Accès à l'espace formateur Skills4mation." },
+      { name: "robots", content: "noindex, nofollow" },
     ],
   }),
   component: AuthPage,
