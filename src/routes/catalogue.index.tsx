@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { CATEGORIES, FORMATIONS, categoryLabel } from "@/data/catalogue";
+import apprenantsDuo from "@/assets/apprenants-duo.jpg";
 
 export const Route = createFileRoute("/catalogue/")({
   head: () => ({
