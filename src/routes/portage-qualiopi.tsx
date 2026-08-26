@@ -90,8 +90,10 @@ export const Route = createFileRoute("/portage-qualiopi")({
       { property: "og:title", content: TITRE },
       { property: "og:description", content: DESCRIPTION },
       { property: "og:type", content: "website" },
+      { property: "og:url", content: "https://train-grow-connect.lovable.app/portage-qualiopi" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
+    links: [{ rel: "canonical", href: "https://train-grow-connect.lovable.app/portage-qualiopi" }],
     scripts: [
       {
         type: "application/ld+json",
