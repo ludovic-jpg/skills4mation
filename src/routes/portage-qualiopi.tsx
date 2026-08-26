@@ -220,10 +220,14 @@ const AUTRES_SERVICES = [
   },
 ];
 
-const TEMOIGNAGES = [
-  { nom: "[Prénom, fonction]", texte: "[Témoignage à compléter]" },
-  { nom: "[Prénom, fonction]", texte: "[Témoignage à compléter]" },
-  { nom: "[Prénom, fonction]", texte: "[Témoignage à compléter]" },
+// Réactivable dès que de vrais témoignages sont disponibles : il suffit de remplir ce tableau.
+const TEMOIGNAGES: { nom: string; texte: string }[] = [];
+
+const INDICATEURS = [
+  { valeur: "48 h", label: "dossier formation prêt" },
+  { valeur: "10 j", label: "paiement sous 10 jours ouvrés" },
+  { valeur: "100 %", label: "conformité Qualiopi" },
+  { valeur: "4,8/5", label: "satisfaction des formateurs portés" },
 ];
 
 const SERVICE_AAS = [
