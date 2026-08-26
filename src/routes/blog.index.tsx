@@ -10,7 +10,7 @@ const DESCRIPTION =
   "Analyses et guides Skills4mation : portage Qualiopi, marché du bilan de compétences, compétences numériques, vente B2B et langues étrangères.";
 const URL = "https://train-grow-connect.lovable.app/blog";
 
-export const Route = createFileRoute("/blog")({
+export const Route = createFileRoute("/blog/")({
   head: () => ({
     meta: [
       { title: TITRE },
