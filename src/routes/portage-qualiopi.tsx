@@ -674,17 +674,30 @@ function PortageQualiopi() {
         <h2 className="max-w-2xl text-3xl font-semibold sm:text-4xl">
           Ils forment sereinement grâce à Skills4mation
         </h2>
-        <div className="mt-10 grid gap-5 lg:grid-cols-3">
-          {TEMOIGNAGES.map((item, index) => (
-            <Card key={index} className="rounded-2xl border-border/70 shadow-soft">
-              <CardContent className="p-6">
-                <Quote className="size-6 text-secondary" aria-hidden />
-                <p className="mt-4 text-sm text-muted-foreground">« {item.texte} »</p>
-                <p className="mt-4 text-sm font-semibold">{item.nom}</p>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
+        {TEMOIGNAGES.length > 0 ? (
+          <div className="mt-10 grid gap-5 lg:grid-cols-3">
+            {TEMOIGNAGES.map((item, index) => (
+              <Card key={index} className="rounded-2xl border-border/70 shadow-soft">
+                <CardContent className="p-6">
+                  <Quote className="size-6 text-secondary" aria-hidden />
+                  <p className="mt-4 text-sm text-muted-foreground">« {item.texte} »</p>
+                  <p className="mt-4 text-sm font-semibold">{item.nom}</p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        ) : (
+          <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            {INDICATEURS.map((item) => (
+              <Card key={item.label} className="rounded-2xl border-border/70 shadow-soft">
+                <CardContent className="p-6">
+                  <p className="text-3xl font-semibold text-secondary">{item.valeur}</p>
+                  <p className="mt-2 text-sm text-muted-foreground">{item.label}</p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        )}
       </section>
 
       <section className="section-shell pb-20">
