@@ -17,7 +17,6 @@ import {
   MonitorSmartphone,
   Network,
   PenTool,
-  Quote,
   Receipt,
   ScrollText,
   ShieldCheck,
@@ -218,16 +217,6 @@ const AUTRES_SERVICES = [
     texte:
       "Indicateurs de satisfaction et de compétences pour objectiver la qualité de vos formations.",
   },
-];
-
-// Réactivable dès que de vrais témoignages sont disponibles : il suffit de remplir ce tableau.
-const TEMOIGNAGES: { nom: string; texte: string }[] = [];
-
-const INDICATEURS = [
-  { valeur: "48 h", label: "dossier formation prêt" },
-  { valeur: "10 j", label: "paiement sous 10 jours ouvrés" },
-  { valeur: "100 %", label: "conformité Qualiopi" },
-  { valeur: "4,8/5", label: "satisfaction des formateurs portés" },
 ];
 
 const SERVICE_AAS = [
@@ -668,36 +657,6 @@ function PortageQualiopi() {
             ))}
           </Accordion>
         </div>
-      </section>
-
-      <section className="section-shell py-16 lg:py-20">
-        <h2 className="max-w-2xl text-3xl font-semibold sm:text-4xl">
-          Ils forment sereinement grâce à Skills4mation
-        </h2>
-        {TEMOIGNAGES.length > 0 ? (
-          <div className="mt-10 grid gap-5 lg:grid-cols-3">
-            {TEMOIGNAGES.map((item, index) => (
-              <Card key={index} className="rounded-2xl border-border/70 shadow-soft">
-                <CardContent className="p-6">
-                  <Quote className="size-6 text-secondary" aria-hidden />
-                  <p className="mt-4 text-sm text-muted-foreground">« {item.texte} »</p>
-                  <p className="mt-4 text-sm font-semibold">{item.nom}</p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        ) : (
-          <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {INDICATEURS.map((item) => (
-              <Card key={item.label} className="rounded-2xl border-border/70 shadow-soft">
-                <CardContent className="p-6">
-                  <p className="text-3xl font-semibold text-secondary">{item.valeur}</p>
-                  <p className="mt-2 text-sm text-muted-foreground">{item.label}</p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        )}
       </section>
 
       <section className="section-shell pb-20">
