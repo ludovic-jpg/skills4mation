@@ -68,6 +68,9 @@ export function SiteFooter() {
               <Link to="/pole-formateur" hash="candidature">Rejoindre Skills4mation</Link>
             </li>
             <li>
+              <Link to="/blog">Blog pédagogique</Link>
+            </li>
+            <li>
               <Link to="/contact">Contact</Link>
             </li>
             <li>

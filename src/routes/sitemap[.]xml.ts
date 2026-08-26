@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import type {} from "@tanstack/react-start";
+import { blogPosts } from "@/data/blog";
 import { CATEGORIES, FORMATIONS } from "@/data/catalogue";
 
 const BASE_URL = "https://train-grow-connect.lovable.app";
@@ -20,6 +21,12 @@ export const Route = createFileRoute("/sitemap.xml")({
           { path: "/portage-qualiopi", changefreq: "weekly", priority: "0.9" },
           { path: "/pole-formateur", changefreq: "monthly", priority: "0.8" },
           { path: "/contact", changefreq: "monthly", priority: "0.7" },
+          { path: "/blog", changefreq: "weekly", priority: "0.8" },
+          ...blogPosts.map((p) => ({
+            path: `/blog/${p.slug}`,
+            changefreq: "monthly" as const,
+            priority: "0.7",
+          })),
           { path: "/mentions-legales", changefreq: "yearly", priority: "0.2" },
           { path: "/confidentialite", changefreq: "yearly", priority: "0.2" },
           ...CATEGORIES.map((c) => ({
