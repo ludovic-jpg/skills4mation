@@ -34,7 +34,7 @@ export const blogPosts: BlogPost[] = [
   },
   {
     "slug": "apprendre-une-langue-pour-booster-sa-carriere-lexpertise-formalangue",
-    "title": "Apprendre une langue pour booster sa carrière : l’expertise nos formateurs langues",
+    "title": "Apprendre une langue pour booster sa carrière : l’expertise de nos formateurs langues",
     "date": "2025-10-16",
     "cover": "https://skills4mation.com/wp-content/uploads/2025/10/formalangue-1024x683.png",
     "excerpt": "L’idée qu’apprendre une langue booste une carrière est devenue une évidence. Mais au-delà de l’intuition, les avantages concrets et mesurables sont considérables. Investir dans une compétence linguistique,…",
@@ -50,7 +50,7 @@ export const blogPosts: BlogPost[] = [
   },
   {
     "slug": "formadigital-comment-maitriser-les-competences-numeriques-cles-en-2025",
-    "title": "nos formateurs digital : comment maîtriser les compétences numériques clés en 2025 ?",
+    "title": "Nos formateurs digital : comment maîtriser les compétences numériques clés en 2025 ?",
     "date": "2025-10-16",
     "cover": "https://skills4mation.com/wp-content/uploads/2025/10/formadigital-a-1024x576.png",
     "excerpt": "Si la transformation digitale est un processus continu, ces dernières années ont marqué une accélération fulgurante. La crise sanitaire a pérennisé le travail à distance, faisant des outils collaboratifs le…",
