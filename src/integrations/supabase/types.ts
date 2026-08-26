@@ -17,6 +17,8 @@ export type Database = {
       candidatures: {
         Row: {
           adresse: string | null
+          assigne_a: string | null
+          assigne_nom: string | null
           commentaire_admin: string | null
           created_at: string
           cv_url: string | null
@@ -39,6 +41,8 @@ export type Database = {
         }
         Insert: {
           adresse?: string | null
+          assigne_a?: string | null
+          assigne_nom?: string | null
           commentaire_admin?: string | null
           created_at?: string
           cv_url?: string | null
@@ -61,6 +65,8 @@ export type Database = {
         }
         Update: {
           adresse?: string | null
+          assigne_a?: string | null
+          assigne_nom?: string | null
           commentaire_admin?: string | null
           created_at?: string
           cv_url?: string | null
@@ -93,6 +99,8 @@ export type Database = {
       }
       demandes_budget: {
         Row: {
+          assigne_a: string | null
+          assigne_nom: string | null
           besoin: string | null
           budget_estime: string | null
           commentaire: string | null
@@ -106,6 +114,8 @@ export type Database = {
           statut: Database["public"]["Enums"]["budget_statut"]
         }
         Insert: {
+          assigne_a?: string | null
+          assigne_nom?: string | null
           besoin?: string | null
           budget_estime?: string | null
           commentaire?: string | null
@@ -119,6 +129,8 @@ export type Database = {
           statut?: Database["public"]["Enums"]["budget_statut"]
         }
         Update: {
+          assigne_a?: string | null
+          assigne_nom?: string | null
           besoin?: string | null
           budget_estime?: string | null
           commentaire?: string | null
@@ -135,6 +147,8 @@ export type Database = {
       }
       demandes_contact: {
         Row: {
+          assigne_a: string | null
+          assigne_nom: string | null
           budget_estime: string | null
           created_at: string
           disponibilites: string | null
@@ -143,12 +157,16 @@ export type Database = {
           id: string
           message: string | null
           nom: string
+          note_admin: string | null
           objectif: string | null
           prenom: string
           profil: string | null
+          statut: Database["public"]["Enums"]["budget_statut"]
           telephone: string | null
         }
         Insert: {
+          assigne_a?: string | null
+          assigne_nom?: string | null
           budget_estime?: string | null
           created_at?: string
           disponibilites?: string | null
@@ -157,12 +175,16 @@ export type Database = {
           id?: string
           message?: string | null
           nom: string
+          note_admin?: string | null
           objectif?: string | null
           prenom: string
           profil?: string | null
+          statut?: Database["public"]["Enums"]["budget_statut"]
           telephone?: string | null
         }
         Update: {
+          assigne_a?: string | null
+          assigne_nom?: string | null
           budget_estime?: string | null
           created_at?: string
           disponibilites?: string | null
@@ -171,9 +193,74 @@ export type Database = {
           id?: string
           message?: string | null
           nom?: string
+          note_admin?: string | null
           objectif?: string | null
           prenom?: string
           profil?: string | null
+          statut?: Database["public"]["Enums"]["budget_statut"]
+          telephone?: string | null
+        }
+        Relationships: []
+      }
+      demandes_droits_formation: {
+        Row: {
+          assigne_a: string | null
+          assigne_nom: string | null
+          budget_estime: string | null
+          created_at: string
+          disponibilites: string | null
+          dispositifs: string[] | null
+          email: string
+          formation_visee: string | null
+          id: string
+          message: string | null
+          nom: string
+          note_admin: string | null
+          objectif_professionnel: string | null
+          prenom: string
+          situation: string | null
+          statut: Database["public"]["Enums"]["budget_statut"]
+          statut_pro: string | null
+          telephone: string | null
+        }
+        Insert: {
+          assigne_a?: string | null
+          assigne_nom?: string | null
+          budget_estime?: string | null
+          created_at?: string
+          disponibilites?: string | null
+          dispositifs?: string[] | null
+          email: string
+          formation_visee?: string | null
+          id?: string
+          message?: string | null
+          nom: string
+          note_admin?: string | null
+          objectif_professionnel?: string | null
+          prenom: string
+          situation?: string | null
+          statut?: Database["public"]["Enums"]["budget_statut"]
+          statut_pro?: string | null
+          telephone?: string | null
+        }
+        Update: {
+          assigne_a?: string | null
+          assigne_nom?: string | null
+          budget_estime?: string | null
+          created_at?: string
+          disponibilites?: string | null
+          dispositifs?: string[] | null
+          email?: string
+          formation_visee?: string | null
+          id?: string
+          message?: string | null
+          nom?: string
+          note_admin?: string | null
+          objectif_professionnel?: string | null
+          prenom?: string
+          situation?: string | null
+          statut?: Database["public"]["Enums"]["budget_statut"]
+          statut_pro?: string | null
           telephone?: string | null
         }
         Relationships: []
