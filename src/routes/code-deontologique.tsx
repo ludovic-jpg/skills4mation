@@ -30,7 +30,7 @@ export const Route = createFileRoute("/code-deontologique")({
       { rel: "canonical", href: "https://train-grow-connect.lovable.app/code-deontologique" },
     ],
   }),
-  component: CodeDeontologique;
+  component: CodeDeontologique,
 });
 
 type Chapitre = {
