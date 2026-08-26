@@ -224,149 +224,20 @@ function EvaluerDroitFormation() {
       </section>
 
       <section id="formulaire" className="section-shell scroll-mt-24 py-16">
-        <div className="mx-auto max-w-3xl">
-          <p className="eyebrow text-secondary">Formulaire</p>
+        <div className="mx-auto max-w-4xl">
+          <p className="eyebrow text-secondary">Diagnostic Express</p>
           <h2 className="mt-2 text-2xl font-semibold sm:text-3xl">
             Demander l'évaluation de mes droits
           </h2>
           <p className="mt-3 text-sm text-muted-foreground">
-            Vos réponses sont transmises directement à notre équipe pédagogique et financement.
-            Réponse sous 48 heures ouvrées.
+            Obtenez une estimation immédiate, puis complétez votre demande pour qu'un conseiller
+            affine votre plan de financement. Réponse sous 48 heures ouvrées.
           </p>
-
-          {sent ? (
-            <Card className="mt-8 rounded-3xl border-success/40 bg-success/10 shadow-soft">
-              <CardContent className="p-8">
-                <CheckCircle2 className="size-8 text-success" aria-hidden />
-                <h3 className="mt-4 text-lg font-semibold">Demande enregistrée</h3>
-                <p className="mt-2 text-sm text-muted-foreground">
-                  Merci ! Un expert Skills4mation analyse vos droits et revient vers vous sous 48
-                  heures ouvrées avec les dispositifs mobilisables et un plan de financement.
-                </p>
-              </CardContent>
-            </Card>
-          ) : (
-            <Card className="mt-8 rounded-3xl border-border/70 shadow-soft">
-              <CardContent className="p-6 sm:p-8">
-                <form onSubmit={onSubmit} className="grid gap-5 sm:grid-cols-2">
-                  <Champ label="Prénom *" name="prenom" error={errors["prenom"]} />
-                  <Champ label="Nom *" name="nom" error={errors["nom"]} />
-                  <Champ label="Email *" name="email" type="email" error={errors["email"]} />
-                  <Champ label="Téléphone" name="telephone" error={errors["telephone"]} />
-
-                  <div>
-                    <Label htmlFor="statut_pro">Votre statut professionnel</Label>
-                    <select
-                      id="statut_pro"
-                      name="statut_pro"
-                      defaultValue=""
-                      className="mt-2 h-10 w-full rounded-xl border border-input bg-background px-3 text-sm"
-                    >
-                      <option value="">Sélectionner…</option>
-                      {STATUTS.map((s) => (
-                        <option key={s} value={s}>
-                          {s}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                  <Champ
-                    label="Formation ou domaine visé"
-                    name="formation_visee"
-                    error={errors["formation_visee"]}
-                  />
-
-                  <div className="sm:col-span-2">
-                    <Label htmlFor="objectif_professionnel">Votre objectif professionnel *</Label>
-                    <Textarea
-                      id="objectif_professionnel"
-                      name="objectif_professionnel"
-                      rows={4}
-                      className="mt-2"
-                      placeholder="Reconversion, montée en compétences, évolution interne, création d'activité…"
-                    />
-                    {errors["objectif_professionnel"] ? (
-                      <p className="mt-1 text-xs text-destructive">
-                        {errors["objectif_professionnel"]}
-                      </p>
-                    ) : null}
-                  </div>
-
-                  <Champ
-                    label="Votre situation actuelle (employeur, secteur…)"
-                    name="situation"
-                    error={errors["situation"]}
-                  />
-                  <Champ
-                    label="Vos disponibilités"
-                    name="disponibilites"
-                    error={errors["disponibilites"]}
-                    placeholder="Soirs, semaine, 100 % distanciel…"
-                  />
-
-                  <div className="sm:col-span-2">
-                    <p className="text-sm font-medium">Dispositifs de financement envisagés</p>
-                    <div className="mt-3 grid gap-2.5 sm:grid-cols-2">
-                      {DISPOSITIFS.map((d) => (
-                        <label key={d} className="flex items-start gap-2.5 text-sm">
-                          <Checkbox
-                            checked={dispositifs.includes(d)}
-                            onCheckedChange={(checked) => toggleDispositif(d, checked === true)}
-                          />
-                          <span className="leading-snug text-muted-foreground">{d}</span>
-                        </label>
-                      ))}
-                    </div>
-                  </div>
-
-                  <Champ
-                    label="Budget estimé"
-                    name="budget_estime"
-                    error={errors["budget_estime"]}
-                    placeholder="Ex. 1 500 – 3 000 €"
-                  />
-                  <div className="sm:col-span-2">
-                    <Label htmlFor="message">Précisions complémentaires</Label>
-                    <Textarea id="message" name="message" rows={3} className="mt-2" />
-                  </div>
-
-                  <div className="sm:col-span-2">
-                    <Button type="submit" variant="cta" size="lg" disabled={sending}>
-                      {sending ? "Envoi…" : "Évaluer mes droits formation"}
-                    </Button>
-                    <p className="mt-3 text-xs text-muted-foreground">
-                      Les données transmises sont traitées uniquement pour l'étude de votre projet de
-                      formation, conformément à notre politique de confidentialité.
-                    </p>
-                  </div>
-                </form>
-              </CardContent>
-            </Card>
-          )}
+          <div className="mt-8">
+            <DiagnosticExpress variant="full" />
+          </div>
         </div>
       </section>
     </PublicLayout>
-  );
-}
-
-function Champ({
-  label,
-  name,
-  type = "text",
-  error,
-  placeholder,
-}: {
-  label: string;
-  name: string;
-  type?: string | undefined;
-  error?: string | undefined;
-  placeholder?: string | undefined;
-}) {
-  return (
-    <div>
-      <Label htmlFor={name}>{label}</Label>
-      <Input id={name} name={name} type={type} placeholder={placeholder} className="mt-2" />
-      {error ? <p className="mt-1 text-xs text-destructive">{error}</p> : null}
-    </div>
   );
 }
