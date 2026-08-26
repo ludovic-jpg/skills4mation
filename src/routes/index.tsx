@@ -26,9 +26,9 @@ import { PublicLayout } from "@/components/site/PublicLayout";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 
-const TITRE = "Skills4mation | Se former ou former sous certification Qualiopi";
+const TITRE = "Skills4mation, votre vecteur de réussite";
 const DESCRIPTION =
-  "Apprenants : trouvez la formation et le formateur qui correspondent à votre projet. Formateurs : formez sous notre certification Qualiopi avec conventions en 48h.";
+  "Vous voulez vous former auprès du formateur de votre choix ? Vous souhaitez former les apprenants de votre choix, sans tracas ? Skills4mation est le vecteur de la réussite de vos espaces de formation.";
 
 export const Route = createFileRoute("/")({
   head: () => ({
