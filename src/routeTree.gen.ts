@@ -25,6 +25,7 @@ import { Route as BlogIndexRouteImport } from './routes/blog.index'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 import { Route as CatalogueIndexRouteImport } from './routes/catalogue.index'
 import { Route as AppAdminIndexRouteImport } from './routes/_app.admin.index'
+import { Route as AppAdminDemandesRouteImport } from './routes/_app.admin.demandes'
 import { Route as AppAdminDossiersRouteImport } from './routes/_app.admin.dossiers'
 import { Route as AppEspaceIndexRouteImport } from './routes/_app.espace.index'
 import { Route as AppEspaceCandidatureRouteImport } from './routes/_app.espace.candidature'
@@ -115,6 +116,11 @@ const AppAdminIndexRoute = AppAdminIndexRouteImport.update({
   path: '/admin/',
   getParentRoute: () => AppRoute,
 } as any)
+const AppAdminDemandesRoute = AppAdminDemandesRouteImport.update({
+  id: '/admin/demandes',
+  path: '/admin/demandes',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppAdminDossiersRoute = AppAdminDossiersRouteImport.update({
   id: '/admin/dossiers',
   path: '/admin/dossiers',
@@ -176,6 +182,7 @@ export interface FileRoutesByFullPath {
   '/blog/$slug': typeof BlogSlugRoute
   '/blog/': typeof BlogIndexRoute
   '/catalogue/': typeof CatalogueIndexRoute
+  '/admin/demandes': typeof AppAdminDemandesRoute
   '/admin/dossiers': typeof AppAdminDossiersRoute
   '/espace/candidature': typeof AppEspaceCandidatureRoute
   '/espace/profil': typeof AppEspaceProfilRoute
@@ -202,6 +209,7 @@ export interface FileRoutesByTo {
   '/blog/$slug': typeof BlogSlugRoute
   '/blog': typeof BlogIndexRoute
   '/catalogue': typeof CatalogueIndexRoute
+  '/admin/demandes': typeof AppAdminDemandesRoute
   '/admin/dossiers': typeof AppAdminDossiersRoute
   '/espace/candidature': typeof AppEspaceCandidatureRoute
   '/espace/profil': typeof AppEspaceProfilRoute
@@ -230,6 +238,7 @@ export interface FileRoutesById {
   '/blog/$slug': typeof BlogSlugRoute
   '/blog/': typeof BlogIndexRoute
   '/catalogue/': typeof CatalogueIndexRoute
+  '/_app/admin/demandes': typeof AppAdminDemandesRoute
   '/_app/admin/dossiers': typeof AppAdminDossiersRoute
   '/_app/espace/candidature': typeof AppEspaceCandidatureRoute
   '/_app/espace/profil': typeof AppEspaceProfilRoute
@@ -258,6 +267,7 @@ export interface FileRouteTypes {
     | '/blog/$slug'
     | '/blog/'
     | '/catalogue/'
+    | '/admin/demandes'
     | '/admin/dossiers'
     | '/espace/candidature'
     | '/espace/profil'
@@ -284,6 +294,7 @@ export interface FileRouteTypes {
     | '/blog/$slug'
     | '/blog'
     | '/catalogue'
+    | '/admin/demandes'
     | '/admin/dossiers'
     | '/espace/candidature'
     | '/espace/profil'
@@ -311,6 +322,7 @@ export interface FileRouteTypes {
     | '/blog/$slug'
     | '/blog/'
     | '/catalogue/'
+    | '/_app/admin/demandes'
     | '/_app/admin/dossiers'
     | '/_app/espace/candidature'
     | '/_app/espace/profil'
@@ -457,6 +469,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppAdminIndexRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/admin/demandes': {
+      id: '/_app/admin/demandes'
+      path: '/admin/demandes'
+      fullPath: '/admin/demandes'
+      preLoaderRoute: typeof AppAdminDemandesRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/_app/admin/dossiers': {
       id: '/_app/admin/dossiers'
       path: '/admin/dossiers'
@@ -524,6 +543,7 @@ declare module '@tanstack/react-router' {
 }
 
 interface AppRouteChildren {
+  AppAdminDemandesRoute: typeof AppAdminDemandesRoute
   AppAdminDossiersRoute: typeof AppAdminDossiersRoute
   AppEspaceCandidatureRoute: typeof AppEspaceCandidatureRoute
   AppEspaceProfilRoute: typeof AppEspaceProfilRoute
@@ -535,6 +555,7 @@ interface AppRouteChildren {
 }
 
 const AppRouteChildren: AppRouteChildren = {
+  AppAdminDemandesRoute: AppAdminDemandesRoute,
   AppAdminDossiersRoute: AppAdminDossiersRoute,
   AppEspaceCandidatureRoute: AppEspaceCandidatureRoute,
   AppEspaceProfilRoute: AppEspaceProfilRoute,

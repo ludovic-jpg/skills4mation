@@ -151,7 +151,10 @@ function AdminDemandes() {
 
   const update = useMutation({
     mutationFn: async ({ id, patch }: { id: string; patch: Record<string, unknown> }) => {
-      const { error } = await supabase.from(source).update(patch).eq("id", id);
+      const { error } = await supabase
+        .from(source)
+        .update(patch as never)
+        .eq("id", id);
       if (error) throw error;
     },
     onSuccess: () => {
