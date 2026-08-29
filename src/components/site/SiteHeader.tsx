@@ -11,7 +11,7 @@ const NAV = [
   { to: "/", hash: undefined, label: "Accueil" },
   { to: "/catalogue", hash: undefined, label: "Catalogue" },
   { to: "/evaluer-droit-formation", hash: undefined, label: "Mes droits formation" },
-  { to: "/portage-qualiopi", hash: undefined, label: "Espace formateur" },
+  { to: "/portage-qualiopi", hash: undefined, label: "Portage Qualiopi" },
   { to: "/portage-qualiopi", hash: "etapes", label: "Comment ça marche" },
   { to: "/portage-qualiopi", hash: "tarifs", label: "Tarifs" },
   { to: "/", hash: "projet", label: "Mon projet" },
@@ -22,7 +22,7 @@ const NAV = [
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
   const { session, isAdmin } = useAuth();
-  const espaceTo = session ? (isAdmin ? "/admin" : "/espace") : "/portage-qualiopi";
+  const espaceTo = session ? (isAdmin ? "/admin" : "/espace") : "/auth";
 
   return (
     <header className="sticky top-0 z-50 border-b border-border/70 bg-background/90 backdrop-blur">

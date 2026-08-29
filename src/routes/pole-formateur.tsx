@@ -1,11 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { toast } from "sonner";
 import { z } from "zod";
-import { BadgeCheck, Banknote, FolderCheck, HeartHandshake } from "lucide-react";
+import { ArrowLeft, ArrowRight, BadgeCheck, Banknote, FolderCheck, HeartHandshake } from "lucide-react";
 
 import { PageHero, PublicLayout } from "@/components/site/PublicLayout";
 import formateurWebapp from "@/assets/formateur-webapp.jpg";
+import formatriceTablette from "@/assets/formatrice-tablette.jpg";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -96,12 +97,37 @@ function PoleFormateur() {
   const [sent, setSent] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [files, setFiles] = useState<Partial<Record<PieceName, File>>>({});
+  const [step, setStep] = useState(0);
+  const formRef = useRef<HTMLFormElement>(null);
+
+  const ETAPES_FORM = ["Vos coordonnées", "Votre expertise", "Vos pièces"] as const;
+
+  function value(name: string) {
+    const form = formRef.current;
+    if (!form) return "";
+    const data = new FormData(form);
+    return String(data.get(name) ?? "").trim();
+  }
+
+  function next() {
+    const map: Record<string, string> = {};
+    if (step === 0) {
+      const partial = schema
+        .pick({ prenom: true, nom: true, email: true })
+        .safeParse({ prenom: value("prenom"), nom: value("nom"), email: value("email") });
+      if (!partial.success)
+        for (const issue of partial.error.issues) map[String(issue.path[0])] = issue.message;
+    }
+    if (step === 1 && value("expertise").length < 2) map["expertise"] = "Précisez votre expertise";
+    setErrors(map);
+    if (Object.keys(map).length > 0) return;
+    setStep((s) => Math.min(s + 1, 2));
+  }
 
   async function upload(prefix: string, kind: PieceName, file: File) {
     const safeName = file.name.replace(/[^\w.\-]+/g, "_").slice(-80);
     const path = `public/${prefix}/${kind}-${safeName}`;
     const { error } = await supabase.storage.from("candidatures").upload(path, file, {
-      upsert: true,
       contentType: file.type || "application/octet-stream",
     });
     if (error) throw error;
@@ -123,6 +149,8 @@ function PoleFormateur() {
     }
     if (Object.keys(map).length > 0 || !parsed.success) {
       setErrors(map);
+      if (map["prenom"] || map["nom"] || map["email"]) setStep(0);
+      else if (map["expertise"]) setStep(1);
       toast.error("Merci de compléter le formulaire et de joindre vos trois pièces.");
       return;
     }
@@ -201,6 +229,14 @@ function PoleFormateur() {
         <Card className="rounded-3xl border-border/70 shadow-soft">
           <CardContent className="grid gap-10 p-8 lg:grid-cols-[1fr_1.1fr] lg:p-10">
             <div>
+              <img
+                src={formatriceTablette}
+                alt="Formatrice indépendante souriante, membre du réseau Skills4mation"
+                width={1200}
+                height={800}
+                loading="lazy"
+                className="mb-6 h-56 w-full rounded-2xl object-cover shadow-soft"
+              />
               <p className="eyebrow">Candidature</p>
               <h2 className="mt-3 text-3xl font-semibold">Rejoindre Skills4mation</h2>
               <p className="mt-4 text-sm text-muted-foreground">
@@ -235,7 +271,27 @@ function PoleFormateur() {
                 </p>
               </div>
             ) : (
-              <form onSubmit={onSubmit} className="grid gap-4" noValidate>
+              <form ref={formRef} onSubmit={onSubmit} className="grid gap-5" noValidate>
+                <div className="grid gap-2">
+                  <div className="flex items-center justify-between text-xs font-semibold">
+                    <span>{ETAPES_FORM[step]}</span>
+                    <span className="text-muted-foreground">Étape {step + 1}/3</span>
+                  </div>
+                  <div className="flex gap-1.5">
+                    {ETAPES_FORM.map((label, i) => (
+                      <span
+                        key={label}
+                        className={
+                          i <= step
+                            ? "h-1.5 flex-1 rounded-full bg-primary"
+                            : "h-1.5 flex-1 rounded-full bg-border"
+                        }
+                      />
+                    ))}
+                  </div>
+                </div>
+
+                <div className={step === 0 ? "grid gap-4" : "hidden"}>
                 <div className="grid gap-4 sm:grid-cols-2">
                   <Field label="Prénom" name="prenom" error={errors["prenom"]} required />
                   <Field label="Nom" name="nom" error={errors["nom"]} required />
@@ -251,6 +307,9 @@ function PoleFormateur() {
                   />
                   <Field label="Téléphone" name="telephone" error={errors["telephone"]} />
                 </div>
+                </div>
+
+                <div className={step === 1 ? "grid gap-4" : "hidden"}>
                 <Field
                   label="Votre expertise"
                   name="expertise"
@@ -268,8 +327,9 @@ function PoleFormateur() {
                     placeholder="Parcours, publics formés, volume d'activité souhaité…"
                   />
                 </div>
+                </div>
 
-                <div className="grid gap-3 rounded-2xl bg-muted/50 p-4">
+                <div className={step === 2 ? "grid gap-3 rounded-2xl bg-muted/50 p-4" : "hidden"}>
                   <div>
                     <p className="text-sm font-semibold">Vos trois pièces obligatoires</p>
                     <p className="mt-1 text-xs text-muted-foreground">
@@ -307,9 +367,22 @@ function PoleFormateur() {
                   })}
                 </div>
 
-                <Button type="submit" variant="cta" size="lg" disabled={sending}>
-                  {sending ? "Envoi…" : "Envoyer ma candidature"}
-                </Button>
+                <div className="flex flex-wrap items-center gap-3">
+                  {step > 0 ? (
+                    <Button type="button" variant="outline" onClick={() => setStep((s) => s - 1)}>
+                      <ArrowLeft className="size-4" /> Retour
+                    </Button>
+                  ) : null}
+                  {step < 2 ? (
+                    <Button type="button" variant="cta" size="lg" onClick={next}>
+                      Continuer <ArrowRight className="size-4" />
+                    </Button>
+                  ) : (
+                    <Button type="submit" variant="cta" size="lg" disabled={sending}>
+                      {sending ? "Envoi…" : "Envoyer ma candidature"}
+                    </Button>
+                  )}
+                </div>
                 <p className="text-xs text-muted-foreground">
                   Les données transmises sont utilisées uniquement dans le cadre de l'étude de votre
                   candidature.
