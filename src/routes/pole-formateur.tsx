@@ -101,7 +101,6 @@ function PoleFormateur() {
     const safeName = file.name.replace(/[^\w.\-]+/g, "_").slice(-80);
     const path = `public/${prefix}/${kind}-${safeName}`;
     const { error } = await supabase.storage.from("candidatures").upload(path, file, {
-      upsert: true,
       contentType: file.type || "application/octet-stream",
     });
     if (error) throw error;
