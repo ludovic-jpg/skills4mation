@@ -165,8 +165,29 @@ function DossierDetail() {
       ) : !dossier ? (
         <p className="text-sm text-muted-foreground">Dossier introuvable.</p>
       ) : (
-        <div className="grid gap-6 lg:grid-cols-[1.3fr_1fr]">
-          <div className="grid gap-6">
+        <Tabs defaultValue="suivi" className="gap-6">
+          <TabsList>
+            <TabsTrigger value="suivi">Suivi</TabsTrigger>
+            <TabsTrigger value="variables">Variables du dossier</TabsTrigger>
+            <TabsTrigger value="pieces">Pièces &amp; génération</TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="variables">
+            <DossierWizard
+              value={donnees}
+              saving={saveDonnees.isPending}
+              onSave={(next) => saveDonnees.mutate(next)}
+            />
+          </TabsContent>
+
+          <TabsContent value="pieces">
+            {user ? (
+              <PiecesPanel dossierId={id} formateurId={user.id} donnees={donnees} />
+            ) : null}
+          </TabsContent>
+
+          <TabsContent value="suivi" className="grid gap-6 lg:grid-cols-[1.3fr_1fr]">
+            <div className="grid gap-6">
             <Card className="rounded-2xl border-border/70 shadow-soft">
               <CardContent className="p-6">
                 <div className="flex flex-wrap items-center justify-between gap-3">
