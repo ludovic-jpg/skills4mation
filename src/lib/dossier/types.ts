@@ -1,6 +1,13 @@
 export type Apprenant = {
+  /** Prénom et nom (affiché tel quel dans les documents). */
   nom: string;
   poste: string;
+  email?: string;
+  telephone?: string;
+  /** Numéro de dossier CPF le cas échéant. */
+  numeroCpf?: string;
+  /** Certification visée (ex. ICDL). */
+  certification?: string;
 };
 
 export type Session = {
@@ -8,10 +15,14 @@ export type Session = {
   heureDebut: string;
   heureFin: string;
   lieu?: string;
+  module?: string;
 };
+
+export type ModeFinancement = "opco" | "cpf" | "fonds_propres";
 
 export type DossierDonnees = {
   adf: string;
+  organisme: string;
   entreprise: {
     nom: string;
     nomCommercial: string;
@@ -34,6 +45,8 @@ export type DossierDonnees = {
     nbJours: string;
     format: "presentiel" | "distanciel" | "mixte";
     lienConnexion: string;
+    /** Le formateur assume la création et la fourniture du lien de connexion. */
+    lienResponsableFormateur: boolean;
   };
   lieu: {
     intitule: string;
@@ -49,6 +62,10 @@ export type DossierDonnees = {
     prixPresentiel: string;
     opco: string;
     subrogation: "oui" | "non";
+    modeFinancement: ModeFinancement;
+    montantPrisEnCharge: string;
+    /** Certification ICDL visée pour la session. */
+    certificationIcdl: boolean;
   };
   convention: {
     lieu: string;
@@ -75,10 +92,19 @@ export type DossierDonnees = {
     contraintes: string;
     modalitesEvaluation: string;
   };
+  facture: {
+    numero: string;
+    date: string;
+    montantHt: string;
+    tva: string;
+    montantTtc: string;
+    iban: string;
+  };
 };
 
 export const DONNEES_VIDES: DossierDonnees = {
   adf: "",
+  organisme: "Skills4mation",
   entreprise: {
     nom: "",
     nomCommercial: "",
@@ -101,6 +127,7 @@ export const DONNEES_VIDES: DossierDonnees = {
     nbJours: "",
     format: "presentiel",
     lienConnexion: "",
+    lienResponsableFormateur: true,
   },
   lieu: { intitule: "", adresse: "", siret: "" },
   apprenants: [],
@@ -112,6 +139,9 @@ export const DONNEES_VIDES: DossierDonnees = {
     prixPresentiel: "",
     opco: "",
     subrogation: "non",
+    modeFinancement: "opco",
+    montantPrisEnCharge: "",
+    certificationIcdl: false,
   },
   convention: { lieu: "", date: "" },
   formateur: {
@@ -135,6 +165,7 @@ export const DONNEES_VIDES: DossierDonnees = {
     contraintes: "",
     modalitesEvaluation: "",
   },
+  facture: { numero: "", date: "", montantHt: "", tva: "20", montantTtc: "", iban: "" },
 };
 
 /** Fusionne des données partielles (issues de la base) avec la structure complète. */
@@ -143,6 +174,7 @@ export function mergeDonnees(raw: unknown): DossierDonnees {
   return {
     ...DONNEES_VIDES,
     ...source,
+    organisme: source.organisme || DONNEES_VIDES.organisme,
     entreprise: { ...DONNEES_VIDES.entreprise, ...(source.entreprise ?? {}) },
     formation: { ...DONNEES_VIDES.formation, ...(source.formation ?? {}) },
     lieu: { ...DONNEES_VIDES.lieu, ...(source.lieu ?? {}) },
@@ -150,6 +182,7 @@ export function mergeDonnees(raw: unknown): DossierDonnees {
     convention: { ...DONNEES_VIDES.convention, ...(source.convention ?? {}) },
     formateur: { ...DONNEES_VIDES.formateur, ...(source.formateur ?? {}) },
     besoins: { ...DONNEES_VIDES.besoins, ...(source.besoins ?? {}) },
+    facture: { ...DONNEES_VIDES.facture, ...(source.facture ?? {}) },
     apprenants: Array.isArray(source.apprenants) ? source.apprenants : [],
     sessions: Array.isArray(source.sessions) ? source.sessions : [],
   };
@@ -174,3 +207,40 @@ export const FORMAT_LABELS: Record<DossierDonnees["formation"]["format"], string
   distanciel: "Distanciel",
   mixte: "Mixte (présentiel et distanciel)",
 };
+
+export const FINANCEMENT_LABELS: Record<ModeFinancement, string> = {
+  opco: "OPCO / financement entreprise",
+  cpf: "CPF (Compte Personnel de Formation)",
+  fonds_propres: "Fonds propres",
+};
+
+/** Le prix / les heures en présentiel ne sont affichés que si la formation en comporte. */
+export function aDuPresentiel(d: DossierDonnees) {
+  const heures = Number(String(d.formation.heuresPresentiel).replace(",", "."));
+  return (
+    d.formation.format !== "distanciel" &&
+    ((!Number.isNaN(heures) && heures > 0) || Boolean(d.tarifs.prixPresentiel))
+  );
+}
+
+export function estCpf(d: DossierDonnees) {
+  return d.tarifs.modeFinancement === "cpf";
+}
+
+export function viseIcdl(d: DossierDonnees) {
+  return (
+    d.tarifs.certificationIcdl ||
+    d.apprenants.some((a) => (a.certification ?? "").toLowerCase().includes("icdl"))
+  );
+}
+
+/** Nom de rangement normalisé : [Nom_Apprenant]_[Nom_Formation]_[Date]. */
+export function nomRangement(apprenant: string, formation: string, date: string) {
+  const clean = (v: string) =>
+    v
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/[^A-Za-z0-9]+/g, "_")
+      .replace(/^_+|_+$/g, "");
+  return `${clean(apprenant) || "Apprenant"}_${clean(formation) || "Formation"}_${clean(date) || "sans_date"}`;
+}
