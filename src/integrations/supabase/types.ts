@@ -341,6 +341,53 @@ export type Database = {
           },
         ]
       }
+      dossier_pieces: {
+        Row: {
+          code: string
+          created_at: string
+          dossier_id: string
+          fichier_url: string | null
+          formateur_id: string
+          generated_at: string | null
+          id: string
+          remarque: string | null
+          statut: Database["public"]["Enums"]["piece_statut"]
+          updated_at: string
+        }
+        Insert: {
+          code: string
+          created_at?: string
+          dossier_id: string
+          fichier_url?: string | null
+          formateur_id: string
+          generated_at?: string | null
+          id?: string
+          remarque?: string | null
+          statut?: Database["public"]["Enums"]["piece_statut"]
+          updated_at?: string
+        }
+        Update: {
+          code?: string
+          created_at?: string
+          dossier_id?: string
+          fichier_url?: string | null
+          formateur_id?: string
+          generated_at?: string | null
+          id?: string
+          remarque?: string | null
+          statut?: Database["public"]["Enums"]["piece_statut"]
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "dossier_pieces_dossier_id_fkey"
+            columns: ["dossier_id"]
+            isOneToOne: false
+            referencedRelation: "dossiers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       dossiers: {
         Row: {
           archived_at: string | null
@@ -349,6 +396,7 @@ export type Database = {
           date_debut: string | null
           date_fin: string | null
           documents_json: Json
+          donnees: Json
           dossier_nom: string | null
           drive_folder_url: string | null
           entreprise_nom: string | null
@@ -368,6 +416,7 @@ export type Database = {
           date_debut?: string | null
           date_fin?: string | null
           documents_json?: Json
+          donnees?: Json
           dossier_nom?: string | null
           drive_folder_url?: string | null
           entreprise_nom?: string | null
@@ -387,6 +436,7 @@ export type Database = {
           date_debut?: string | null
           date_fin?: string | null
           documents_json?: Json
+          donnees?: Json
           dossier_nom?: string | null
           drive_folder_url?: string | null
           entreprise_nom?: string | null
@@ -574,6 +624,11 @@ export type Database = {
         | "financement_depose"
         | "complet"
         | "archive"
+      piece_statut:
+        | "a_generer"
+        | "en_attente_tally"
+        | "rapport_a_classer"
+        | "complete"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -724,6 +779,12 @@ export const Constants = {
         "financement_depose",
         "complet",
         "archive",
+      ],
+      piece_statut: [
+        "a_generer",
+        "en_attente_tally",
+        "rapport_a_classer",
+        "complete",
       ],
     },
   },

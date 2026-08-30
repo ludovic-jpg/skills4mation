@@ -7,6 +7,8 @@ import { ArrowLeft, ExternalLink, FileText, Upload } from "lucide-react";
 import { AppShell } from "@/components/app/AppShell";
 import { CrmBadge } from "@/components/app/CrmBadge";
 import { FORMATEUR_NAV } from "@/components/app/nav";
+import { DossierWizard } from "@/components/dossier/DossierWizard";
+import { PiecesPanel } from "@/components/dossier/PiecesPanel";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
@@ -17,9 +19,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { CRM_PIPELINE, CRM_STATUTS, crmProgress, dossierNom, type CrmStatut } from "@/lib/crm";
+import { mergeDonnees, type DossierDonnees } from "@/lib/dossier/types";
 import { DOCUMENT_TYPES, formatDate, type DocumentType } from "@/lib/statuts";
 
 export const Route = createFileRoute("/_app/espace/dossiers/$id")({
@@ -118,7 +122,30 @@ function DossierDetail() {
     toast.success("Document déposé.");
   }
 
+  const saveDonnees = useMutation({
+    mutationFn: async (donnees: DossierDonnees) => {
+      const { error } = await supabase
+        .from("dossiers")
+        .update({
+          donnees,
+          entreprise_nom: donnees.entreprise.nom || null,
+          entreprise_siret: donnees.entreprise.siret || null,
+          titre_formation: donnees.formation.titre || null,
+          date_debut: donnees.formation.dateDebut || null,
+          date_fin: donnees.formation.dateFin || null,
+        })
+        .eq("id", id);
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      toast.success("Variables du dossier enregistrées.");
+      void queryClient.invalidateQueries({ queryKey: ["dossier", id] });
+    },
+    onError: () => toast.error("Enregistrement impossible."),
+  });
+
   const statut = (dossier?.statut_crm ?? "brouillon") as CrmStatut;
+  const donnees = mergeDonnees(dossier?.donnees);
 
   return (
     <AppShell
@@ -138,8 +165,29 @@ function DossierDetail() {
       ) : !dossier ? (
         <p className="text-sm text-muted-foreground">Dossier introuvable.</p>
       ) : (
-        <div className="grid gap-6 lg:grid-cols-[1.3fr_1fr]">
-          <div className="grid gap-6">
+        <Tabs defaultValue="suivi" className="gap-6">
+          <TabsList>
+            <TabsTrigger value="suivi">Suivi</TabsTrigger>
+            <TabsTrigger value="variables">Variables du dossier</TabsTrigger>
+            <TabsTrigger value="pieces">Pièces &amp; génération</TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="variables">
+            <DossierWizard
+              value={donnees}
+              saving={saveDonnees.isPending}
+              onSave={(next) => saveDonnees.mutate(next)}
+            />
+          </TabsContent>
+
+          <TabsContent value="pieces">
+            {user ? (
+              <PiecesPanel dossierId={id} formateurId={user.id} donnees={donnees} />
+            ) : null}
+          </TabsContent>
+
+          <TabsContent value="suivi" className="grid gap-6 lg:grid-cols-[1.3fr_1fr]">
+            <div className="grid gap-6">
             <Card className="rounded-2xl border-border/70 shadow-soft">
               <CardContent className="p-6">
                 <div className="flex flex-wrap items-center justify-between gap-3">
@@ -275,7 +323,8 @@ function DossierDetail() {
               </ol>
             </CardContent>
           </Card>
-        </div>
+          </TabsContent>
+        </Tabs>
       )}
     </AppShell>
   );
