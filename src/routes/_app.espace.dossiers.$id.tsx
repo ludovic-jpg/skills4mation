@@ -7,6 +7,8 @@ import { ArrowLeft, ExternalLink, FileText, Upload } from "lucide-react";
 import { AppShell } from "@/components/app/AppShell";
 import { CrmBadge } from "@/components/app/CrmBadge";
 import { FORMATEUR_NAV } from "@/components/app/nav";
+import { DossierWizard } from "@/components/dossier/DossierWizard";
+import { PiecesPanel } from "@/components/dossier/PiecesPanel";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
@@ -17,9 +19,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { CRM_PIPELINE, CRM_STATUTS, crmProgress, dossierNom, type CrmStatut } from "@/lib/crm";
+import { mergeDonnees, type DossierDonnees } from "@/lib/dossier/types";
 import { DOCUMENT_TYPES, formatDate, type DocumentType } from "@/lib/statuts";
 
 export const Route = createFileRoute("/_app/espace/dossiers/$id")({
