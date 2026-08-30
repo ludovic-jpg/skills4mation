@@ -729,7 +729,7 @@ function Field({
   onChange: (value: string) => void;
   type?: string;
   className?: string;
-  error?: string;
+  error?: string | undefined;
 }) {
   return (
     <div className={`grid gap-2 ${className ?? ""}`}>
