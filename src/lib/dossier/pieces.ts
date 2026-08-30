@@ -1,6 +1,6 @@
 export type PieceStatut = "a_generer" | "en_attente_tally" | "rapport_a_classer" | "complete";
 
-/** Source de la pièce : générée par l'app, collectée via Tally, produite hors app, ou tableur. */
+/** Source de la pièce : générée par l'app, collectée auprès des apprenants, produite hors app, ou tableur. */
 export type PieceSource = "pdf" | "tally" | "externe" | "tableur";
 
 export type PieceDef = {
@@ -17,7 +17,7 @@ export type PieceDef = {
 export const PIECE_STATUTS: Record<PieceStatut, { label: string; tone: string }> = {
   a_generer: { label: "À générer", tone: "bg-muted text-muted-foreground border-border" },
   en_attente_tally: {
-    label: "En attente Tally",
+    label: "En attente de retour",
     tone: "bg-accent text-accent-foreground border-accent",
   },
   rapport_a_classer: {
@@ -29,7 +29,7 @@ export const PIECE_STATUTS: Record<PieceStatut, { label: string; tone: string }>
 
 export const PIECE_SOURCES: Record<PieceSource, string> = {
   pdf: "Généré par le portail",
-  tally: "Collecte Tally",
+  tally: "Questionnaire à collecter",
   externe: "Pièce externe à déposer",
   tableur: "Tableur (Excel)",
 };
@@ -52,7 +52,7 @@ export const PIECES: PieceDef[] = [
     source: "pdf",
     generable: true,
     description:
-      "Planning des sessions (jusqu'à 20 créneaux) avec l'effectif complet des stagiaires. Créneaux collectés via le formulaire Tally.",
+      "Planning des sessions (jusqu'à 20 créneaux) avec l'effectif complet des stagiaires. Créneaux saisis dans le formulaire du dossier.",
     matrice:
       "https://docs.google.com/document/d/1Iw-MICtpmw1owUUtp09sYaqmMud9iv0DWwIc-Es-f1s/edit?usp=sharing",
     statutInitial: "a_generer",
@@ -115,7 +115,7 @@ export const PIECES: PieceDef[] = [
     label: "Satisfaction à chaud",
     source: "tally",
     generable: false,
-    description: "Questionnaire de satisfaction en fin de session, collecté via Tally.",
+    description: "Questionnaire de satisfaction en fin de session, généré par le portail et collecté auprès des apprenants.",
     matrice:
       "https://docs.google.com/document/d/1xIHyLHT4WHcXJGG7qHlHAhA55yubwS1bqNOFMWPmid8/edit?usp=sharing",
     statutInitial: "en_attente_tally",
@@ -125,7 +125,7 @@ export const PIECES: PieceDef[] = [
     label: "Satisfaction à froid",
     source: "tally",
     generable: false,
-    description: "Questionnaire de satisfaction à 3 mois, collecté via Tally.",
+    description: "Questionnaire de satisfaction à 3 mois, généré par le portail et collecté auprès des apprenants.",
     matrice:
       "https://docs.google.com/document/d/1cEocCoc_CAdOTZGNQMaGVyTdwngVUaVoWXc3xfD4Z3g/edit?usp=sharing",
     statutInitial: "en_attente_tally",
