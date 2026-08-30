@@ -119,8 +119,9 @@ function AdminCandidatures() {
       toast.error(error instanceof Error ? error.message : "Attribution de l'accès impossible."),
   });
 
-
+  if (!loading && !isAdmin) {
     return (
+
       <AppShell items={ADMIN_NAV} title="Back-office">
         <Card className="rounded-2xl border-destructive/30">
           <CardContent className="p-8">
@@ -192,11 +193,19 @@ function AdminCandidatures() {
 
                 <div className="flex shrink-0 flex-wrap items-start gap-2">
                   <Button
+                    variant="cta"
+                    disabled={acces.isPending}
+                    onClick={() => acces.mutate(c.id)}
+                  >
+                    <KeyRound className="mr-1.5 size-4" />
+                    {acces.isPending ? "Envoi…" : "Valider et donner accès"}
+                  </Button>
+                  <Button
                     variant="teal"
                     disabled={update.isPending || c.statut === "valide"}
                     onClick={() => update.mutate({ id: c.id, statut: "valide" })}
                   >
-                    Valider
+                    Valider seulement
                   </Button>
                   <Button
                     variant="outline"
@@ -206,6 +215,7 @@ function AdminCandidatures() {
                     Refuser
                   </Button>
                 </div>
+
               </CardContent>
             </Card>
           ))}
