@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Plus, Save, Trash2 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Progress } from "@/components/ui/progress";
@@ -14,7 +15,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import type { DossierDonnees } from "@/lib/dossier/types";
+import { aDuPresentiel, estCpf, type DossierDonnees } from "@/lib/dossier/types";
 
 type Props = {
   value: DossierDonnees;
@@ -23,18 +24,50 @@ type Props = {
 };
 
 const ETAPES = [
-  "Dossier & entreprise",
-  "Formation & lieu",
-  "Apprenants",
-  "Sessions",
-  "Tarifs & financement",
-  "Formateur",
-  "Recueil des besoins",
+  "Informations générales",
+  "Entreprise & financeur",
+  "Formateur & logistique",
+  "Apprenants / stagiaires",
+  "Besoins & facturation",
 ];
+
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+/** Validation temps réel : messages par champ. */
+function validate(d: DossierDonnees) {
+  const err: Record<string, string> = {};
+  if (!d.formation.titre.trim()) err["titre"] = "Le titre de la formation est requis.";
+  if (!d.formation.dateDebut) err["dateDebut"] = "Date de démarrage requise.";
+  if (!d.formation.dateFin) err["dateFin"] = "Date de fin requise.";
+  if (d.formation.dateDebut && d.formation.dateFin && d.formation.dateFin < d.formation.dateDebut)
+    err["dateFin"] = "La date de fin doit suivre la date de démarrage.";
+  if (!d.formation.heuresTotal || Number(d.formation.heuresTotal) <= 0)
+    err["heuresTotal"] = "Durée totale en heures requise.";
+  if (d.formation.format !== "presentiel" && !d.formation.lienConnexion.trim())
+    err["lienConnexion"] = "Lien de connexion requis pour le distanciel.";
+  if (!d.entreprise.nom.trim()) err["entrepriseNom"] = "Raison sociale requise.";
+  if (d.entreprise.siret && !/^\d{14}$/.test(d.entreprise.siret.replace(/\s/g, "")))
+    err["siret"] = "Le SIRET comporte 14 chiffres.";
+  if (d.entreprise.email && !EMAIL_RE.test(d.entreprise.email))
+    err["entrepriseEmail"] = "E-mail invalide.";
+  if (!d.formateur.nom.trim()) err["formateurNom"] = "Nom du formateur requis.";
+  if (!d.formateur.email.trim() || !EMAIL_RE.test(d.formateur.email))
+    err["formateurEmail"] = "E-mail du formateur invalide.";
+  if (d.apprenants.length === 0) err["apprenants"] = "Ajoutez au moins un apprenant.";
+  d.apprenants.forEach((a, i) => {
+    if (!a.nom.trim()) err[`apprenant-${i}`] = "Prénom et nom requis.";
+    else if (a.email && !EMAIL_RE.test(a.email)) err[`apprenant-${i}`] = "E-mail invalide.";
+    else if (estCpf(d) && !(a.numeroCpf ?? "").trim())
+      err[`apprenant-${i}`] = "Numéro de dossier CPF requis pour un financement CPF.";
+  });
+  return err;
+}
 
 export function DossierWizard({ value, saving, onSave }: Props) {
   const [step, setStep] = useState(0);
   const [d, setD] = useState<DossierDonnees>(value);
+  const errors = useMemo(() => validate(d), [d]);
+  const invalide = Object.keys(errors).length > 0;
 
   function set<K extends keyof DossierDonnees>(key: K, patch: Partial<DossierDonnees[K]>) {
     setD((prev) => ({ ...prev, [key]: { ...(prev[key] as object), ...patch } }) as DossierDonnees);
@@ -45,83 +78,40 @@ export function DossierWizard({ value, saving, onSave }: Props) {
       <CardContent className="p-6">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
-            <h2 className="text-base font-semibold">Formulaire unique du dossier</h2>
+            <h2 className="text-base font-semibold">Formulaire du dossier de formation</h2>
             <p className="text-sm text-muted-foreground">
               Étape {step + 1}/{ETAPES.length} — {ETAPES[step]}
             </p>
           </div>
           <Button variant="cta" disabled={saving} onClick={() => onSave(d)}>
             <Save className="mr-1.5 size-4" />
-            {saving ? "Enregistrement…" : "Enregistrer les variables"}
+            {saving ? "Enregistrement…" : "Enregistrer le dossier"}
           </Button>
         </div>
         <Progress value={((step + 1) / ETAPES.length) * 100} className="mt-4" />
+        {invalide ? (
+          <p className="mt-3 text-xs text-cta-foreground">
+            {Object.keys(errors).length} champ(s) à compléter avant génération des documents
+            définitifs. L'enregistrement reste possible à tout moment.
+          </p>
+        ) : (
+          <p className="mt-3 text-xs text-success">Dossier complet : documents prêts à générer.</p>
+        )}
 
         <div className="mt-6 grid gap-4">
           {step === 0 ? (
             <div className="grid gap-4 sm:grid-cols-2">
               <Field label="Numéro ADF" value={d.adf} onChange={(v) => setD({ ...d, adf: v })} />
               <Field
-                label="Raison sociale"
-                value={d.entreprise.nom}
-                onChange={(v) => set("entreprise", { nom: v })}
+                label="Organisme de formation"
+                value={d.organisme}
+                onChange={(v) => setD({ ...d, organisme: v })}
               />
-              <Field
-                label="Nom commercial"
-                value={d.entreprise.nomCommercial}
-                onChange={(v) => set("entreprise", { nomCommercial: v })}
-              />
-              <Field
-                label="SIRET"
-                value={d.entreprise.siret}
-                onChange={(v) => set("entreprise", { siret: v })}
-              />
-              <Field
-                label="Adresse de l'entreprise"
-                value={d.entreprise.adresse}
-                onChange={(v) => set("entreprise", { adresse: v })}
-                className="sm:col-span-2"
-              />
-              <Field
-                label="Prénom du représentant"
-                value={d.entreprise.prenomRepresentant}
-                onChange={(v) => set("entreprise", { prenomRepresentant: v })}
-              />
-              <Field
-                label="Nom du représentant"
-                value={d.entreprise.nomRepresentant}
-                onChange={(v) => set("entreprise", { nomRepresentant: v })}
-              />
-              <Field
-                label="Téléphone"
-                value={d.entreprise.telephone}
-                onChange={(v) => set("entreprise", { telephone: v })}
-              />
-              <Field
-                label="E-mail"
-                value={d.entreprise.email}
-                onChange={(v) => set("entreprise", { email: v })}
-              />
-              <Field
-                label="Lieu de signature de la convention"
-                value={d.convention.lieu}
-                onChange={(v) => set("convention", { lieu: v })}
-              />
-              <Field
-                label="Date de la convention"
-                type="date"
-                value={d.convention.date}
-                onChange={(v) => set("convention", { date: v })}
-              />
-            </div>
-          ) : null}
-
-          {step === 1 ? (
-            <div className="grid gap-4 sm:grid-cols-2">
               <Field
                 label="Titre de la formation"
                 value={d.formation.titre}
                 onChange={(v) => set("formation", { titre: v })}
+                error={errors["titre"]}
                 className="sm:col-span-2"
               />
               <Area
@@ -145,22 +135,20 @@ export function DossierWizard({ value, saving, onSave }: Props) {
                 type="date"
                 value={d.formation.dateDebut}
                 onChange={(v) => set("formation", { dateDebut: v })}
+                error={errors["dateDebut"]}
               />
               <Field
                 label="Date de fin"
                 type="date"
                 value={d.formation.dateFin}
                 onChange={(v) => set("formation", { dateFin: v })}
+                error={errors["dateFin"]}
               />
               <Field
                 label="Durée totale (heures)"
                 value={d.formation.heuresTotal}
                 onChange={(v) => set("formation", { heuresTotal: v })}
-              />
-              <Field
-                label="Dont présentiel (heures, optionnel)"
-                value={d.formation.heuresPresentiel}
-                onChange={(v) => set("formation", { heuresPresentiel: v })}
+                error={errors["heuresTotal"]}
               />
               <Field
                 label="Nombre de jours"
@@ -185,11 +173,22 @@ export function DossierWizard({ value, saving, onSave }: Props) {
                   </SelectContent>
                 </Select>
               </div>
-              <Field
-                label="Lien de connexion (distanciel)"
-                value={d.formation.lienConnexion}
-                onChange={(v) => set("formation", { lienConnexion: v })}
-              />
+              {d.formation.format !== "distanciel" ? (
+                <Field
+                  label="Dont heures en présentiel"
+                  value={d.formation.heuresPresentiel}
+                  onChange={(v) => set("formation", { heuresPresentiel: v })}
+                />
+              ) : null}
+              {d.formation.format !== "presentiel" ? (
+                <Field
+                  label="Lien de connexion (visio / Workspace)"
+                  value={d.formation.lienConnexion}
+                  onChange={(v) => set("formation", { lienConnexion: v })}
+                  error={errors["lienConnexion"]}
+                  className="sm:col-span-2"
+                />
+              ) : null}
               <Field
                 label="Lieu de la formation"
                 value={d.lieu.intitule}
@@ -209,142 +208,84 @@ export function DossierWizard({ value, saving, onSave }: Props) {
             </div>
           ) : null}
 
-          {step === 2 ? (
-            <div className="grid gap-3">
-              <p className="text-sm text-muted-foreground">
-                Jusqu'à 8 apprenants sont injectés dans la convention et l'ordre de mission, 5 par
-                feuille d'émargement.
-              </p>
-              {d.apprenants.map((a, i) => (
-                <div key={i} className="grid gap-2 sm:grid-cols-[1fr_1fr_auto]">
-                  <Input
-                    placeholder={`Prénom et nom (apprenant ${i + 1})`}
-                    value={a.nom}
-                    onChange={(e) =>
-                      setD({
-                        ...d,
-                        apprenants: d.apprenants.map((x, j) =>
-                          j === i ? { ...x, nom: e.target.value } : x,
-                        ),
-                      })
-                    }
-                  />
-                  <Input
-                    placeholder="Poste / fonction"
-                    value={a.poste}
-                    onChange={(e) =>
-                      setD({
-                        ...d,
-                        apprenants: d.apprenants.map((x, j) =>
-                          j === i ? { ...x, poste: e.target.value } : x,
-                        ),
-                      })
-                    }
-                  />
-                  <Button
-                    variant="outline"
-                    onClick={() =>
-                      setD({ ...d, apprenants: d.apprenants.filter((_, j) => j !== i) })
-                    }
-                  >
-                    <Trash2 className="size-4" />
-                  </Button>
-                </div>
-              ))}
-              <Button
-                variant="outline"
-                className="justify-self-start"
-                onClick={() =>
-                  setD({ ...d, apprenants: [...d.apprenants, { nom: "", poste: "" }] })
-                }
-              >
-                <Plus className="mr-1.5 size-4" /> Ajouter un apprenant
-              </Button>
-            </div>
-          ) : null}
-
-          {step === 3 ? (
-            <div className="grid gap-3">
-              <p className="text-sm text-muted-foreground">
-                Jusqu'à 20 sessions : elles alimentent le planning, les convocations et les feuilles
-                d'émargement.
-              </p>
-              {d.sessions.map((sess, i) => (
-                <div key={i} className="grid gap-2 sm:grid-cols-[1fr_1fr_1fr_1fr_auto]">
-                  <Input
-                    type="date"
-                    value={sess.date}
-                    onChange={(e) =>
-                      setD({
-                        ...d,
-                        sessions: d.sessions.map((x, j) =>
-                          j === i ? { ...x, date: e.target.value } : x,
-                        ),
-                      })
-                    }
-                  />
-                  <Input
-                    type="time"
-                    value={sess.heureDebut}
-                    onChange={(e) =>
-                      setD({
-                        ...d,
-                        sessions: d.sessions.map((x, j) =>
-                          j === i ? { ...x, heureDebut: e.target.value } : x,
-                        ),
-                      })
-                    }
-                  />
-                  <Input
-                    type="time"
-                    value={sess.heureFin}
-                    onChange={(e) =>
-                      setD({
-                        ...d,
-                        sessions: d.sessions.map((x, j) =>
-                          j === i ? { ...x, heureFin: e.target.value } : x,
-                        ),
-                      })
-                    }
-                  />
-                  <Input
-                    placeholder="Lieu (optionnel)"
-                    value={sess.lieu ?? ""}
-                    onChange={(e) =>
-                      setD({
-                        ...d,
-                        sessions: d.sessions.map((x, j) =>
-                          j === i ? { ...x, lieu: e.target.value } : x,
-                        ),
-                      })
-                    }
-                  />
-                  <Button
-                    variant="outline"
-                    onClick={() => setD({ ...d, sessions: d.sessions.filter((_, j) => j !== i) })}
-                  >
-                    <Trash2 className="size-4" />
-                  </Button>
-                </div>
-              ))}
-              <Button
-                variant="outline"
-                className="justify-self-start"
-                disabled={d.sessions.length >= 20}
-                onClick={() =>
-                  setD({
-                    ...d,
-                    sessions: [...d.sessions, { date: "", heureDebut: "", heureFin: "", lieu: "" }],
-                  })
-                }
-              >
-                <Plus className="mr-1.5 size-4" /> Ajouter une session
-              </Button>
-            </div>
-          ) : null}
-
-          {step === 4 ? (
+          {step === 1 ? (
             <div className="grid gap-4 sm:grid-cols-2">
+              <Field
+                label="Raison sociale"
+                value={d.entreprise.nom}
+                onChange={(v) => set("entreprise", { nom: v })}
+                error={errors["entrepriseNom"]}
+              />
+              <Field
+                label="Nom commercial"
+                value={d.entreprise.nomCommercial}
+                onChange={(v) => set("entreprise", { nomCommercial: v })}
+              />
+              <Field
+                label="SIRET"
+                value={d.entreprise.siret}
+                onChange={(v) => set("entreprise", { siret: v })}
+                error={errors["siret"]}
+              />
+              <Field
+                label="Téléphone"
+                value={d.entreprise.telephone}
+                onChange={(v) => set("entreprise", { telephone: v })}
+              />
+              <Field
+                label="Adresse de l'entreprise"
+                value={d.entreprise.adresse}
+                onChange={(v) => set("entreprise", { adresse: v })}
+                className="sm:col-span-2"
+              />
+              <Field
+                label="Prénom du représentant légal"
+                value={d.entreprise.prenomRepresentant}
+                onChange={(v) => set("entreprise", { prenomRepresentant: v })}
+              />
+              <Field
+                label="Nom du représentant légal"
+                value={d.entreprise.nomRepresentant}
+                onChange={(v) => set("entreprise", { nomRepresentant: v })}
+              />
+              <Field
+                label="E-mail du contact"
+                value={d.entreprise.email}
+                onChange={(v) => set("entreprise", { email: v })}
+                error={errors["entrepriseEmail"]}
+              />
+              <div className="grid gap-2">
+                <Label>Mode de financement</Label>
+                <Select
+                  value={d.tarifs.modeFinancement}
+                  onValueChange={(v) =>
+                    set("tarifs", {
+                      modeFinancement: v as DossierDonnees["tarifs"]["modeFinancement"],
+                    })
+                  }
+                >
+                  <SelectTrigger>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="opco">OPCO / entreprise</SelectItem>
+                    <SelectItem value="cpf">CPF</SelectItem>
+                    <SelectItem value="fonds_propres">Fonds propres</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              {d.tarifs.modeFinancement === "opco" ? (
+                <Field
+                  label="OPCO / financeur"
+                  value={d.tarifs.opco}
+                  onChange={(v) => set("tarifs", { opco: v })}
+                />
+              ) : null}
+              <Field
+                label="Montant pris en charge (€)"
+                value={d.tarifs.montantPrisEnCharge}
+                onChange={(v) => set("tarifs", { montantPrisEnCharge: v })}
+              />
               <Field
                 label="Prix unitaire par stagiaire (€)"
                 value={d.tarifs.prixUnitaire}
@@ -360,16 +301,13 @@ export function DossierWizard({ value, saving, onSave }: Props) {
                 value={d.tarifs.prixTotal}
                 onChange={(v) => set("tarifs", { prixTotal: v })}
               />
-              <Field
-                label="Dont part présentiel (€, optionnel)"
-                value={d.tarifs.prixPresentiel}
-                onChange={(v) => set("tarifs", { prixPresentiel: v })}
-              />
-              <Field
-                label="OPCO / financeur"
-                value={d.tarifs.opco}
-                onChange={(v) => set("tarifs", { opco: v })}
-              />
+              {d.formation.format !== "distanciel" ? (
+                <Field
+                  label="Dont prix en présentiel (€, facultatif)"
+                  value={d.tarifs.prixPresentiel}
+                  onChange={(v) => set("tarifs", { prixPresentiel: v })}
+                />
+              ) : null}
               <div className="grid gap-2">
                 <Label>Subrogation de paiement</Label>
                 <Select
@@ -387,77 +325,316 @@ export function DossierWizard({ value, saving, onSave }: Props) {
                   </SelectContent>
                 </Select>
               </div>
-            </div>
-          ) : null}
-
-          {step === 5 ? (
-            <div className="grid gap-4 sm:grid-cols-2">
-              <Field
-                label="Prénom du formateur"
-                value={d.formateur.prenom}
-                onChange={(v) => set("formateur", { prenom: v })}
-              />
-              <Field
-                label="Nom du formateur"
-                value={d.formateur.nom}
-                onChange={(v) => set("formateur", { nom: v })}
-              />
-              <Field
-                label="Entreprise du formateur"
-                value={d.formateur.entreprise}
-                onChange={(v) => set("formateur", { entreprise: v })}
-              />
-              <Field
-                label="SIRET du formateur"
-                value={d.formateur.siret}
-                onChange={(v) => set("formateur", { siret: v })}
-              />
-              <Field
-                label="Adresse du formateur"
-                value={d.formateur.adresse}
-                onChange={(v) => set("formateur", { adresse: v })}
+              <Toggle
+                label="Certification ICDL visée pour la session"
+                checked={d.tarifs.certificationIcdl}
+                onChange={(v) => set("tarifs", { certificationIcdl: v })}
                 className="sm:col-span-2"
               />
               <Field
-                label="Numéro de déclaration d'activité"
-                value={d.formateur.nda}
-                onChange={(v) => set("formateur", { nda: v })}
+                label="Lieu de signature de la convention"
+                value={d.convention.lieu}
+                onChange={(v) => set("convention", { lieu: v })}
               />
               <Field
-                label="Région du NDA"
-                value={d.formateur.ndaRegion}
-                onChange={(v) => set("formateur", { ndaRegion: v })}
-              />
-              <Field
-                label="E-mail"
-                value={d.formateur.email}
-                onChange={(v) => set("formateur", { email: v })}
-              />
-              <Field
-                label="Téléphone"
-                value={d.formateur.telephone}
-                onChange={(v) => set("formateur", { telephone: v })}
-              />
-              <Field
-                label="Coût horaire (€)"
-                value={d.formateur.coutHoraire}
-                onChange={(v) => set("formateur", { coutHoraire: v })}
-              />
-              <Field
-                label="Total recette mission (€)"
-                value={d.formateur.totalRecette}
-                onChange={(v) => set("formateur", { totalRecette: v })}
-              />
-              <Field
-                label="Date d'ouverture de mission"
+                label="Date de la convention"
                 type="date"
-                value={d.formateur.dateMissionOuverte}
-                onChange={(v) => set("formateur", { dateMissionOuverte: v })}
+                value={d.convention.date}
+                onChange={(v) => set("convention", { date: v })}
               />
+              {!aDuPresentiel(d) ? (
+                <p className="text-xs text-muted-foreground sm:col-span-2">
+                  Sans heures en présentiel, la mention « Dont prix en présentiel » est retirée de la
+                  convention.
+                </p>
+              ) : null}
             </div>
           ) : null}
 
-          {step === 6 ? (
+          {step === 2 ? (
+            <div className="grid gap-6">
+              <div className="grid gap-4 sm:grid-cols-2">
+                <Field
+                  label="Prénom du formateur"
+                  value={d.formateur.prenom}
+                  onChange={(v) => set("formateur", { prenom: v })}
+                />
+                <Field
+                  label="Nom du formateur"
+                  value={d.formateur.nom}
+                  onChange={(v) => set("formateur", { nom: v })}
+                  error={errors["formateurNom"]}
+                />
+                <Field
+                  label="E-mail"
+                  value={d.formateur.email}
+                  onChange={(v) => set("formateur", { email: v })}
+                  error={errors["formateurEmail"]}
+                />
+                <Field
+                  label="Téléphone"
+                  value={d.formateur.telephone}
+                  onChange={(v) => set("formateur", { telephone: v })}
+                />
+                <Field
+                  label="Entreprise du formateur"
+                  value={d.formateur.entreprise}
+                  onChange={(v) => set("formateur", { entreprise: v })}
+                />
+                <Field
+                  label="SIRET du formateur"
+                  value={d.formateur.siret}
+                  onChange={(v) => set("formateur", { siret: v })}
+                />
+                <Field
+                  label="Adresse du formateur"
+                  value={d.formateur.adresse}
+                  onChange={(v) => set("formateur", { adresse: v })}
+                  className="sm:col-span-2"
+                />
+                <Field
+                  label="Numéro de déclaration d'activité"
+                  value={d.formateur.nda}
+                  onChange={(v) => set("formateur", { nda: v })}
+                />
+                <Field
+                  label="Région du NDA"
+                  value={d.formateur.ndaRegion}
+                  onChange={(v) => set("formateur", { ndaRegion: v })}
+                />
+                <Field
+                  label="Coût horaire (€)"
+                  value={d.formateur.coutHoraire}
+                  onChange={(v) => set("formateur", { coutHoraire: v })}
+                />
+                <Field
+                  label="Total recette mission (€)"
+                  value={d.formateur.totalRecette}
+                  onChange={(v) => set("formateur", { totalRecette: v })}
+                />
+                <Field
+                  label="Date d'ouverture de mission"
+                  type="date"
+                  value={d.formateur.dateMissionOuverte}
+                  onChange={(v) => set("formateur", { dateMissionOuverte: v })}
+                />
+                <Toggle
+                  label="Le lien de connexion (Workspace / visio) est créé et fourni sous la responsabilité du formateur"
+                  checked={d.formation.lienResponsableFormateur}
+                  onChange={(v) => set("formation", { lienResponsableFormateur: v })}
+                  className="sm:col-span-2"
+                />
+              </div>
+
+              <div className="grid gap-3">
+                <h3 className="text-sm font-semibold">Planning des sessions (20 maximum)</h3>
+                {d.sessions.map((sess, i) => (
+                  <div key={i} className="grid gap-2 sm:grid-cols-[1fr_1fr_1fr_1fr_1fr_auto]">
+                    <Input
+                      type="date"
+                      value={sess.date}
+                      onChange={(e) =>
+                        setD({
+                          ...d,
+                          sessions: d.sessions.map((x, j) =>
+                            j === i ? { ...x, date: e.target.value } : x,
+                          ),
+                        })
+                      }
+                    />
+                    <Input
+                      type="time"
+                      value={sess.heureDebut}
+                      onChange={(e) =>
+                        setD({
+                          ...d,
+                          sessions: d.sessions.map((x, j) =>
+                            j === i ? { ...x, heureDebut: e.target.value } : x,
+                          ),
+                        })
+                      }
+                    />
+                    <Input
+                      type="time"
+                      value={sess.heureFin}
+                      onChange={(e) =>
+                        setD({
+                          ...d,
+                          sessions: d.sessions.map((x, j) =>
+                            j === i ? { ...x, heureFin: e.target.value } : x,
+                          ),
+                        })
+                      }
+                    />
+                    <Input
+                      placeholder="Module"
+                      value={sess.module ?? ""}
+                      onChange={(e) =>
+                        setD({
+                          ...d,
+                          sessions: d.sessions.map((x, j) =>
+                            j === i ? { ...x, module: e.target.value } : x,
+                          ),
+                        })
+                      }
+                    />
+                    <Input
+                      placeholder="Lieu / connexion"
+                      value={sess.lieu ?? ""}
+                      onChange={(e) =>
+                        setD({
+                          ...d,
+                          sessions: d.sessions.map((x, j) =>
+                            j === i ? { ...x, lieu: e.target.value } : x,
+                          ),
+                        })
+                      }
+                    />
+                    <Button
+                      variant="outline"
+                      onClick={() => setD({ ...d, sessions: d.sessions.filter((_, j) => j !== i) })}
+                    >
+                      <Trash2 className="size-4" />
+                    </Button>
+                  </div>
+                ))}
+                <Button
+                  variant="outline"
+                  className="justify-self-start"
+                  disabled={d.sessions.length >= 20}
+                  onClick={() =>
+                    setD({
+                      ...d,
+                      sessions: [
+                        ...d.sessions,
+                        { date: "", heureDebut: "", heureFin: "", lieu: "", module: "" },
+                      ],
+                    })
+                  }
+                >
+                  <Plus className="mr-1.5 size-4" /> Ajouter une session
+                </Button>
+              </div>
+            </div>
+          ) : null}
+
+          {step === 3 ? (
+            <div className="grid gap-4">
+              <p className="text-sm text-muted-foreground">
+                Les apprenants alimentent la convention, le planning, les convocations, les
+                émargements et les attestations.
+              </p>
+              {errors["apprenants"] ? (
+                <p className="text-xs text-destructive">{errors["apprenants"]}</p>
+              ) : null}
+              {d.apprenants.map((a, i) => (
+                <div key={i} className="grid gap-2 rounded-xl border border-border/70 p-4">
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm font-semibold">Apprenant {i + 1}</span>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() =>
+                        setD({ ...d, apprenants: d.apprenants.filter((_, j) => j !== i) })
+                      }
+                    >
+                      <Trash2 className="size-4" />
+                    </Button>
+                  </div>
+                  <div className="grid gap-2 sm:grid-cols-2">
+                    <Input
+                      placeholder="Prénom et nom"
+                      value={a.nom}
+                      onChange={(e) =>
+                        setD({
+                          ...d,
+                          apprenants: d.apprenants.map((x, j) =>
+                            j === i ? { ...x, nom: e.target.value } : x,
+                          ),
+                        })
+                      }
+                    />
+                    <Input
+                      placeholder="Poste / fonction"
+                      value={a.poste}
+                      onChange={(e) =>
+                        setD({
+                          ...d,
+                          apprenants: d.apprenants.map((x, j) =>
+                            j === i ? { ...x, poste: e.target.value } : x,
+                          ),
+                        })
+                      }
+                    />
+                    <Input
+                      placeholder="E-mail"
+                      value={a.email ?? ""}
+                      onChange={(e) =>
+                        setD({
+                          ...d,
+                          apprenants: d.apprenants.map((x, j) =>
+                            j === i ? { ...x, email: e.target.value } : x,
+                          ),
+                        })
+                      }
+                    />
+                    <Input
+                      placeholder="Téléphone"
+                      value={a.telephone ?? ""}
+                      onChange={(e) =>
+                        setD({
+                          ...d,
+                          apprenants: d.apprenants.map((x, j) =>
+                            j === i ? { ...x, telephone: e.target.value } : x,
+                          ),
+                        })
+                      }
+                    />
+                    {estCpf(d) ? (
+                      <Input
+                        placeholder="Numéro de dossier CPF"
+                        value={a.numeroCpf ?? ""}
+                        onChange={(e) =>
+                          setD({
+                            ...d,
+                            apprenants: d.apprenants.map((x, j) =>
+                              j === i ? { ...x, numeroCpf: e.target.value } : x,
+                            ),
+                          })
+                        }
+                      />
+                    ) : null}
+                    <Input
+                      placeholder="Certification visée (ex. ICDL)"
+                      value={a.certification ?? ""}
+                      onChange={(e) =>
+                        setD({
+                          ...d,
+                          apprenants: d.apprenants.map((x, j) =>
+                            j === i ? { ...x, certification: e.target.value } : x,
+                          ),
+                        })
+                      }
+                    />
+                  </div>
+                  {errors[`apprenant-${i}`] ? (
+                    <p className="text-xs text-destructive">{errors[`apprenant-${i}`]}</p>
+                  ) : null}
+                </div>
+              ))}
+              <Button
+                variant="outline"
+                className="justify-self-start"
+                onClick={() =>
+                  setD({ ...d, apprenants: [...d.apprenants, { nom: "", poste: "" }] })
+                }
+              >
+                <Plus className="mr-1.5 size-4" /> Ajouter un apprenant
+              </Button>
+            </div>
+          ) : null}
+
+          {step === 4 ? (
             <div className="grid gap-4">
               <Area
                 label="Contexte et enjeux"
@@ -484,6 +661,40 @@ export function DossierWizard({ value, saving, onSave }: Props) {
                 value={d.besoins.modalitesEvaluation}
                 onChange={(v) => set("besoins", { modalitesEvaluation: v })}
               />
+              <h3 className="text-sm font-semibold">Facture formateur (F9)</h3>
+              <div className="grid gap-4 sm:grid-cols-2">
+                <Field
+                  label="Numéro de facture"
+                  value={d.facture.numero}
+                  onChange={(v) => set("facture", { numero: v })}
+                />
+                <Field
+                  label="Date de facture"
+                  type="date"
+                  value={d.facture.date}
+                  onChange={(v) => set("facture", { date: v })}
+                />
+                <Field
+                  label="Montant HT (€)"
+                  value={d.facture.montantHt}
+                  onChange={(v) => set("facture", { montantHt: v })}
+                />
+                <Field
+                  label="TVA (%)"
+                  value={d.facture.tva}
+                  onChange={(v) => set("facture", { tva: v })}
+                />
+                <Field
+                  label="Montant TTC (€)"
+                  value={d.facture.montantTtc}
+                  onChange={(v) => set("facture", { montantTtc: v })}
+                />
+                <Field
+                  label="IBAN"
+                  value={d.facture.iban}
+                  onChange={(v) => set("facture", { iban: v })}
+                />
+              </div>
             </div>
           ) : null}
         </div>
@@ -511,17 +722,25 @@ function Field({
   onChange,
   type = "text",
   className,
+  error,
 }: {
   label: string;
   value: string;
   onChange: (value: string) => void;
   type?: string;
   className?: string;
+  error?: string;
 }) {
   return (
     <div className={`grid gap-2 ${className ?? ""}`}>
       <Label>{label}</Label>
-      <Input type={type} value={value} onChange={(e) => onChange(e.target.value)} />
+      <Input
+        type={type}
+        value={value}
+        aria-invalid={Boolean(error)}
+        onChange={(e) => onChange(e.target.value)}
+      />
+      {error ? <p className="text-xs text-destructive">{error}</p> : null}
     </div>
   );
 }
@@ -542,5 +761,24 @@ function Area({
       <Label>{label}</Label>
       <Textarea rows={3} value={value} onChange={(e) => onChange(e.target.value)} />
     </div>
+  );
+}
+
+function Toggle({
+  label,
+  checked,
+  onChange,
+  className,
+}: {
+  label: string;
+  checked: boolean;
+  onChange: (value: boolean) => void;
+  className?: string;
+}) {
+  return (
+    <label className={`flex items-start gap-3 text-sm ${className ?? ""}`}>
+      <Checkbox checked={checked} onCheckedChange={(v) => onChange(v === true)} />
+      <span>{label}</span>
+    </label>
   );
 }
