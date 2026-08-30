@@ -122,7 +122,30 @@ function DossierDetail() {
     toast.success("Document déposé.");
   }
 
+  const saveDonnees = useMutation({
+    mutationFn: async (donnees: DossierDonnees) => {
+      const { error } = await supabase
+        .from("dossiers")
+        .update({
+          donnees,
+          entreprise_nom: donnees.entreprise.nom || null,
+          entreprise_siret: donnees.entreprise.siret || null,
+          titre_formation: donnees.formation.titre || null,
+          date_debut: donnees.formation.dateDebut || null,
+          date_fin: donnees.formation.dateFin || null,
+        })
+        .eq("id", id);
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      toast.success("Variables du dossier enregistrées.");
+      void queryClient.invalidateQueries({ queryKey: ["dossier", id] });
+    },
+    onError: () => toast.error("Enregistrement impossible."),
+  });
+
   const statut = (dossier?.statut_crm ?? "brouillon") as CrmStatut;
+  const donnees = mergeDonnees(dossier?.donnees);
 
   return (
     <AppShell
