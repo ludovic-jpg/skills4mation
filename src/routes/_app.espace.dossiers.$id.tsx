@@ -323,7 +323,8 @@ function DossierDetail() {
               </ol>
             </CardContent>
           </Card>
-        </div>
+          </TabsContent>
+        </Tabs>
       )}
     </AppShell>
   );
