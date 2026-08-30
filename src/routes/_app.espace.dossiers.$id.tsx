@@ -7,6 +7,7 @@ import { ArrowLeft, ExternalLink, FileText, Upload } from "lucide-react";
 import { AppShell } from "@/components/app/AppShell";
 import { CrmBadge } from "@/components/app/CrmBadge";
 import { FORMATEUR_NAV } from "@/components/app/nav";
+import { DocumentsPanel } from "@/components/dossier/DocumentsPanel";
 import { DossierWizard } from "@/components/dossier/DossierWizard";
 import { PiecesPanel } from "@/components/dossier/PiecesPanel";
 import { Button } from "@/components/ui/button";
@@ -168,7 +169,8 @@ function DossierDetail() {
         <Tabs defaultValue="suivi" className="gap-6">
           <TabsList>
             <TabsTrigger value="suivi">Suivi</TabsTrigger>
-            <TabsTrigger value="variables">Variables du dossier</TabsTrigger>
+            <TabsTrigger value="variables">Formulaire du dossier</TabsTrigger>
+            <TabsTrigger value="documents">Documents</TabsTrigger>
             <TabsTrigger value="pieces">Pièces &amp; génération</TabsTrigger>
           </TabsList>
 
@@ -178,6 +180,12 @@ function DossierDetail() {
               saving={saveDonnees.isPending}
               onSave={(next) => saveDonnees.mutate(next)}
             />
+          </TabsContent>
+
+          <TabsContent value="documents">
+            {user ? (
+              <DocumentsPanel dossierId={id} formateurId={user.id} donnees={donnees} />
+            ) : null}
           </TabsContent>
 
           <TabsContent value="pieces">
