@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { FileText } from "lucide-react";
+import { useServerFn } from "@tanstack/react-start";
+import { FileText, KeyRound } from "lucide-react";
 import { toast } from "sonner";
 
 import { AppShell } from "@/components/app/AppShell";
@@ -10,7 +11,9 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useAuth } from "@/hooks/useAuth";
 import { formatDate, type CandidatureStatut } from "@/lib/statuts";
+import { validerCandidatureEtDonnerAcces } from "@/lib/admin-candidatures.functions";
 import { supabase } from "@/integrations/supabase/client";
+
 
 export const Route = createFileRoute("/_app/admin/")({
   component: AdminCandidatures,
@@ -98,8 +101,27 @@ function AdminCandidatures() {
     onError: () => toast.error("Mise à jour impossible."),
   });
 
+  const donnerAcces = useServerFn(validerCandidatureEtDonnerAcces);
+  const acces = useMutation({
+    mutationFn: async (candidatureId: string) =>
+      donnerAcces({
+        data: { candidatureId, redirectTo: `${window.location.origin}/auth` },
+      }),
+    onSuccess: (result) => {
+      toast.success(
+        result.invited
+          ? `Accès accordé : invitation envoyée à ${result.email}.`
+          : `Accès accordé à ${result.email} (compte déjà existant).`,
+      );
+      void queryClient.invalidateQueries({ queryKey: ["candidatures"] });
+    },
+    onError: (error) =>
+      toast.error(error instanceof Error ? error.message : "Attribution de l'accès impossible."),
+  });
+
   if (!loading && !isAdmin) {
     return (
+
       <AppShell items={ADMIN_NAV} title="Back-office">
         <Card className="rounded-2xl border-destructive/30">
           <CardContent className="p-8">
@@ -171,11 +193,19 @@ function AdminCandidatures() {
 
                 <div className="flex shrink-0 flex-wrap items-start gap-2">
                   <Button
+                    variant="cta"
+                    disabled={acces.isPending}
+                    onClick={() => acces.mutate(c.id)}
+                  >
+                    <KeyRound className="mr-1.5 size-4" />
+                    {acces.isPending ? "Envoi…" : "Valider et donner accès"}
+                  </Button>
+                  <Button
                     variant="teal"
                     disabled={update.isPending || c.statut === "valide"}
                     onClick={() => update.mutate({ id: c.id, statut: "valide" })}
                   >
-                    Valider
+                    Valider seulement
                   </Button>
                   <Button
                     variant="outline"
@@ -185,6 +215,7 @@ function AdminCandidatures() {
                     Refuser
                   </Button>
                 </div>
+
               </CardContent>
             </Card>
           ))}
