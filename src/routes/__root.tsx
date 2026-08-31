@@ -97,8 +97,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           "@context": "https://schema.org",
           "@type": "EducationalOrganization",
           name: "Skills4mation",
-          url: "https://train-grow-connect.lovable.app",
-          logo: "https://train-grow-connect.lovable.app/favicon.png",
+          url: "https://skills4mation.com",
+          logo: "https://skills4mation.com/favicon.png",
           description:
             "Organisme de formation certifié Qualiopi : portage administratif et pédagogique pour formateurs indépendants et parcours sur mesure pour apprenants.",
           email: "contact@skills4mation.com",

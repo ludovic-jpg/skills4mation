@@ -23,13 +23,13 @@ export const Route = createFileRoute("/politique-de-confidentialite")({
       { name: "twitter:card", content: "summary_large_image" },
       {
         property: "og:url",
-        content: "https://train-grow-connect.lovable.app/politique-de-confidentialite",
+        content: "https://skills4mation.com/politique-de-confidentialite",
       },
     ],
     links: [
       {
         rel: "canonical",
-        href: "https://train-grow-connect.lovable.app/politique-de-confidentialite",
+        href: "https://skills4mation.com/politique-de-confidentialite",
       },
     ],
   }),

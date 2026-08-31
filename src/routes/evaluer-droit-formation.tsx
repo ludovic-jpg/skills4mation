@@ -26,11 +26,11 @@ export const Route = createFileRoute("/evaluer-droit-formation")({
       { name: "twitter:card", content: "summary_large_image" },
       {
         property: "og:url",
-        content: "https://train-grow-connect.lovable.app/evaluer-droit-formation",
+        content: "https://skills4mation.com/evaluer-droit-formation",
       },
     ],
     links: [
-      { rel: "canonical", href: "https://train-grow-connect.lovable.app/evaluer-droit-formation" },
+      { rel: "canonical", href: "https://skills4mation.com/evaluer-droit-formation" },
     ],
   }),
   component: EvaluerDroitFormation,

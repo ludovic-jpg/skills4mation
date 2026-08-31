@@ -42,6 +42,8 @@ export function slugify(value: string) {
 /** Adresse publique et stable d'un visuel stocké dans l'espace « formations ». */
 export function visuelUrl(path?: string | null) {
   if (!path) return null;
+  // Les formations historiques du réseau référencent directement une image distante.
+  if (/^https?:\/\//i.test(path)) return path;
   return `/api/public/formation-image/${path
     .split("/")
     .map((part) => encodeURIComponent(part))
@@ -61,15 +63,19 @@ export function parseProgramme(raw: unknown): ModuleProgramme[] {
     .filter((m) => m.titre || m.points.length > 0);
 }
 
-export function dureeLabel(f: Pick<FormationCatalogue, "duree_heures" | "duree_jours">) {
+export function dureeLabel(
+  f: Pick<FormationCatalogue, "duree_heures" | "duree_jours"> & { duree_texte?: string | null },
+) {
   const parts: string[] = [];
   if (f.duree_heures) parts.push(`${f.duree_heures} h`);
   if (f.duree_jours) parts.push(`${f.duree_jours} jour(s)`);
-  return parts.join(" · ") || null;
+  return parts.join(" · ") || f.duree_texte || null;
 }
 
-export function tarifLabel(f: Pick<FormationCatalogue, "tarif_ht" | "tarif_unite">) {
-  if (f.tarif_ht === null || f.tarif_ht === undefined) return null;
+export function tarifLabel(
+  f: Pick<FormationCatalogue, "tarif_ht" | "tarif_unite"> & { tarif_details?: string | null },
+) {
+  if (f.tarif_ht === null || f.tarif_ht === undefined) return f.tarif_details ?? null;
   const montant = Number(f.tarif_ht).toLocaleString("fr-FR", {
     minimumFractionDigits: 0,
     maximumFractionDigits: 2,
@@ -78,7 +84,7 @@ export function tarifLabel(f: Pick<FormationCatalogue, "tarif_ht" | "tarif_unite
 }
 
 export function lienPublic(slug: string, origin?: string) {
-  const base = origin ?? "https://train-grow-connect.lovable.app";
+  const base = origin ?? "https://skills4mation.com";
   return `${base}/formations/${slug}`;
 }
 
