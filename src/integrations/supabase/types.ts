@@ -630,6 +630,10 @@ export type Database = {
         | "paiement"
         | "paiement_formateur"
         | "refuse"
+        | "formation_en_cours"
+        | "formation_realisee"
+        | "demande_paiement"
+        | "paiement_organisme"
       document_type: "signe" | "accord_financement" | "qualiopi_final"
       dossier_statut:
         | "brouillon"
@@ -784,6 +788,10 @@ export const Constants = {
         "paiement",
         "paiement_formateur",
         "refuse",
+        "formation_en_cours",
+        "formation_realisee",
+        "demande_paiement",
+        "paiement_organisme",
       ],
       document_type: ["signe", "accord_financement", "qualiopi_final"],
       dossier_statut: [
