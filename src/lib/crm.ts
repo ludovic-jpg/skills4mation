@@ -5,8 +5,13 @@ export type CrmStatut =
   | "demande_financement"
   | "accord_financement"
   | "finalisation_administrative"
-  | "paiement"
+  | "formation_en_cours"
+  | "formation_realisee"
+  | "demande_paiement"
+  | "paiement_organisme"
   | "paiement_formateur"
+  /** Conservé pour compatibilité descendante, remplacé par « paiement_organisme ». */
+  | "paiement"
   | "refuse";
 
 type Tone = "neutral" | "info" | "teal" | "cta" | "success" | "danger";
@@ -49,19 +54,43 @@ export const CRM_STATUTS: Record<
     etape: 5,
     label: "Finalisation administrative",
     tone: "cta",
-    description: "Signatures et dernières pièces réunies.",
+    description: "Signatures et dernières pièces réunies avant le démarrage.",
   },
-  paiement: {
+  formation_en_cours: {
     etape: 6,
-    label: "Paiement reçu",
+    label: "Formation en cours",
+    tone: "info",
+    description: "La session a démarré : émargements et suivi pédagogique en cours.",
+  },
+  formation_realisee: {
+    etape: 7,
+    label: "Formation réalisée",
+    tone: "teal",
+    description: "Session terminée, pièces de fin de formation à réunir.",
+  },
+  demande_paiement: {
+    etape: 8,
+    label: "Demande de paiement",
     tone: "cta",
-    description: "Règlement reçu du client ou de l'OPCO.",
+    description: "Facturation transmise au client ou au financeur.",
+  },
+  paiement_organisme: {
+    etape: 9,
+    label: "Paiement organisme",
+    tone: "cta",
+    description: "Règlement reçu par Skills4mation du client ou de l'OPCO.",
   },
   paiement_formateur: {
-    etape: 7,
+    etape: 9,
     label: "Paiement formateur",
     tone: "success",
     description: "Rémunération versée au formateur sous 10 jours ouvrés.",
+  },
+  paiement: {
+    etape: 9,
+    label: "Paiement reçu (historique)",
+    tone: "cta",
+    description: "Ancien statut conservé pour les dossiers antérieurs.",
   },
   refuse: {
     etape: null,
@@ -78,9 +107,15 @@ export const CRM_PIPELINE: CrmStatut[] = [
   "demande_financement",
   "accord_financement",
   "finalisation_administrative",
-  "paiement",
+  "formation_en_cours",
+  "formation_realisee",
+  "demande_paiement",
+  "paiement_organisme",
   "paiement_formateur",
 ];
+
+/** Nombre d'étapes du pipeline (0 → 9, le paiement formateur clôturant l'étape 9). */
+const ETAPE_MAX = 9;
 
 export function crmLabel(statut: CrmStatut) {
   return CRM_STATUTS[statut]?.label ?? statut;
@@ -89,8 +124,10 @@ export function crmLabel(statut: CrmStatut) {
 export function crmProgress(statut: CrmStatut) {
   const etape = CRM_STATUTS[statut]?.etape;
   if (etape == null) return 0;
-  return Math.round((etape / 7) * 100);
+  if (statut === "paiement_formateur") return 100;
+  return Math.round((etape / ETAPE_MAX) * 100);
 }
+
 
 export function dossierNom(input: {
   entreprise_nom?: string | null;
