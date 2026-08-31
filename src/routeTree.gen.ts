@@ -35,6 +35,8 @@ import { Route as CatalogueCategorySlugRouteImport } from './routes/catalogue.$c
 import { Route as AppEspaceDossiersIndexRouteImport } from './routes/_app.espace.dossiers.index'
 import { Route as AppEspaceDossiersIdRouteImport } from './routes/_app.espace.dossiers.$id'
 import { Route as AppEspaceDossiersNewRouteImport } from './routes/_app.espace.dossiers.new'
+import { Route as LovableEmailAuthPreviewRouteImport } from './routes/lovable/email/auth/preview'
+import { Route as LovableEmailAuthWebhookRouteImport } from './routes/lovable/email/auth/webhook'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -166,6 +168,16 @@ const AppEspaceDossiersNewRoute = AppEspaceDossiersNewRouteImport.update({
   path: '/espace/dossiers/new',
   getParentRoute: () => AppRoute,
 } as any)
+const LovableEmailAuthPreviewRoute = LovableEmailAuthPreviewRouteImport.update({
+  id: '/lovable/email/auth/preview',
+  path: '/lovable/email/auth/preview',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LovableEmailAuthWebhookRoute = LovableEmailAuthWebhookRouteImport.update({
+  id: '/lovable/email/auth/webhook',
+  path: '/lovable/email/auth/webhook',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -192,6 +204,8 @@ export interface FileRoutesByFullPath {
   '/catalogue/$category/': typeof CatalogueCategoryIndexRoute
   '/espace/dossiers/$id': typeof AppEspaceDossiersIdRoute
   '/espace/dossiers/new': typeof AppEspaceDossiersNewRoute
+  '/lovable/email/auth/preview': typeof LovableEmailAuthPreviewRoute
+  '/lovable/email/auth/webhook': typeof LovableEmailAuthWebhookRoute
   '/espace/dossiers/': typeof AppEspaceDossiersIndexRoute
 }
 export interface FileRoutesByTo {
@@ -219,6 +233,8 @@ export interface FileRoutesByTo {
   '/catalogue/$category': typeof CatalogueCategoryIndexRoute
   '/espace/dossiers/$id': typeof AppEspaceDossiersIdRoute
   '/espace/dossiers/new': typeof AppEspaceDossiersNewRoute
+  '/lovable/email/auth/preview': typeof LovableEmailAuthPreviewRoute
+  '/lovable/email/auth/webhook': typeof LovableEmailAuthWebhookRoute
   '/espace/dossiers': typeof AppEspaceDossiersIndexRoute
 }
 export interface FileRoutesById {
@@ -248,6 +264,8 @@ export interface FileRoutesById {
   '/catalogue/$category/': typeof CatalogueCategoryIndexRoute
   '/_app/espace/dossiers/$id': typeof AppEspaceDossiersIdRoute
   '/_app/espace/dossiers/new': typeof AppEspaceDossiersNewRoute
+  '/lovable/email/auth/preview': typeof LovableEmailAuthPreviewRoute
+  '/lovable/email/auth/webhook': typeof LovableEmailAuthWebhookRoute
   '/_app/espace/dossiers/': typeof AppEspaceDossiersIndexRoute
 }
 export interface FileRouteTypes {
@@ -277,6 +295,8 @@ export interface FileRouteTypes {
     | '/catalogue/$category/'
     | '/espace/dossiers/$id'
     | '/espace/dossiers/new'
+    | '/lovable/email/auth/preview'
+    | '/lovable/email/auth/webhook'
     | '/espace/dossiers/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -304,6 +324,8 @@ export interface FileRouteTypes {
     | '/catalogue/$category'
     | '/espace/dossiers/$id'
     | '/espace/dossiers/new'
+    | '/lovable/email/auth/preview'
+    | '/lovable/email/auth/webhook'
     | '/espace/dossiers'
   id:
     | '__root__'
@@ -332,6 +354,8 @@ export interface FileRouteTypes {
     | '/catalogue/$category/'
     | '/_app/espace/dossiers/$id'
     | '/_app/espace/dossiers/new'
+    | '/lovable/email/auth/preview'
+    | '/lovable/email/auth/webhook'
     | '/_app/espace/dossiers/'
   fileRoutesById: FileRoutesById
 }
@@ -352,6 +376,8 @@ export interface RootRouteChildren {
   CatalogueIndexRoute: typeof CatalogueIndexRoute
   CatalogueCategorySlugRoute: typeof CatalogueCategorySlugRoute
   CatalogueCategoryIndexRoute: typeof CatalogueCategoryIndexRoute
+  LovableEmailAuthPreviewRoute: typeof LovableEmailAuthPreviewRoute
+  LovableEmailAuthWebhookRoute: typeof LovableEmailAuthWebhookRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -538,6 +564,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppEspaceDossiersNewRouteImport
       parentRoute: typeof AppRoute
     }
+    '/lovable/email/auth/preview': {
+      id: '/lovable/email/auth/preview'
+      path: '/lovable/email/auth/preview'
+      fullPath: '/lovable/email/auth/preview'
+      preLoaderRoute: typeof LovableEmailAuthPreviewRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/lovable/email/auth/webhook': {
+      id: '/lovable/email/auth/webhook'
+      path: '/lovable/email/auth/webhook'
+      fullPath: '/lovable/email/auth/webhook'
+      preLoaderRoute: typeof LovableEmailAuthWebhookRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -586,6 +626,8 @@ const rootRouteChildren: RootRouteChildren = {
   CatalogueIndexRoute: CatalogueIndexRoute,
   CatalogueCategorySlugRoute: CatalogueCategorySlugRoute,
   CatalogueCategoryIndexRoute: CatalogueCategoryIndexRoute,
+  LovableEmailAuthPreviewRoute: LovableEmailAuthPreviewRoute,
+  LovableEmailAuthWebhookRoute: LovableEmailAuthWebhookRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
