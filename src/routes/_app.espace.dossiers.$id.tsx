@@ -73,29 +73,37 @@ function DossierDetail() {
     },
   });
 
-  const demandeFinancement = useMutation({
-    mutationFn: async () => {
+  const changerStatut = useMutation({
+    mutationFn: async ({
+      cible,
+      commentaire,
+    }: {
+      cible: CrmStatut;
+      commentaire: string;
+      message: string;
+    }) => {
       if (!dossier || !user) return;
       const { error } = await supabase
         .from("dossiers")
-        .update({ statut_crm: "demande_financement" })
+        .update({ statut_crm: cible })
         .eq("id", id);
       if (error) throw error;
       await supabase.from("dossier_historique").insert({
         dossier_id: id,
         ancien_statut: dossier.statut_crm,
-        nouveau_statut: "demande_financement",
+        nouveau_statut: cible,
         auteur_id: user.id,
-        commentaire: "Demande de financement initiée par le formateur.",
+        commentaire,
       });
     },
-    onSuccess: () => {
-      toast.success("Demande de financement transmise à l'équipe.");
+    onSuccess: (_data, variables) => {
+      toast.success(variables.message);
       void queryClient.invalidateQueries({ queryKey: ["dossier", id] });
       void queryClient.invalidateQueries({ queryKey: ["dossier-historique", id] });
     },
     onError: () => toast.error("Action impossible."),
   });
+
 
   async function uploadDocument(file: File) {
     if (!user) return;
