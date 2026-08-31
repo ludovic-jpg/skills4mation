@@ -35,6 +35,7 @@ import { Route as CatalogueCategorySlugRouteImport } from './routes/catalogue.$c
 import { Route as AppEspaceDossiersIndexRouteImport } from './routes/_app.espace.dossiers.index'
 import { Route as AppEspaceDossiersIdRouteImport } from './routes/_app.espace.dossiers.$id'
 import { Route as AppEspaceDossiersNewRouteImport } from './routes/_app.espace.dossiers.new'
+import { Route as ApiPublicFormationImageSplatRouteImport } from './routes/api/public/formation-image.$'
 import { Route as LovableEmailAuthPreviewRouteImport } from './routes/lovable/email/auth/preview'
 import { Route as LovableEmailAuthWebhookRouteImport } from './routes/lovable/email/auth/webhook'
 
@@ -168,6 +169,12 @@ const AppEspaceDossiersNewRoute = AppEspaceDossiersNewRouteImport.update({
   path: '/espace/dossiers/new',
   getParentRoute: () => AppRoute,
 } as any)
+const ApiPublicFormationImageSplatRoute =
+  ApiPublicFormationImageSplatRouteImport.update({
+    id: '/api/public/formation-image/$',
+    path: '/api/public/formation-image/$',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const LovableEmailAuthPreviewRoute = LovableEmailAuthPreviewRouteImport.update({
   id: '/lovable/email/auth/preview',
   path: '/lovable/email/auth/preview',
@@ -204,6 +211,7 @@ export interface FileRoutesByFullPath {
   '/catalogue/$category/': typeof CatalogueCategoryIndexRoute
   '/espace/dossiers/$id': typeof AppEspaceDossiersIdRoute
   '/espace/dossiers/new': typeof AppEspaceDossiersNewRoute
+  '/api/public/formation-image/$': typeof ApiPublicFormationImageSplatRoute
   '/lovable/email/auth/preview': typeof LovableEmailAuthPreviewRoute
   '/lovable/email/auth/webhook': typeof LovableEmailAuthWebhookRoute
   '/espace/dossiers/': typeof AppEspaceDossiersIndexRoute
@@ -233,6 +241,7 @@ export interface FileRoutesByTo {
   '/catalogue/$category': typeof CatalogueCategoryIndexRoute
   '/espace/dossiers/$id': typeof AppEspaceDossiersIdRoute
   '/espace/dossiers/new': typeof AppEspaceDossiersNewRoute
+  '/api/public/formation-image/$': typeof ApiPublicFormationImageSplatRoute
   '/lovable/email/auth/preview': typeof LovableEmailAuthPreviewRoute
   '/lovable/email/auth/webhook': typeof LovableEmailAuthWebhookRoute
   '/espace/dossiers': typeof AppEspaceDossiersIndexRoute
@@ -264,6 +273,7 @@ export interface FileRoutesById {
   '/catalogue/$category/': typeof CatalogueCategoryIndexRoute
   '/_app/espace/dossiers/$id': typeof AppEspaceDossiersIdRoute
   '/_app/espace/dossiers/new': typeof AppEspaceDossiersNewRoute
+  '/api/public/formation-image/$': typeof ApiPublicFormationImageSplatRoute
   '/lovable/email/auth/preview': typeof LovableEmailAuthPreviewRoute
   '/lovable/email/auth/webhook': typeof LovableEmailAuthWebhookRoute
   '/_app/espace/dossiers/': typeof AppEspaceDossiersIndexRoute
@@ -295,6 +305,7 @@ export interface FileRouteTypes {
     | '/catalogue/$category/'
     | '/espace/dossiers/$id'
     | '/espace/dossiers/new'
+    | '/api/public/formation-image/$'
     | '/lovable/email/auth/preview'
     | '/lovable/email/auth/webhook'
     | '/espace/dossiers/'
@@ -324,6 +335,7 @@ export interface FileRouteTypes {
     | '/catalogue/$category'
     | '/espace/dossiers/$id'
     | '/espace/dossiers/new'
+    | '/api/public/formation-image/$'
     | '/lovable/email/auth/preview'
     | '/lovable/email/auth/webhook'
     | '/espace/dossiers'
@@ -354,6 +366,7 @@ export interface FileRouteTypes {
     | '/catalogue/$category/'
     | '/_app/espace/dossiers/$id'
     | '/_app/espace/dossiers/new'
+    | '/api/public/formation-image/$'
     | '/lovable/email/auth/preview'
     | '/lovable/email/auth/webhook'
     | '/_app/espace/dossiers/'
@@ -376,6 +389,7 @@ export interface RootRouteChildren {
   CatalogueIndexRoute: typeof CatalogueIndexRoute
   CatalogueCategorySlugRoute: typeof CatalogueCategorySlugRoute
   CatalogueCategoryIndexRoute: typeof CatalogueCategoryIndexRoute
+  ApiPublicFormationImageSplatRoute: typeof ApiPublicFormationImageSplatRoute
   LovableEmailAuthPreviewRoute: typeof LovableEmailAuthPreviewRoute
   LovableEmailAuthWebhookRoute: typeof LovableEmailAuthWebhookRoute
 }
@@ -564,6 +578,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppEspaceDossiersNewRouteImport
       parentRoute: typeof AppRoute
     }
+    '/api/public/formation-image/$': {
+      id: '/api/public/formation-image/$'
+      path: '/api/public/formation-image/$'
+      fullPath: '/api/public/formation-image/$'
+      preLoaderRoute: typeof ApiPublicFormationImageSplatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/lovable/email/auth/preview': {
       id: '/lovable/email/auth/preview'
       path: '/lovable/email/auth/preview'
@@ -626,6 +647,7 @@ const rootRouteChildren: RootRouteChildren = {
   CatalogueIndexRoute: CatalogueIndexRoute,
   CatalogueCategorySlugRoute: CatalogueCategorySlugRoute,
   CatalogueCategoryIndexRoute: CatalogueCategoryIndexRoute,
+  ApiPublicFormationImageSplatRoute: ApiPublicFormationImageSplatRoute,
   LovableEmailAuthPreviewRoute: LovableEmailAuthPreviewRoute,
   LovableEmailAuthWebhookRoute: LovableEmailAuthWebhookRoute,
 }
