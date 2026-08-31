@@ -304,6 +304,8 @@ export type Database = {
       document_envois: {
         Row: {
           apprenant_id: string | null
+          certificat_drive_url: string | null
+          certificat_url: string | null
           code: string
           contenu_html: string | null
           created_at: string
@@ -319,11 +321,17 @@ export type Database = {
           reponse_nom: string | null
           reponse_url: string | null
           sent_at: string | null
+          signature_consentement: boolean
+          signature_date: string | null
+          signature_hash: string | null
+          signature_user_id: string | null
           statut: string
           updated_at: string
         }
         Insert: {
           apprenant_id?: string | null
+          certificat_drive_url?: string | null
+          certificat_url?: string | null
           code: string
           contenu_html?: string | null
           created_at?: string
@@ -339,11 +347,17 @@ export type Database = {
           reponse_nom?: string | null
           reponse_url?: string | null
           sent_at?: string | null
+          signature_consentement?: boolean
+          signature_date?: string | null
+          signature_hash?: string | null
+          signature_user_id?: string | null
           statut?: string
           updated_at?: string
         }
         Update: {
           apprenant_id?: string | null
+          certificat_drive_url?: string | null
+          certificat_url?: string | null
           code?: string
           contenu_html?: string | null
           created_at?: string
@@ -359,6 +373,10 @@ export type Database = {
           reponse_nom?: string | null
           reponse_url?: string | null
           sent_at?: string | null
+          signature_consentement?: boolean
+          signature_date?: string | null
+          signature_hash?: string | null
+          signature_user_id?: string | null
           statut?: string
           updated_at?: string
         }
