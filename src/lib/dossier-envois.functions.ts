@@ -155,6 +155,28 @@ export const archiverReponseApprenant = createServerFn({ method: "POST" })
       [dossier?.entreprise_nom, dossier?.titre_formation].filter(Boolean).join(" - ") ||
       `Dossier ${envoi.dossier_id.slice(0, 8)}`;
 
+    const { sendTemplateEmail } = await import("@/lib/email-templates/send-email");
+    const lienDossier = `https://skills4mation.com/espace/dossiers/${envoi.dossier_id}`;
+
+    if (formateur?.email) {
+      try {
+        await sendTemplateEmail("depot-formateur", formateur.email, {
+          idempotencyKey: `depot-formateur-${envoi.id}`,
+          templateData: {
+            formateurPrenom: formateur.prenom ?? "",
+            apprenantNom: apprenantLabel,
+            documentCode: envoi.code,
+            documentLabel: envoi.label,
+            dossierLabel,
+            fichierNom: envoi.reponse_nom ?? "",
+            lien: lienDossier,
+          },
+        });
+      } catch (mailError) {
+        console.error("[email] dépôt formateur non envoyé", mailError);
+      }
+    }
+
     const ext = (envoi.reponse_nom ?? envoi.reponse_url).split(".").pop() ?? "pdf";
     const baseName = (envoi.nom_archive ?? `${envoi.code}_${apprenantLabel}`).replace(/\.pdf$/i, "");
     const fileName = `${baseName}_SIGNE.${ext}`;
