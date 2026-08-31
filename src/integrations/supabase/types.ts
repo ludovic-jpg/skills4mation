@@ -588,9 +588,10 @@ export type Database = {
           created_at: string
           duree_heures: number | null
           duree_jours: number | null
+          duree_texte: string | null
           format: string
           formateur_bio: string | null
-          formateur_id: string
+          formateur_id: string | null
           formateur_nom: string | null
           id: string
           inscriptions_ouvertes: boolean
@@ -609,6 +610,7 @@ export type Database = {
           public_cible: string | null
           publiee: boolean
           slug: string
+          source: string
           tarif_details: string | null
           tarif_ht: number | null
           tarif_unite: string
@@ -625,9 +627,10 @@ export type Database = {
           created_at?: string
           duree_heures?: number | null
           duree_jours?: number | null
+          duree_texte?: string | null
           format?: string
           formateur_bio?: string | null
-          formateur_id: string
+          formateur_id?: string | null
           formateur_nom?: string | null
           id?: string
           inscriptions_ouvertes?: boolean
@@ -646,6 +649,7 @@ export type Database = {
           public_cible?: string | null
           publiee?: boolean
           slug: string
+          source?: string
           tarif_details?: string | null
           tarif_ht?: number | null
           tarif_unite?: string
@@ -662,9 +666,10 @@ export type Database = {
           created_at?: string
           duree_heures?: number | null
           duree_jours?: number | null
+          duree_texte?: string | null
           format?: string
           formateur_bio?: string | null
-          formateur_id?: string
+          formateur_id?: string | null
           formateur_nom?: string | null
           id?: string
           inscriptions_ouvertes?: boolean
@@ -683,6 +688,7 @@ export type Database = {
           public_cible?: string | null
           publiee?: boolean
           slug?: string
+          source?: string
           tarif_details?: string | null
           tarif_ht?: number | null
           tarif_unite?: string
@@ -699,7 +705,7 @@ export type Database = {
           disponibilites: string | null
           email: string
           financement: string | null
-          formateur_id: string
+          formateur_id: string | null
           formation_id: string
           id: string
           message: string | null
@@ -716,7 +722,7 @@ export type Database = {
           disponibilites?: string | null
           email: string
           financement?: string | null
-          formateur_id: string
+          formateur_id?: string | null
           formation_id: string
           id?: string
           message?: string | null
@@ -733,7 +739,7 @@ export type Database = {
           disponibilites?: string | null
           email?: string
           financement?: string | null
-          formateur_id?: string
+          formateur_id?: string | null
           formation_id?: string
           id?: string
           message?: string | null
