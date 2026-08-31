@@ -14,6 +14,42 @@ export type Database = {
   }
   public: {
     Tables: {
+      ambassadeurs: {
+        Row: {
+          commentaire: string | null
+          created_at: string
+          filleul_email: string
+          filleul_nom: string | null
+          filleul_type: Database["public"]["Enums"]["filleul_type"]
+          id: string
+          parrain_id: string
+          statut: Database["public"]["Enums"]["parrainage_statut"]
+          updated_at: string
+        }
+        Insert: {
+          commentaire?: string | null
+          created_at?: string
+          filleul_email: string
+          filleul_nom?: string | null
+          filleul_type?: Database["public"]["Enums"]["filleul_type"]
+          id?: string
+          parrain_id: string
+          statut?: Database["public"]["Enums"]["parrainage_statut"]
+          updated_at?: string
+        }
+        Update: {
+          commentaire?: string | null
+          created_at?: string
+          filleul_email?: string
+          filleul_nom?: string | null
+          filleul_type?: Database["public"]["Enums"]["filleul_type"]
+          id?: string
+          parrain_id?: string
+          statut?: Database["public"]["Enums"]["parrainage_statut"]
+          updated_at?: string
+        }
+        Relationships: []
+      }
       candidatures: {
         Row: {
           adresse: string | null
@@ -953,6 +989,8 @@ export type Database = {
         | "financement_depose"
         | "complet"
         | "archive"
+      filleul_type: "formateur" | "client"
+      parrainage_statut: "invite" | "inscrit" | "actif"
       piece_statut:
         | "a_generer"
         | "en_attente_tally"
@@ -1113,6 +1151,8 @@ export const Constants = {
         "complet",
         "archive",
       ],
+      filleul_type: ["formateur", "client"],
+      parrainage_statut: ["invite", "inscrit", "actif"],
       piece_statut: [
         "a_generer",
         "en_attente_tally",
