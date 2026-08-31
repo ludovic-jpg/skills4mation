@@ -36,6 +36,7 @@ import { Route as AppEspaceDossiersIndexRouteImport } from './routes/_app.espace
 import { Route as AppEspaceDossiersIdRouteImport } from './routes/_app.espace.dossiers.$id'
 import { Route as AppEspaceDossiersNewRouteImport } from './routes/_app.espace.dossiers.new'
 import { Route as AppEspaceFormationsIndexRouteImport } from './routes/_app.espace.formations.index'
+import { Route as AppEspaceFormationsNewRouteImport } from './routes/_app.espace.formations.new'
 import { Route as ApiPublicFormationImageSplatRouteImport } from './routes/api/public/formation-image.$'
 import { Route as LovableEmailAuthPreviewRouteImport } from './routes/lovable/email/auth/preview'
 import { Route as LovableEmailAuthWebhookRouteImport } from './routes/lovable/email/auth/webhook'
@@ -176,6 +177,11 @@ const AppEspaceFormationsIndexRoute =
     path: '/espace/formations/',
     getParentRoute: () => AppRoute,
   } as any)
+const AppEspaceFormationsNewRoute = AppEspaceFormationsNewRouteImport.update({
+  id: '/espace/formations/new',
+  path: '/espace/formations/new',
+  getParentRoute: () => AppRoute,
+} as any)
 const ApiPublicFormationImageSplatRoute =
   ApiPublicFormationImageSplatRouteImport.update({
     id: '/api/public/formation-image/$',
@@ -218,6 +224,7 @@ export interface FileRoutesByFullPath {
   '/catalogue/$category/': typeof CatalogueCategoryIndexRoute
   '/espace/dossiers/$id': typeof AppEspaceDossiersIdRoute
   '/espace/dossiers/new': typeof AppEspaceDossiersNewRoute
+  '/espace/formations/new': typeof AppEspaceFormationsNewRoute
   '/api/public/formation-image/$': typeof ApiPublicFormationImageSplatRoute
   '/lovable/email/auth/preview': typeof LovableEmailAuthPreviewRoute
   '/lovable/email/auth/webhook': typeof LovableEmailAuthWebhookRoute
@@ -249,6 +256,7 @@ export interface FileRoutesByTo {
   '/catalogue/$category': typeof CatalogueCategoryIndexRoute
   '/espace/dossiers/$id': typeof AppEspaceDossiersIdRoute
   '/espace/dossiers/new': typeof AppEspaceDossiersNewRoute
+  '/espace/formations/new': typeof AppEspaceFormationsNewRoute
   '/api/public/formation-image/$': typeof ApiPublicFormationImageSplatRoute
   '/lovable/email/auth/preview': typeof LovableEmailAuthPreviewRoute
   '/lovable/email/auth/webhook': typeof LovableEmailAuthWebhookRoute
@@ -282,6 +290,7 @@ export interface FileRoutesById {
   '/catalogue/$category/': typeof CatalogueCategoryIndexRoute
   '/_app/espace/dossiers/$id': typeof AppEspaceDossiersIdRoute
   '/_app/espace/dossiers/new': typeof AppEspaceDossiersNewRoute
+  '/_app/espace/formations/new': typeof AppEspaceFormationsNewRoute
   '/api/public/formation-image/$': typeof ApiPublicFormationImageSplatRoute
   '/lovable/email/auth/preview': typeof LovableEmailAuthPreviewRoute
   '/lovable/email/auth/webhook': typeof LovableEmailAuthWebhookRoute
@@ -315,6 +324,7 @@ export interface FileRouteTypes {
     | '/catalogue/$category/'
     | '/espace/dossiers/$id'
     | '/espace/dossiers/new'
+    | '/espace/formations/new'
     | '/api/public/formation-image/$'
     | '/lovable/email/auth/preview'
     | '/lovable/email/auth/webhook'
@@ -346,6 +356,7 @@ export interface FileRouteTypes {
     | '/catalogue/$category'
     | '/espace/dossiers/$id'
     | '/espace/dossiers/new'
+    | '/espace/formations/new'
     | '/api/public/formation-image/$'
     | '/lovable/email/auth/preview'
     | '/lovable/email/auth/webhook'
@@ -378,6 +389,7 @@ export interface FileRouteTypes {
     | '/catalogue/$category/'
     | '/_app/espace/dossiers/$id'
     | '/_app/espace/dossiers/new'
+    | '/_app/espace/formations/new'
     | '/api/public/formation-image/$'
     | '/lovable/email/auth/preview'
     | '/lovable/email/auth/webhook'
@@ -598,6 +610,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppEspaceFormationsIndexRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/espace/formations/new': {
+      id: '/_app/espace/formations/new'
+      path: '/espace/formations/new'
+      fullPath: '/espace/formations/new'
+      preLoaderRoute: typeof AppEspaceFormationsNewRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/api/public/formation-image/$': {
       id: '/api/public/formation-image/$'
       path: '/api/public/formation-image/$'
@@ -632,6 +651,7 @@ interface AppRouteChildren {
   AppEspaceIndexRoute: typeof AppEspaceIndexRoute
   AppEspaceDossiersIdRoute: typeof AppEspaceDossiersIdRoute
   AppEspaceDossiersNewRoute: typeof AppEspaceDossiersNewRoute
+  AppEspaceFormationsNewRoute: typeof AppEspaceFormationsNewRoute
   AppEspaceDossiersIndexRoute: typeof AppEspaceDossiersIndexRoute
   AppEspaceFormationsIndexRoute: typeof AppEspaceFormationsIndexRoute
 }
@@ -646,6 +666,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppEspaceIndexRoute: AppEspaceIndexRoute,
   AppEspaceDossiersIdRoute: AppEspaceDossiersIdRoute,
   AppEspaceDossiersNewRoute: AppEspaceDossiersNewRoute,
+  AppEspaceFormationsNewRoute: AppEspaceFormationsNewRoute,
   AppEspaceDossiersIndexRoute: AppEspaceDossiersIndexRoute,
   AppEspaceFormationsIndexRoute: AppEspaceFormationsIndexRoute,
 }
