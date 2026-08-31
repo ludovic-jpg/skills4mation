@@ -31,10 +31,13 @@ function NouveauDossier() {
           nom: profile?.nom ?? "",
           email: profile?.email ?? "",
           telephone: profile?.telephone ?? "",
+          entreprise: profile?.entreprise ?? "",
           siret: profile?.siret ?? "",
-          adresse: profile?.adresse ?? "",
+          adresse: profile?.entreprise_adresse ?? profile?.adresse ?? "",
           nda: profile?.numero_nda ?? "",
+          ndaRegion: profile?.nda_region ?? "",
         },
+
       };
       const { data, error: insertError } = await supabase
         .from("dossiers")
