@@ -169,23 +169,47 @@ function EspaceApprenant() {
                       </Button>
                     ) : null}
                   </div>
-                  <div className="grid gap-2 sm:max-w-md">
-                    <Label>Déposer votre document rempli et signé</Label>
-                    <Input
-                      type="file"
-                      accept=".pdf,.png,.jpg,.jpeg"
-                      disabled={busy === doc.id || depot.isPending}
-                      onChange={(event) => {
-                        const file = event.target.files?.[0];
-                        if (!file) return;
-                        setBusy(doc.id);
-                        depot.mutate({ envoiId: doc.id, file });
-                      }}
-                    />
-                    <p className="text-xs text-muted-foreground">
-                      <Send className="mr-1 inline size-3" />
-                      Le dépôt vaut transmission : votre formateur est notifié automatiquement.
-                    </p>
+                  <div className="grid gap-3 sm:max-w-xl">
+                    <label className="flex items-start gap-3 rounded-xl border border-border/70 bg-muted/40 p-3 text-sm">
+                      <Checkbox
+                        checked={consentements[doc.id] ?? false}
+                        onCheckedChange={(checked) =>
+                          setConsentements((prev) => ({ ...prev, [doc.id]: checked === true }))
+                        }
+                        className="mt-0.5"
+                      />
+                      <span>
+                        Je certifie avoir pris connaissance de ce document et j'y appose ma signature
+                        électronique.
+                      </span>
+                    </label>
+                    <div className="grid gap-2">
+                      <Label>Déposer votre document rempli et signé</Label>
+                      <Input
+                        type="file"
+                        accept=".pdf,.png,.jpg,.jpeg"
+                        disabled={busy === doc.id || depot.isPending || !consentements[doc.id]}
+                        onChange={(event) => {
+                          const file = event.target.files?.[0];
+                          if (!file) return;
+                          if (!consentements[doc.id]) {
+                            toast.error("Cochez la mention de signature électronique avant le dépôt.");
+                            return;
+                          }
+                          setBusy(doc.id);
+                          depot.mutate({ envoiId: doc.id, file });
+                        }}
+                      />
+                      <p className="text-xs text-muted-foreground">
+                        <ShieldCheck className="mr-1 inline size-3" />
+                        Date, heure et empreinte SHA-256 de votre fichier sont horodatées, puis un
+                        certificat de signature est archivé avec le document.
+                      </p>
+                      <p className="text-xs text-muted-foreground">
+                        <Send className="mr-1 inline size-3" />
+                        Le dépôt vaut transmission : votre formateur est notifié automatiquement.
+                      </p>
+                    </div>
                   </div>
                 </CardContent>
               </Card>
