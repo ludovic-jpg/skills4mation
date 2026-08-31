@@ -1,5 +1,8 @@
 import type { ComponentType } from 'react'
 
+import { template as signatureFormateurTemplate } from './signature-formateur'
+import { template as depotFormateurTemplate } from './depot-formateur'
+
 export interface TemplateEntry {
   component: ComponentType<any>
   subject: string | ((data: Record<string, any>) => string)
