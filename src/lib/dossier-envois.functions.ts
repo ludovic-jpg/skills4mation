@@ -44,8 +44,9 @@ export const envoyerDocumentApprenant = createServerFn({ method: "POST" })
     );
     const fileName = `${data.code}_${base}.pdf`;
 
-    const { htmlToPdf, uploadToFolder, ensureDossierTree, folderUrl } = await import("@/lib/drive.server");
-    const pdf = await htmlToPdf(data.contenuHtml, fileName);
+    const { uploadToFolder, ensureDossierTree, folderUrl } = await import("@/lib/drive.server");
+    const { htmlToPdfAvecRepli } = await import("@/lib/pdf-repli.server");
+    const pdf = await htmlToPdfAvecRepli(data.contenuHtml, fileName);
 
     const dossierLabel =
       dossier.dossier_nom ||
