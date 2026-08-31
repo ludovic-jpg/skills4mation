@@ -524,6 +524,7 @@ export type Database = {
           nom: string
           numero_nda: string | null
           parcours_formation: string | null
+          parcours_formation_url: string | null
           photo_url: string | null
           prenom: string
           siret: string | null
@@ -546,6 +547,7 @@ export type Database = {
           nom?: string
           numero_nda?: string | null
           parcours_formation?: string | null
+          parcours_formation_url?: string | null
           photo_url?: string | null
           prenom?: string
           siret?: string | null
@@ -568,6 +570,7 @@ export type Database = {
           nom?: string
           numero_nda?: string | null
           parcours_formation?: string | null
+          parcours_formation_url?: string | null
           photo_url?: string | null
           prenom?: string
           siret?: string | null
