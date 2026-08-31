@@ -155,6 +155,10 @@ function DossierDetail() {
 
   const statut = (dossier?.statut_crm ?? "brouillon") as CrmStatut;
   const donnees = mergeDonnees(dossier?.donnees);
+  const emargementsPrets = (pieces ?? []).some(
+    (p) => p.code === "F3" && (p.statut === "complete" || Boolean(p.fichier_url)),
+  );
+
 
   return (
     <AppShell
