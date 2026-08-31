@@ -217,6 +217,12 @@ function DossierDetail() {
             ) : null}
           </TabsContent>
 
+          <TabsContent value="signatures">
+            <EnvoisPanel dossierId={id} donnees={donnees} />
+          </TabsContent>
+
+
+
           <TabsContent value="pieces">
             {user ? (
               <PiecesPanel dossierId={id} formateurId={user.id} donnees={donnees} />
