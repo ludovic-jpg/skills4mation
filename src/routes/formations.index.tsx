@@ -106,7 +106,7 @@ function CataloguePublic() {
   }, [formations, categorie, q]);
 
   const setCat = (value: string | undefined) =>
-    navigate({ search: { categorie: value }, resetScroll: false });
+    navigate({ search: value ? { categorie: value } : ({} as { categorie?: string }), resetScroll: false });
 
   return (
     <PublicLayout>
