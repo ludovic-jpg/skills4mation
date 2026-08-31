@@ -45,10 +45,10 @@ function shell(title: string, body: string, orientation: "portrait" | "landscape
 <style>
   @page { size: A4 ${orientation}; margin: 12mm 14mm; }
   * { box-sizing: border-box; }
-  body { font-family: "Helvetica Neue", Arial, sans-serif; color: #0f172a; margin: 0; padding: 24px; background: #f1f5f9; font-size: 12px; line-height: 1.5; }
+  body { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; color: #0f172a; margin: 0; padding: 24px; background: #f1f5f9; font-size: 12px; line-height: 1.5; }
   .sheet { background: #fff; max-width: ${orientation === "landscape" ? "1120px" : "820px"}; margin: 0 auto; padding: 32px 36px; box-shadow: 0 8px 24px rgba(15,23,42,.08); }
   h1 { font-size: 19px; margin: 0 0 4px; letter-spacing: -.01em; }
-  h2 { font-size: 13px; text-transform: uppercase; letter-spacing: .06em; margin: 22px 0 8px; padding-bottom: 4px; border-bottom: 1px solid #cbd5e1; color: #14532d; }
+  h2 { font-size: 13px; text-transform: uppercase; letter-spacing: .06em; margin: 22px 0 8px; padding-bottom: 4px; border-bottom: 1px solid #cbd5e1; color: #1e3a8a; }
   .head { border-bottom: 2px solid #0f172a; padding-bottom: 12px; margin-bottom: 8px; }
   .muted { color: #64748b; }
   .vide { color: #94a3b8; }
@@ -60,8 +60,8 @@ function shell(title: string, body: string, orientation: "portrait" | "landscape
   th { background: #f8fafc; text-transform: uppercase; font-size: 10px; letter-spacing: .04em; color: #334155; }
   .sign { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 28px; }
   .sign div { border: 1px solid #cbd5e1; height: 108px; padding: 8px; }
-  .badge { display: inline-block; border: 1px solid #14532d; color: #14532d; border-radius: 999px; padding: 2px 10px; font-size: 10px; }
-  .note { background: #f8fafc; border-left: 3px solid #14532d; padding: 8px 12px; margin-top: 10px; }
+  .badge { display: inline-block; border: 1px solid #1e3a8a; color: #1e3a8a; border-radius: 999px; padding: 2px 10px; font-size: 10px; }
+  .note { background: #f8fafc; border-left: 3px solid #1e3a8a; padding: 8px 12px; margin-top: 10px; }
   tr, .avoid { page-break-inside: avoid; }
   @media print {
     body { background: #fff; padding: 0; font-size: 10.5px; }
