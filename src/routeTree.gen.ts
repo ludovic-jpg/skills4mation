@@ -45,6 +45,7 @@ import { Route as AppEspaceFormationsNewRouteImport } from './routes/_app.espace
 import { Route as ApiPublicFormationImageSplatRouteImport } from './routes/api/public/formation-image.$'
 import { Route as LovableEmailAuthPreviewRouteImport } from './routes/lovable/email/auth/preview'
 import { Route as LovableEmailAuthWebhookRouteImport } from './routes/lovable/email/auth/webhook'
+import { Route as LovableEmailTransactionalPreviewRouteImport } from './routes/lovable/email/transactional/preview'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -228,6 +229,12 @@ const LovableEmailAuthWebhookRoute = LovableEmailAuthWebhookRouteImport.update({
   path: '/lovable/email/auth/webhook',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LovableEmailTransactionalPreviewRoute =
+  LovableEmailTransactionalPreviewRouteImport.update({
+    id: '/lovable/email/transactional/preview',
+    path: '/lovable/email/transactional/preview',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -263,6 +270,7 @@ export interface FileRoutesByFullPath {
   '/api/public/formation-image/$': typeof ApiPublicFormationImageSplatRoute
   '/lovable/email/auth/preview': typeof LovableEmailAuthPreviewRoute
   '/lovable/email/auth/webhook': typeof LovableEmailAuthWebhookRoute
+  '/lovable/email/transactional/preview': typeof LovableEmailTransactionalPreviewRoute
   '/espace/dossiers/': typeof AppEspaceDossiersIndexRoute
   '/espace/formations/': typeof AppEspaceFormationsIndexRoute
 }
@@ -300,6 +308,7 @@ export interface FileRoutesByTo {
   '/api/public/formation-image/$': typeof ApiPublicFormationImageSplatRoute
   '/lovable/email/auth/preview': typeof LovableEmailAuthPreviewRoute
   '/lovable/email/auth/webhook': typeof LovableEmailAuthWebhookRoute
+  '/lovable/email/transactional/preview': typeof LovableEmailTransactionalPreviewRoute
   '/espace/dossiers': typeof AppEspaceDossiersIndexRoute
   '/espace/formations': typeof AppEspaceFormationsIndexRoute
 }
@@ -339,6 +348,7 @@ export interface FileRoutesById {
   '/api/public/formation-image/$': typeof ApiPublicFormationImageSplatRoute
   '/lovable/email/auth/preview': typeof LovableEmailAuthPreviewRoute
   '/lovable/email/auth/webhook': typeof LovableEmailAuthWebhookRoute
+  '/lovable/email/transactional/preview': typeof LovableEmailTransactionalPreviewRoute
   '/_app/espace/dossiers/': typeof AppEspaceDossiersIndexRoute
   '/_app/espace/formations/': typeof AppEspaceFormationsIndexRoute
 }
@@ -378,6 +388,7 @@ export interface FileRouteTypes {
     | '/api/public/formation-image/$'
     | '/lovable/email/auth/preview'
     | '/lovable/email/auth/webhook'
+    | '/lovable/email/transactional/preview'
     | '/espace/dossiers/'
     | '/espace/formations/'
   fileRoutesByTo: FileRoutesByTo
@@ -415,6 +426,7 @@ export interface FileRouteTypes {
     | '/api/public/formation-image/$'
     | '/lovable/email/auth/preview'
     | '/lovable/email/auth/webhook'
+    | '/lovable/email/transactional/preview'
     | '/espace/dossiers'
     | '/espace/formations'
   id:
@@ -453,6 +465,7 @@ export interface FileRouteTypes {
     | '/api/public/formation-image/$'
     | '/lovable/email/auth/preview'
     | '/lovable/email/auth/webhook'
+    | '/lovable/email/transactional/preview'
     | '/_app/espace/dossiers/'
     | '/_app/espace/formations/'
   fileRoutesById: FileRoutesById
@@ -479,6 +492,7 @@ export interface RootRouteChildren {
   ApiPublicFormationImageSplatRoute: typeof ApiPublicFormationImageSplatRoute
   LovableEmailAuthPreviewRoute: typeof LovableEmailAuthPreviewRoute
   LovableEmailAuthWebhookRoute: typeof LovableEmailAuthWebhookRoute
+  LovableEmailTransactionalPreviewRoute: typeof LovableEmailTransactionalPreviewRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -735,6 +749,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LovableEmailAuthWebhookRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/lovable/email/transactional/preview': {
+      id: '/lovable/email/transactional/preview'
+      path: '/lovable/email/transactional/preview'
+      fullPath: '/lovable/email/transactional/preview'
+      preLoaderRoute: typeof LovableEmailTransactionalPreviewRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -798,6 +819,7 @@ const rootRouteChildren: RootRouteChildren = {
   ApiPublicFormationImageSplatRoute: ApiPublicFormationImageSplatRoute,
   LovableEmailAuthPreviewRoute: LovableEmailAuthPreviewRoute,
   LovableEmailAuthWebhookRoute: LovableEmailAuthWebhookRoute,
+  LovableEmailTransactionalPreviewRoute: LovableEmailTransactionalPreviewRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
