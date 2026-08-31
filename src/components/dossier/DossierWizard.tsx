@@ -17,11 +17,14 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { aDuPresentiel, estCpf, type DossierDonnees } from "@/lib/dossier/types";
+import { appliquerFormation, type FormationCatalogue } from "@/lib/formations";
 
 type Props = {
   value: DossierDonnees;
   saving?: boolean;
   onSave: (donnees: DossierDonnees) => void;
+  /** Formations préenregistrées par le formateur, réutilisables en un clic. */
+  modeles?: FormationCatalogue[];
 };
 
 const ETAPES = [
@@ -79,7 +82,7 @@ function validateStep(step: number, d: DossierDonnees): Errs {
   return err;
 }
 
-export function DossierWizard({ value, saving, onSave }: Props) {
+export function DossierWizard({ value, saving, onSave, modeles = [] }: Props) {
   const [step, setStep] = useState(0);
   const [d, setD] = useState<DossierDonnees>(value);
   const [showBlocking, setShowBlocking] = useState(false);
@@ -182,6 +185,33 @@ export function DossierWizard({ value, saving, onSave }: Props) {
         <div className="mt-6 grid gap-4">
           {step === 0 ? (
             <div className="grid gap-4 sm:grid-cols-2">
+              {modeles.length ? (
+                <div className="grid gap-2 rounded-xl border border-secondary/40 bg-secondary/5 p-4 sm:col-span-2">
+                  <Label>Reprendre une de mes formations préenregistrées</Label>
+                  <Select
+                    value=""
+                    onValueChange={(id) => {
+                      const modele = modeles.find((m) => m.id === id);
+                      if (modele) setD((prev) => appliquerFormation(modele, prev));
+                    }}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Choisir une formation…" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {modeles.map((m) => (
+                        <SelectItem key={m.id} value={m.id}>
+                          {m.titre}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <p className="text-xs text-muted-foreground">
+                    Titre, objectifs, durée, modalités, tarifs et visuel sont préremplis
+                    automatiquement.
+                  </p>
+                </div>
+              ) : null}
               <Field label="Numéro ADF" value={d.adf} onChange={(v) => setD({ ...d, adf: v })} />
               <Field
                 label="Organisme de formation"

@@ -23,6 +23,7 @@ import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as BlogIndexRouteImport } from './routes/blog.index'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 import { Route as CatalogueIndexRouteImport } from './routes/catalogue.index'
+import { Route as FormationsIndexRouteImport } from './routes/formations.index'
 import { Route as FormationsSlugRouteImport } from './routes/formations.$slug'
 import { Route as AppAdminIndexRouteImport } from './routes/_app.admin.index'
 import { Route as AppAdminDemandesRouteImport } from './routes/_app.admin.demandes'
@@ -111,6 +112,11 @@ const BlogSlugRoute = BlogSlugRouteImport.update({
 const CatalogueIndexRoute = CatalogueIndexRouteImport.update({
   id: '/catalogue/',
   path: '/catalogue/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FormationsIndexRoute = FormationsIndexRouteImport.update({
+  id: '/formations/',
+  path: '/formations/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const FormationsSlugRoute = FormationsSlugRouteImport.update({
@@ -226,6 +232,7 @@ export interface FileRoutesByFullPath {
   '/formations/$slug': typeof FormationsSlugRoute
   '/blog/': typeof BlogIndexRoute
   '/catalogue/': typeof CatalogueIndexRoute
+  '/formations/': typeof FormationsIndexRoute
   '/admin/demandes': typeof AppAdminDemandesRoute
   '/admin/dossiers': typeof AppAdminDossiersRoute
   '/espace/candidature': typeof AppEspaceCandidatureRoute
@@ -260,6 +267,7 @@ export interface FileRoutesByTo {
   '/formations/$slug': typeof FormationsSlugRoute
   '/blog': typeof BlogIndexRoute
   '/catalogue': typeof CatalogueIndexRoute
+  '/formations': typeof FormationsIndexRoute
   '/admin/demandes': typeof AppAdminDemandesRoute
   '/admin/dossiers': typeof AppAdminDossiersRoute
   '/espace/candidature': typeof AppEspaceCandidatureRoute
@@ -296,6 +304,7 @@ export interface FileRoutesById {
   '/formations/$slug': typeof FormationsSlugRoute
   '/blog/': typeof BlogIndexRoute
   '/catalogue/': typeof CatalogueIndexRoute
+  '/formations/': typeof FormationsIndexRoute
   '/_app/admin/demandes': typeof AppAdminDemandesRoute
   '/_app/admin/dossiers': typeof AppAdminDossiersRoute
   '/_app/espace/candidature': typeof AppEspaceCandidatureRoute
@@ -332,6 +341,7 @@ export interface FileRouteTypes {
     | '/formations/$slug'
     | '/blog/'
     | '/catalogue/'
+    | '/formations/'
     | '/admin/demandes'
     | '/admin/dossiers'
     | '/espace/candidature'
@@ -366,6 +376,7 @@ export interface FileRouteTypes {
     | '/formations/$slug'
     | '/blog'
     | '/catalogue'
+    | '/formations'
     | '/admin/demandes'
     | '/admin/dossiers'
     | '/espace/candidature'
@@ -401,6 +412,7 @@ export interface FileRouteTypes {
     | '/formations/$slug'
     | '/blog/'
     | '/catalogue/'
+    | '/formations/'
     | '/_app/admin/demandes'
     | '/_app/admin/dossiers'
     | '/_app/espace/candidature'
@@ -437,6 +449,7 @@ export interface RootRouteChildren {
   FormationsSlugRoute: typeof FormationsSlugRoute
   BlogIndexRoute: typeof BlogIndexRoute
   CatalogueIndexRoute: typeof CatalogueIndexRoute
+  FormationsIndexRoute: typeof FormationsIndexRoute
   CatalogueCategorySlugRoute: typeof CatalogueCategorySlugRoute
   CatalogueCategoryIndexRoute: typeof CatalogueCategoryIndexRoute
   ApiPublicFormationImageSplatRoute: typeof ApiPublicFormationImageSplatRoute
@@ -542,6 +555,13 @@ declare module '@tanstack/react-router' {
       path: '/catalogue'
       fullPath: '/catalogue/'
       preLoaderRoute: typeof CatalogueIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/formations/': {
+      id: '/formations/'
+      path: '/formations'
+      fullPath: '/formations/'
+      preLoaderRoute: typeof FormationsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/formations/$slug': {
@@ -730,6 +750,7 @@ const rootRouteChildren: RootRouteChildren = {
   FormationsSlugRoute: FormationsSlugRoute,
   BlogIndexRoute: BlogIndexRoute,
   CatalogueIndexRoute: CatalogueIndexRoute,
+  FormationsIndexRoute: FormationsIndexRoute,
   CatalogueCategorySlugRoute: CatalogueCategorySlugRoute,
   CatalogueCategoryIndexRoute: CatalogueCategoryIndexRoute,
   ApiPublicFormationImageSplatRoute: ApiPublicFormationImageSplatRoute,
