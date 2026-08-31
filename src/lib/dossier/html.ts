@@ -71,7 +71,9 @@ function shell(title: string, body: string, orientation: "portrait" | "landscape
 }
 
 function entete(d: DossierDonnees, titre: string, sousTitre?: string) {
+  const visuel = String(d.formation.visuelUrl ?? "").trim();
   return `<div class="head">
+    ${visuel ? `<img src="${e(visuel)}" alt="" style="max-height:56px;float:right;margin-left:16px;border-radius:6px" />` : ""}
     <div class="muted" style="font-size:11px">${v(d.organisme)} — Organisme de formation certifié Qualiopi${d.formateur.nda ? ` · NDA ${e(d.formateur.nda)}` : ""}</div>
     <h1>${e(titre)}</h1>
     <div class="muted">${sousTitre ? e(sousTitre) : ""}${d.adf ? ` · Dossier ADF ${e(d.adf)}` : ""}</div>
