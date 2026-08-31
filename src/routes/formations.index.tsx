@@ -7,7 +7,7 @@ import { categoryLabel } from "@/data/catalogue";
 import { supabase } from "@/integrations/supabase/client";
 import { dureeLabel, tarifLabel, visuelUrl, type FormationCatalogue } from "@/lib/formations";
 
-const BASE = "https://train-grow-connect.lovable.app";
+const BASE = "https://skills4mation.com";
 const DESC =
   "Les formations proposées par les formateurs indépendants du réseau Skills4mation : tarifs, programme et inscription directe auprès du formateur de votre choix.";
 

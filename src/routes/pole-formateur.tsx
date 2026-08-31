@@ -30,9 +30,9 @@ export const Route = createFileRoute("/pole-formateur")({
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { property: "og:url", content: "https://train-grow-connect.lovable.app/pole-formateur" },
+      { property: "og:url", content: "https://skills4mation.com/pole-formateur" },
     ],
-    links: [{ rel: "canonical", href: "https://train-grow-connect.lovable.app/pole-formateur" }],
+    links: [{ rel: "canonical", href: "https://skills4mation.com/pole-formateur" }],
   }),
   component: PoleFormateur,
 });

@@ -25,9 +25,9 @@ export const Route = createFileRoute("/catalogue/")({
         property: "og:description",
         content: "Plus de 65 parcours de formation professionnelle animés par nos formateurs experts.",
       },
-      { property: "og:url", content: "https://train-grow-connect.lovable.app/catalogue" },
+      { property: "og:url", content: "https://skills4mation.com/catalogue" },
     ],
-    links: [{ rel: "canonical", href: "https://train-grow-connect.lovable.app/catalogue" }],
+    links: [{ rel: "canonical", href: "https://skills4mation.com/catalogue" }],
   }),
   component: CatalogueIndex,
 });

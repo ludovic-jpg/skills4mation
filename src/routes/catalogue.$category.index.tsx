@@ -15,7 +15,7 @@ export const Route = createFileRoute("/catalogue/$category/")({
     const label = categoryLabel(params.category);
     const title = `Formations ${label} — Skills4mation`;
     const description = `Toutes nos formations professionnelles ${label} : objectifs pédagogiques, programme, durée et modalités de financement.`;
-    const url = `https://train-grow-connect.lovable.app/catalogue/${params.category}`;
+    const url = `https://skills4mation.com/catalogue/${params.category}`;
     return {
       meta: [
         { title },

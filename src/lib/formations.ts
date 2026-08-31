@@ -78,7 +78,7 @@ export function tarifLabel(f: Pick<FormationCatalogue, "tarif_ht" | "tarif_unite
 }
 
 export function lienPublic(slug: string, origin?: string) {
-  const base = origin ?? "https://train-grow-connect.lovable.app";
+  const base = origin ?? "https://skills4mation.com";
   return `${base}/formations/${slug}`;
 }
 

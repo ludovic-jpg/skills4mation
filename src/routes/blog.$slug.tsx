@@ -7,7 +7,7 @@ import { PublicLayout } from "@/components/site/PublicLayout";
 import { Button } from "@/components/ui/button";
 import { blogPosts, getPost } from "@/data/blog";
 
-const BASE = "https://train-grow-connect.lovable.app";
+const BASE = "https://skills4mation.com";
 
 export const Route = createFileRoute("/blog/$slug")({
   loader: ({ params }) => {

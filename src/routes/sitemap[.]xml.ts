@@ -3,7 +3,7 @@ import type {} from "@tanstack/react-start";
 import { blogPosts } from "@/data/blog";
 import { CATEGORIES, FORMATIONS } from "@/data/catalogue";
 
-const BASE_URL = "https://train-grow-connect.lovable.app";
+const BASE_URL = "https://skills4mation.com";
 
 interface SitemapEntry {
   path: string;

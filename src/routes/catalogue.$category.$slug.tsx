@@ -22,7 +22,7 @@ export const Route = createFileRoute("/catalogue/$category/$slug")({
     }
     const f = loaderData.formation;
     const description = f.intro.slice(0, 155) || `Programme de la formation ${f.title}.`;
-    const base = "https://train-grow-connect.lovable.app";
+    const base = "https://skills4mation.com";
     const url = `${base}/catalogue/${f.category}/${f.slug}`;
     return {
       meta: [

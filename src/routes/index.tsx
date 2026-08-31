@@ -38,10 +38,10 @@ export const Route = createFileRoute("/")({
       { property: "og:title", content: TITRE },
       { property: "og:description", content: DESCRIPTION },
       { property: "og:type", content: "website" },
-      { property: "og:url", content: "https://train-grow-connect.lovable.app/" },
+      { property: "og:url", content: "https://skills4mation.com/" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
-    links: [{ rel: "canonical", href: "https://train-grow-connect.lovable.app/" }],
+    links: [{ rel: "canonical", href: "https://skills4mation.com/" }],
   }),
   component: Accueil,
 });

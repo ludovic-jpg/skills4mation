@@ -28,9 +28,9 @@ export const Route = createFileRoute("/contact")({
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { property: "og:url", content: "https://train-grow-connect.lovable.app/contact" },
+      { property: "og:url", content: "https://skills4mation.com/contact" },
     ],
-    links: [{ rel: "canonical", href: "https://train-grow-connect.lovable.app/contact" }],
+    links: [{ rel: "canonical", href: "https://skills4mation.com/contact" }],
   }),
   component: Contact,
 });

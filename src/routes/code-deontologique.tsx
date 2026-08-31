@@ -24,10 +24,10 @@ export const Route = createFileRoute("/code-deontologique")({
       },
       { property: "og:type", content: "article" },
       { name: "twitter:card", content: "summary_large_image" },
-      { property: "og:url", content: "https://train-grow-connect.lovable.app/code-deontologique" },
+      { property: "og:url", content: "https://skills4mation.com/code-deontologique" },
     ],
     links: [
-      { rel: "canonical", href: "https://train-grow-connect.lovable.app/code-deontologique" },
+      { rel: "canonical", href: "https://skills4mation.com/code-deontologique" },
     ],
   }),
   component: CodeDeontologique,

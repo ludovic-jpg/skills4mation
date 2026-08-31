@@ -16,4 +16,4 @@ Disallow: /auth
 Disallow: /espace
 Disallow: /admin
 
-Sitemap: https://train-grow-connect.lovable.app/sitemap.xml
+Sitemap: https://skills4mation.com/sitemap.xml
