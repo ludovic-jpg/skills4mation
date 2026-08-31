@@ -42,6 +42,8 @@ export function slugify(value: string) {
 /** Adresse publique et stable d'un visuel stocké dans l'espace « formations ». */
 export function visuelUrl(path?: string | null) {
   if (!path) return null;
+  // Les formations historiques du réseau référencent directement une image distante.
+  if (/^https?:\/\//i.test(path)) return path;
   return `/api/public/formation-image/${path
     .split("/")
     .map((part) => encodeURIComponent(part))
