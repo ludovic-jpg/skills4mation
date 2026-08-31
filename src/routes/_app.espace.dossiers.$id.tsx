@@ -176,6 +176,8 @@ function DossierDetail() {
 
           <TabsContent value="variables">
             <DossierWizard
+              key={id}
+
               value={donnees}
               saving={saveDonnees.isPending}
               onSave={(next) => saveDonnees.mutate(next)}
