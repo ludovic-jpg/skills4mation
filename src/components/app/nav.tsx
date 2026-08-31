@@ -1,5 +1,6 @@
 import {
   FilePlus2,
+  GraduationCap,
   FolderKanban,
   Folders,
   Inbox,
