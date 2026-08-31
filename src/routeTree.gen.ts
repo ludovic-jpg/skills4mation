@@ -23,6 +23,7 @@ import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as BlogIndexRouteImport } from './routes/blog.index'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 import { Route as CatalogueIndexRouteImport } from './routes/catalogue.index'
+import { Route as FormationsSlugRouteImport } from './routes/formations.$slug'
 import { Route as AppAdminIndexRouteImport } from './routes/_app.admin.index'
 import { Route as AppAdminDemandesRouteImport } from './routes/_app.admin.demandes'
 import { Route as AppAdminDossiersRouteImport } from './routes/_app.admin.dossiers'
@@ -110,6 +111,11 @@ const BlogSlugRoute = BlogSlugRouteImport.update({
 const CatalogueIndexRoute = CatalogueIndexRouteImport.update({
   id: '/catalogue/',
   path: '/catalogue/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FormationsSlugRoute = FormationsSlugRouteImport.update({
+  id: '/formations/$slug',
+  path: '/formations/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AppAdminIndexRoute = AppAdminIndexRouteImport.update({
@@ -217,6 +223,7 @@ export interface FileRoutesByFullPath {
   '/portage-qualiopi': typeof PortageQualiopiRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/blog/$slug': typeof BlogSlugRoute
+  '/formations/$slug': typeof FormationsSlugRoute
   '/blog/': typeof BlogIndexRoute
   '/catalogue/': typeof CatalogueIndexRoute
   '/admin/demandes': typeof AppAdminDemandesRoute
@@ -250,6 +257,7 @@ export interface FileRoutesByTo {
   '/portage-qualiopi': typeof PortageQualiopiRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/blog/$slug': typeof BlogSlugRoute
+  '/formations/$slug': typeof FormationsSlugRoute
   '/blog': typeof BlogIndexRoute
   '/catalogue': typeof CatalogueIndexRoute
   '/admin/demandes': typeof AppAdminDemandesRoute
@@ -285,6 +293,7 @@ export interface FileRoutesById {
   '/portage-qualiopi': typeof PortageQualiopiRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/blog/$slug': typeof BlogSlugRoute
+  '/formations/$slug': typeof FormationsSlugRoute
   '/blog/': typeof BlogIndexRoute
   '/catalogue/': typeof CatalogueIndexRoute
   '/_app/admin/demandes': typeof AppAdminDemandesRoute
@@ -320,6 +329,7 @@ export interface FileRouteTypes {
     | '/portage-qualiopi'
     | '/sitemap.xml'
     | '/blog/$slug'
+    | '/formations/$slug'
     | '/blog/'
     | '/catalogue/'
     | '/admin/demandes'
@@ -353,6 +363,7 @@ export interface FileRouteTypes {
     | '/portage-qualiopi'
     | '/sitemap.xml'
     | '/blog/$slug'
+    | '/formations/$slug'
     | '/blog'
     | '/catalogue'
     | '/admin/demandes'
@@ -387,6 +398,7 @@ export interface FileRouteTypes {
     | '/portage-qualiopi'
     | '/sitemap.xml'
     | '/blog/$slug'
+    | '/formations/$slug'
     | '/blog/'
     | '/catalogue/'
     | '/_app/admin/demandes'
@@ -422,6 +434,7 @@ export interface RootRouteChildren {
   PortageQualiopiRoute: typeof PortageQualiopiRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   BlogSlugRoute: typeof BlogSlugRoute
+  FormationsSlugRoute: typeof FormationsSlugRoute
   BlogIndexRoute: typeof BlogIndexRoute
   CatalogueIndexRoute: typeof CatalogueIndexRoute
   CatalogueCategorySlugRoute: typeof CatalogueCategorySlugRoute
@@ -529,6 +542,13 @@ declare module '@tanstack/react-router' {
       path: '/catalogue'
       fullPath: '/catalogue/'
       preLoaderRoute: typeof CatalogueIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/formations/$slug': {
+      id: '/formations/$slug'
+      path: '/formations/$slug'
+      fullPath: '/formations/$slug'
+      preLoaderRoute: typeof FormationsSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_app/admin/': {
@@ -707,6 +727,7 @@ const rootRouteChildren: RootRouteChildren = {
   PortageQualiopiRoute: PortageQualiopiRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   BlogSlugRoute: BlogSlugRoute,
+  FormationsSlugRoute: FormationsSlugRoute,
   BlogIndexRoute: BlogIndexRoute,
   CatalogueIndexRoute: CatalogueIndexRoute,
   CatalogueCategorySlugRoute: CatalogueCategorySlugRoute,
