@@ -516,7 +516,11 @@ export type Database = {
           date_naissance: string | null
           deroule_pedagogique_url: string | null
           email: string
+          entreprise: string | null
+          entreprise_adresse: string | null
           id: string
+          nda_document_url: string | null
+          nda_region: string | null
           nom: string
           numero_nda: string | null
           parcours_formation: string | null
@@ -534,7 +538,11 @@ export type Database = {
           date_naissance?: string | null
           deroule_pedagogique_url?: string | null
           email?: string
+          entreprise?: string | null
+          entreprise_adresse?: string | null
           id: string
+          nda_document_url?: string | null
+          nda_region?: string | null
           nom?: string
           numero_nda?: string | null
           parcours_formation?: string | null
@@ -552,7 +560,11 @@ export type Database = {
           date_naissance?: string | null
           deroule_pedagogique_url?: string | null
           email?: string
+          entreprise?: string | null
+          entreprise_adresse?: string | null
           id?: string
+          nda_document_url?: string | null
+          nda_region?: string | null
           nom?: string
           numero_nda?: string | null
           parcours_formation?: string | null
