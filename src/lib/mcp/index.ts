@@ -1,4 +1,4 @@
-import { auth, defineMcp } from "@lovable.dev/mcp-js";
+import { auth, defineMcp, type AnyToolDefinition } from "@lovable.dev/mcp-js";
 
 import getDossierTool from "./tools/get-dossier";
 import listDossiersTool from "./tools/list-dossiers";
