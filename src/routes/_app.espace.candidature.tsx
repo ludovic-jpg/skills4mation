@@ -1,16 +1,12 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useState } from "react";
-import { toast } from "sonner";
-import { CheckCircle2, FileText, Upload } from "lucide-react";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { useQuery } from "@tanstack/react-query";
+import { CheckCircle2 } from "lucide-react";
 
 import { AppShell } from "@/components/app/AppShell";
 import { CANDIDAT_NAV, FORMATEUR_NAV } from "@/components/app/nav";
 import { StatutBadge } from "@/components/StatutBadge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { formatDate, type CandidatureStatut } from "@/lib/statuts";
@@ -26,9 +22,7 @@ const ETAPES: { statut: CandidatureStatut; label: string }[] = [
 ];
 
 function MaCandidature() {
-  const { user, profile, isValidatedFormateur, refresh } = useAuth();
-  const queryClient = useQueryClient();
-  const [busy, setBusy] = useState<string | null>(null);
+  const { user, profile, isValidatedFormateur } = useAuth();
 
   const { data: candidature, isLoading } = useQuery({
     queryKey: ["ma-candidature", user?.id],
@@ -43,55 +37,6 @@ function MaCandidature() {
       return data?.[0] ?? null;
     },
   });
-
-  async function upload(kind: "cv" | "deroule", file: File) {
-    if (!user) return;
-    setBusy(kind);
-    const ext = file.name.split(".").pop()?.toLowerCase() || "pdf";
-    const path = `${user.id}/${kind}.${ext}`;
-    const { error } = await supabase.storage
-      .from("candidatures")
-      .upload(path, file, { upsert: true, contentType: file.type || "application/pdf" });
-    if (!error) {
-      const patch =
-        kind === "cv" ? { cv_url: path } : { deroule_pedagogique_url: path };
-      const { error: profileError } = await supabase
-        .from("profiles")
-        .update(patch)
-        .eq("id", user.id);
-      if (profileError) {
-        setBusy(null);
-        toast.error("Le fichier est envoyé mais n'a pas pu être rattaché à votre profil.");
-        return;
-      }
-    }
-    setBusy(null);
-    if (error) {
-      toast.error("Envoi du fichier impossible.");
-      return;
-    }
-    await refresh();
-    void queryClient.invalidateQueries({ queryKey: ["ma-candidature"] });
-    toast.success("Document enregistré.");
-  }
-
-  async function saveParcours(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    if (!user) return;
-    const form = new FormData(event.currentTarget);
-    setBusy("parcours");
-    const { error } = await supabase
-      .from("profiles")
-      .update({ parcours_formation: String(form.get("parcours") ?? "").slice(0, 5000) })
-      .eq("id", user.id);
-    setBusy(null);
-    if (error) {
-      toast.error("Enregistrement impossible.");
-      return;
-    }
-    await refresh();
-    toast.success("Parcours enregistré.");
-  }
 
   const statut: CandidatureStatut =
     (candidature?.statut as CandidatureStatut | undefined) ??
@@ -111,9 +56,7 @@ function MaCandidature() {
             <div className="flex flex-wrap items-center justify-between gap-3">
               <div>
                 <p className="text-sm text-muted-foreground">Statut courant</p>
-                <p className="mt-1 text-lg font-semibold">
-                  {isLoading ? "Chargement…" : null}
-                </p>
+                <p className="mt-1 text-lg font-semibold">{isLoading ? "Chargement…" : null}</p>
               </div>
               <StatutBadge kind="candidature" statut={statut} />
             </div>
@@ -170,82 +113,27 @@ function MaCandidature() {
 
         <Card className="rounded-2xl border-border/70 shadow-soft">
           <CardContent className="p-6">
-            <h2 className="text-base font-semibold">Pièces de mon dossier de candidature</h2>
+            <h2 className="text-base font-semibold">Mes pièces justificatives</h2>
             <p className="mt-1 text-sm text-muted-foreground">
-              CV et déroulé pédagogique type au format PDF (10 Mo max).
+              CV, parcours de formation, déroulé(s) pédagogique(s), justificatif de déclaration
+              d'activité et photo sont désormais centralisés sur votre profil formateur. Vous pouvez
+              les déposer, les remplacer et les télécharger à tout moment.
             </p>
-
-            <div className="mt-5 grid gap-4">
-              <DocField
-                label="CV"
-                done={!!profile?.cv_url}
-                busy={busy === "cv"}
-                onFile={(file) => void upload("cv", file)}
-              />
-              <DocField
-                label="Déroulé pédagogique type"
-                done={!!profile?.deroule_pedagogique_url}
-                busy={busy === "deroule"}
-                onFile={(file) => void upload("deroule", file)}
-              />
-            </div>
-
-            <form onSubmit={saveParcours} className="mt-6 grid gap-2">
-              <Label htmlFor="parcours">Parcours professionnel et pédagogique</Label>
-              <Textarea
-                id="parcours"
-                name="parcours"
-                rows={6}
-                maxLength={5000}
-                defaultValue={profile?.parcours_formation ?? ""}
-                placeholder="Expériences, publics formés, thématiques maîtrisées…"
-              />
-              <Button type="submit" variant="cta" disabled={busy === "parcours"}>
-                {busy === "parcours" ? "Enregistrement…" : "Enregistrer mon parcours"}
-              </Button>
-            </form>
+            <ul className="mt-4 grid gap-1 text-sm">
+              <li>CV : {profile?.cv_url ? "déposé" : "à déposer"}</li>
+              <li>
+                Parcours de formation : {profile?.parcours_formation_url ? "déposé" : "à déposer"}
+              </li>
+              <li>
+                Déroulé pédagogique : {profile?.deroule_pedagogique_url ? "déposé" : "à déposer"}
+              </li>
+            </ul>
+            <Button asChild variant="cta" className="mt-5">
+              <Link to="/espace/profil">Gérer mes pièces dans mon profil</Link>
+            </Button>
           </CardContent>
         </Card>
       </div>
     </AppShell>
-  );
-}
-
-function DocField({
-  label,
-  done,
-  busy,
-  onFile,
-}: {
-  label: string;
-  done: boolean;
-  busy: boolean;
-  onFile: (file: File) => void;
-}) {
-  return (
-    <div className="flex items-center justify-between gap-3 rounded-xl border border-border p-4">
-      <div className="flex min-w-0 items-center gap-3">
-        <FileText className="size-5 shrink-0 text-muted-foreground" />
-        <div className="min-w-0">
-          <p className="truncate text-sm font-semibold">{label}</p>
-          <p className="text-xs text-muted-foreground">{done ? "Déposé" : "Non déposé"}</p>
-        </div>
-      </div>
-      <label className="shrink-0">
-        <input
-          type="file"
-          accept="application/pdf"
-          className="sr-only"
-          onChange={(event) => {
-            const file = event.target.files?.[0];
-            if (file) onFile(file);
-            event.target.value = "";
-          }}
-        />
-        <span className="inline-flex cursor-pointer items-center gap-2 rounded-lg border border-border px-3 py-2 text-xs font-semibold hover:bg-muted">
-          <Upload className="size-3.5" /> {busy ? "Envoi…" : done ? "Remplacer" : "Déposer"}
-        </span>
-      </label>
-    </div>
   );
 }

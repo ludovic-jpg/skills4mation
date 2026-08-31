@@ -60,6 +60,19 @@ function DossierDetail() {
     },
   });
 
+  const { data: pieces } = useQuery({
+    queryKey: ["dossier-pieces", id],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("dossier_pieces")
+        .select("code, statut, fichier_url")
+        .eq("dossier_id", id);
+      if (error) throw error;
+      return data ?? [];
+    },
+  });
+
+
   const { data: documents } = useQuery({
     queryKey: ["dossier-documents", id],
     queryFn: async () => {
@@ -73,29 +86,37 @@ function DossierDetail() {
     },
   });
 
-  const demandeFinancement = useMutation({
-    mutationFn: async () => {
+  const changerStatut = useMutation({
+    mutationFn: async ({
+      cible,
+      commentaire,
+    }: {
+      cible: CrmStatut;
+      commentaire: string;
+      message: string;
+    }) => {
       if (!dossier || !user) return;
       const { error } = await supabase
         .from("dossiers")
-        .update({ statut_crm: "demande_financement" })
+        .update({ statut_crm: cible })
         .eq("id", id);
       if (error) throw error;
       await supabase.from("dossier_historique").insert({
         dossier_id: id,
         ancien_statut: dossier.statut_crm,
-        nouveau_statut: "demande_financement",
+        nouveau_statut: cible,
         auteur_id: user.id,
-        commentaire: "Demande de financement initiée par le formateur.",
+        commentaire,
       });
     },
-    onSuccess: () => {
-      toast.success("Demande de financement transmise à l'équipe.");
+    onSuccess: (_data, variables) => {
+      toast.success(variables.message);
       void queryClient.invalidateQueries({ queryKey: ["dossier", id] });
       void queryClient.invalidateQueries({ queryKey: ["dossier-historique", id] });
     },
     onError: () => toast.error("Action impossible."),
   });
+
 
   async function uploadDocument(file: File) {
     if (!user) return;
@@ -147,6 +168,10 @@ function DossierDetail() {
 
   const statut = (dossier?.statut_crm ?? "brouillon") as CrmStatut;
   const donnees = mergeDonnees(dossier?.donnees);
+  const emargementsPrets = (pieces ?? []).some(
+    (p) => p.code === "F3" && (p.statut === "complete" || Boolean(p.fichier_url)),
+  );
+
 
   return (
     <AppShell
@@ -176,6 +201,8 @@ function DossierDetail() {
 
           <TabsContent value="variables">
             <DossierWizard
+              key={id}
+
               value={donnees}
               saving={saveDonnees.isPending}
               onSave={(next) => saveDonnees.mutate(next)}
@@ -234,12 +261,53 @@ function DossierDetail() {
                   {statut === "dossier_valide" ? (
                     <Button
                       variant="cta"
-                      disabled={demandeFinancement.isPending}
-                      onClick={() => demandeFinancement.mutate()}
+                      disabled={changerStatut.isPending}
+                      onClick={() =>
+                        changerStatut.mutate({
+                          cible: "demande_financement",
+                          commentaire: "Demande de financement initiée par le formateur.",
+                          message: "Demande de financement transmise à l'équipe.",
+                        })
+                      }
                     >
                       Demander le financement
                     </Button>
                   ) : null}
+                  {statut === "accord_financement" || statut === "finalisation_administrative" ? (
+                    <Button
+                      variant="cta"
+                      disabled={changerStatut.isPending}
+                      onClick={() =>
+                        changerStatut.mutate({
+                          cible: "formation_en_cours",
+                          commentaire: "Démarrage de la formation signalé par le formateur.",
+                          message: "Démarrage de la formation enregistré.",
+                        })
+                      }
+                    >
+                      Signaler le début de la formation
+                    </Button>
+                  ) : null}
+                  {statut === "formation_en_cours" ? (
+                    <Button
+                      variant="cta"
+                      disabled={changerStatut.isPending}
+                      onClick={() => {
+                        if (!emargementsPrets)
+                          toast.warning(
+                            "Les émargements (F3) ne sont pas encore générés : pensez à les compléter.",
+                          );
+                        changerStatut.mutate({
+                          cible: "formation_realisee",
+                          commentaire: "Formation signalée comme réalisée par le formateur.",
+                          message: "Formation signalée comme réalisée.",
+                        });
+                      }}
+                    >
+                      Signaler la formation comme réalisée
+                    </Button>
+                  ) : null}
+
                 </div>
               </CardContent>
             </Card>

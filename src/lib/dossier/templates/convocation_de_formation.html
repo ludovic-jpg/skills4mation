@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Convocation de Formation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @media print {
+            body {
+                background-color: #ffffff !important;
+                color: #000000 !important;
+            }
+            .no-print {
+                display: none !important;
+            }
+            .page-card {
+                box-shadow: none !important;
+                border: none !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                max-width: 100% !important;
+            }
+        }
+        .var-tag {
+            background-color: #e0f2fe;
+            color: #0369a1;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-weight: 600;
+            border: 1px dashed #38bdf8;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body class="bg-slate-100 text-slate-800 font-sans min-h-screen py-8 px-4 sm:px-6">
+
+    <!-- Action Bar / Instructions -->
+    <div class="max-w-4xl mx-auto mb-6 bg-white p-4 rounded-xl shadow-md border border-slate-200 flex flex-wrap justify-between items-center gap-4 no-print">
+        <div>
+            <h1 class="text-lg font-bold text-slate-900">Modèle de Convocation de Formation</h1>
+            <p class="text-sm text-slate-500">Les variables dynamiques sont affichées sous la forme <span class="var-tag text-xs">{{variable}}</span>.</p>
+        </div>
+        <div class="flex items-center gap-3">
+            <button onclick="window.print()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-medium px-4 py-2 rounded-lg transition-colors text-sm flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+                </svg>
+                Imprimer / Imprimer en PDF
+            </button>
+        </div>
+    </div>
+
+    <!-- Document Page Container -->
+    <div class="max-w-4xl mx-auto bg-white p-8 sm:p-12 rounded-xl shadow-lg border border-slate-200 page-card text-sm leading-relaxed">
+        
+        <!-- Header with Branding & Declaration -->
+        <div class="border-b border-slate-200 pb-6 mb-8">
+            <div class="flex flex-col sm:flex-row justify-between items-center gap-4 mb-4">
+                <!-- Logo SKILLS4MATION -->
+                <div class="text-3xl font-extrabold tracking-tight">
+                    <span class="text-amber-400">SKILLS</span><span class="text-emerald-500 font-semibold">4MATION</span>
+                </div>
+                <div class="text-right text-xs text-slate-500">
+                    <p class="font-medium">NDA n° en cours Auprès du Préfet de la Région GRAND EST</p>
+                    <p class="mt-1 font-semibold text-slate-700">Réf. Convention ADF : <span class="var-tag">{{NBADF}}</span></p>
+                </div>
+            </div>
+            
+            <div class="mt-6 text-center bg-slate-900 text-white py-3 rounded-lg shadow-sm">
+                <h1 class="text-xl font-bold uppercase tracking-wider">CONVOCATION DE FORMATION</h1>
+            </div>
+        </div>
+
+        <!-- Salutation & Core Message -->
+        <div class="space-y-4 mb-8">
+            <p class="text-base font-semibold text-slate-900">
+                Bonjour <span class="var-tag">{{liste_stagiaires}}</span>,
+            </p>
+            <p class="text-slate-700">
+                Nous avons le plaisir de vous convoquer à votre première session de formation. Veuillez trouver ci-dessous le détail des modalités d’organisation :
+            </p>
+        </div>
+
+        <!-- Formation Main Details Card -->
+        <div class="bg-slate-50 rounded-xl p-6 border border-slate-200 mb-8 space-y-4">
+            <h2 class="text-base font-bold text-slate-900 border-b border-slate-200 pb-2 flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                Informations sur la session
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="md:col-span-2">
+                    <span class="font-bold text-slate-900">Intitulé de la formation :</span>
+                    <div class="mt-1"><span class="var-tag text-base">{{TITREFOR}}</span></div>
+                </div>
+
+                <div>
+                    <span class="font-bold text-slate-900">Date de la 1ère session :</span>
+                    <div class="mt-1"><span class="var-tag">{{DAT}}</span></div>
+                </div>
+
+                <div>
+                    <span class="font-bold text-slate-900">Horaires :</span>
+                    <div class="mt-1">
+                        De <span class="var-tag">{{Hsess1}}</span> à <span class="var-tag">{{hsess1fin}}</span>
+                    </div>
+                </div>
+
+                <div>
+                    <span class="font-bold text-slate-900">Format de formation :</span>
+                    <div class="mt-1"><span class="var-tag">{{format}}</span></div>
+                </div>
+
+                <div>
+                    <span class="font-bold text-slate-900">Lieu de formation :</span>
+                    <div class="mt-1"><span class="var-tag">{{adresseFOR}}</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Online Access & Required Equipment -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            
+            <!-- Connection Link Card -->
+            <div class="bg-indigo-50/50 rounded-xl p-5 border border-indigo-100 space-y-3 flex flex-col justify-between">
+                <div>
+                    <h3 class="font-bold text-indigo-950 flex items-center gap-2 mb-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+                        </svg>
+                        Lien de connexion (Visio)
+                    </h3>
+                    <p class="text-xs text-indigo-900 mb-3">
+                        Ce lien sera identique sur l'ensemble du temps de formation dont le calendrier complet est joint.
+                    </p>
+                </div>
+                <div>
+                    <span class="var-tag w-full break-all text-xs py-2 px-3 text-center block bg-white">{{lienform}}</span>
+                </div>
+            </div>
+
+            <!-- Required Equipment List -->
+            <div class="bg-amber-50/60 rounded-xl p-5 border border-amber-200/60 space-y-2">
+                <h3 class="font-bold text-amber-950 flex items-center gap-2 mb-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" />
+                    </svg>
+                    Matériel & Équipement requis
+                </h3>
+                <ul class="text-xs text-amber-900 space-y-1.5 list-disc list-inside">
+                    <li>Un micro-ordinateur</li>
+                    <li>Connexion internet haute vitesse</li>
+                    <li>Casque avec micro recommandé (ou intégré à votre ordinateur)</li>
+                    <li><strong class="text-amber-950 uppercase font-bold">Webcam OBLIGATOIRE</strong></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Instructor Information & Attachments -->
+        <div class="bg-slate-50 rounded-xl p-5 border border-slate-200 mb-8 space-y-3">
+            <h3 class="font-bold text-slate-900 flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                </svg>
+                Coordonnées de votre Formateur / Formatrice
+            </h3>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs sm:text-sm pt-1">
+                <div>
+                    <span class="text-slate-500 block">Nom / Prénom :</span>
+                    <span class="var-tag mt-1">{{FOR}}</span>
+                </div>
+                <div>
+                    <span class="text-slate-500 block">Email :</span>
+                    <span class="var-tag mt-1">{{emailFOR}}</span>
+                </div>
+                <div>
+                    <span class="text-slate-500 block">Téléphone :</span>
+                    <span class="var-tag mt-1">{{TelFOR}}</span>
+                </div>
+            </div>
+
+            <div class="border-t border-slate-200 pt-3 mt-3 text-xs text-slate-600 italic">
+                 Vous trouverez en pièce jointe le programme de formation ainsi que nos engagements qualité.
+            </div>
+        </div>
+
+        <!-- Signatures & Organisme Info Block -->
+        <div class="pt-6 border-t-2 border-slate-900 grid grid-cols-1 md:grid-cols-2 gap-8">
+            
+            <!-- Stagiaire / Commanditaire Signature -->
+            <div class="bg-slate-50 p-4 rounded-lg border border-slate-200 flex flex-col justify-between">
+                <div>
+                    <p class="font-bold text-slate-900">Signature stagiaire ou Responsable de l'entreprise commanditaire :</p>
+                    <p class="mt-2 text-xs"><span class="var-tag">{{nomstagaire}}</span></p>
+                </div>
+                <div class="mt-8 border-b border-dashed border-slate-300 h-16 flex items-end justify-center pb-1 text-slate-400 text-xs italic">
+                    Cadre réservé à la signature
+                </div>
+            </div>
+
+            <!-- Organisme de Formation Info -->
+            <div class="bg-slate-50 p-4 rounded-lg border border-slate-200 text-xs space-y-1 text-slate-700">
+                <p class="font-bold text-slate-900 text-sm">L’organisme de formation :</p>
+                <p class="font-bold text-slate-900">FORMATRIX / SKILLS4MATION</p>
+                <p>33 avenue d’Altkirch</p>
+                <p>68200 MULHOUSE</p>
+                <p class="pt-1"><strong>Tél :</strong> 06 60 11 62 15</p>
+                <p><strong>SIREN :</strong> 925 376 725 | <strong>APE :</strong> 8559A</p>
+                <div class="mt-4 border-b border-dashed border-slate-300 h-10 flex items-end justify-center pb-1 text-slate-400 italic">
+                    Cachet & Signature
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+</html>

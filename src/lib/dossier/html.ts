@@ -8,6 +8,14 @@ import {
   viseIcdl,
   type DossierDonnees,
 } from "./types";
+import {
+  contratSousTraitanceHtml,
+  conventionHtml,
+  convocationHtml,
+  emargementHtml,
+  planningHtml,
+  recueilBesoinsHtml,
+} from "./render";
 
 /** Échappe une valeur pour insertion HTML. */
 function e(value?: string | null) {
@@ -37,10 +45,10 @@ function shell(title: string, body: string, orientation: "portrait" | "landscape
 <style>
   @page { size: A4 ${orientation}; margin: 12mm 14mm; }
   * { box-sizing: border-box; }
-  body { font-family: "Helvetica Neue", Arial, sans-serif; color: #0f172a; margin: 0; padding: 24px; background: #f1f5f9; font-size: 12px; line-height: 1.5; }
+  body { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; color: #0f172a; margin: 0; padding: 24px; background: #f1f5f9; font-size: 12px; line-height: 1.5; }
   .sheet { background: #fff; max-width: ${orientation === "landscape" ? "1120px" : "820px"}; margin: 0 auto; padding: 32px 36px; box-shadow: 0 8px 24px rgba(15,23,42,.08); }
   h1 { font-size: 19px; margin: 0 0 4px; letter-spacing: -.01em; }
-  h2 { font-size: 13px; text-transform: uppercase; letter-spacing: .06em; margin: 22px 0 8px; padding-bottom: 4px; border-bottom: 1px solid #cbd5e1; color: #14532d; }
+  h2 { font-size: 13px; text-transform: uppercase; letter-spacing: .06em; margin: 22px 0 8px; padding-bottom: 4px; border-bottom: 1px solid #cbd5e1; color: #1e3a8a; }
   .head { border-bottom: 2px solid #0f172a; padding-bottom: 12px; margin-bottom: 8px; }
   .muted { color: #64748b; }
   .vide { color: #94a3b8; }
@@ -52,8 +60,8 @@ function shell(title: string, body: string, orientation: "portrait" | "landscape
   th { background: #f8fafc; text-transform: uppercase; font-size: 10px; letter-spacing: .04em; color: #334155; }
   .sign { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 28px; }
   .sign div { border: 1px solid #cbd5e1; height: 108px; padding: 8px; }
-  .badge { display: inline-block; border: 1px solid #14532d; color: #14532d; border-radius: 999px; padding: 2px 10px; font-size: 10px; }
-  .note { background: #f8fafc; border-left: 3px solid #14532d; padding: 8px 12px; margin-top: 10px; }
+  .badge { display: inline-block; border: 1px solid #1e3a8a; color: #1e3a8a; border-radius: 999px; padding: 2px 10px; font-size: 10px; }
+  .note { background: #f8fafc; border-left: 3px solid #1e3a8a; padding: 8px 12px; margin-top: 10px; }
   tr, .avoid { page-break-inside: avoid; }
   @media print {
     body { background: #fff; padding: 0; font-size: 10.5px; }
@@ -113,55 +121,6 @@ function signatures(a: string, b: string) {
 
 /* ------------------------------- Documents ------------------------------- */
 
-function convention(d: DossierDonnees) {
-  return shell(
-    "Convention de formation professionnelle",
-    `${entete(d, "Convention de formation professionnelle", "Articles L.6353-1 et suivants du Code du travail")}
-    <h2>Entre les parties</h2>
-    <div class="grid">
-      <div>
-        <strong>L'organisme de formation</strong><br />${v(d.organisme)}<br />
-        ${v(d.formateur.entreprise)}<br />${v(d.formateur.adresse)}<br />
-        SIRET ${v(d.formateur.siret)} · NDA ${v(d.formateur.nda)} ${d.formateur.ndaRegion ? `(${e(d.formateur.ndaRegion)})` : ""}
-      </div>
-      <div>
-        <strong>Le client</strong><br />${v(d.entreprise.nom)}${d.entreprise.nomCommercial ? ` (${e(d.entreprise.nomCommercial)})` : ""}<br />
-        ${v(d.entreprise.adresse)}<br />SIRET ${v(d.entreprise.siret)}<br />
-        Représenté par ${v(`${d.entreprise.prenomRepresentant} ${d.entreprise.nomRepresentant}`.trim())}<br />
-        ${v(d.entreprise.telephone)} · ${v(d.entreprise.email)}
-      </div>
-    </div>
-    <h2>Article 1 — Objet et nature de l'action</h2>
-    ${ligne("Intitulé", v(d.formation.titre))}
-    ${ligne("Objectifs pédagogiques", multiline(d.formation.objectifs))}
-    ${ligne("Niveau", v(d.formation.niveau))}
-    ${ligne("Prérequis", v(d.formation.prerequis))}
-    ${ligne("Modalité", e(FORMAT_LABELS[d.formation.format]))}
-    <h2>Article 2 — Durée et lieu</h2>
-    ${ligne("Dates", `${v(dateFr(d.formation.dateDebut))} au ${v(dateFr(d.formation.dateFin))}`)}
-    ${ligne("Durée totale", `${v(d.formation.heuresTotal)} heures sur ${v(d.formation.nbJours)} jour(s)`)}
-    ${aDuPresentiel(d) ? ligne("Dont heures en présentiel", v(d.formation.heuresPresentiel)) : ""}
-    ${ligne("Lieu de formation", `${v(d.lieu.intitule)} — ${v(d.lieu.adresse)}`)}
-    ${d.formation.format !== "presentiel" ? ligne("Lien de connexion", v(d.formation.lienConnexion)) : ""}
-    <h2>Article 3 — Effectif concerné</h2>
-    ${tableApprenants(d)}
-    <h2>Article 4 — Dispositions financières</h2>
-    ${ligne("Prix unitaire par stagiaire", e(euros(d.tarifs.prixUnitaire)))}
-    ${ligne("Nombre de stagiaires", v(d.tarifs.nbStagiaires || String(d.apprenants.length)))}
-    ${ligne("Prix total de l'action", e(euros(d.tarifs.prixTotal)))}
-    ${aDuPresentiel(d) && d.tarifs.prixPresentiel ? ligne("Dont prix en présentiel", e(euros(d.tarifs.prixPresentiel))) : ""}
-    ${ligne("Financement", e(FINANCEMENT_LABELS[d.tarifs.modeFinancement]))}
-    ${d.tarifs.modeFinancement === "opco" ? ligne("OPCO / financeur", v(d.tarifs.opco)) : ""}
-    ${d.tarifs.montantPrisEnCharge ? ligne("Montant pris en charge", e(euros(d.tarifs.montantPrisEnCharge))) : ""}
-    ${ligne("Subrogation de paiement", d.tarifs.subrogation === "oui" ? "Oui" : "Non")}
-    <h2>Article 5 — Moyens et évaluation</h2>
-    <p>Les moyens pédagogiques, techniques et d'encadrement sont mis en œuvre par l'organisme. L'atteinte des objectifs est évaluée selon les modalités suivantes : ${multiline(d.besoins.modalitesEvaluation)}. Une attestation de fin de formation est remise à chaque participant.</p>
-    <h2>Article 6 — Interruption, litiges</h2>
-    <p>En cas d'abandon ou d'interruption, seules les heures réellement réalisées sont facturées. Tout litige relève de la compétence des tribunaux du siège de l'organisme, après tentative de résolution amiable.</p>
-    <p style="margin-top:16px">Fait à ${v(d.convention.lieu)}, le ${v(dateFr(d.convention.date))}, en deux exemplaires.</p>
-    ${signatures("Pour l'organisme de formation (cachet et signature)", "Pour le client (cachet et signature)")}`,
-  );
-}
 
 function attestation(d: DossierDonnees) {
   const body = d.apprenants.length ? d.apprenants : [{ nom: "", poste: "" }];
@@ -192,59 +151,7 @@ function attestation(d: DossierDonnees) {
   );
 }
 
-function planning(d: DossierDonnees) {
-  return shell(
-    "Planning de formation",
-    `${entete(d, "Planning de formation", v(d.formation.titre).replace(/<[^>]+>/g, ""))}
-    <h2>Informations générales</h2>
-    <div class="grid">
-      <div>${ligne("Formation", v(d.formation.titre))}${ligne("Démarrage", v(dateFr(d.formation.dateDebut)))}${ligne("Fin", v(dateFr(d.formation.dateFin)))}</div>
-      <div>${ligne("Durée totale", `${v(d.formation.heuresTotal)} h`)}${ligne("Nombre de jours", v(d.formation.nbJours))}${ligne("Lieu", `${v(d.lieu.intitule)} — ${v(d.lieu.adresse)}`)}</div>
-    </div>
-    <h2>Sessions programmées</h2>
-    ${tableSessions(d)}
-    <h2>Effectif de la session</h2>
-    ${tableApprenants(d)}
-    <p style="margin-top:14px">Fait à ${v(d.convention.lieu)}, le ${v(dateFr(d.convention.date))} — ${v(`${d.entreprise.prenomRepresentant} ${d.entreprise.nomRepresentant}`.trim())}</p>
-    ${signatures("L'organisme de formation", "Le client")}`,
-  );
-}
 
-function convocation(d: DossierDonnees) {
-  const s = d.sessions[0];
-  const body = d.apprenants.length ? d.apprenants : [{ nom: "", poste: "" }];
-  return shell(
-    "Convocation de formation",
-    body
-      .map(
-        (a, i) => `<div class="avoid" ${i > 0 ? 'style="page-break-before:always"' : ""}>
-      ${entete(d, "Convocation de formation", `Dossier ${d.adf || "—"}`)}
-      <p style="margin-top:18px">Madame, Monsieur ${v(a.nom)},</p>
-      <p>Vous êtes convoqué(e) à l'action de formation <strong>${v(d.formation.titre)}</strong> organisée par ${v(d.organisme)}.</p>
-      <h2>Modalités pratiques</h2>
-      ${ligne("Dates", `${v(dateFr(d.formation.dateDebut))} au ${v(dateFr(d.formation.dateFin))}`)}
-      ${ligne("Première session", `${v(dateFr(s?.date))} de ${v(s?.heureDebut)} à ${v(s?.heureFin)}`)}
-      ${ligne("Durée totale", `${v(d.formation.heuresTotal)} heures`)}
-      ${ligne("Modalité", e(FORMAT_LABELS[d.formation.format]))}
-      ${d.formation.format !== "distanciel" ? ligne("Lieu", `${v(d.lieu.intitule)} — ${v(d.lieu.adresse)}`) : ""}
-      ${d.formation.format !== "presentiel" ? ligne("Lien de connexion", v(d.formation.lienConnexion)) : ""}
-      ${viseIcdl(d) ? ligne("Certification visée", v(a.certification || "ICDL")) : ""}
-      <h2>Votre formateur</h2>
-      ${ligne("Formateur", v(`${d.formateur.prenom} ${d.formateur.nom}`.trim()))}
-      ${ligne("Contact", `${v(d.formateur.email)} · ${v(d.formateur.telephone)}`)}
-      <div class="note">${
-        d.formation.lienResponsableFormateur
-          ? "La création, la fourniture et le bon fonctionnement du lien de connexion (Workspace / visioconférence) relèvent de la responsabilité du formateur."
-          : "Le lien de connexion est fourni par l'entreprise cliente."
-      }</div>
-      <h2>Planning détaillé</h2>
-      ${tableSessions(d)}
-      <p style="margin-top:14px">Fait à ${v(d.convention.lieu)}, le ${v(dateFr(d.convention.date))}.</p>
-    </div>`,
-      )
-      .join(""),
-  );
-}
 
 function icdl(d: DossierDonnees) {
   return shell(
@@ -264,53 +171,7 @@ function icdl(d: DossierDonnees) {
   );
 }
 
-function recueilBesoins(d: DossierDonnees) {
-  return shell(
-    "Recueil des besoins pré-formation",
-    `${entete(d, "Recueil des besoins — pré-formation", "Analyse du besoin et personnalisation du parcours")}
-    <h2>Demandeur</h2>
-    <div class="grid">
-      <div>${ligne("Entreprise", v(d.entreprise.nom))}${ligne("Représentant", v(`${d.entreprise.prenomRepresentant} ${d.entreprise.nomRepresentant}`.trim()))}</div>
-      <div>${ligne("Contact", `${v(d.entreprise.email)} · ${v(d.entreprise.telephone)}`)}${ligne("Formation envisagée", v(d.formation.titre))}</div>
-    </div>
-    <h2>Contexte et enjeux</h2><p>${multiline(d.besoins.contexte)}</p>
-    <h2>Attentes et objectifs opérationnels</h2><p>${multiline(d.besoins.attentes)}</p>
-    <h2>Niveau de départ des participants</h2><p>${multiline(d.besoins.niveauDepart)}</p>
-    <h2>Prérequis et contraintes</h2>
-    ${ligne("Prérequis", v(d.formation.prerequis))}
-    ${ligne("Niveau visé", v(d.formation.niveau))}
-    <p>${multiline(d.besoins.contraintes)}</p>
-    <h2>Modalités d'évaluation retenues</h2><p>${multiline(d.besoins.modalitesEvaluation)}</p>
-    <h2>Participants concernés</h2>
-    ${tableApprenants(d, true)}
-    ${signatures("Le formateur", "Le client")}`,
-  );
-}
 
-function emargement(d: DossierDonnees) {
-  const sessions = d.sessions.length ? d.sessions : [{ date: "", heureDebut: "", heureFin: "" }];
-  return shell(
-    "Relevé de fréquentation / émargement",
-    sessions
-      .map(
-        (s, i) => `<div class="avoid" ${i > 0 ? 'style="page-break-before:always"' : ""}>
-      ${entete(d, "Relevé de fréquentation — feuille d'émargement", `Session ${i + 1} du ${dateFr(s.date)}`)}
-      <div class="grid">
-        <div>${ligne("Formation", v(d.formation.titre))}${ligne("Objectif", multiline(d.formation.objectifs))}${ligne("Durée totale", `${v(d.formation.heuresTotal)} h`)}</div>
-        <div>${ligne("Horaires", `${v(s.heureDebut)} - ${v(s.heureFin)}`)}${ligne("Lieu", `${v(s.lieu || d.lieu.intitule)} — ${v(d.lieu.adresse)}`)}${ligne("Entreprise", `${v(d.entreprise.nom)} · SIRET ${v(d.entreprise.siret)}`)}</div>
-      </div>
-      <table><thead><tr><th style="width:32px">#</th><th>Prénom et nom de l'apprenant</th><th style="width:34%">Signature matin</th><th style="width:34%">Signature après-midi</th></tr></thead><tbody>
-      ${(d.apprenants.length ? d.apprenants : Array.from({ length: 5 }, () => ({ nom: "" })))
-        .map((a, j) => `<tr><td>${j + 1}</td><td>${v(a.nom)}</td><td style="height:34px"></td><td></td></tr>`)
-        .join("")}
-      </tbody></table>
-      ${signatures("Signature du formateur", "Cachet de l'organisme")}
-    </div>`,
-      )
-      .join(""),
-    "landscape",
-  );
-}
 
 function satisfaction(d: DossierDonnees, chaud: boolean) {
   const questions = chaud
@@ -376,38 +237,6 @@ function facture(d: DossierDonnees) {
   );
 }
 
-function ordreMission(d: DossierDonnees) {
-  return shell(
-    "Contrat de sous-traitance / ordre de mission",
-    `${entete(d, "Contrat de sous-traitance de formation (ordre de mission)", `Dossier ${d.adf || "—"}`)}
-    <h2>Les parties</h2>
-    <div class="grid">
-      <div><strong>Le donneur d'ordre</strong><br />${v(d.organisme)}</div>
-      <div><strong>Le sous-traitant (formateur)</strong><br />${v(d.formateur.entreprise)}<br />${v(`${d.formateur.prenom} ${d.formateur.nom}`.trim())}<br />${v(d.formateur.adresse)}<br />SIRET ${v(d.formateur.siret)} · NDA ${v(d.formateur.nda)} ${d.formateur.ndaRegion ? `(${e(d.formateur.ndaRegion)})` : ""}</div>
-    </div>
-    <h2>Mission confiée</h2>
-    ${ligne("Formation", v(d.formation.titre))}
-    ${ligne("Client final", `${v(d.entreprise.nom)} — ${v(`${d.entreprise.prenomRepresentant} ${d.entreprise.nomRepresentant}`.trim())} · ${v(d.entreprise.telephone)}`)}
-    ${ligne("Dates", `${v(dateFr(d.formation.dateDebut))} au ${v(dateFr(d.formation.dateFin))}`)}
-    ${ligne("Volume", `${v(d.formation.heuresTotal)} heures${aDuPresentiel(d) ? ` dont ${v(d.formation.heuresPresentiel)} h en présentiel` : ""}`)}
-    ${ligne("Lieu", `${v(d.lieu.intitule)} — ${v(d.lieu.adresse)}`)}
-    ${ligne("Objectifs pédagogiques", multiline(d.formation.objectifs))}
-    ${ligne("Ouverture de mission", v(dateFr(d.formateur.dateMissionOuverte)))}
-    <h2>Effectif à former</h2>
-    ${tableApprenants(d)}
-    <h2>Conditions financières</h2>
-    ${ligne("Coût horaire", e(euros(d.formateur.coutHoraire)))}
-    ${ligne("Total recette mission", e(euros(d.formateur.totalRecette)))}
-    ${ligne("Règlement", "Sous 10 jours ouvrés à réception des fonds, sur facture conforme")}
-    <h2>Engagements</h2>
-    <p>Le sous-traitant s'engage à respecter le référentiel Qualiopi, à produire les pièces du dossier (émargements, évaluations, satisfaction) et à garantir la confidentialité des données. ${
-      d.formation.lienResponsableFormateur
-        ? "La fourniture du lien de connexion (Workspace / visio) est à sa charge et sous sa responsabilité."
-        : "Le lien de connexion est fourni par le client."
-    }</p>
-    ${signatures("Le donneur d'ordre", "Le sous-traitant")}`,
-  );
-}
 
 /* ------------------------------- Catalogue ------------------------------- */
 
@@ -424,7 +253,7 @@ export const DOCUMENTS: DocDef[] = [
   {
     code: "1A",
     label: "Convention de formation",
-    build: convention,
+    build: conventionHtml,
     applicable: () => true,
     destinataires: (d) => [d.entreprise.email],
   },
@@ -435,11 +264,11 @@ export const DOCUMENTS: DocDef[] = [
     applicable: estCpf,
     destinataires: (d) => d.apprenants.map((a) => a.email ?? ""),
   },
-  { code: "2", label: "Planning", build: planning, applicable: () => true, destinataires: (d) => [d.entreprise.email] },
+  { code: "2", label: "Planning", build: planningHtml, applicable: () => true, destinataires: (d) => [d.entreprise.email] },
   {
     code: "3A",
     label: "Convocation des stagiaires",
-    build: convocation,
+    build: convocationHtml,
     applicable: () => true,
     destinataires: (d) => d.apprenants.map((a) => a.email ?? ""),
   },
@@ -453,21 +282,21 @@ export const DOCUMENTS: DocDef[] = [
   {
     code: "F0A",
     label: "Recueil des besoins",
-    build: recueilBesoins,
+    build: recueilBesoinsHtml,
     applicable: () => true,
     destinataires: (d) => [d.entreprise.email],
   },
   {
     code: "F0C",
     label: "Ordre de mission / sous-traitance",
-    build: ordreMission,
+    build: contratSousTraitanceHtml,
     applicable: () => true,
     destinataires: (d) => [d.formateur.email],
   },
   {
     code: "F3",
     label: "Relevé de fréquentation / émargement",
-    build: emargement,
+    build: emargementHtml,
     applicable: () => true,
     destinataires: (d) => [d.formateur.email],
   },

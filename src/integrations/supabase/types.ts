@@ -516,10 +516,15 @@ export type Database = {
           date_naissance: string | null
           deroule_pedagogique_url: string | null
           email: string
+          entreprise: string | null
+          entreprise_adresse: string | null
           id: string
+          nda_document_url: string | null
+          nda_region: string | null
           nom: string
           numero_nda: string | null
           parcours_formation: string | null
+          parcours_formation_url: string | null
           photo_url: string | null
           prenom: string
           siret: string | null
@@ -534,10 +539,15 @@ export type Database = {
           date_naissance?: string | null
           deroule_pedagogique_url?: string | null
           email?: string
+          entreprise?: string | null
+          entreprise_adresse?: string | null
           id: string
+          nda_document_url?: string | null
+          nda_region?: string | null
           nom?: string
           numero_nda?: string | null
           parcours_formation?: string | null
+          parcours_formation_url?: string | null
           photo_url?: string | null
           prenom?: string
           siret?: string | null
@@ -552,10 +562,15 @@ export type Database = {
           date_naissance?: string | null
           deroule_pedagogique_url?: string | null
           email?: string
+          entreprise?: string | null
+          entreprise_adresse?: string | null
           id?: string
+          nda_document_url?: string | null
+          nda_region?: string | null
           nom?: string
           numero_nda?: string | null
           parcours_formation?: string | null
+          parcours_formation_url?: string | null
           photo_url?: string | null
           prenom?: string
           siret?: string | null
@@ -615,6 +630,10 @@ export type Database = {
         | "paiement"
         | "paiement_formateur"
         | "refuse"
+        | "formation_en_cours"
+        | "formation_realisee"
+        | "demande_paiement"
+        | "paiement_organisme"
       document_type: "signe" | "accord_financement" | "qualiopi_final"
       dossier_statut:
         | "brouillon"
@@ -769,6 +788,10 @@ export const Constants = {
         "paiement",
         "paiement_formateur",
         "refuse",
+        "formation_en_cours",
+        "formation_realisee",
+        "demande_paiement",
+        "paiement_organisme",
       ],
       document_type: ["signe", "accord_financement", "qualiopi_final"],
       dossier_statut: [
