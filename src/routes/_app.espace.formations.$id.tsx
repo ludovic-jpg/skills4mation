@@ -16,7 +16,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { supabase } from "@/integrations/supabase/client";
-import { STATUT_BUDGET_LABELS } from "@/lib/statuts";
+import { BUDGET_STATUTS } from "@/lib/statuts";
 import type { FormationCatalogue } from "@/lib/formations";
 
 export const Route = createFileRoute("/_app/espace/formations/$id")({
@@ -146,7 +146,7 @@ function FormationDetail() {
                     <p className="font-semibold">
                       {i.prenom} {i.nom}{" "}
                       <Badge variant="outline" className="ml-1 align-middle">
-                        {STATUT_BUDGET_LABELS[i.statut]}
+                        {BUDGET_STATUTS[i.statut].label}
                       </Badge>
                     </p>
                     <p className="text-xs text-muted-foreground">
@@ -173,9 +173,9 @@ function FormationDetail() {
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
-                        {Object.entries(STATUT_BUDGET_LABELS).map(([value, label]) => (
+                        {Object.entries(BUDGET_STATUTS).map(([value, meta]) => (
                           <SelectItem key={value} value={value}>
-                            {label}
+                            {meta.label}
                           </SelectItem>
                         ))}
                       </SelectContent>
