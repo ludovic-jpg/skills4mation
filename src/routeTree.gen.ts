@@ -35,6 +35,7 @@ import { Route as CatalogueCategorySlugRouteImport } from './routes/catalogue.$c
 import { Route as AppEspaceDossiersIndexRouteImport } from './routes/_app.espace.dossiers.index'
 import { Route as AppEspaceDossiersIdRouteImport } from './routes/_app.espace.dossiers.$id'
 import { Route as AppEspaceDossiersNewRouteImport } from './routes/_app.espace.dossiers.new'
+import { Route as AppEspaceFormationsIndexRouteImport } from './routes/_app.espace.formations.index'
 import { Route as ApiPublicFormationImageSplatRouteImport } from './routes/api/public/formation-image.$'
 import { Route as LovableEmailAuthPreviewRouteImport } from './routes/lovable/email/auth/preview'
 import { Route as LovableEmailAuthWebhookRouteImport } from './routes/lovable/email/auth/webhook'
@@ -169,6 +170,12 @@ const AppEspaceDossiersNewRoute = AppEspaceDossiersNewRouteImport.update({
   path: '/espace/dossiers/new',
   getParentRoute: () => AppRoute,
 } as any)
+const AppEspaceFormationsIndexRoute =
+  AppEspaceFormationsIndexRouteImport.update({
+    id: '/espace/formations/',
+    path: '/espace/formations/',
+    getParentRoute: () => AppRoute,
+  } as any)
 const ApiPublicFormationImageSplatRoute =
   ApiPublicFormationImageSplatRouteImport.update({
     id: '/api/public/formation-image/$',
@@ -215,6 +222,7 @@ export interface FileRoutesByFullPath {
   '/lovable/email/auth/preview': typeof LovableEmailAuthPreviewRoute
   '/lovable/email/auth/webhook': typeof LovableEmailAuthWebhookRoute
   '/espace/dossiers/': typeof AppEspaceDossiersIndexRoute
+  '/espace/formations/': typeof AppEspaceFormationsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -245,6 +253,7 @@ export interface FileRoutesByTo {
   '/lovable/email/auth/preview': typeof LovableEmailAuthPreviewRoute
   '/lovable/email/auth/webhook': typeof LovableEmailAuthWebhookRoute
   '/espace/dossiers': typeof AppEspaceDossiersIndexRoute
+  '/espace/formations': typeof AppEspaceFormationsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -277,6 +286,7 @@ export interface FileRoutesById {
   '/lovable/email/auth/preview': typeof LovableEmailAuthPreviewRoute
   '/lovable/email/auth/webhook': typeof LovableEmailAuthWebhookRoute
   '/_app/espace/dossiers/': typeof AppEspaceDossiersIndexRoute
+  '/_app/espace/formations/': typeof AppEspaceFormationsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -309,6 +319,7 @@ export interface FileRouteTypes {
     | '/lovable/email/auth/preview'
     | '/lovable/email/auth/webhook'
     | '/espace/dossiers/'
+    | '/espace/formations/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -339,6 +350,7 @@ export interface FileRouteTypes {
     | '/lovable/email/auth/preview'
     | '/lovable/email/auth/webhook'
     | '/espace/dossiers'
+    | '/espace/formations'
   id:
     | '__root__'
     | '/'
@@ -370,6 +382,7 @@ export interface FileRouteTypes {
     | '/lovable/email/auth/preview'
     | '/lovable/email/auth/webhook'
     | '/_app/espace/dossiers/'
+    | '/_app/espace/formations/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -578,6 +591,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppEspaceDossiersNewRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/espace/formations/': {
+      id: '/_app/espace/formations/'
+      path: '/espace/formations'
+      fullPath: '/espace/formations/'
+      preLoaderRoute: typeof AppEspaceFormationsIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/api/public/formation-image/$': {
       id: '/api/public/formation-image/$'
       path: '/api/public/formation-image/$'
@@ -613,6 +633,7 @@ interface AppRouteChildren {
   AppEspaceDossiersIdRoute: typeof AppEspaceDossiersIdRoute
   AppEspaceDossiersNewRoute: typeof AppEspaceDossiersNewRoute
   AppEspaceDossiersIndexRoute: typeof AppEspaceDossiersIndexRoute
+  AppEspaceFormationsIndexRoute: typeof AppEspaceFormationsIndexRoute
 }
 
 const AppRouteChildren: AppRouteChildren = {
@@ -626,6 +647,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppEspaceDossiersIdRoute: AppEspaceDossiersIdRoute,
   AppEspaceDossiersNewRoute: AppEspaceDossiersNewRoute,
   AppEspaceDossiersIndexRoute: AppEspaceDossiersIndexRoute,
+  AppEspaceFormationsIndexRoute: AppEspaceFormationsIndexRoute,
 }
 
 const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
