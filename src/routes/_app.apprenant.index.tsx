@@ -261,24 +261,44 @@ function EspaceApprenant() {
           ) : (
             reponses.map((doc) => (
               <Card key={doc.id} className="rounded-2xl border-border/70 shadow-soft">
-                <CardContent className="flex flex-wrap items-center gap-3 p-5 text-sm">
-                  <CheckCircle2 className="size-4 text-success" />
-                  <span className="font-medium">
-                    {doc.code} — {doc.label}
-                  </span>
-                  <span className="text-muted-foreground">{doc.reponse_nom}</span>
-                  <span className="ml-auto text-xs text-muted-foreground">
-                    {doc.statut === "archive" ? "Archivé" : "Reçu"}
-                  </span>
-                  {doc.drive_url ? (
-                    <a
-                      href={doc.drive_url}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="inline-flex items-center gap-1 text-xs text-primary underline"
-                    >
-                      Archive <ExternalLink className="size-3" />
-                    </a>
+                <CardContent className="grid gap-2 p-5 text-sm">
+                  <div className="flex flex-wrap items-center gap-3">
+                    <CheckCircle2 className="size-4 text-success" />
+                    <span className="font-medium">
+                      {doc.code} — {doc.label}
+                    </span>
+                    <span className="text-muted-foreground">{doc.reponse_nom}</span>
+                    <span className="ml-auto text-xs text-muted-foreground">
+                      {doc.statut === "archive" ? "Archivé" : "Reçu"}
+                    </span>
+                    {doc.drive_url ? (
+                      <a
+                        href={doc.drive_url}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="inline-flex items-center gap-1 text-xs text-primary underline"
+                      >
+                        Archive <ExternalLink className="size-3" />
+                      </a>
+                    ) : null}
+                  </div>
+                  {doc.signature_date ? (
+                    <div className="grid gap-1 rounded-xl bg-muted/40 p-3 text-xs text-muted-foreground">
+                      <span>
+                        <ShieldCheck className="mr-1 inline size-3 text-success" />
+                        Signé électroniquement le {horodatageFr(doc.signature_date)}
+                      </span>
+                      <span className="break-all">Empreinte SHA-256 : {doc.signature_hash}</span>
+                      {doc.certificat_url ? (
+                        <button
+                          type="button"
+                          onClick={() => void ouvrir(doc.certificat_url!)}
+                          className="justify-self-start text-primary underline"
+                        >
+                          Télécharger le certificat de signature
+                        </button>
+                      ) : null}
+                    </div>
                   ) : null}
                 </CardContent>
               </Card>
