@@ -31,7 +31,7 @@ type AuthState = {
   session: Session | null;
   user: User | null;
   profile: Profile | null;
-  role: "admin" | "formateur" | null;
+  role: "admin" | "formateur" | "apprenant" | null;
   loading: boolean;
   isAdmin: boolean;
   isValidatedFormateur: boolean;
@@ -44,7 +44,7 @@ const AuthContext = createContext<AuthState | null>(null);
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [session, setSession] = useState<Session | null>(null);
   const [profile, setProfile] = useState<Profile | null>(null);
-  const [role, setRole] = useState<"admin" | "formateur" | null>(null);
+  const [role, setRole] = useState<"admin" | "formateur" | "apprenant" | null>(null);
   const [loading, setLoading] = useState(true);
 
   async function load(userId: string | undefined) {
@@ -59,7 +59,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     ]);
     setProfile((prof as Profile) ?? null);
     const list = (roles ?? []).map((r) => r.role);
-    setRole(list.includes("admin") ? "admin" : list.includes("formateur") ? "formateur" : null);
+    setRole(
+      list.includes("admin")
+        ? "admin"
+        : list.includes("formateur")
+          ? "formateur"
+          : list.includes("apprenant")
+            ? "apprenant"
+            : null,
+    );
   }
 
   useEffect(() => {

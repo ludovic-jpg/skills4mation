@@ -38,15 +38,17 @@ const ATOUTS = [
 
 function AuthPage() {
   const router = useRouter();
-  const { session, isAdmin, loading } = useAuth();
+  const { session, isAdmin, role, loading } = useAuth();
   const [busy, setBusy] = useState(false);
   const [mode, setMode] = useState<"login" | "reset">("login");
 
   useEffect(() => {
     if (!loading && session) {
-      void router.navigate({ to: isAdmin ? "/admin" : "/espace" });
+      void router.navigate({
+        to: isAdmin ? "/admin" : role === "apprenant" ? "/apprenant" : "/espace",
+      });
     }
-  }, [loading, session, isAdmin, router]);
+  }, [loading, session, isAdmin, role, router]);
 
   async function signIn(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();

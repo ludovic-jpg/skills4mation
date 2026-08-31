@@ -265,6 +265,84 @@ export type Database = {
         }
         Relationships: []
       }
+      document_envois: {
+        Row: {
+          apprenant_id: string | null
+          code: string
+          contenu_html: string | null
+          created_at: string
+          dossier_id: string
+          drive_file_id: string | null
+          drive_url: string | null
+          fichier_url: string | null
+          formateur_id: string
+          id: string
+          label: string
+          nom_archive: string | null
+          received_at: string | null
+          reponse_nom: string | null
+          reponse_url: string | null
+          sent_at: string | null
+          statut: string
+          updated_at: string
+        }
+        Insert: {
+          apprenant_id?: string | null
+          code: string
+          contenu_html?: string | null
+          created_at?: string
+          dossier_id: string
+          drive_file_id?: string | null
+          drive_url?: string | null
+          fichier_url?: string | null
+          formateur_id: string
+          id?: string
+          label?: string
+          nom_archive?: string | null
+          received_at?: string | null
+          reponse_nom?: string | null
+          reponse_url?: string | null
+          sent_at?: string | null
+          statut?: string
+          updated_at?: string
+        }
+        Update: {
+          apprenant_id?: string | null
+          code?: string
+          contenu_html?: string | null
+          created_at?: string
+          dossier_id?: string
+          drive_file_id?: string | null
+          drive_url?: string | null
+          fichier_url?: string | null
+          formateur_id?: string
+          id?: string
+          label?: string
+          nom_archive?: string | null
+          received_at?: string | null
+          reponse_nom?: string | null
+          reponse_url?: string | null
+          sent_at?: string | null
+          statut?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "document_envois_apprenant_id_fkey"
+            columns: ["apprenant_id"]
+            isOneToOne: false
+            referencedRelation: "dossier_apprenants"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "document_envois_dossier_id_fkey"
+            columns: ["dossier_id"]
+            isOneToOne: false
+            referencedRelation: "dossiers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       documents_dossier: {
         Row: {
           dossier_id: string
@@ -296,6 +374,53 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "documents_dossier_dossier_id_fkey"
+            columns: ["dossier_id"]
+            isOneToOne: false
+            referencedRelation: "dossiers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      dossier_apprenants: {
+        Row: {
+          created_at: string
+          dossier_id: string
+          email: string
+          formateur_id: string
+          id: string
+          nom: string
+          prenom: string
+          telephone: string | null
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          dossier_id: string
+          email: string
+          formateur_id: string
+          id?: string
+          nom?: string
+          prenom?: string
+          telephone?: string | null
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          dossier_id?: string
+          email?: string
+          formateur_id?: string
+          id?: string
+          nom?: string
+          prenom?: string
+          telephone?: string | null
+          updated_at?: string
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "dossier_apprenants_dossier_id_fkey"
             columns: ["dossier_id"]
             isOneToOne: false
             referencedRelation: "dossiers"
@@ -398,6 +523,7 @@ export type Database = {
           documents_json: Json
           donnees: Json
           dossier_nom: string | null
+          drive_folder_id: string | null
           drive_folder_url: string | null
           entreprise_nom: string | null
           entreprise_siret: string | null
@@ -418,6 +544,7 @@ export type Database = {
           documents_json?: Json
           donnees?: Json
           dossier_nom?: string | null
+          drive_folder_id?: string | null
           drive_folder_url?: string | null
           entreprise_nom?: string | null
           entreprise_siret?: string | null
@@ -438,6 +565,7 @@ export type Database = {
           documents_json?: Json
           donnees?: Json
           dossier_nom?: string | null
+          drive_folder_id?: string | null
           drive_folder_url?: string | null
           entreprise_nom?: string | null
           entreprise_siret?: string | null
@@ -617,7 +745,7 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      app_role: "formateur" | "admin"
+      app_role: "formateur" | "admin" | "apprenant"
       budget_statut: "en_attente" | "en_cours_etude" | "validee" | "refusee"
       candidature_statut: "en_attente" | "valide" | "refuse" | "en_cours"
       crm_statut:
@@ -775,7 +903,7 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
-      app_role: ["formateur", "admin"],
+      app_role: ["formateur", "admin", "apprenant"],
       budget_statut: ["en_attente", "en_cours_etude", "validee", "refusee"],
       candidature_statut: ["en_attente", "valide", "refuse", "en_cours"],
       crm_statut: [

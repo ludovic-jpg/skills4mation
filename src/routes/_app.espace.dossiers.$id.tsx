@@ -9,6 +9,7 @@ import { CrmBadge } from "@/components/app/CrmBadge";
 import { FORMATEUR_NAV } from "@/components/app/nav";
 import { DocumentsPanel } from "@/components/dossier/DocumentsPanel";
 import { DossierWizard } from "@/components/dossier/DossierWizard";
+import { EnvoisPanel } from "@/components/dossier/EnvoisPanel";
 import { PiecesPanel } from "@/components/dossier/PiecesPanel";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -196,6 +197,7 @@ function DossierDetail() {
             <TabsTrigger value="suivi">Suivi</TabsTrigger>
             <TabsTrigger value="variables">Formulaire du dossier</TabsTrigger>
             <TabsTrigger value="documents">Documents</TabsTrigger>
+            <TabsTrigger value="signatures">Envoi &amp; signatures</TabsTrigger>
             <TabsTrigger value="pieces">Pièces &amp; génération</TabsTrigger>
           </TabsList>
 
@@ -214,6 +216,12 @@ function DossierDetail() {
               <DocumentsPanel dossierId={id} formateurId={user.id} donnees={donnees} />
             ) : null}
           </TabsContent>
+
+          <TabsContent value="signatures">
+            <EnvoisPanel dossierId={id} donnees={donnees} />
+          </TabsContent>
+
+
 
           <TabsContent value="pieces">
             {user ? (

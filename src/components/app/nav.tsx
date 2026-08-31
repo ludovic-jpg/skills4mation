@@ -1,5 +1,6 @@
 import {
   FilePlus2,
+  GraduationCap,
   FolderKanban,
   Folders,
   Inbox,
@@ -21,6 +22,10 @@ export const FORMATEUR_NAV: NavItem[] = [
 export const CANDIDAT_NAV: NavItem[] = [
   { to: "/espace/candidature", label: "Ma candidature", icon: Users },
   { to: "/espace/profil", label: "Mon profil", icon: UserCog },
+];
+
+export const APPRENANT_NAV: NavItem[] = [
+  { to: "/apprenant", label: "Mon espace apprenant", icon: GraduationCap },
 ];
 
 export const ADMIN_NAV: NavItem[] = [
