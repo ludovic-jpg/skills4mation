@@ -59,7 +59,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     ]);
     setProfile((prof as Profile) ?? null);
     const list = (roles ?? []).map((r) => r.role);
-    setRole(list.includes("admin") ? "admin" : list.includes("formateur") ? "formateur" : null);
+    setRole(
+      list.includes("admin")
+        ? "admin"
+        : list.includes("formateur")
+          ? "formateur"
+          : list.includes("apprenant")
+            ? "apprenant"
+            : null,
+    );
   }
 
   useEffect(() => {
