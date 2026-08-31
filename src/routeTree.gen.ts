@@ -15,16 +15,20 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as CodeDeontologiqueRouteImport } from './routes/code-deontologique'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as EvaluerDroitFormationRouteImport } from './routes/evaluer-droit-formation'
+import { Route as McpRouteImport } from './routes/mcp'
 import { Route as MentionsLegalesRouteImport } from './routes/mentions-legales'
 import { Route as PoleFormateurRouteImport } from './routes/pole-formateur'
 import { Route as PolitiqueDeConfidentialiteRouteImport } from './routes/politique-de-confidentialite'
 import { Route as PortageQualiopiRouteImport } from './routes/portage-qualiopi'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as Char91DotmcpChar93ListToolsRouteImport } from './routes/[.mcp]/list-tools'
+import { Route as Char91DotwellKnownChar93OauthProtectedResourceRouteImport } from './routes/[.well-known]/oauth-protected-resource'
 import { Route as BlogIndexRouteImport } from './routes/blog.index'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 import { Route as CatalogueIndexRouteImport } from './routes/catalogue.index'
 import { Route as FormationsIndexRouteImport } from './routes/formations.index'
 import { Route as FormationsSlugRouteImport } from './routes/formations.$slug'
+import { Route as Char91DotmcpChar93InvokeToolToolRouteImport } from './routes/[.mcp]/invoke-tool/$tool'
 import { Route as AppAdminIndexRouteImport } from './routes/_app.admin.index'
 import { Route as AppAdminDemandesRouteImport } from './routes/_app.admin.demandes'
 import { Route as AppAdminDossiersRouteImport } from './routes/_app.admin.dossiers'
@@ -76,6 +80,11 @@ const EvaluerDroitFormationRoute = EvaluerDroitFormationRouteImport.update({
   path: '/evaluer-droit-formation',
   getParentRoute: () => rootRouteImport,
 } as any)
+const McpRoute = McpRouteImport.update({
+  id: '/mcp',
+  path: '/mcp',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const MentionsLegalesRoute = MentionsLegalesRouteImport.update({
   id: '/mentions-legales',
   path: '/mentions-legales',
@@ -102,6 +111,18 @@ const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
+const Char91DotmcpChar93ListToolsRoute =
+  Char91DotmcpChar93ListToolsRouteImport.update({
+    id: '/.mcp/list-tools',
+    path: '/.mcp/list-tools',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const Char91DotwellKnownChar93OauthProtectedResourceRoute =
+  Char91DotwellKnownChar93OauthProtectedResourceRouteImport.update({
+    id: '/.well-known/oauth-protected-resource',
+    path: '/.well-known/oauth-protected-resource',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const BlogIndexRoute = BlogIndexRouteImport.update({
   id: '/blog/',
   path: '/blog/',
@@ -127,6 +148,12 @@ const FormationsSlugRoute = FormationsSlugRouteImport.update({
   path: '/formations/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const Char91DotmcpChar93InvokeToolToolRoute =
+  Char91DotmcpChar93InvokeToolToolRouteImport.update({
+    id: '/.mcp/invoke-tool/$tool',
+    path: '/.mcp/invoke-tool/$tool',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const AppAdminIndexRoute = AppAdminIndexRouteImport.update({
   id: '/admin/',
   path: '/admin/',
@@ -242,16 +269,20 @@ export interface FileRoutesByFullPath {
   '/code-deontologique': typeof CodeDeontologiqueRoute
   '/contact': typeof ContactRoute
   '/evaluer-droit-formation': typeof EvaluerDroitFormationRoute
+  '/mcp': typeof McpRoute
   '/mentions-legales': typeof MentionsLegalesRoute
   '/pole-formateur': typeof PoleFormateurRoute
   '/politique-de-confidentialite': typeof PolitiqueDeConfidentialiteRoute
   '/portage-qualiopi': typeof PortageQualiopiRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
+  '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/formations/$slug': typeof FormationsSlugRoute
   '/blog/': typeof BlogIndexRoute
   '/catalogue/': typeof CatalogueIndexRoute
   '/formations/': typeof FormationsIndexRoute
+  '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
   '/admin/demandes': typeof AppAdminDemandesRoute
   '/admin/dossiers': typeof AppAdminDossiersRoute
   '/admin/pilotage': typeof AppAdminPilotageRoute
@@ -280,16 +311,20 @@ export interface FileRoutesByTo {
   '/code-deontologique': typeof CodeDeontologiqueRoute
   '/contact': typeof ContactRoute
   '/evaluer-droit-formation': typeof EvaluerDroitFormationRoute
+  '/mcp': typeof McpRoute
   '/mentions-legales': typeof MentionsLegalesRoute
   '/pole-formateur': typeof PoleFormateurRoute
   '/politique-de-confidentialite': typeof PolitiqueDeConfidentialiteRoute
   '/portage-qualiopi': typeof PortageQualiopiRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
+  '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/formations/$slug': typeof FormationsSlugRoute
   '/blog': typeof BlogIndexRoute
   '/catalogue': typeof CatalogueIndexRoute
   '/formations': typeof FormationsIndexRoute
+  '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
   '/admin/demandes': typeof AppAdminDemandesRoute
   '/admin/dossiers': typeof AppAdminDossiersRoute
   '/admin/pilotage': typeof AppAdminPilotageRoute
@@ -320,16 +355,20 @@ export interface FileRoutesById {
   '/code-deontologique': typeof CodeDeontologiqueRoute
   '/contact': typeof ContactRoute
   '/evaluer-droit-formation': typeof EvaluerDroitFormationRoute
+  '/mcp': typeof McpRoute
   '/mentions-legales': typeof MentionsLegalesRoute
   '/pole-formateur': typeof PoleFormateurRoute
   '/politique-de-confidentialite': typeof PolitiqueDeConfidentialiteRoute
   '/portage-qualiopi': typeof PortageQualiopiRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
+  '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/formations/$slug': typeof FormationsSlugRoute
   '/blog/': typeof BlogIndexRoute
   '/catalogue/': typeof CatalogueIndexRoute
   '/formations/': typeof FormationsIndexRoute
+  '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
   '/_app/admin/demandes': typeof AppAdminDemandesRoute
   '/_app/admin/dossiers': typeof AppAdminDossiersRoute
   '/_app/admin/pilotage': typeof AppAdminPilotageRoute
@@ -360,16 +399,20 @@ export interface FileRouteTypes {
     | '/code-deontologique'
     | '/contact'
     | '/evaluer-droit-formation'
+    | '/mcp'
     | '/mentions-legales'
     | '/pole-formateur'
     | '/politique-de-confidentialite'
     | '/portage-qualiopi'
     | '/sitemap.xml'
+    | '/.mcp/list-tools'
+    | '/.well-known/oauth-protected-resource'
     | '/blog/$slug'
     | '/formations/$slug'
     | '/blog/'
     | '/catalogue/'
     | '/formations/'
+    | '/.mcp/invoke-tool/$tool'
     | '/admin/demandes'
     | '/admin/dossiers'
     | '/admin/pilotage'
@@ -398,16 +441,20 @@ export interface FileRouteTypes {
     | '/code-deontologique'
     | '/contact'
     | '/evaluer-droit-formation'
+    | '/mcp'
     | '/mentions-legales'
     | '/pole-formateur'
     | '/politique-de-confidentialite'
     | '/portage-qualiopi'
     | '/sitemap.xml'
+    | '/.mcp/list-tools'
+    | '/.well-known/oauth-protected-resource'
     | '/blog/$slug'
     | '/formations/$slug'
     | '/blog'
     | '/catalogue'
     | '/formations'
+    | '/.mcp/invoke-tool/$tool'
     | '/admin/demandes'
     | '/admin/dossiers'
     | '/admin/pilotage'
@@ -437,16 +484,20 @@ export interface FileRouteTypes {
     | '/code-deontologique'
     | '/contact'
     | '/evaluer-droit-formation'
+    | '/mcp'
     | '/mentions-legales'
     | '/pole-formateur'
     | '/politique-de-confidentialite'
     | '/portage-qualiopi'
     | '/sitemap.xml'
+    | '/.mcp/list-tools'
+    | '/.well-known/oauth-protected-resource'
     | '/blog/$slug'
     | '/formations/$slug'
     | '/blog/'
     | '/catalogue/'
     | '/formations/'
+    | '/.mcp/invoke-tool/$tool'
     | '/_app/admin/demandes'
     | '/_app/admin/dossiers'
     | '/_app/admin/pilotage'
@@ -477,16 +528,20 @@ export interface RootRouteChildren {
   CodeDeontologiqueRoute: typeof CodeDeontologiqueRoute
   ContactRoute: typeof ContactRoute
   EvaluerDroitFormationRoute: typeof EvaluerDroitFormationRoute
+  McpRoute: typeof McpRoute
   MentionsLegalesRoute: typeof MentionsLegalesRoute
   PoleFormateurRoute: typeof PoleFormateurRoute
   PolitiqueDeConfidentialiteRoute: typeof PolitiqueDeConfidentialiteRoute
   PortageQualiopiRoute: typeof PortageQualiopiRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  Char91DotmcpChar93ListToolsRoute: typeof Char91DotmcpChar93ListToolsRoute
+  Char91DotwellKnownChar93OauthProtectedResourceRoute: typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   BlogSlugRoute: typeof BlogSlugRoute
   FormationsSlugRoute: typeof FormationsSlugRoute
   BlogIndexRoute: typeof BlogIndexRoute
   CatalogueIndexRoute: typeof CatalogueIndexRoute
   FormationsIndexRoute: typeof FormationsIndexRoute
+  Char91DotmcpChar93InvokeToolToolRoute: typeof Char91DotmcpChar93InvokeToolToolRoute
   CatalogueCategorySlugRoute: typeof CatalogueCategorySlugRoute
   CatalogueCategoryIndexRoute: typeof CatalogueCategoryIndexRoute
   ApiPublicFormationImageSplatRoute: typeof ApiPublicFormationImageSplatRoute
@@ -539,6 +594,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EvaluerDroitFormationRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/mcp': {
+      id: '/mcp'
+      path: '/mcp'
+      fullPath: '/mcp'
+      preLoaderRoute: typeof McpRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/mentions-legales': {
       id: '/mentions-legales'
       path: '/mentions-legales'
@@ -574,6 +636,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/.mcp/list-tools': {
+      id: '/.mcp/list-tools'
+      path: '/.mcp/list-tools'
+      fullPath: '/.mcp/list-tools'
+      preLoaderRoute: typeof Char91DotmcpChar93ListToolsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/.well-known/oauth-protected-resource': {
+      id: '/.well-known/oauth-protected-resource'
+      path: '/.well-known/oauth-protected-resource'
+      fullPath: '/.well-known/oauth-protected-resource'
+      preLoaderRoute: typeof Char91DotwellKnownChar93OauthProtectedResourceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/blog/': {
       id: '/blog/'
       path: '/blog'
@@ -607,6 +683,13 @@ declare module '@tanstack/react-router' {
       path: '/formations/$slug'
       fullPath: '/formations/$slug'
       preLoaderRoute: typeof FormationsSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/.mcp/invoke-tool/$tool': {
+      id: '/.mcp/invoke-tool/$tool'
+      path: '/.mcp/invoke-tool/$tool'
+      fullPath: '/.mcp/invoke-tool/$tool'
+      preLoaderRoute: typeof Char91DotmcpChar93InvokeToolToolRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_app/admin/': {
@@ -804,16 +887,21 @@ const rootRouteChildren: RootRouteChildren = {
   CodeDeontologiqueRoute: CodeDeontologiqueRoute,
   ContactRoute: ContactRoute,
   EvaluerDroitFormationRoute: EvaluerDroitFormationRoute,
+  McpRoute: McpRoute,
   MentionsLegalesRoute: MentionsLegalesRoute,
   PoleFormateurRoute: PoleFormateurRoute,
   PolitiqueDeConfidentialiteRoute: PolitiqueDeConfidentialiteRoute,
   PortageQualiopiRoute: PortageQualiopiRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
+  Char91DotmcpChar93ListToolsRoute: Char91DotmcpChar93ListToolsRoute,
+  Char91DotwellKnownChar93OauthProtectedResourceRoute:
+    Char91DotwellKnownChar93OauthProtectedResourceRoute,
   BlogSlugRoute: BlogSlugRoute,
   FormationsSlugRoute: FormationsSlugRoute,
   BlogIndexRoute: BlogIndexRoute,
   CatalogueIndexRoute: CatalogueIndexRoute,
   FormationsIndexRoute: FormationsIndexRoute,
+  Char91DotmcpChar93InvokeToolToolRoute: Char91DotmcpChar93InvokeToolToolRoute,
   CatalogueCategorySlugRoute: CatalogueCategorySlugRoute,
   CatalogueCategoryIndexRoute: CatalogueCategoryIndexRoute,
   ApiPublicFormationImageSplatRoute: ApiPublicFormationImageSplatRoute,
