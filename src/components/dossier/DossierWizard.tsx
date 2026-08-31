@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import { Link } from "@tanstack/react-router";
 import { Plus, Save, Trash2 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -433,6 +434,12 @@ export function DossierWizard({ value, saving, onSave }: Props) {
 
           {step === 2 ? (
             <div className="grid gap-6">
+              <p className="text-xs text-muted-foreground">
+                Entreprise, adresse, SIRET, NDA et région proviennent de votre profil formateur.{" "}
+                <Link to="/espace/profil" className="font-semibold underline">
+                  Modifier dans mon profil
+                </Link>
+              </p>
               <div className="grid gap-4 sm:grid-cols-2">
                 <Field
                   label="Prénom du formateur"
@@ -460,27 +467,32 @@ export function DossierWizard({ value, saving, onSave }: Props) {
                   label="Entreprise du formateur"
                   value={d.formateur.entreprise}
                   onChange={(v) => set("formateur", { entreprise: v })}
+                  readOnly
                 />
                 <Field
                   label="SIRET du formateur"
                   value={d.formateur.siret}
                   onChange={(v) => set("formateur", { siret: v })}
+                  readOnly
                 />
                 <Field
                   label="Adresse du formateur"
                   value={d.formateur.adresse}
                   onChange={(v) => set("formateur", { adresse: v })}
+                  readOnly
                   className="sm:col-span-2"
                 />
                 <Field
                   label="Numéro de déclaration d'activité"
                   value={d.formateur.nda}
                   onChange={(v) => set("formateur", { nda: v })}
+                  readOnly
                 />
                 <Field
                   label="Région du NDA"
                   value={d.formateur.ndaRegion}
                   onChange={(v) => set("formateur", { ndaRegion: v })}
+                  readOnly
                 />
                 <Field
                   label="Coût horaire (€)"
@@ -803,6 +815,7 @@ function Field({
   type = "text",
   className,
   error,
+  readOnly,
 }: {
   label: string;
   value: string;
@@ -810,6 +823,7 @@ function Field({
   type?: string;
   className?: string;
   error?: string | undefined;
+  readOnly?: boolean;
 }) {
   return (
     <div className={`grid gap-2 ${className ?? ""}`}>
@@ -817,6 +831,8 @@ function Field({
       <Input
         type={type}
         value={value}
+        readOnly={readOnly}
+        disabled={readOnly}
         aria-invalid={Boolean(error)}
         onChange={(e) => onChange(e.target.value)}
       />
