@@ -1,4 +1,4 @@
-import { auth, defineMcp, type AnyToolDefinition } from "@lovable.dev/mcp-js";
+import { auth, defineMcp } from "@lovable.dev/mcp-js";
 
 import getDossierTool from "./tools/get-dossier";
 import listDossiersTool from "./tools/list-dossiers";
@@ -24,5 +24,5 @@ export default defineMcp({
     updateDossierStatutTool,
     listMesFormationsTool,
     searchCatalogueTool,
-  ],
+  ] as unknown as Parameters<typeof defineMcp>[0]["tools"],
 });
