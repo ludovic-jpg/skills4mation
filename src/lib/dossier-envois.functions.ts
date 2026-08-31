@@ -131,6 +131,12 @@ export const archiverReponseApprenant = createServerFn({ method: "POST" })
       .download(envoi.reponse_url);
     if (dlError || !file) throw new Error("Fichier signé illisible.");
 
+    const { data: formateur } = await supabaseAdmin
+      .from("profiles")
+      .select("prenom, email")
+      .eq("id", envoi.formateur_id)
+      .maybeSingle();
+
     const { data: dossier } = await supabaseAdmin
       .from("dossiers")
       .select("id, dossier_nom, entreprise_nom, titre_formation")
@@ -148,6 +154,28 @@ export const archiverReponseApprenant = createServerFn({ method: "POST" })
       dossier?.dossier_nom ||
       [dossier?.entreprise_nom, dossier?.titre_formation].filter(Boolean).join(" - ") ||
       `Dossier ${envoi.dossier_id.slice(0, 8)}`;
+
+    const { sendTemplateEmail } = await import("@/lib/email-templates/send-email");
+    const lienDossier = `https://skills4mation.com/espace/dossiers/${envoi.dossier_id}`;
+
+    if (formateur?.email) {
+      try {
+        await sendTemplateEmail("depot-formateur", formateur.email, {
+          idempotencyKey: `depot-formateur-${envoi.id}`,
+          templateData: {
+            formateurPrenom: formateur.prenom ?? "",
+            apprenantNom: apprenantLabel,
+            documentCode: envoi.code,
+            documentLabel: envoi.label,
+            dossierLabel,
+            fichierNom: envoi.reponse_nom ?? "",
+            lien: lienDossier,
+          },
+        });
+      } catch (mailError) {
+        console.error("[email] dépôt formateur non envoyé", mailError);
+      }
+    }
 
     const ext = (envoi.reponse_nom ?? envoi.reponse_url).split(".").pop() ?? "pdf";
     const baseName = (envoi.nom_archive ?? `${envoi.code}_${apprenantLabel}`).replace(/\.pdf$/i, "");
@@ -215,6 +243,28 @@ export const archiverReponseApprenant = createServerFn({ method: "POST" })
       message: `${apprenantLabel} a signé électroniquement « ${envoi.label} ». Document et certificat de signature archivés dans Google Drive.`,
       lien: `/espace/dossiers/${envoi.dossier_id}`,
     });
+
+    if (formateur?.email) {
+      const { horodatageFr } = await import("@/lib/dossier/signature");
+      try {
+        await sendTemplateEmail("signature-formateur", formateur.email, {
+          idempotencyKey: `signature-formateur-${envoi.id}`,
+          templateData: {
+            formateurPrenom: formateur.prenom ?? "",
+            apprenantNom: apprenantLabel,
+            documentCode: envoi.code,
+            documentLabel: envoi.label,
+            dossierLabel,
+            signatureDate: horodatageFr(signatureDate),
+            hash,
+            lien: lienDossier,
+            driveUrl: uploaded.webViewLink ?? folderUrl(targetFolderId),
+          },
+        });
+      } catch (mailError) {
+        console.error("[email] notification de signature non envoyée", mailError);
+      }
+    }
 
     return {
       driveUrl: uploaded.webViewLink ?? folderUrl(targetFolderId),
