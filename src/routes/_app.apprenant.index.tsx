@@ -105,6 +105,8 @@ function EspaceApprenant() {
       if (!user) throw new Error("Session expirée.");
       const ext = file.name.split(".").pop() ?? "pdf";
       const path = `apprenants/${user.id}/${envoiId}.${ext}`;
+      const hash = await sha256Hex(await file.arrayBuffer());
+      const signatureDate = new Date().toISOString();
       const { error: upErr } = await supabase.storage
         .from("documents")
         .upload(path, file, { upsert: true, contentType: file.type || "application/pdf" });
@@ -114,10 +116,10 @@ function EspaceApprenant() {
         .update({ reponse_url: path, reponse_nom: file.name, statut: "recu" })
         .eq("id", envoiId);
       if (updErr) throw new Error("Enregistrement impossible.");
-      return archiver({ data: { envoiId } });
+      return archiver({ data: { envoiId, consentement: true, hash, signatureDate } });
     },
     onSuccess: () => {
-      toast.success("Document transmis, archivé et formateur notifié.");
+      toast.success("Signature enregistrée : document et certificat archivés, formateur notifié.");
       void queryClient.invalidateQueries({ queryKey: ["apprenant-documents", user?.id] });
     },
     onError: (error: Error) => toast.error(error.message),
