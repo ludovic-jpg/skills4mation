@@ -131,6 +131,12 @@ export const archiverReponseApprenant = createServerFn({ method: "POST" })
       .download(envoi.reponse_url);
     if (dlError || !file) throw new Error("Fichier signé illisible.");
 
+    const { data: formateur } = await supabaseAdmin
+      .from("profiles")
+      .select("prenom, email")
+      .eq("id", envoi.formateur_id)
+      .maybeSingle();
+
     const { data: dossier } = await supabaseAdmin
       .from("dossiers")
       .select("id, dossier_nom, entreprise_nom, titre_formation")
