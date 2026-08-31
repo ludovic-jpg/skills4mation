@@ -96,7 +96,7 @@ export const Route = createFileRoute("/formations/$slug")({
           Cette page de formation n'est plus publiée.
         </p>
         <Button asChild variant="cta" className="mt-6">
-          <Link to="/catalogue">Voir le catalogue</Link>
+          <Link to="/formations">Voir le catalogue</Link>
         </Button>
       </section>
     </PublicLayout>

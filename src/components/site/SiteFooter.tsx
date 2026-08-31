@@ -52,7 +52,7 @@ export function SiteFooter() {
               </Link>
             </li>
             <li>
-              <Link to="/catalogue">Catalogue de formation</Link>
+              <Link to="/formations">Catalogue de formation</Link>
             </li>
             <li>
               <Link to="/" hash="budget">

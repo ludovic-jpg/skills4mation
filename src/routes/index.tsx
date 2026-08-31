@@ -115,7 +115,7 @@ function Accueil() {
             </div>
             <div className="mt-8 flex flex-wrap gap-3">
               <Button asChild variant="cta" size="lg">
-                <Link to="/catalogue">Je veux me former</Link>
+                <Link to="/formations">Je veux me former</Link>
               </Button>
               <Button asChild variant="onDark" size="lg">
                 <Link to="/portage-qualiopi">Je suis formateur</Link>
@@ -164,7 +164,7 @@ function Accueil() {
               </p>
               <div className="mt-7">
                 <Button asChild variant="cta" size="lg">
-                  <Link to="/catalogue">
+                  <Link to="/formations">
                     Voir les formations <ArrowRight className="size-4" />
                   </Link>
                 </Button>
@@ -256,7 +256,7 @@ function Accueil() {
                 </p>
                 <div className="mt-auto pt-7">
                   <Button asChild variant="cta" size="lg">
-                    <Link to="/catalogue">Voir les formations</Link>
+                    <Link to="/formations">Voir les formations</Link>
                   </Button>
                 </div>
               </CardContent>
@@ -293,7 +293,7 @@ function Accueil() {
                 <Link to="/contact">Parler de mon projet de formation</Link>
               </Button>
               <Button asChild variant="outline" size="lg">
-                <Link to="/catalogue">Voir les formations</Link>
+                <Link to="/formations">Voir les formations</Link>
               </Button>
             </div>
           </div>
@@ -355,7 +355,7 @@ function Accueil() {
               </h2>
               <div className="mt-8 flex flex-wrap gap-3">
                 <Button asChild variant="cta" size="lg">
-                  <Link to="/catalogue">Voir les formations</Link>
+                  <Link to="/formations">Voir les formations</Link>
                 </Button>
                 <Button asChild variant="onDark" size="lg">
                   <Link to="/portage-qualiopi">Découvrir le portage Qualiopi</Link>
