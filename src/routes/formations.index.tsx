@@ -34,10 +34,10 @@ type Ligne = {
 };
 
 export const Route = createFileRoute("/formations/")({
-  validateSearch: (search: Record<string, unknown>) => ({
-    categorie:
-      typeof search['categorie'] === "string" ? (search['categorie'] as string) : undefined,
-  }),
+  validateSearch: (search: Record<string, unknown>): { categorie?: string } =>
+    typeof search['categorie'] === "string" && search['categorie']
+      ? { categorie: search['categorie'] as string }
+      : {},
   loader: async () => {
     const { data } = await supabase
       .from("formations_catalogue")
