@@ -33,41 +33,69 @@ const ETAPES = [
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-/** Validation temps réel : messages par champ. */
-function validate(d: DossierDonnees) {
-  const err: Record<string, string> = {};
-  if (!d.formation.titre.trim()) err["titre"] = "Le titre de la formation est requis.";
-  if (!d.formation.dateDebut) err["dateDebut"] = "Date de démarrage requise.";
-  if (!d.formation.dateFin) err["dateFin"] = "Date de fin requise.";
-  if (d.formation.dateDebut && d.formation.dateFin && d.formation.dateFin < d.formation.dateDebut)
-    err["dateFin"] = "La date de fin doit suivre la date de démarrage.";
-  if (!d.formation.heuresTotal || Number(d.formation.heuresTotal) <= 0)
-    err["heuresTotal"] = "Durée totale en heures requise.";
-  if (d.formation.format !== "presentiel" && !d.formation.lienConnexion.trim())
-    err["lienConnexion"] = "Lien de connexion requis pour le distanciel.";
-  if (!d.entreprise.nom.trim()) err["entrepriseNom"] = "Raison sociale requise.";
-  if (d.entreprise.siret && !/^\d{14}$/.test(d.entreprise.siret.replace(/\s/g, "")))
-    err["siret"] = "Le SIRET comporte 14 chiffres.";
-  if (d.entreprise.email && !EMAIL_RE.test(d.entreprise.email))
-    err["entrepriseEmail"] = "E-mail invalide.";
-  if (!d.formateur.nom.trim()) err["formateurNom"] = "Nom du formateur requis.";
-  if (!d.formateur.email.trim() || !EMAIL_RE.test(d.formateur.email))
-    err["formateurEmail"] = "E-mail du formateur invalide.";
-  if (d.apprenants.length === 0) err["apprenants"] = "Ajoutez au moins un apprenant.";
-  d.apprenants.forEach((a, i) => {
-    if (!a.nom.trim()) err[`apprenant-${i}`] = "Prénom et nom requis.";
-    else if (a.email && !EMAIL_RE.test(a.email)) err[`apprenant-${i}`] = "E-mail invalide.";
-    else if (estCpf(d) && !(a.numeroCpf ?? "").trim())
-      err[`apprenant-${i}`] = "Numéro de dossier CPF requis pour un financement CPF.";
-  });
+/** Retire espaces, tirets et points avant contrôle du SIRET. */
+function normaliseSiret(value: string) {
+  return value.replace(/[\s.-]/g, "");
+}
+
+type Errs = Record<string, string>;
+
+/** Validation par étape : seules les erreurs de l'étape affichée sont montrées. */
+function validateStep(step: number, d: DossierDonnees): Errs {
+  const err: Errs = {};
+  if (step === 0) {
+    if (!d.formation.titre.trim()) err["titre"] = "Le titre de la formation est requis.";
+    if (!d.formation.dateDebut) err["dateDebut"] = "Date de démarrage requise.";
+    if (!d.formation.dateFin) err["dateFin"] = "Date de fin requise.";
+    if (d.formation.dateDebut && d.formation.dateFin && d.formation.dateFin < d.formation.dateDebut)
+      err["dateFin"] = "La date de fin doit suivre la date de démarrage.";
+    if (!d.formation.heuresTotal || Number(d.formation.heuresTotal) <= 0)
+      err["heuresTotal"] = "Durée totale en heures requise.";
+    if (d.formation.format !== "presentiel" && !d.formation.lienConnexion.trim())
+      err["lienConnexion"] = "Lien de connexion requis pour le distanciel.";
+  }
+  if (step === 1) {
+    if (!d.entreprise.nom.trim()) err["entrepriseNom"] = "Raison sociale requise.";
+    if (d.entreprise.siret && !/^\d{14}$/.test(normaliseSiret(d.entreprise.siret)))
+      err["siret"] = "Le SIRET comporte 14 chiffres.";
+    if (d.entreprise.email && !EMAIL_RE.test(d.entreprise.email))
+      err["entrepriseEmail"] = "E-mail invalide.";
+  }
+  if (step === 2) {
+    if (!d.formateur.nom.trim()) err["formateurNom"] = "Nom du formateur requis.";
+    if (!d.formateur.email.trim() || !EMAIL_RE.test(d.formateur.email))
+      err["formateurEmail"] = "E-mail du formateur invalide.";
+  }
+  if (step === 3) {
+    if (d.apprenants.length === 0) err["apprenants"] = "Ajoutez au moins un apprenant.";
+    d.apprenants.forEach((a, i) => {
+      if (!a.nom.trim()) err[`apprenant-${i}`] = "Prénom et nom requis.";
+      else if (a.email && !EMAIL_RE.test(a.email)) err[`apprenant-${i}`] = "E-mail invalide.";
+      else if (estCpf(d) && !(a.numeroCpf ?? "").trim())
+        err[`apprenant-${i}`] = "Numéro de dossier CPF requis pour un financement CPF.";
+    });
+  }
   return err;
 }
 
 export function DossierWizard({ value, saving, onSave }: Props) {
   const [step, setStep] = useState(0);
   const [d, setD] = useState<DossierDonnees>(value);
-  const errors = useMemo(() => validate(d), [d]);
-  const invalide = Object.keys(errors).length > 0;
+  const [showBlocking, setShowBlocking] = useState(false);
+
+  // Resynchronise l'état interne quand la valeur enregistrée change côté serveur.
+  const [syncRef, setSyncRef] = useState(value);
+  if (value !== syncRef) {
+    setSyncRef(value);
+    setD(value);
+  }
+
+  const parEtape = useMemo(
+    () => ETAPES.map((_, index) => validateStep(index, d)),
+    [d],
+  );
+  const errors = parEtape[step] ?? {};
+  const totalManquants = parEtape.reduce((sum, e) => sum + Object.keys(e).length, 0);
 
   function set<K extends keyof DossierDonnees>(key: K, patch: Partial<DossierDonnees[K]>) {
     setD((prev) => ({ ...prev, [key]: { ...(prev[key] as object), ...patch } }) as DossierDonnees);
@@ -83,20 +111,72 @@ export function DossierWizard({ value, saving, onSave }: Props) {
               Étape {step + 1}/{ETAPES.length} — {ETAPES[step]}
             </p>
           </div>
-          <Button variant="cta" disabled={saving} onClick={() => onSave(d)}>
-            <Save className="mr-1.5 size-4" />
-            {saving ? "Enregistrement…" : "Enregistrer le dossier"}
-          </Button>
+          <div className="flex flex-wrap gap-2">
+            <Button variant="cta" disabled={saving} onClick={() => onSave(d)}>
+              <Save className="mr-1.5 size-4" />
+              {saving ? "Enregistrement…" : "Enregistrer le dossier"}
+            </Button>
+            <Button variant="outline" onClick={() => setShowBlocking(true)}>
+              Vérifier avant génération
+            </Button>
+          </div>
         </div>
         <Progress value={((step + 1) / ETAPES.length) * 100} className="mt-4" />
-        {invalide ? (
-          <p className="mt-3 text-xs text-cta-foreground">
-            {Object.keys(errors).length} champ(s) à compléter avant génération des documents
-            définitifs. L'enregistrement reste possible à tout moment.
-          </p>
-        ) : (
-          <p className="mt-3 text-xs text-success">Dossier complet : documents prêts à générer.</p>
-        )}
+
+        <div className="mt-3 flex flex-wrap gap-2">
+          {ETAPES.map((nom, index) => {
+            const nb = Object.keys(parEtape[index] ?? {}).length;
+            return (
+              <button
+                key={nom}
+                type="button"
+                onClick={() => setStep(index)}
+                className={`rounded-full border px-3 py-1 text-xs transition ${
+                  index === step ? "border-secondary bg-secondary/10" : "border-border/70"
+                }`}
+              >
+                {nom}{" "}
+                {nb === 0 ? (
+                  <span className="font-semibold text-success">✓</span>
+                ) : (
+                  <span className="font-semibold text-cta-foreground">{nb}</span>
+                )}
+              </button>
+            );
+          })}
+        </div>
+
+        {showBlocking ? (
+          totalManquants === 0 ? (
+            <p className="mt-3 text-xs text-success">Dossier complet : documents prêts à générer.</p>
+          ) : (
+            <div className="mt-3 rounded-xl border border-cta/40 bg-cta/10 p-3 text-xs">
+              <p className="font-semibold">
+                {totalManquants} champ(s) obligatoire(s) à compléter avant la génération des
+                documents définitifs. L'enregistrement reste possible à tout moment.
+              </p>
+              <ul className="mt-2 grid gap-1">
+                {ETAPES.map((nom, index) =>
+                  Object.keys(parEtape[index] ?? {}).length ? (
+                    <li key={nom}>
+                      <button
+                        type="button"
+                        className="underline"
+                        onClick={() => {
+                          setStep(index);
+                          setShowBlocking(false);
+                        }}
+                      >
+                        {nom} — {Object.values(parEtape[index] ?? {}).join(" ")}
+                      </button>
+                    </li>
+                  ) : null,
+                )}
+              </ul>
+            </div>
+          )
+        ) : null}
+
 
         <div className="mt-6 grid gap-4">
           {step === 0 ? (
