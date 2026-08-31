@@ -244,12 +244,53 @@ function DossierDetail() {
                   {statut === "dossier_valide" ? (
                     <Button
                       variant="cta"
-                      disabled={demandeFinancement.isPending}
-                      onClick={() => demandeFinancement.mutate()}
+                      disabled={changerStatut.isPending}
+                      onClick={() =>
+                        changerStatut.mutate({
+                          cible: "demande_financement",
+                          commentaire: "Demande de financement initiée par le formateur.",
+                          message: "Demande de financement transmise à l'équipe.",
+                        })
+                      }
                     >
                       Demander le financement
                     </Button>
                   ) : null}
+                  {statut === "accord_financement" || statut === "finalisation_administrative" ? (
+                    <Button
+                      variant="cta"
+                      disabled={changerStatut.isPending}
+                      onClick={() =>
+                        changerStatut.mutate({
+                          cible: "formation_en_cours",
+                          commentaire: "Démarrage de la formation signalé par le formateur.",
+                          message: "Démarrage de la formation enregistré.",
+                        })
+                      }
+                    >
+                      Signaler le début de la formation
+                    </Button>
+                  ) : null}
+                  {statut === "formation_en_cours" ? (
+                    <Button
+                      variant="cta"
+                      disabled={changerStatut.isPending}
+                      onClick={() => {
+                        if (!emargementsPrets)
+                          toast.warning(
+                            "Les émargements (F3) ne sont pas encore générés : pensez à les compléter.",
+                          );
+                        changerStatut.mutate({
+                          cible: "formation_realisee",
+                          commentaire: "Formation signalée comme réalisée par le formateur.",
+                          message: "Formation signalée comme réalisée.",
+                        });
+                      }}
+                    >
+                      Signaler la formation comme réalisée
+                    </Button>
+                  ) : null}
+
                 </div>
               </CardContent>
             </Card>
