@@ -71,7 +71,7 @@ function EspaceApprenant() {
       const { data, error } = await supabase
         .from("document_envois")
         .select(
-          "id, code, label, statut, drive_url, fichier_url, reponse_nom, sent_at, received_at, dossier_id",
+          "id, code, label, statut, drive_url, fichier_url, reponse_nom, sent_at, received_at, dossier_id, signature_date, signature_hash, certificat_url, certificat_drive_url",
         )
         .order("created_at", { ascending: false });
       if (error) throw error;
