@@ -60,6 +60,19 @@ function DossierDetail() {
     },
   });
 
+  const { data: pieces } = useQuery({
+    queryKey: ["dossier-pieces", id],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("dossier_pieces")
+        .select("code, statut, fichier_url")
+        .eq("dossier_id", id);
+      if (error) throw error;
+      return data ?? [];
+    },
+  });
+
+
   const { data: documents } = useQuery({
     queryKey: ["dossier-documents", id],
     queryFn: async () => {
