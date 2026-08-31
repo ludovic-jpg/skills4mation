@@ -15,10 +15,16 @@ export type Profile = {
   telephone: string | null;
   adresse: string | null;
   numero_nda: string | null;
+  nda_region: string | null;
+  nda_document_url: string | null;
+  entreprise: string | null;
+  entreprise_adresse: string | null;
   cv_url: string | null;
   deroule_pedagogique_url: string | null;
   parcours_formation: string | null;
+  parcours_formation_url: string | null;
   statut_candidature: CandidatureStatut;
+
 };
 
 type AuthState = {
