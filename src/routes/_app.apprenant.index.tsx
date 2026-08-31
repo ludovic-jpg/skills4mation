@@ -38,6 +38,7 @@ function EspaceApprenant() {
   const archiver = useServerFn(archiverReponseApprenant);
   const [identite, setIdentite] = useState({ prenom: "", nom: "", telephone: "" });
   const [busy, setBusy] = useState<string | null>(null);
+  const [consentements, setConsentements] = useState<Record<string, boolean>>({});
 
   useEffect(() => {
     if (profile) {
