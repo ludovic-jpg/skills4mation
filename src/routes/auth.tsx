@@ -13,7 +13,13 @@ import { useAuth } from "@/hooks/useAuth";
 import { lovable } from "@/integrations/lovable/index";
 import { supabase } from "@/integrations/supabase/client";
 
+function safeNext(value: unknown): string | undefined {
+  if (typeof value !== "string" || !value.startsWith("/") || value.startsWith("//")) return undefined;
+  return value;
+}
+
 export const Route = createFileRoute("/auth")({
+  validateSearch: (s: Record<string, unknown>) => ({ next: safeNext(s['next']) }),
   head: () => ({
     meta: [
       { title: "Espace formateur — Connexion Skills4mation" },
@@ -39,16 +45,21 @@ const ATOUTS = [
 function AuthPage() {
   const router = useRouter();
   const { session, isAdmin, role, loading } = useAuth();
+  const { next } = Route.useSearch();
   const [busy, setBusy] = useState(false);
   const [mode, setMode] = useState<"login" | "reset">("login");
 
   useEffect(() => {
     if (!loading && session) {
+      if (next) {
+        window.location.href = next;
+        return;
+      }
       void router.navigate({
         to: isAdmin ? "/admin" : role === "apprenant" ? "/apprenant" : "/espace",
       });
     }
-  }, [loading, session, isAdmin, role, router]);
+  }, [loading, session, isAdmin, role, router, next]);
 
   async function signIn(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -81,7 +92,7 @@ function AuthPage() {
 
   async function google() {
     const result = await lovable.auth.signInWithOAuth("google", {
-      redirect_uri: window.location.origin,
+      redirect_uri: next ? `${window.location.origin}${next}` : window.location.origin,
     });
     if (result.error) toast.error("Connexion Google indisponible.");
   }
