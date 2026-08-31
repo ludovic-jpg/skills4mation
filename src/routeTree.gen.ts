@@ -23,6 +23,8 @@ import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as BlogIndexRouteImport } from './routes/blog.index'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 import { Route as CatalogueIndexRouteImport } from './routes/catalogue.index'
+import { Route as FormationsIndexRouteImport } from './routes/formations.index'
+import { Route as FormationsSlugRouteImport } from './routes/formations.$slug'
 import { Route as AppAdminIndexRouteImport } from './routes/_app.admin.index'
 import { Route as AppAdminDemandesRouteImport } from './routes/_app.admin.demandes'
 import { Route as AppAdminDossiersRouteImport } from './routes/_app.admin.dossiers'
@@ -35,6 +37,10 @@ import { Route as CatalogueCategorySlugRouteImport } from './routes/catalogue.$c
 import { Route as AppEspaceDossiersIndexRouteImport } from './routes/_app.espace.dossiers.index'
 import { Route as AppEspaceDossiersIdRouteImport } from './routes/_app.espace.dossiers.$id'
 import { Route as AppEspaceDossiersNewRouteImport } from './routes/_app.espace.dossiers.new'
+import { Route as AppEspaceFormationsIndexRouteImport } from './routes/_app.espace.formations.index'
+import { Route as AppEspaceFormationsIdRouteImport } from './routes/_app.espace.formations.$id'
+import { Route as AppEspaceFormationsNewRouteImport } from './routes/_app.espace.formations.new'
+import { Route as ApiPublicFormationImageSplatRouteImport } from './routes/api/public/formation-image.$'
 import { Route as LovableEmailAuthPreviewRouteImport } from './routes/lovable/email/auth/preview'
 import { Route as LovableEmailAuthWebhookRouteImport } from './routes/lovable/email/auth/webhook'
 
@@ -108,6 +114,16 @@ const CatalogueIndexRoute = CatalogueIndexRouteImport.update({
   path: '/catalogue/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const FormationsIndexRoute = FormationsIndexRouteImport.update({
+  id: '/formations/',
+  path: '/formations/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FormationsSlugRoute = FormationsSlugRouteImport.update({
+  id: '/formations/$slug',
+  path: '/formations/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AppAdminIndexRoute = AppAdminIndexRouteImport.update({
   id: '/admin/',
   path: '/admin/',
@@ -168,6 +184,28 @@ const AppEspaceDossiersNewRoute = AppEspaceDossiersNewRouteImport.update({
   path: '/espace/dossiers/new',
   getParentRoute: () => AppRoute,
 } as any)
+const AppEspaceFormationsIndexRoute =
+  AppEspaceFormationsIndexRouteImport.update({
+    id: '/espace/formations/',
+    path: '/espace/formations/',
+    getParentRoute: () => AppRoute,
+  } as any)
+const AppEspaceFormationsIdRoute = AppEspaceFormationsIdRouteImport.update({
+  id: '/espace/formations/$id',
+  path: '/espace/formations/$id',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppEspaceFormationsNewRoute = AppEspaceFormationsNewRouteImport.update({
+  id: '/espace/formations/new',
+  path: '/espace/formations/new',
+  getParentRoute: () => AppRoute,
+} as any)
+const ApiPublicFormationImageSplatRoute =
+  ApiPublicFormationImageSplatRouteImport.update({
+    id: '/api/public/formation-image/$',
+    path: '/api/public/formation-image/$',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const LovableEmailAuthPreviewRoute = LovableEmailAuthPreviewRouteImport.update({
   id: '/lovable/email/auth/preview',
   path: '/lovable/email/auth/preview',
@@ -191,8 +229,10 @@ export interface FileRoutesByFullPath {
   '/portage-qualiopi': typeof PortageQualiopiRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/blog/$slug': typeof BlogSlugRoute
+  '/formations/$slug': typeof FormationsSlugRoute
   '/blog/': typeof BlogIndexRoute
   '/catalogue/': typeof CatalogueIndexRoute
+  '/formations/': typeof FormationsIndexRoute
   '/admin/demandes': typeof AppAdminDemandesRoute
   '/admin/dossiers': typeof AppAdminDossiersRoute
   '/espace/candidature': typeof AppEspaceCandidatureRoute
@@ -204,9 +244,13 @@ export interface FileRoutesByFullPath {
   '/catalogue/$category/': typeof CatalogueCategoryIndexRoute
   '/espace/dossiers/$id': typeof AppEspaceDossiersIdRoute
   '/espace/dossiers/new': typeof AppEspaceDossiersNewRoute
+  '/espace/formations/$id': typeof AppEspaceFormationsIdRoute
+  '/espace/formations/new': typeof AppEspaceFormationsNewRoute
+  '/api/public/formation-image/$': typeof ApiPublicFormationImageSplatRoute
   '/lovable/email/auth/preview': typeof LovableEmailAuthPreviewRoute
   '/lovable/email/auth/webhook': typeof LovableEmailAuthWebhookRoute
   '/espace/dossiers/': typeof AppEspaceDossiersIndexRoute
+  '/espace/formations/': typeof AppEspaceFormationsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -220,8 +264,10 @@ export interface FileRoutesByTo {
   '/portage-qualiopi': typeof PortageQualiopiRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/blog/$slug': typeof BlogSlugRoute
+  '/formations/$slug': typeof FormationsSlugRoute
   '/blog': typeof BlogIndexRoute
   '/catalogue': typeof CatalogueIndexRoute
+  '/formations': typeof FormationsIndexRoute
   '/admin/demandes': typeof AppAdminDemandesRoute
   '/admin/dossiers': typeof AppAdminDossiersRoute
   '/espace/candidature': typeof AppEspaceCandidatureRoute
@@ -233,9 +279,13 @@ export interface FileRoutesByTo {
   '/catalogue/$category': typeof CatalogueCategoryIndexRoute
   '/espace/dossiers/$id': typeof AppEspaceDossiersIdRoute
   '/espace/dossiers/new': typeof AppEspaceDossiersNewRoute
+  '/espace/formations/$id': typeof AppEspaceFormationsIdRoute
+  '/espace/formations/new': typeof AppEspaceFormationsNewRoute
+  '/api/public/formation-image/$': typeof ApiPublicFormationImageSplatRoute
   '/lovable/email/auth/preview': typeof LovableEmailAuthPreviewRoute
   '/lovable/email/auth/webhook': typeof LovableEmailAuthWebhookRoute
   '/espace/dossiers': typeof AppEspaceDossiersIndexRoute
+  '/espace/formations': typeof AppEspaceFormationsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -251,8 +301,10 @@ export interface FileRoutesById {
   '/portage-qualiopi': typeof PortageQualiopiRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/blog/$slug': typeof BlogSlugRoute
+  '/formations/$slug': typeof FormationsSlugRoute
   '/blog/': typeof BlogIndexRoute
   '/catalogue/': typeof CatalogueIndexRoute
+  '/formations/': typeof FormationsIndexRoute
   '/_app/admin/demandes': typeof AppAdminDemandesRoute
   '/_app/admin/dossiers': typeof AppAdminDossiersRoute
   '/_app/espace/candidature': typeof AppEspaceCandidatureRoute
@@ -264,9 +316,13 @@ export interface FileRoutesById {
   '/catalogue/$category/': typeof CatalogueCategoryIndexRoute
   '/_app/espace/dossiers/$id': typeof AppEspaceDossiersIdRoute
   '/_app/espace/dossiers/new': typeof AppEspaceDossiersNewRoute
+  '/_app/espace/formations/$id': typeof AppEspaceFormationsIdRoute
+  '/_app/espace/formations/new': typeof AppEspaceFormationsNewRoute
+  '/api/public/formation-image/$': typeof ApiPublicFormationImageSplatRoute
   '/lovable/email/auth/preview': typeof LovableEmailAuthPreviewRoute
   '/lovable/email/auth/webhook': typeof LovableEmailAuthWebhookRoute
   '/_app/espace/dossiers/': typeof AppEspaceDossiersIndexRoute
+  '/_app/espace/formations/': typeof AppEspaceFormationsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -282,8 +338,10 @@ export interface FileRouteTypes {
     | '/portage-qualiopi'
     | '/sitemap.xml'
     | '/blog/$slug'
+    | '/formations/$slug'
     | '/blog/'
     | '/catalogue/'
+    | '/formations/'
     | '/admin/demandes'
     | '/admin/dossiers'
     | '/espace/candidature'
@@ -295,9 +353,13 @@ export interface FileRouteTypes {
     | '/catalogue/$category/'
     | '/espace/dossiers/$id'
     | '/espace/dossiers/new'
+    | '/espace/formations/$id'
+    | '/espace/formations/new'
+    | '/api/public/formation-image/$'
     | '/lovable/email/auth/preview'
     | '/lovable/email/auth/webhook'
     | '/espace/dossiers/'
+    | '/espace/formations/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -311,8 +373,10 @@ export interface FileRouteTypes {
     | '/portage-qualiopi'
     | '/sitemap.xml'
     | '/blog/$slug'
+    | '/formations/$slug'
     | '/blog'
     | '/catalogue'
+    | '/formations'
     | '/admin/demandes'
     | '/admin/dossiers'
     | '/espace/candidature'
@@ -324,9 +388,13 @@ export interface FileRouteTypes {
     | '/catalogue/$category'
     | '/espace/dossiers/$id'
     | '/espace/dossiers/new'
+    | '/espace/formations/$id'
+    | '/espace/formations/new'
+    | '/api/public/formation-image/$'
     | '/lovable/email/auth/preview'
     | '/lovable/email/auth/webhook'
     | '/espace/dossiers'
+    | '/espace/formations'
   id:
     | '__root__'
     | '/'
@@ -341,8 +409,10 @@ export interface FileRouteTypes {
     | '/portage-qualiopi'
     | '/sitemap.xml'
     | '/blog/$slug'
+    | '/formations/$slug'
     | '/blog/'
     | '/catalogue/'
+    | '/formations/'
     | '/_app/admin/demandes'
     | '/_app/admin/dossiers'
     | '/_app/espace/candidature'
@@ -354,9 +424,13 @@ export interface FileRouteTypes {
     | '/catalogue/$category/'
     | '/_app/espace/dossiers/$id'
     | '/_app/espace/dossiers/new'
+    | '/_app/espace/formations/$id'
+    | '/_app/espace/formations/new'
+    | '/api/public/formation-image/$'
     | '/lovable/email/auth/preview'
     | '/lovable/email/auth/webhook'
     | '/_app/espace/dossiers/'
+    | '/_app/espace/formations/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -372,10 +446,13 @@ export interface RootRouteChildren {
   PortageQualiopiRoute: typeof PortageQualiopiRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   BlogSlugRoute: typeof BlogSlugRoute
+  FormationsSlugRoute: typeof FormationsSlugRoute
   BlogIndexRoute: typeof BlogIndexRoute
   CatalogueIndexRoute: typeof CatalogueIndexRoute
+  FormationsIndexRoute: typeof FormationsIndexRoute
   CatalogueCategorySlugRoute: typeof CatalogueCategorySlugRoute
   CatalogueCategoryIndexRoute: typeof CatalogueCategoryIndexRoute
+  ApiPublicFormationImageSplatRoute: typeof ApiPublicFormationImageSplatRoute
   LovableEmailAuthPreviewRoute: typeof LovableEmailAuthPreviewRoute
   LovableEmailAuthWebhookRoute: typeof LovableEmailAuthWebhookRoute
 }
@@ -480,6 +557,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CatalogueIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/formations/': {
+      id: '/formations/'
+      path: '/formations'
+      fullPath: '/formations/'
+      preLoaderRoute: typeof FormationsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/formations/$slug': {
+      id: '/formations/$slug'
+      path: '/formations/$slug'
+      fullPath: '/formations/$slug'
+      preLoaderRoute: typeof FormationsSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_app/admin/': {
       id: '/_app/admin/'
       path: '/admin'
@@ -564,6 +655,34 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppEspaceDossiersNewRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/espace/formations/': {
+      id: '/_app/espace/formations/'
+      path: '/espace/formations'
+      fullPath: '/espace/formations/'
+      preLoaderRoute: typeof AppEspaceFormationsIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/espace/formations/$id': {
+      id: '/_app/espace/formations/$id'
+      path: '/espace/formations/$id'
+      fullPath: '/espace/formations/$id'
+      preLoaderRoute: typeof AppEspaceFormationsIdRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/espace/formations/new': {
+      id: '/_app/espace/formations/new'
+      path: '/espace/formations/new'
+      fullPath: '/espace/formations/new'
+      preLoaderRoute: typeof AppEspaceFormationsNewRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/api/public/formation-image/$': {
+      id: '/api/public/formation-image/$'
+      path: '/api/public/formation-image/$'
+      fullPath: '/api/public/formation-image/$'
+      preLoaderRoute: typeof ApiPublicFormationImageSplatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/lovable/email/auth/preview': {
       id: '/lovable/email/auth/preview'
       path: '/lovable/email/auth/preview'
@@ -591,7 +710,10 @@ interface AppRouteChildren {
   AppEspaceIndexRoute: typeof AppEspaceIndexRoute
   AppEspaceDossiersIdRoute: typeof AppEspaceDossiersIdRoute
   AppEspaceDossiersNewRoute: typeof AppEspaceDossiersNewRoute
+  AppEspaceFormationsIdRoute: typeof AppEspaceFormationsIdRoute
+  AppEspaceFormationsNewRoute: typeof AppEspaceFormationsNewRoute
   AppEspaceDossiersIndexRoute: typeof AppEspaceDossiersIndexRoute
+  AppEspaceFormationsIndexRoute: typeof AppEspaceFormationsIndexRoute
 }
 
 const AppRouteChildren: AppRouteChildren = {
@@ -604,7 +726,10 @@ const AppRouteChildren: AppRouteChildren = {
   AppEspaceIndexRoute: AppEspaceIndexRoute,
   AppEspaceDossiersIdRoute: AppEspaceDossiersIdRoute,
   AppEspaceDossiersNewRoute: AppEspaceDossiersNewRoute,
+  AppEspaceFormationsIdRoute: AppEspaceFormationsIdRoute,
+  AppEspaceFormationsNewRoute: AppEspaceFormationsNewRoute,
   AppEspaceDossiersIndexRoute: AppEspaceDossiersIndexRoute,
+  AppEspaceFormationsIndexRoute: AppEspaceFormationsIndexRoute,
 }
 
 const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
@@ -622,10 +747,13 @@ const rootRouteChildren: RootRouteChildren = {
   PortageQualiopiRoute: PortageQualiopiRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   BlogSlugRoute: BlogSlugRoute,
+  FormationsSlugRoute: FormationsSlugRoute,
   BlogIndexRoute: BlogIndexRoute,
   CatalogueIndexRoute: CatalogueIndexRoute,
+  FormationsIndexRoute: FormationsIndexRoute,
   CatalogueCategorySlugRoute: CatalogueCategorySlugRoute,
   CatalogueCategoryIndexRoute: CatalogueCategoryIndexRoute,
+  ApiPublicFormationImageSplatRoute: ApiPublicFormationImageSplatRoute,
   LovableEmailAuthPreviewRoute: LovableEmailAuthPreviewRoute,
   LovableEmailAuthWebhookRoute: LovableEmailAuthWebhookRoute,
 }

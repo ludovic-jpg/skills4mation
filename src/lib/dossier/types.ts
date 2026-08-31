@@ -47,6 +47,8 @@ export type DossierDonnees = {
     lienConnexion: string;
     /** Le formateur assume la création et la fourniture du lien de connexion. */
     lienResponsableFormateur: boolean;
+    /** Visuel de la formation (adresse publique) repris sur le site et les documents. */
+    visuelUrl: string;
   };
   lieu: {
     intitule: string;
@@ -128,6 +130,7 @@ export const DONNEES_VIDES: DossierDonnees = {
     format: "presentiel",
     lienConnexion: "",
     lienResponsableFormateur: true,
+    visuelUrl: "",
   },
   lieu: { intitule: "", adresse: "", siret: "" },
   apprenants: [],

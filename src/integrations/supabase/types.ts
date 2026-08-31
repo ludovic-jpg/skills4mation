@@ -579,6 +579,182 @@ export type Database = {
         }
         Relationships: []
       }
+      formations_catalogue: {
+        Row: {
+          accessibilite: string | null
+          categorie: string | null
+          certification: string | null
+          cout_horaire: number | null
+          created_at: string
+          duree_heures: number | null
+          duree_jours: number | null
+          format: string
+          formateur_bio: string | null
+          formateur_id: string
+          formateur_nom: string | null
+          id: string
+          inscriptions_ouvertes: boolean
+          intro: string | null
+          lien_connexion: string | null
+          lieu_defaut: string | null
+          modalites: string[]
+          modalites_evaluation: string | null
+          moyens_pedagogiques: string | null
+          niveau: string | null
+          objectif: string | null
+          objectifs: string[]
+          photo_formateur_url: string | null
+          prerequis: string | null
+          programme: Json
+          public_cible: string | null
+          publiee: boolean
+          slug: string
+          tarif_details: string | null
+          tarif_ht: number | null
+          tarif_unite: string
+          titre: string
+          tva: number
+          updated_at: string
+          visuel_url: string | null
+        }
+        Insert: {
+          accessibilite?: string | null
+          categorie?: string | null
+          certification?: string | null
+          cout_horaire?: number | null
+          created_at?: string
+          duree_heures?: number | null
+          duree_jours?: number | null
+          format?: string
+          formateur_bio?: string | null
+          formateur_id: string
+          formateur_nom?: string | null
+          id?: string
+          inscriptions_ouvertes?: boolean
+          intro?: string | null
+          lien_connexion?: string | null
+          lieu_defaut?: string | null
+          modalites?: string[]
+          modalites_evaluation?: string | null
+          moyens_pedagogiques?: string | null
+          niveau?: string | null
+          objectif?: string | null
+          objectifs?: string[]
+          photo_formateur_url?: string | null
+          prerequis?: string | null
+          programme?: Json
+          public_cible?: string | null
+          publiee?: boolean
+          slug: string
+          tarif_details?: string | null
+          tarif_ht?: number | null
+          tarif_unite?: string
+          titre: string
+          tva?: number
+          updated_at?: string
+          visuel_url?: string | null
+        }
+        Update: {
+          accessibilite?: string | null
+          categorie?: string | null
+          certification?: string | null
+          cout_horaire?: number | null
+          created_at?: string
+          duree_heures?: number | null
+          duree_jours?: number | null
+          format?: string
+          formateur_bio?: string | null
+          formateur_id?: string
+          formateur_nom?: string | null
+          id?: string
+          inscriptions_ouvertes?: boolean
+          intro?: string | null
+          lien_connexion?: string | null
+          lieu_defaut?: string | null
+          modalites?: string[]
+          modalites_evaluation?: string | null
+          moyens_pedagogiques?: string | null
+          niveau?: string | null
+          objectif?: string | null
+          objectifs?: string[]
+          photo_formateur_url?: string | null
+          prerequis?: string | null
+          programme?: Json
+          public_cible?: string | null
+          publiee?: boolean
+          slug?: string
+          tarif_details?: string | null
+          tarif_ht?: number | null
+          tarif_unite?: string
+          titre?: string
+          tva?: number
+          updated_at?: string
+          visuel_url?: string | null
+        }
+        Relationships: []
+      }
+      formations_inscriptions: {
+        Row: {
+          created_at: string
+          disponibilites: string | null
+          email: string
+          financement: string | null
+          formateur_id: string
+          formation_id: string
+          id: string
+          message: string | null
+          nom: string
+          note_admin: string | null
+          objectif: string | null
+          prenom: string
+          statut: Database["public"]["Enums"]["budget_statut"]
+          telephone: string | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          disponibilites?: string | null
+          email: string
+          financement?: string | null
+          formateur_id: string
+          formation_id: string
+          id?: string
+          message?: string | null
+          nom: string
+          note_admin?: string | null
+          objectif?: string | null
+          prenom: string
+          statut?: Database["public"]["Enums"]["budget_statut"]
+          telephone?: string | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          disponibilites?: string | null
+          email?: string
+          financement?: string | null
+          formateur_id?: string
+          formation_id?: string
+          id?: string
+          message?: string | null
+          nom?: string
+          note_admin?: string | null
+          objectif?: string | null
+          prenom?: string
+          statut?: Database["public"]["Enums"]["budget_statut"]
+          telephone?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "formations_inscriptions_formation_id_fkey"
+            columns: ["formation_id"]
+            isOneToOne: false
+            referencedRelation: "formations_catalogue"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       notifications: {
         Row: {
           created_at: string

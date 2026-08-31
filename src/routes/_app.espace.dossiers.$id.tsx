@@ -9,6 +9,7 @@ import { CrmBadge } from "@/components/app/CrmBadge";
 import { FORMATEUR_NAV } from "@/components/app/nav";
 import { DocumentsPanel } from "@/components/dossier/DocumentsPanel";
 import { DossierWizard } from "@/components/dossier/DossierWizard";
+import type { FormationCatalogue } from "@/lib/formations";
 import { EnvoisPanel } from "@/components/dossier/EnvoisPanel";
 import { PiecesPanel } from "@/components/dossier/PiecesPanel";
 import { Button } from "@/components/ui/button";
@@ -34,6 +35,17 @@ export const Route = createFileRoute("/_app/espace/dossiers/$id")({
 
 function DossierDetail() {
   const { id } = Route.useParams();
+  const mesFormations = useQuery({
+    queryKey: ["mes-formations-modeles"],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("formations_catalogue")
+        .select("*")
+        .order("titre");
+      if (error) throw error;
+      return (data ?? []) as FormationCatalogue[];
+    },
+  });
   const { user } = useAuth();
   const queryClient = useQueryClient();
   const [type, setType] = useState<DocumentType>("signe");
@@ -204,6 +216,7 @@ function DossierDetail() {
           <TabsContent value="variables">
             <DossierWizard
               key={id}
+              modeles={mesFormations.data ?? []}
 
               value={donnees}
               saving={saveDonnees.isPending}

@@ -1,4 +1,5 @@
 import {
+  BookOpen,
   FilePlus2,
   GraduationCap,
   FolderKanban,
@@ -13,6 +14,7 @@ import type { NavItem } from "@/components/app/AppShell";
 
 export const FORMATEUR_NAV: NavItem[] = [
   { to: "/espace", label: "Tableau de bord", icon: LayoutDashboard },
+  { to: "/espace/formations", label: "Mes formations", icon: BookOpen },
   { to: "/espace/dossiers", label: "Mes dossiers", icon: Folders },
   { to: "/espace/dossiers/new", label: "Nouveau dossier", icon: FilePlus2 },
   { to: "/espace/candidature", label: "Ma candidature", icon: Users },
