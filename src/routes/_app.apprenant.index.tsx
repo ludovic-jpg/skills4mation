@@ -15,6 +15,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { archiverReponseApprenant } from "@/lib/dossier-envois.functions";
+import { horodatageFr, sha256Hex } from "@/lib/dossier/signature";
 
 export const Route = createFileRoute("/_app/apprenant/")({
   head: () => ({
