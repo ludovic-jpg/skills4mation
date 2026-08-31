@@ -26,6 +26,7 @@ import { Route as CatalogueIndexRouteImport } from './routes/catalogue.index'
 import { Route as AppAdminIndexRouteImport } from './routes/_app.admin.index'
 import { Route as AppAdminDemandesRouteImport } from './routes/_app.admin.demandes'
 import { Route as AppAdminDossiersRouteImport } from './routes/_app.admin.dossiers'
+import { Route as AppApprenantIndexRouteImport } from './routes/_app.apprenant.index'
 import { Route as AppEspaceIndexRouteImport } from './routes/_app.espace.index'
 import { Route as AppEspaceCandidatureRouteImport } from './routes/_app.espace.candidature'
 import { Route as AppEspaceProfilRouteImport } from './routes/_app.espace.profil'
@@ -120,6 +121,11 @@ const AppAdminDossiersRoute = AppAdminDossiersRouteImport.update({
   path: '/admin/dossiers',
   getParentRoute: () => AppRoute,
 } as any)
+const AppApprenantIndexRoute = AppApprenantIndexRouteImport.update({
+  id: '/apprenant/',
+  path: '/apprenant/',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppEspaceIndexRoute = AppEspaceIndexRouteImport.update({
   id: '/espace/',
   path: '/espace/',
@@ -181,6 +187,7 @@ export interface FileRoutesByFullPath {
   '/espace/profil': typeof AppEspaceProfilRoute
   '/catalogue/$category/$slug': typeof CatalogueCategorySlugRoute
   '/admin/': typeof AppAdminIndexRoute
+  '/apprenant/': typeof AppApprenantIndexRoute
   '/espace/': typeof AppEspaceIndexRoute
   '/catalogue/$category/': typeof CatalogueCategoryIndexRoute
   '/espace/dossiers/$id': typeof AppEspaceDossiersIdRoute
@@ -207,6 +214,7 @@ export interface FileRoutesByTo {
   '/espace/profil': typeof AppEspaceProfilRoute
   '/catalogue/$category/$slug': typeof CatalogueCategorySlugRoute
   '/admin': typeof AppAdminIndexRoute
+  '/apprenant': typeof AppApprenantIndexRoute
   '/espace': typeof AppEspaceIndexRoute
   '/catalogue/$category': typeof CatalogueCategoryIndexRoute
   '/espace/dossiers/$id': typeof AppEspaceDossiersIdRoute
@@ -235,6 +243,7 @@ export interface FileRoutesById {
   '/_app/espace/profil': typeof AppEspaceProfilRoute
   '/catalogue/$category/$slug': typeof CatalogueCategorySlugRoute
   '/_app/admin/': typeof AppAdminIndexRoute
+  '/_app/apprenant/': typeof AppApprenantIndexRoute
   '/_app/espace/': typeof AppEspaceIndexRoute
   '/catalogue/$category/': typeof CatalogueCategoryIndexRoute
   '/_app/espace/dossiers/$id': typeof AppEspaceDossiersIdRoute
@@ -263,6 +272,7 @@ export interface FileRouteTypes {
     | '/espace/profil'
     | '/catalogue/$category/$slug'
     | '/admin/'
+    | '/apprenant/'
     | '/espace/'
     | '/catalogue/$category/'
     | '/espace/dossiers/$id'
@@ -289,6 +299,7 @@ export interface FileRouteTypes {
     | '/espace/profil'
     | '/catalogue/$category/$slug'
     | '/admin'
+    | '/apprenant'
     | '/espace'
     | '/catalogue/$category'
     | '/espace/dossiers/$id'
@@ -316,6 +327,7 @@ export interface FileRouteTypes {
     | '/_app/espace/profil'
     | '/catalogue/$category/$slug'
     | '/_app/admin/'
+    | '/_app/apprenant/'
     | '/_app/espace/'
     | '/catalogue/$category/'
     | '/_app/espace/dossiers/$id'
@@ -463,6 +475,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppAdminDossiersRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/apprenant/': {
+      id: '/_app/apprenant/'
+      path: '/apprenant'
+      fullPath: '/apprenant/'
+      preLoaderRoute: typeof AppApprenantIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/_app/espace/': {
       id: '/_app/espace/'
       path: '/espace'
@@ -528,6 +547,7 @@ interface AppRouteChildren {
   AppEspaceCandidatureRoute: typeof AppEspaceCandidatureRoute
   AppEspaceProfilRoute: typeof AppEspaceProfilRoute
   AppAdminIndexRoute: typeof AppAdminIndexRoute
+  AppApprenantIndexRoute: typeof AppApprenantIndexRoute
   AppEspaceIndexRoute: typeof AppEspaceIndexRoute
   AppEspaceDossiersIdRoute: typeof AppEspaceDossiersIdRoute
   AppEspaceDossiersNewRoute: typeof AppEspaceDossiersNewRoute
@@ -540,6 +560,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppEspaceCandidatureRoute: AppEspaceCandidatureRoute,
   AppEspaceProfilRoute: AppEspaceProfilRoute,
   AppAdminIndexRoute: AppAdminIndexRoute,
+  AppApprenantIndexRoute: AppApprenantIndexRoute,
   AppEspaceIndexRoute: AppEspaceIndexRoute,
   AppEspaceDossiersIdRoute: AppEspaceDossiersIdRoute,
   AppEspaceDossiersNewRoute: AppEspaceDossiersNewRoute,
