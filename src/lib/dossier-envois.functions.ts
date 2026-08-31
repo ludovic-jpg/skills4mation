@@ -244,6 +244,28 @@ export const archiverReponseApprenant = createServerFn({ method: "POST" })
       lien: `/espace/dossiers/${envoi.dossier_id}`,
     });
 
+    if (formateur?.email) {
+      const { horodatageFr } = await import("@/lib/dossier/signature");
+      try {
+        await sendTemplateEmail("signature-formateur", formateur.email, {
+          idempotencyKey: `signature-formateur-${envoi.id}`,
+          templateData: {
+            formateurPrenom: formateur.prenom ?? "",
+            apprenantNom: apprenantLabel,
+            documentCode: envoi.code,
+            documentLabel: envoi.label,
+            dossierLabel,
+            signatureDate: horodatageFr(signatureDate),
+            hash,
+            lien: lienDossier,
+            driveUrl: uploaded.webViewLink ?? folderUrl(targetFolderId),
+          },
+        });
+      } catch (mailError) {
+        console.error("[email] notification de signature non envoyée", mailError);
+      }
+    }
+
     return {
       driveUrl: uploaded.webViewLink ?? folderUrl(targetFolderId),
       fileName,
