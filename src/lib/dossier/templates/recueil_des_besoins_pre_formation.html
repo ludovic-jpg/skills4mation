@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recueil des besoins PRE FORMATION</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Merriweather:ital,wght@0,400;0,700;1,300&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+            color: #1e293b;
+        }
+
+        .font-serif-legal {
+            font-family: 'Merriweather', serif;
+        }
+
+        /* Standard A4 Portrait Print Rules */
+        @page {
+            size: A4 portrait;
+            margin: 12mm 15mm;
+        }
+
+        @media print {
+            body {
+                background-color: #ffffff;
+                color: #000000;
+                padding: 0;
+                margin: 0;
+                font-size: 9.5pt;
+                line-height: 1.4;
+            }
+
+            .no-print {
+                display: none !important;
+            }
+
+            .page-container {
+                box-shadow: none !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                max-width: 100% !important;
+                width: 100% !important;
+                border: none !important;
+            }
+
+            .page-break {
+                break-before: page;
+                page-break-before: always;
+            }
+
+            .avoid-break {
+                break-inside: avoid;
+                page-break-inside: avoid;
+            }
+        }
+
+        .a4-container {
+            width: 210mm;
+            min-height: 297mm;
+            background: white;
+            margin: 0 auto;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+        }
+
+        .var-highlight {
+            transition: all 0.2s ease;
+        }
+
+        .demo-mode .var-highlight {
+            font-weight: 600;
+            color: #1e3a8a;
+        }
+
+        .tag-mode .var-highlight {
+            font-family: monospace;
+            background-color: #f1f5f9;
+            padding: 1px 4px;
+            border-radius: 4px;
+            color: #475569;
+            font-size: 0.9em;
+        }
+
+        .checkbox-custom {
+            width: 14px;
+            height: 14px;
+            border: 1.5px solid #334155;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 3px;
+            margin-right: 4px;
+        }
+    </style>
+</head>
+<body class="py-8 px-4 tag-mode">
+
+    <!-- Control Toolbar (Screen view only) -->
+    <div class="no-print max-w-[210mm] mx-auto mb-6 bg-white p-4 rounded-xl shadow-md border border-slate-200 flex flex-wrap items-center justify-between gap-4">
+        <div>
+            <h1 class="text-lg font-bold text-slate-900 flex items-center gap-2">
+                <svg class="w-5 h-5 text-blue-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                </svg>
+                Recueil des Besoins PRE FORMATION
+            </h1>
+            <p class="text-xs text-slate-500 mt-0.5">Formulaire de pré-évaluation et d'analyse des besoins apprenant (A4 Portrait)</p>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-3">
+            <button id="toggleDataBtn" onclick="toggleDataMode()" class="px-3.5 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold rounded-lg transition-colors flex items-center gap-2 border border-slate-300">
+                <svg class="w-4 h-4 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                </svg>
+                <span id="toggleBtnText">Afficher Données Démo</span>
+            </button>
+
+            <button onclick="window.print()" class="px-4 py-1.5 bg-blue-900 hover:bg-blue-800 text-white text-xs font-semibold rounded-lg shadow-sm hover:shadow transition-all flex items-center gap-2">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path>
+                </svg>
+                Imprimer en PDF
+            </button>
+        </div>
+    </div>
+
+    <!-- MAIN PRINTABLE DOCUMENT -->
+    <div class="a4-container page-container p-10 md:p-12 border border-slate-200 flex flex-col justify-between">
+        <div>
+            <!-- Header section -->
+            <header class="text-center pb-5 mb-6 border-b-2 border-slate-900">
+                <div class="flex justify-between items-center mb-2">
+                    <span class="text-xs font-bold text-slate-500 uppercase tracking-widest">QUALIOPI - DÉMARCHE QUALITÉ</span>
+                    <span class="text-xs font-bold text-blue-950 uppercase tracking-wider bg-blue-50 px-2.5 py-1 rounded border border-blue-200">
+                        ADF <span data-var="nbadf" class="var-highlight">{{nbadf}}</span>
+                    </span>
+                </div>
+                <h1 class="text-2xl font-black uppercase tracking-tight text-slate-900">
+                    RECUEIL DES BESOINS PRE FORMATION
+                </h1>
+                <p class="text-xs text-slate-600 mt-1 italic">
+                    Positionnement pédagogique initial et définition des objectifs individuels
+                </p>
+            </header>
+
+            <!-- Information Cadre -->
+            <section class="mb-6 bg-slate-50 p-4 rounded-lg border border-slate-300 text-xs">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-3 pb-3 border-b border-slate-200">
+                    <div>
+                        <span class="text-slate-500 font-medium block">Pré-évaluation effectuée le :</span>
+                        <strong class="text-slate-900 text-sm var-highlight" data-var="datepreeval">{{datepreeval}}</strong>
+                    </div>
+                    <div>
+                        <span class="text-slate-500 font-medium block">Par le Formateur :</span>
+                        <strong class="text-blue-900 text-sm var-highlight uppercase" data-var="nomformateur">{{nomformateur}}</strong>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-y-2.5 gap-x-4">
+                    <div class="col-span-1 md:col-span-2">
+                        <span class="font-bold text-slate-700">Prénom et Nom du Stagiaire :</span>
+                        <span class="text-slate-900 font-semibold ml-2 var-highlight" data-var="nomstagiaire">{{nomstagiaire}}</span>
+                    </div>
+                    
+                    <div class="col-span-1 md:col-span-2">
+                        <span class="font-bold text-slate-700">Intitulé de l’action de formation :</span>
+                        <span class="text-slate-900 font-semibold ml-2 var-highlight" data-var="titreform">{{titreform}}</span>
+                    </div>
+
+                    <div>
+                        <span class="font-bold text-slate-700">Durée en heures :</span>
+                        <span class="text-slate-900 ml-1 var-highlight" data-var="nbheure">{{nbheure}}</span> h
+                    </div>
+
+                    <div>
+                        <span class="font-bold text-slate-700">Période souhaitée :</span>
+                        <span class="text-slate-900 ml-1 italic">Voir planning</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Questions et Réponses -->
+            <section class="space-y-4 text-xs">
+                
+                <!-- Question 1 -->
+                <div class="border border-slate-300 rounded-lg p-3.5 bg-white shadow-xs">
+                    <label class="font-bold text-slate-900 block mb-1.5 flex items-start gap-2">
+                        <span class="bg-slate-800 text-white text-[10px] w-5 h-5 rounded-full inline-flex items-center justify-center shrink-0">1</span>
+                        <span>Quel poste occupez-vous au sein de l’entreprise ? Depuis combien de temps ?</span>
+                    </label>
+                    <div class="p-2.5 bg-slate-50 border border-slate-200 rounded text-slate-800 min-h-[42px] var-highlight" data-var="q_poste_anciennete">
+                        {{q_poste_anciennete}}
+                    </div>
+                </div>
+
+                <!-- Question 2 -->
+                <div class="border border-slate-300 rounded-lg p-3.5 bg-white shadow-xs">
+                    <label class="font-bold text-slate-900 block mb-1.5 flex items-start gap-2">
+                        <span class="bg-slate-800 text-white text-[10px] w-5 h-5 rounded-full inline-flex items-center justify-center shrink-0">2</span>
+                        <span>Selon vous, quel est votre niveau de maîtrise dans le domaine de la formation choisie ?</span>
+                    </label>
+                    <div class="p-2.5 bg-slate-50 border border-slate-200 rounded text-slate-800 min-h-[42px] var-highlight" data-var="q_niveau_maitrise">
+                        {{q_niveau_maitrise}}
+                    </div>
+                </div>
+
+                <!-- Question 3 -->
+                <div class="border border-slate-300 rounded-lg p-3.5 bg-white shadow-xs">
+                    <label class="font-bold text-slate-900 block mb-1.5 flex items-start gap-2">
+                        <span class="bg-slate-800 text-white text-[10px] w-5 h-5 rounded-full inline-flex items-center justify-center shrink-0">3</span>
+                        <span>Quelles sont vos attentes en participant à cette formation ?</span>
+                    </label>
+                    <div class="p-2.5 bg-slate-50 border border-slate-200 rounded text-slate-800 min-h-[42px] var-highlight" data-var="q_attentes">
+                        {{q_attentes}}
+                    </div>
+                </div>
+
+                <!-- Question 4 -->
+                <div class="border border-slate-300 rounded-lg p-3.5 bg-white shadow-xs">
+                    <label class="font-bold text-slate-900 block mb-1.5 flex items-start gap-2">
+                        <span class="bg-slate-800 text-white text-[10px] w-5 h-5 rounded-full inline-flex items-center justify-center shrink-0">4</span>
+                        <span>Que pensez-vous avoir le plus besoin ?</span>
+                    </label>
+                    <div class="p-2.5 bg-slate-50 border border-slate-200 rounded text-slate-800 min-h-[42px] var-highlight" data-var="q_besoins_principaux">
+                        {{q_besoins_principaux}}
+                    </div>
+                </div>
+
+                <!-- Question 5 - Handicap -->
+                <div class="border border-slate-300 rounded-lg p-3.5 bg-white shadow-xs">
+                    <label class="font-bold text-slate-900 block mb-2 flex items-start gap-2">
+                        <span class="bg-slate-800 text-white text-[10px] w-5 h-5 rounded-full inline-flex items-center justify-center shrink-0">5</span>
+                        <span>Est-ce qu'un bénéficiaire participant à la formation est en situation de handicap ?</span>
+                    </label>
+                    
+                    <div class="flex flex-wrap items-center gap-6 pl-7 mb-2">
+                        <label class="inline-flex items-center gap-1.5 cursor-pointer">
+                            <span id="chkHandicapOui" class="checkbox-custom font-bold text-blue-900 text-xs"></span>
+                            <span class="font-medium text-slate-800">Oui, précisez :</span>
+                        </label>
+                        <label class="inline-flex items-center gap-1.5 cursor-pointer">
+                            <span id="chkHandicapNon" class="checkbox-custom font-bold text-blue-900 text-xs"></span>
+                            <span class="font-medium text-slate-800">Non</span>
+                        </label>
+                    </div>
+
+                    <div class="ml-7 p-2.5 bg-slate-50 border border-slate-200 rounded text-slate-700 min-h-[36px] var-highlight" data-var="q_handicap_precision">
+                        {{q_handicap_precision}}
+                    </div>
+                </div>
+
+                <!-- Question 6 - Transmission Programme -->
+                <div class="border border-slate-300 rounded-lg p-3.5 bg-white shadow-xs">
+                    <label class="font-bold text-slate-900 block mb-2 flex items-start gap-2">
+                        <span class="bg-slate-800 text-white text-[10px] w-5 h-5 rounded-full inline-flex items-center justify-center shrink-0">6</span>
+                        <span>Le programme de la formation vous a-t-il bien été transmis par votre supérieur hiérarchique ?</span>
+                    </label>
+
+                    <div class="flex items-center gap-8 pl-7">
+                        <label class="inline-flex items-center gap-1.5 cursor-pointer">
+                            <span id="chkProgOui" class="checkbox-custom font-bold text-blue-900 text-xs"></span>
+                            <span class="font-medium text-slate-800">Oui</span>
+                        </label>
+                        <label class="inline-flex items-center gap-1.5 cursor-pointer">
+                            <span id="chkProgNon" class="checkbox-custom font-bold text-blue-900 text-xs"></span>
+                            <span class="font-medium text-slate-800">Non</span>
+                        </label>
+                    </div>
+                </div>
+
+            </section>
+        </div>
+
+        <!-- Footer / Validation block -->
+        <footer class="mt-8 pt-4 border-t border-slate-300 avoid-break text-xs">
+            <div class="bg-slate-50 border border-slate-200 p-4 rounded-lg flex flex-wrap justify-between items-center gap-4">
+                <div>
+                    <span class="text-slate-500 block text-[11px]">Validation de l'entretien pré-pédagogique :</span>
+                    <p class="font-semibold text-slate-900 mt-0.5">
+                        Pré-évaluation effectuée le <span data-var="datepreeval" class="var-highlight font-bold">{{datepreeval}}</span>
+                    </p>
+                    <p class="text-slate-700">
+                        par le formateur <strong data-var="nomformateur" class="var-highlight uppercase text-blue-900">{{nomformateur}}</strong>
+                    </p>
+                </div>
+
+                <div class="w-48 text-center">
+                    <span class="text-[10px] text-slate-400 block mb-1">Visa / Emergement Formateur</span>
+                    <div class="h-14 border border-dashed border-slate-400 rounded bg-white flex items-center justify-center text-slate-300 text-[10px]">
+                        Emplacement Signature
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-4 pt-2 border-t border-slate-100 text-[9px] text-slate-400 flex justify-between items-center">
+                <div>BACK TO BUSINESS - Recueil des besoins apprenant</div>
+                <div>Formulaire Qualiopi Ind. 4 & Ind. 8</div>
+            </div>
+        </footer>
+
+    </div>
+
+    <script>
+        // Sample demo dataset for realistic preview
+        const sampleData = {
+            "nbadf": "2024-0312",
+            "datepreeval": "13/03/2024",
+            "nomformateur": "GARCIA FABRICE",
+            "nomstagiaire": "Alexandre BENOIT",
+            "titreform": "Perfectionnement aux Techniques de Vente & Négociation commerciale",
+            "nbheure": "14",
+            "q_poste_anciennete": "Commercial Senior, en poste au sein de la société depuis 3 ans et demi.",
+            "q_niveau_maitrise": "Niveau intermédiaire. Maîtrise bien la prospection directe mais éprouve des difficultés lors des phases de closing grands comptes.",
+            "q_attentes": "Acquérir des méthodes structurées pour traiter les objections complexes et savoir défendre mes marges commerciales sans concéder de remises excessives.",
+            "q_besoins_principaux": "Exercices pratiques et jeux de rôles ciblés sur la négociation à forts enjeux et l'argumentaire de valeur.",
+            "q_handicap_precision": "Aucune adaptation spécifique requise.",
+            "handicap_choice": "Non",
+            "programme_choice": "Oui"
+        };
+
+        let isDemoMode = false;
+
+        function updateCheckboxUI() {
+            const chkHandicapOui = document.getElementById('chkHandicapOui');
+            const chkHandicapNon = document.getElementById('chkHandicapNon');
+            const chkProgOui = document.getElementById('chkProgOui');
+            const chkProgNon = document.getElementById('chkProgNon');
+
+            if (isDemoMode) {
+                chkHandicapOui.textContent = sampleData.handicap_choice === "Oui" ? "✓" : "";
+                chkHandicapNon.textContent = sampleData.handicap_choice === "Non" ? "✓" : "";
+
+                chkProgOui.textContent = sampleData.programme_choice === "Oui" ? "✓" : "";
+                chkProgNon.textContent = sampleData.programme_choice === "Non" ? "✓" : "";
+            } else {
+                chkHandicapOui.textContent = "";
+                chkHandicapNon.textContent = "";
+                chkProgOui.textContent = "";
+                chkProgNon.textContent = "";
+            }
+        }
+
+        function updateGeneralVars() {
+            const elements = document.querySelectorAll('[data-var]');
+            elements.forEach(el => {
+                const varName = el.getAttribute('data-var');
+                if (isDemoMode && sampleData[varName] !== undefined) {
+                    el.textContent = sampleData[varName];
+                } else if (!isDemoMode) {
+                    el.textContent = `{{${varName}}}`;
+                }
+            });
+            updateCheckboxUI();
+        }
+
+        function toggleDataMode() {
+            isDemoMode = !isDemoMode;
+            const body = document.body;
+            const btnText = document.getElementById('toggleBtnText');
+
+            if (isDemoMode) {
+                body.classList.remove('tag-mode');
+                body.classList.add('demo-mode');
+                btnText.textContent = "Afficher Balises ({{...}})";
+            } else {
+                body.classList.remove('demo-mode');
+                body.classList.add('tag-mode');
+                btnText.textContent = "Afficher Données Démo";
+            }
+
+            updateGeneralVars();
+        }
+
+        // Initialize display on window load
+        window.onload = function() {
+            updateGeneralVars();
+        };
+    </script>
+</body>
+</html>

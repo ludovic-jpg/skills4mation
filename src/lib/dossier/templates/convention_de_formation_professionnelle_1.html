@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Convention de Formation Professionnelle</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @media print {
+            body {
+                background-color: #ffffff !important;
+                color: #000000 !important;
+            }
+            .no-print {
+                display: none !important;
+            }
+            .page-card {
+                box-shadow: none !important;
+                border: none !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                max-width: 100% !important;
+            }
+        }
+        .var-tag {
+            background-color: #e0f2fe;
+            color: #0369a1;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-weight: 600;
+            border: 1px dashed #38bdf8;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body class="bg-slate-100 text-slate-800 font-sans min-h-screen py-8 px-4 sm:px-6">
+
+    <!-- Action Bar / Instructions -->
+    <div class="max-w-4xl mx-auto mb-6 bg-white p-4 rounded-xl shadow-md border border-slate-200 flex flex-wrap justify-between items-center gap-4 no-print">
+        <div>
+            <h1 class="text-lg font-bold text-slate-900">Modèle de Convention de Formation</h1>
+            <p class="text-sm text-slate-500">Les variables dynamiques sont affichées sous la forme <span class="var-tag text-xs">{{variable}}</span>.</p>
+        </div>
+        <div class="flex items-center gap-3">
+            <button onclick="window.print()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-medium px-4 py-2 rounded-lg transition-colors text-sm flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+                </svg>
+                Imprimer / Imprimer en PDF
+            </button>
+        </div>
+    </div>
+
+    <!-- Document Page Container -->
+    <div class="max-w-4xl mx-auto bg-white p-8 sm:p-12 rounded-xl shadow-lg border border-slate-200 page-card text-sm leading-relaxed">
+        
+        <!-- Document Header -->
+        <div class="border-b-2 border-slate-900 pb-6 mb-8 text-center">
+            <h1 class="text-2xl font-extrabold text-slate-900 uppercase tracking-wide mb-2">Convention de Formation Professionnelle</h1>
+            <p class="text-base font-semibold text-slate-700">N° Convention <span class="var-tag">{{adf}}</span></p>
+        </div>
+
+        <!-- Section Parties -->
+        <div class="space-y-6 mb-8">
+            <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
+                <h2 class="font-bold text-slate-900 mb-2 uppercase text-xs tracking-wider">Entre les soussignés :</h2>
+                <p class="font-semibold text-slate-900">SKILLS4MATION</p>
+                <p>13 C RUE DES ROMAINS 68170 RIXHEIM</p>
+                <p>Enregistré sous le n° de déclaration d’activité : <strong>44 68 03334 68</strong> auprès de la DREETS Grand Est</p>
+                <p>Représenté par : <strong>M. Ludovic ALBISSER</strong></p>
+                <p class="mt-2 text-xs text-slate-500 italic">Ci-après dénommé l'Organisme Prestataire d’Actions concourant au développement de compétences</p>
+            </div>
+
+            <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
+                <h2 class="font-bold text-slate-900 mb-2 uppercase text-xs tracking-wider">ET l’entreprise :</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <p><span class="text-slate-600">Raison sociale :</span> <span class="var-tag">{{entreprise}}</span></p>
+                    <p><span class="text-slate-600">Nom commercial :</span> <span class="var-tag">{{nomcom}}</span></p>
+                    <p class="md:col-span-2"><span class="text-slate-600">Adresse :</span> <span class="var-tag">{{adresseentreprise}}</span></p>
+                    <p><span class="text-slate-600">SIRET :</span> <span class="var-tag">{{siret}}</span></p>
+                    <p><span class="text-slate-600">Représentée par :</span> <span class="var-tag">{{prerepresentant}}</span> <span class="var-tag">{{nomrepresentant}}</span></p>
+                </div>
+                <p class="mt-2 text-xs text-slate-500 italic">Ci-après dénommé le Commanditaire de l’action définie à l’article 1</p>
+            </div>
+
+            <p class="italic text-center font-medium text-slate-700 bg-amber-50 p-3 rounded-lg border border-amber-200">
+                Est conclue la convention suivante en application de l’article L.6313-1 du code du travail : <strong>Action d’adaptation et développement de compétences</strong>
+            </p>
+        </div>
+
+        <!-- Articles -->
+        <div class="space-y-6 text-slate-800">
+            
+            <!-- Article 1 -->
+            <section class="border-t border-slate-200 pt-4">
+                <h2 class="text-base font-bold text-slate-900 mb-4 bg-slate-100 p-2 rounded">
+                    Article 1 - Détail de l’action de formation <span class="text-xs font-normal text-slate-600">(en application de l’article L 6353-1 du code du travail)</span>
+                </h2>
+                
+                <div class="space-y-4 pl-2">
+                    <div>
+                        <h3 class="font-bold text-slate-900">1.1 Intitulé :</h3>
+                        <p class="mt-1"><span class="var-tag">{{titre}}</span></p>
+                    </div>
+
+                    <div>
+                        <h3 class="font-bold text-slate-900">1.2 Objectifs :</h3>
+                        <div class="mt-1 bg-slate-50 p-3 rounded border border-slate-200 whitespace-pre-line">
+                            <span class="var-tag">{{objectifs}}</span>
+                        </div>
+                        <p class="text-xs text-slate-500 italic mt-1">Le programme détaillé de l’action de formation figure en annexe à la présente convention.</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <h3 class="font-bold text-slate-900">1.3 Niveau :</h3>
+                            <p class="mt-1"><span class="var-tag">{{niveau}}</span></p>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-slate-900">1.4 Dates de l’action de formation :</h3>
+                            <p class="mt-1">
+                                du <span class="var-tag">{{datedeb}}</span> au <span class="var-tag">{{datefin}}</span>
+                            </p>
+                            <p class="text-xs text-slate-500 italic">Voir planning en annexe</p>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 class="font-bold text-slate-900">1.5 Durée et horaires de l’action de formation :</h3>
+                        <p class="mt-1">
+                            <span class="var-tag">{{horairetot}}</span> heures sur <span class="var-tag">{{jours}}</span> dont <span class="var-tag">{{heurepres}}</span> Présentiel.
+                        </p>
+                    </div>
+
+                    <div>
+                        <h3 class="font-bold text-slate-900 mb-2">1.6 Effectif de l’action de formation (nom, prénom et poste occupé du stagiaire) :</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+                            <div class="p-2 border border-slate-200 rounded bg-slate-50">
+                                <strong>Apprenant 1 :</strong> Prénom & Nom : <span class="var-tag">{{nomapp1}}</span> | Poste : <span class="var-tag">{{positionapp1}}</span>
+                            </div>
+                            <div class="p-2 border border-slate-200 rounded bg-slate-50">
+                                <strong>Apprenant 2 :</strong> Prénom & Nom : <span class="var-tag">{{nomapp2}}</span> | Poste : <span class="var-tag">{{positionapp2}}</span>
+                            </div>
+                            <div class="p-2 border border-slate-200 rounded bg-slate-50">
+                                <strong>Apprenant 3 :</strong> Prénom & Nom : <span class="var-tag">{{nomapp3}}</span> | Poste : <span class="var-tag">{{positionapp3}}</span>
+                            </div>
+                            <div class="p-2 border border-slate-200 rounded bg-slate-50">
+                                <strong>Apprenant 4 :</strong> Prénom & Nom : <span class="var-tag">{{nomapp4}}</span> | Poste : <span class="var-tag">{{positionapp4}}</span>
+                            </div>
+                            <div class="p-2 border border-slate-200 rounded bg-slate-50">
+                                <strong>Apprenant 5 :</strong> Prénom & Nom : <span class="var-tag">{{nomapp5}}</span> | Poste : <span class="var-tag">{{positionapp5}}</span>
+                            </div>
+                            <div class="p-2 border border-slate-200 rounded bg-slate-50">
+                                <strong>Apprenant 6 :</strong> Prénom & Nom : <span class="var-tag">{{nomapp6}}</span> | Poste : <span class="var-tag">{{positionapp6}}</span>
+                            </div>
+                            <div class="p-2 border border-slate-200 rounded bg-slate-50">
+                                <strong>Apprenant 7 :</strong> Prénom & Nom : <span class="var-tag">{{nomapp7}}</span> | Poste : <span class="var-tag">{{positionapp7}}</span>
+                            </div>
+                            <div class="p-2 border border-slate-200 rounded bg-slate-50">
+                                <strong>Apprenant 8 :</strong> Prénom & Nom : <span class="var-tag">{{nomapp8}}</span> | Poste : <span class="var-tag">{{positionapp8}}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 class="font-bold text-slate-900">1.7 Lieu de l’action de formation :</h3>
+                        <p class="mt-1">
+                            Lieu : <span class="var-tag">{{lieuformation}}</span><br>
+                            Adresse : <span class="var-tag">{{adresseformation}}</span><br>
+                            SIRET du lieu : <span class="var-tag">{{siretformation}}</span>
+                        </p>
+                    </div>
+
+                    <div>
+                        <h3 class="font-bold text-slate-900">1.8 Modalités de déroulement :</h3>
+                        <p class="mt-1 text-slate-700">
+                            <strong>PRESENTIEL :</strong> Les formations en présentiel sont individuelles ou en groupe (minimum: 2 stagiaires et maximum: 12 stagiaires) avec un formateur sur site.
+                        </p>
+                    </div>
+
+                    <div>
+                        <h3 class="font-bold text-slate-900">1.9 Prérequis :</h3>
+                        <p class="mt-1"><span class="var-tag">{{prerecquis}}</span></p>
+                    </div>
+
+                    <div>
+                        <h3 class="font-bold text-slate-900">1.10 Moyens pédagogiques et techniques mis en œuvre :</h3>
+                        <p class="mt-1">Voir le programme de formation en annexe détaillant les moyens mis en œuvre pour réaliser techniquement l'action, suivre son exécution et apprécier ses résultats.</p>
+                        <p class="mt-2"><strong>Encadrement :</strong> La formation est assurée par SKILLS4MATION en mettant à disposition un formateur expérimenté dans son domaine et disponible selon les modalités et plages horaires préalablement définies.</p>
+                        <p class="mt-2"><strong>Accompagnement pédagogique :</strong> Un(e) conseillèr(e) référent(e) (suivi personnalisé – prises de contacts régulières, forte disponibilité) sera en charge de l’apprenant dès l'entrée en formation et ce, tout le long du parcours pédagogique.</p>
+                    </div>
+
+                    <div>
+                        <h3 class="font-bold text-slate-900">1.11 Modalités de sanction :</h3>
+                        <p class="mt-1">Délivrance d’une attestation de formation et/ou certification selon les cas.</p>
+                    </div>
+
+                    <div>
+                        <h3 class="font-bold text-slate-900">1.12 Moyen de contrôle de l’assiduité & Modalités d’évaluation :</h3>
+                        <p class="mt-1">
+                            <strong>Moyen de contrôle :</strong> Attestation d’assiduité, feuille d’émargement pour les formations en présentiel / relevé de fréquentation pour les formations synchrones / relevé de connexion pour les formations asynchrones.
+                        </p>
+                        <p class="mt-2"><strong>Modalités d’évaluation :</strong> Questionnaire d'évaluation</p>
+                        <ul class="list-disc list-inside mt-1 space-y-1 text-slate-700">
+                            <li>Travaux et évaluation intermédiaire</li>
+                            <li>Tests d'évaluation et de progression</li>
+                            <li>Exercices</li>
+                            <li>Échanges avec le formateur</li>
+                            <li>Travaux et évaluation finale</li>
+                            <li>Passage d'une certification si incluse dans le programme</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Article 2 -->
+            <section class="border-t border-slate-200 pt-4">
+                <h2 class="text-base font-bold text-slate-900 mb-2 bg-slate-100 p-2 rounded">Article 2 - Engagement de participation à l'action de formation</h2>
+                <p>Le Commanditaire s’engage à assurer la présence du (des) participant(s) aux dates, lieux et heures prévus à l'article 1.</p>
+            </section>
+
+            <!-- Article 3 -->
+            <section class="border-t border-slate-200 pt-4">
+                <h2 class="text-base font-bold text-slate-900 mb-2 bg-slate-100 p-2 rounded">Article 3 - Dispositions financières</h2>
+                <p>En contrepartie de cette action de formation, le commanditaire (ou le financeur dans le cadre d'une subrogation de paiement) s'acquittera des coûts suivants qui couvrent l'intégralité des frais engagés par l'organisme de formation pour cette session :</p>
+                
+                <div class="my-3 p-4 bg-slate-50 rounded border border-slate-200 space-y-2">
+                    <p>Coûts pédagogiques : coût unitaire H.T de : <span class="var-tag">{{prixunitaire}}</span> X <span class="var-tag">{{nbstagaire}}</span> = <span class="var-tag">{{prixtotal}}</span> HT</p>
+                    <p>Dont pour les heures en présentiel : <span class="var-tag">{{prixpresentiel}}</span></p>
+                    <p class="font-bold text-slate-900 pt-2 border-t border-slate-300">
+                        Soit un total NET DE TAXE - TVA NON APPLICABLE (Art. 261.4.4 du CGI) : <span class="var-tag">{{prixtotal}}</span> HT
+                    </p>
+                </div>
+
+                <p class="font-bold mt-2">Modalités de règlement :</p>
+                <p>Le règlement se fera par chèque ou virement bancaire à réception de facture*.</p>
+                <p class="mt-2">L'opérateur de compétence est : <span class="var-tag">{{OPCO}}</span></p>
+                <p class="mt-1"><span class="var-tag">{{subrogation}}</span></p>
+                
+                <p class="mt-2 text-xs text-slate-600">Seuls les participants déclarés et les heures attestées par l’émargement seront facturables à votre OPCO ou FAF, les montants facturés à VOTRE OPCO ou FAF seront calculés au prorata des heures de formation réalisées et attestées, le reste étant à charge de l'entreprise.</p>
+                <p class="mt-2 text-xs text-slate-600">En cas de subrogation de paiement par un OPCO, le commanditaire s'engage à payer les montants non pris en charge par l'OPCO*. L'absence d'un ou plusieurs stagiaires partielle ou totale ne donne lieu à aucune réduction sur le prix final de la prestation.</p>
+                <p class="mt-1 text-xs text-slate-500 italic">*Dans le cas d'un refus de subrogation par l'OPCO, le FAF ou autre financeur, le règlement pourra s'effectuer en 4 ou 6 mensualités.</p>
+            </section>
+
+            <!-- Article 4 -->
+            <section class="border-t border-slate-200 pt-4">
+                <h2 class="text-base font-bold text-slate-900 mb-2 bg-slate-100 p-2 rounded">Article 4 - Délai de rétractation en application de l’article Art. L. 6353-5</h2>
+                <p>Le commanditaire est informé qu’il dispose d’un délai de rétractation de 15 jours à compter de la date de la conclusion du présent contrat.</p>
+                <p class="mt-1">Le cas échéant, le stagiaire informe l’organisme de formation par lettre recommandée avec accusé de réception.</p>
+                <p class="mt-1">Aucune somme ne peut être exigée du commanditaire qui a exercé son droit de rétractation dans les délais prévus.</p>
+            </section>
+
+            <!-- Article 5 -->
+            <section class="border-t border-slate-200 pt-4">
+                <h2 class="text-base font-bold text-slate-900 mb-2 bg-slate-100 p-2 rounded">Article 5 - Dédommagement, réparation ou dédit</h2>
+                <p>En cas de renoncement par le commanditaire avant le début du programme de formation :</p>
+                <ul class="list-disc list-inside mt-2 space-y-1 text-slate-700">
+                    <li>Dans un délai supérieur à 1 mois avant le début de la formation : Néant</li>
+                    <li>Dans un délai compris entre 1 mois et 2 semaines avant le début de la formation : 30 % du coût de la formation est dû.</li>
+                    <li>Dans un délai inférieur à 2 semaines avant le début de la formation : 50 % du coût de la formation est dû.</li>
+                </ul>
+                <p class="mt-2 text-xs text-slate-600">Le coût ne pourra faire l'objet d'une demande de remboursement ou de prise en charge par l'OPCO.</p>
+            </section>
+
+            <!-- Article 6 -->
+            <section class="border-t border-slate-200 pt-4">
+                <h2 class="text-base font-bold text-slate-900 mb-2 bg-slate-100 p-2 rounded">Article 6 - Conditions d'annulation et de report de formation</h2>
+                <p>Toute annulation ou demande de report par le commanditaire doit être communiquée à l’organisme de formation par lettre recommandée avec accusé de réception minimum 15 jours avant le début de la formation.</p>
+                <p class="mt-2">Toute demande d'annulation ou de report reçue hors délai ne sera pas recevable et entraînera l'obligation, pour le Commanditaire, de s'acquitter immédiatement de la somme mentionnée à l'article 5 de la présente convention.</p>
+                <p class="mt-2">SKILLS4MATION pourra annuler ou reporter la formation sans frais en informant le Commanditaire au moins 7 jours ouvrés avant le début de la prestation de formation.</p>
+                <p class="mt-2">En cas d’indisponibilité du formateur ou de toute autre circonstance extérieure indépendante de SKILLS4MATION, cette dernière pourra annuler ou reporter la formation prévue sans préavis. Dans ce dernier cas, SKILLS4MATION s’engage à proposer une nouvelle date aussi proche que possible de la date initialement prévue.</p>
+            </section>
+
+            <!-- Article 7 -->
+            <section class="border-t border-slate-200 pt-4">
+                <h2 class="text-base font-bold text-slate-900 mb-2 bg-slate-100 p-2 rounded">Article 7 - Non réalisation de la prestation de formation</h2>
+                <p>En application de l'article L6354-1 du Code du travail, il est convenu entre les signataires de la présente convention, que faute de résiliation totale ou partielle de la prestation de formation, l'organisme prestataire doit rembourser au cocontractant les sommes indûment perçues de ce fait.</p>
+            </section>
+
+            <!-- Article 8 -->
+            <section class="border-t border-slate-200 pt-4">
+                <h2 class="text-base font-bold text-slate-900 mb-2 bg-slate-100 p-2 rounded">Article 8 - Prise d’effet</h2>
+                <p>La présente convention prend effet à compter de sa signature par l’entreprise et pour la durée de la formation.</p>
+            </section>
+
+            <!-- Article 9 -->
+            <section class="border-t border-slate-200 pt-4">
+                <h2 class="text-base font-bold text-slate-900 mb-2 bg-slate-100 p-2 rounded">Article 9 - Nullité</h2>
+                <p>Si une ou plusieurs dispositions de la présente Convention est déclarée nulle en application d'une loi, d'un règlement ou à la suite d'une décision définitive d'une juridiction compétente, cette disposition est considérée comme détachable de la présente Convention.</p>
+                <p class="mt-1">Les autres dispositions de la présente Convention sont considérées comme valides, et restent en vigueur, à moins que l'une des Parties ne démontre que la disposition annulée revêt un caractère essentiel et déterminant sans lequel elle n'aurait pas contracté.</p>
+            </section>
+
+            <!-- Article 10 -->
+            <section class="border-t border-slate-200 pt-4">
+                <h2 class="text-base font-bold text-slate-900 mb-2 bg-slate-100 p-2 rounded">Article 10 - Litiges</h2>
+                <p>Si une contestation ou un différend ne peuvent pas être réglés à l'amiable, le Tribunal de Mulhouse sera seul compétent pour régler le litige.</p>
+            </section>
+
+            <!-- Article 11 -->
+            <section class="border-t border-slate-200 pt-4">
+                <h2 class="text-base font-bold text-slate-900 mb-2 bg-slate-100 p-2 rounded">Article 11 - Protection des données personnelles</h2>
+                <p>Le traitement des données à caractère personnel mis en œuvre par la Société s’inscrit dans le strict respect de la loi du 6 juin 2004 sur la protection de l’économie numérique, de la loi du 6 janvier 1978 relative à l’informatique, les fichiers et la liberté telle qu’elle a été modifiée par la loi du 20 juin 2018 relative à la protection des données personnelles ainsi que du Règlement européen Général sur la Protection des Données en date du 27 avril 2016 entré en vigueur le 25 mai 2018.</p>
+                <p class="mt-2">Il s’inscrit également dans l’exécution de la relation contractuelle entre la Société et le Client telle qu’elle résulte du présent Contrat de sorte que ce dernier constitue la base juridique du traitement et de la collecte des données à caractère personnel du Client.</p>
+                <p class="mt-2">Dès lors, la Société met en œuvre des traitements de données à caractère personnel qui ont pour base juridique :</p>
+                <ul class="list-disc list-inside mt-1 space-y-1 text-slate-700">
+                    <li>l’intérêt légitime poursuivi par la Société lorsqu’il poursuit les finalités suivantes : prospection et animation ; gestion de la relation avec ses clients et prospects ; organisation, inscription et invitation aux événements de la Société ;</li>
+                    <li>l’exécution de mesures précontractuelles ou du contrat lorsqu’il met en œuvre un traitement ayant pour finalités la production, la gestion, le suivi des dossiers de ses clients ; le recouvrement ;</li>
+                    <li>le respect d’obligations légales et réglementaires lorsqu’il met en œuvre un traitement ayant pour finalités la gestion de la facturation et de la comptabilité.</li>
+                </ul>
+                <p class="mt-2">La Société ne conserve les données que pour la durée nécessaire aux opérations pour lesquelles elles ont été collectées ainsi que dans le respect de la règlementation en vigueur.</p>
+                <p class="mt-2">À cet égard, les données des clients sont conservées pendant la durée des relations contractuelles augmentée de 3 ans à des fins d'animation et prospection, sans préjudice des obligations de conservation ou des délais de prescription. En matière de comptabilité, elles sont conservées 10 ans à compter de la clôture de l'exercice comptable.</p>
+                <p class="mt-2">Le Client est informé qu’il dispose des droits d'accès, de rectification, d'effacement, de limitation, du droit à la portabilité de ses données à caractère personnel ainsi que du droit d'opposition au traitement desdites données et ce dans les conditions et limits d'application des Articles 15 à 21 du Règlement Général relatif à la Protection des Données Personnelles.</p>
+                <p class="mt-2">Il peut exercer ces droits en contactant M. Ludovic ALBISSER par email <a href="mailto:pedagogie@formatrix.fr" class="text-indigo-600 underline">pedagogie@formatrix.fr</a>, en accompagnant leur demande d’une copie de sa pièce d’identité.</p>
+                <p class="mt-2">Le Client dispose également du droit d’introduire une réclamation auprès de la CNIL.</p>
+            </section>
+
+        </div>
+
+        <!-- Signature Section -->
+        <div class="mt-12 pt-8 border-t-2 border-slate-900 grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div>
+                <p>Fait en 3 exemplaires à : <span class="var-tag">{{lieusignature}}</span></p>
+                <p class="mt-2">Le : <span class="var-tag">{{datesignature}}</span></p>
+                <p class="mt-4 font-bold">L’organisme de formation :</p>
+                <p class="text-slate-700">SKILLS4MATION</p>
+                <p class="text-xs text-slate-500">M. Ludovic ALBISSER</p>
+                <div class="mt-8 border-b border-dashed border-slate-300 h-16 flex items-end justify-center pb-1 text-slate-400 text-xs italic">
+                    Signature et tampon
+                </div>
+            </div>
+
+            <div>
+                <p>L’entreprise commanditaire : <span class="var-tag">{{entreprise}}</span></p>
+                <p class="mt-2">Prénom : <span class="var-tag">{{prerepresentant}}</span> Nom : <span class="var-tag">{{nomrepresentant}}</span></p>
+                <p class="mt-4 font-bold">Signature :</p>
+                <div class="mt-8 border-b border-dashed border-slate-300 h-16 flex items-end justify-center pb-1 text-slate-400 text-xs italic">
+                    Signature du représentant
+                </div>
+                <p class="mt-4 text-xs text-slate-500 italic">Tampon* :<br>*Pas de tampon si signature électronique</p>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>
