@@ -13,16 +13,19 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
+import type { TablesUpdate } from "@/integrations/supabase/types";
 
 export const Route = createFileRoute("/_app/espace/profil")({
   component: Profil,
 });
 
+type ProfilPatch = TablesUpdate<"profiles">;
+
 type Piece = "photo" | "nda" | "cv" | "parcours" | "deroule";
 
 const PIECES: Record<
   Piece,
-  { bucket: "candidatures" | "profils"; colonne: string; accept: string }
+  { bucket: "candidatures" | "profils"; colonne: keyof ProfilPatch; accept: string }
 > = {
   photo: { bucket: "profils", colonne: "photo_url", accept: "image/*" },
   nda: { bucket: "profils", colonne: "nda_document_url", accept: "application/pdf" },
@@ -59,7 +62,7 @@ function Profil() {
     }
     const { error: profileError } = await supabase
       .from("profiles")
-      .update({ [colonne]: path })
+      .update({ [colonne]: path } as ProfilPatch)
       .eq("id", user.id);
     setSaving(null);
     if (profileError) {
@@ -70,7 +73,7 @@ function Profil() {
     toast.success("Document enregistré.");
   }
 
-  async function save(section: string, patch: Record<string, string | null>) {
+  async function save(section: string, patch: ProfilPatch) {
     if (!user) return;
     setSaving(section);
     const { error } = await supabase.from("profiles").update(patch).eq("id", user.id);
@@ -157,7 +160,7 @@ function Profil() {
                 hint="JPG ou PNG"
                 bucket="profils"
                 accept="image/*"
-                path={profile?.photo_url}
+                path={profile?.photo_url ?? null}
                 busy={saving === "photo"}
                 onFile={(file) => void upload("photo", file)}
               />
@@ -256,7 +259,7 @@ function Profil() {
                 label="Justificatif de déclaration d'activité"
                 hint="PDF"
                 bucket="profils"
-                path={profile?.nda_document_url}
+                path={profile?.nda_document_url ?? null}
                 busy={saving === "nda"}
                 onFile={(file) => void upload("nda", file)}
               />
@@ -278,21 +281,21 @@ function Profil() {
               <DocField
                 label="CV"
                 bucket="candidatures"
-                path={profile?.cv_url}
+                path={profile?.cv_url ?? null}
                 busy={saving === "cv"}
                 onFile={(file) => void upload("cv", file)}
               />
               <DocField
                 label="Parcours de formation (document)"
                 bucket="candidatures"
-                path={profile?.parcours_formation_url}
+                path={profile?.parcours_formation_url ?? null}
                 busy={saving === "parcours"}
                 onFile={(file) => void upload("parcours", file)}
               />
               <DocField
                 label="Déroulé(s) pédagogique(s)"
                 bucket="candidatures"
-                path={profile?.deroule_pedagogique_url}
+                path={profile?.deroule_pedagogique_url ?? null}
                 busy={saving === "deroule"}
                 onFile={(file) => void upload("deroule", file)}
               />
