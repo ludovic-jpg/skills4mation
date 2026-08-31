@@ -797,10 +797,10 @@ export function DossierWizard({ value, saving, onSave }: Props) {
           </Button>
           <Button
             variant="teal"
-            disabled={step === ETAPES.length - 1}
-            onClick={() => setStep((v) => v + 1)}
+            onClick={() => setStep((v) => Math.min(v + 1, ETAPES.length - 1))}
           >
-            Suivant
+            {step === ETAPES.length - 1 ? "Dernière étape" : "Suivant"}
+
           </Button>
         </div>
       </CardContent>
