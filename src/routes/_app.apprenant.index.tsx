@@ -3,12 +3,20 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
-import { CheckCircle2, ExternalLink, FileSignature, GraduationCap, Send } from "lucide-react";
+import {
+  CheckCircle2,
+  ExternalLink,
+  FileSignature,
+  GraduationCap,
+  Send,
+  ShieldCheck,
+} from "lucide-react";
 
 import { AppShell } from "@/components/app/AppShell";
 import { APPRENANT_NAV } from "@/components/app/nav";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
