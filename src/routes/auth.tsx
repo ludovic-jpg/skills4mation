@@ -68,7 +68,7 @@ function AuthPage() {
               : "/espace",
       });
     }
-  }, [loading, session, isAdmin, isConseillere, isSuperAdmin, role, router, next]);
+  }, [loading, session, isConseillere, isSuperAdmin, role, router, next]);
 
   async function signIn(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
