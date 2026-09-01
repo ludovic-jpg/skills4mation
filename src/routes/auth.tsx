@@ -59,14 +59,13 @@ function AuthPage() {
         return;
       }
       void router.navigate({
-        to:
-          isConseillere || isSuperAdmin
+        to: isSuperAdmin
+          ? "/admin/pilotage"
+          : isConseillere
             ? "/admin/validation"
-            : isAdmin
-              ? "/admin"
-              : role === "apprenant"
-                ? "/apprenant"
-                : "/espace",
+            : role === "apprenant"
+              ? "/apprenant"
+              : "/espace",
       });
     }
   }, [loading, session, isAdmin, isConseillere, isSuperAdmin, role, router, next]);
