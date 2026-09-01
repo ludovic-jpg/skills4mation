@@ -231,13 +231,12 @@ function facture(d: DossierDonnees) {
     </tbody></table>
     <div style="margin-top:12px;max-width:320px;margin-left:auto">
       ${ligne("Total HT", e(euros(f.montantHt || d.formateur.totalRecette)))}
-      ${ligne("TVA", `${v(f.tva)} %`)}
-      ${ligne("Total TTC", e(euros(f.montantTtc)))}
+      ${ligne("Total à régler (exonéré de TVA)", e(euros(f.montantHt || d.formateur.totalRecette)))}
     </div>
     <h2>Règlement</h2>
     ${ligne("Conditions", "Paiement sous 10 jours ouvrés à réception des fonds du financeur")}
     ${ligne("IBAN", v(f.iban))}
-    <p class="muted" style="margin-top:12px">Exonération de TVA au titre de l'article 261-4-4°a du CGI le cas échéant. Pas d'escompte pour paiement anticipé. Pénalités de retard : taux légal en vigueur.</p>`,
+    <p class="muted" style="margin-top:12px">Exonération de TVA au titre de l'article 261-4-4°a du CGI. Pas d'escompte pour paiement anticipé. Pénalités de retard : taux légal en vigueur.</p>`,
   );
 }
 

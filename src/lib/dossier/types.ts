@@ -103,7 +103,6 @@ export type DossierDonnees = {
     numero: string;
     date: string;
     montantHt: string;
-    tva: string;
     montantTtc: string;
     iban: string;
   };
@@ -174,7 +173,7 @@ export const DONNEES_VIDES: DossierDonnees = {
     contraintes: "",
     modalitesEvaluation: "",
   },
-  facture: { numero: "", date: "", montantHt: "", tva: "20", montantTtc: "", iban: "" },
+  facture: { numero: "", date: "", montantHt: "", montantTtc: "", iban: "" },
 };
 
 /** Fusionne des données partielles (issues de la base) avec la structure complète. */

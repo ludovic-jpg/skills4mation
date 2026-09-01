@@ -431,7 +431,6 @@ export function FormationEditor({ value, saving, onSave }: Props) {
               </SelectContent>
             </Select>
           </div>
-          <Field label="TVA (%)" value={str(f.tva)} onChange={(v) => set("tva", num(v) ?? 20)} />
           <Field
             label="Coût horaire formateur (interne)"
             value={str(f.cout_horaire)}
