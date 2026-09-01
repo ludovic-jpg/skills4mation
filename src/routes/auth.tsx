@@ -59,10 +59,17 @@ function AuthPage() {
         return;
       }
       void router.navigate({
-        to: isAdmin ? "/admin" : role === "apprenant" ? "/apprenant" : "/espace",
+        to:
+          isConseillere || isSuperAdmin
+            ? "/admin/validation"
+            : isAdmin
+              ? "/admin"
+              : role === "apprenant"
+                ? "/apprenant"
+                : "/espace",
       });
     }
-  }, [loading, session, isAdmin, role, router, next]);
+  }, [loading, session, isAdmin, isConseillere, isSuperAdmin, role, router, next]);
 
   async function signIn(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
