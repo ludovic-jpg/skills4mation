@@ -133,7 +133,15 @@ export function DossierWizard({ value, saving, onSave, modeles = [] }: Props) {
             </p>
           </div>
           <div className="flex flex-wrap gap-2">
-            <Button variant="cta" disabled={saving} onClick={() => onSave(d)}>
+            <Button
+              variant="cta"
+              disabled={saving}
+              onClick={() => {
+                memoriser(d);
+                onSave(d);
+              }}
+            >
+
               <Save className="mr-1.5 size-4" />
               {saving ? "Enregistrement…" : "Enregistrer le dossier"}
             </Button>
