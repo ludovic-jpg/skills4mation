@@ -47,6 +47,13 @@ const PIECES: Record<
 function Profil() {
   const { profile, user, refresh } = useAuth();
   const [saving, setSaving] = useState<string | null>(null);
+  const [region, setRegion] = useState(profile?.nda_region ?? "");
+  const [regionSync, setRegionSync] = useState(profile?.nda_region ?? "");
+  if ((profile?.nda_region ?? "") !== regionSync) {
+    setRegionSync(profile?.nda_region ?? "");
+    setRegion(profile?.nda_region ?? "");
+  }
+
 
   async function upload(kind: Piece, file: File) {
     if (!user) return;
