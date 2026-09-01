@@ -68,6 +68,7 @@ const dossier: DossierDonnees = {
     modeFinancement: "opco",
     montantPrisEnCharge: "12000",
     certificationIcdl: true,
+    coutCertification: "89",
   },
   convention: { lieu: "Paris", date: "2026-09-15" },
   formateur: {

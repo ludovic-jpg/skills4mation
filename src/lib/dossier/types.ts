@@ -150,6 +150,7 @@ export const DONNEES_VIDES: DossierDonnees = {
     modeFinancement: "opco",
     montantPrisEnCharge: "",
     certificationIcdl: false,
+    coutCertification: "",
   },
   convention: { lieu: "", date: "" },
   formateur: {
@@ -230,6 +231,9 @@ export function aDuPresentiel(d: DossierDonnees) {
     ((!Number.isNaN(heures) && heures > 0) || Boolean(d.tarifs.prixPresentiel))
   );
 }
+
+/** Tarif de référence de la certification ICDL (paramétrable ici, un seul endroit). */
+export const TARIF_CERTIFICATION_ICDL = "89";
 
 export function estCpf(d: DossierDonnees) {
   return d.tarifs.modeFinancement === "cpf";
