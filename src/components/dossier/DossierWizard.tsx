@@ -895,7 +895,10 @@ export function DossierWizard({ value, saving, onSave, modeles = [] }: Props) {
           </Button>
           <Button
             variant="teal"
-            onClick={() => setStep((v) => Math.min(v + 1, ETAPES.length - 1))}
+            onClick={() => {
+              if (step === 1) memoriser(d);
+              setStep((v) => Math.min(v + 1, ETAPES.length - 1));
+            }}
           >
             {step === ETAPES.length - 1 ? "Dernière étape" : "Suivant"}
 
