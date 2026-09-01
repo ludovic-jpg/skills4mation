@@ -725,18 +725,33 @@ export function DossierWizard({ value, saving, onSave, modeles = [] }: Props) {
                         })
                       }
                     />
-                    <Input
-                      placeholder="E-mail"
+                    <ApprenantEmailField
                       value={a.email ?? ""}
-                      onChange={(e) =>
+                      formateurId={user?.id}
+                      onChange={(v) =>
                         setD({
                           ...d,
                           apprenants: d.apprenants.map((x, j) =>
-                            j === i ? { ...x, email: e.target.value } : x,
+                            j === i ? { ...x, email: v } : x,
+                          ),
+                        })
+                      }
+                      onReprendre={(s) =>
+                        setD({
+                          ...d,
+                          apprenants: d.apprenants.map((x, j) =>
+                            j === i
+                              ? {
+                                  ...x,
+                                  nom: x.nom.trim() || `${s.prenom} ${s.nom}`.trim(),
+                                  telephone: x.telephone || s.telephone || "",
+                                }
+                              : x,
                           ),
                         })
                       }
                     />
+
                     <Input
                       placeholder="Téléphone"
                       value={a.telephone ?? ""}
