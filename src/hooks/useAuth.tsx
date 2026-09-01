@@ -27,13 +27,18 @@ export type Profile = {
 
 };
 
+export type AppRole = "super_admin" | "conseillere" | "admin" | "formateur" | "apprenant";
+
 type AuthState = {
   session: Session | null;
   user: User | null;
   profile: Profile | null;
-  role: "admin" | "formateur" | "apprenant" | null;
+  role: AppRole | null;
+  roles: AppRole[];
   loading: boolean;
   isAdmin: boolean;
+  isSuperAdmin: boolean;
+  isConseillere: boolean;
   isValidatedFormateur: boolean;
   refresh: () => Promise<void>;
   signOut: () => Promise<void>;
@@ -44,7 +49,8 @@ const AuthContext = createContext<AuthState | null>(null);
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [session, setSession] = useState<Session | null>(null);
   const [profile, setProfile] = useState<Profile | null>(null);
-  const [role, setRole] = useState<"admin" | "formateur" | "apprenant" | null>(null);
+  const [roles, setRoles] = useState<AppRole[]>([]);
+  const [role, setRole] = useState<AppRole | null>(null);
   const [loading, setLoading] = useState(true);
 
   async function load(userId: string | undefined) {
