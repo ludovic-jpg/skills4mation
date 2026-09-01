@@ -1,0 +1,1 @@
+REVOKE ALL ON FUNCTION public.dossiers_protect_statut_crm() FROM PUBLIC, anon, authenticated;
