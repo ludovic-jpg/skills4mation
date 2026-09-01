@@ -31,6 +31,7 @@ import { Route as FormationsSlugRouteImport } from './routes/formations.$slug'
 import { Route as DotlovableOauthConsentRouteImport } from './routes/[.]lovable.oauth.consent'
 import { Route as Char91DotmcpChar93InvokeToolToolRouteImport } from './routes/[.mcp]/invoke-tool/$tool'
 import { Route as AppAdminIndexRouteImport } from './routes/_app.admin.index'
+import { Route as AppAdminComptesRouteImport } from './routes/_app.admin.comptes'
 import { Route as AppAdminDemandesRouteImport } from './routes/_app.admin.demandes'
 import { Route as AppAdminDossiersRouteImport } from './routes/_app.admin.dossiers'
 import { Route as AppAdminPilotageRouteImport } from './routes/_app.admin.pilotage'
@@ -165,6 +166,11 @@ const AppAdminIndexRoute = AppAdminIndexRouteImport.update({
   path: '/admin/',
   getParentRoute: () => AppRoute,
 } as any)
+const AppAdminComptesRoute = AppAdminComptesRouteImport.update({
+  id: '/admin/comptes',
+  path: '/admin/comptes',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppAdminDemandesRoute = AppAdminDemandesRouteImport.update({
   id: '/admin/demandes',
   path: '/admin/demandes',
@@ -290,6 +296,7 @@ export interface FileRoutesByFullPath {
   '/formations/': typeof FormationsIndexRoute
   '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
+  '/admin/comptes': typeof AppAdminComptesRoute
   '/admin/demandes': typeof AppAdminDemandesRoute
   '/admin/dossiers': typeof AppAdminDossiersRoute
   '/admin/pilotage': typeof AppAdminPilotageRoute
@@ -333,6 +340,7 @@ export interface FileRoutesByTo {
   '/formations': typeof FormationsIndexRoute
   '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
+  '/admin/comptes': typeof AppAdminComptesRoute
   '/admin/demandes': typeof AppAdminDemandesRoute
   '/admin/dossiers': typeof AppAdminDossiersRoute
   '/admin/pilotage': typeof AppAdminPilotageRoute
@@ -378,6 +386,7 @@ export interface FileRoutesById {
   '/formations/': typeof FormationsIndexRoute
   '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
+  '/_app/admin/comptes': typeof AppAdminComptesRoute
   '/_app/admin/demandes': typeof AppAdminDemandesRoute
   '/_app/admin/dossiers': typeof AppAdminDossiersRoute
   '/_app/admin/pilotage': typeof AppAdminPilotageRoute
@@ -423,6 +432,7 @@ export interface FileRouteTypes {
     | '/formations/'
     | '/.lovable/oauth/consent'
     | '/.mcp/invoke-tool/$tool'
+    | '/admin/comptes'
     | '/admin/demandes'
     | '/admin/dossiers'
     | '/admin/pilotage'
@@ -466,6 +476,7 @@ export interface FileRouteTypes {
     | '/formations'
     | '/.lovable/oauth/consent'
     | '/.mcp/invoke-tool/$tool'
+    | '/admin/comptes'
     | '/admin/demandes'
     | '/admin/dossiers'
     | '/admin/pilotage'
@@ -510,6 +521,7 @@ export interface FileRouteTypes {
     | '/formations/'
     | '/.lovable/oauth/consent'
     | '/.mcp/invoke-tool/$tool'
+    | '/_app/admin/comptes'
     | '/_app/admin/demandes'
     | '/_app/admin/dossiers'
     | '/_app/admin/pilotage'
@@ -719,6 +731,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppAdminIndexRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/admin/comptes': {
+      id: '/_app/admin/comptes'
+      path: '/admin/comptes'
+      fullPath: '/admin/comptes'
+      preLoaderRoute: typeof AppAdminComptesRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/_app/admin/demandes': {
       id: '/_app/admin/demandes'
       path: '/admin/demandes'
@@ -863,6 +882,7 @@ declare module '@tanstack/react-router' {
 }
 
 interface AppRouteChildren {
+  AppAdminComptesRoute: typeof AppAdminComptesRoute
   AppAdminDemandesRoute: typeof AppAdminDemandesRoute
   AppAdminDossiersRoute: typeof AppAdminDossiersRoute
   AppAdminPilotageRoute: typeof AppAdminPilotageRoute
@@ -881,6 +901,7 @@ interface AppRouteChildren {
 }
 
 const AppRouteChildren: AppRouteChildren = {
+  AppAdminComptesRoute: AppAdminComptesRoute,
   AppAdminDemandesRoute: AppAdminDemandesRoute,
   AppAdminDossiersRoute: AppAdminDossiersRoute,
   AppAdminPilotageRoute: AppAdminPilotageRoute,
