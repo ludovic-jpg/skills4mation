@@ -6,6 +6,7 @@ import { toast } from "sonner";
 import { AppShell } from "@/components/app/AppShell";
 import { CrmBadge } from "@/components/app/CrmBadge";
 import { SignatureOrganismeBadge } from "@/components/dossier/SignatureOrganismeBadge";
+import { SupprimerDossierBouton } from "@/components/dossier/SupprimerDossierBouton";
 import { adminNav } from "@/components/app/nav";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
