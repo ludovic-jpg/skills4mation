@@ -583,6 +583,12 @@ export type Database = {
           entreprise_siret: string | null
           formateur_id: string
           id: string
+          signature_organisme_certificat_drive_url: string | null
+          signature_organisme_certificat_url: string | null
+          signature_organisme_date: string | null
+          signature_organisme_hash: string | null
+          signature_organisme_par: string | null
+          signature_organisme_user_id: string | null
           statut: Database["public"]["Enums"]["dossier_statut"]
           statut_crm: Database["public"]["Enums"]["crm_statut"]
           tally_submission_id: string | null
@@ -605,6 +611,12 @@ export type Database = {
           entreprise_siret?: string | null
           formateur_id: string
           id?: string
+          signature_organisme_certificat_drive_url?: string | null
+          signature_organisme_certificat_url?: string | null
+          signature_organisme_date?: string | null
+          signature_organisme_hash?: string | null
+          signature_organisme_par?: string | null
+          signature_organisme_user_id?: string | null
           statut?: Database["public"]["Enums"]["dossier_statut"]
           statut_crm?: Database["public"]["Enums"]["crm_statut"]
           tally_submission_id?: string | null
@@ -627,6 +639,12 @@ export type Database = {
           entreprise_siret?: string | null
           formateur_id?: string
           id?: string
+          signature_organisme_certificat_drive_url?: string | null
+          signature_organisme_certificat_url?: string | null
+          signature_organisme_date?: string | null
+          signature_organisme_hash?: string | null
+          signature_organisme_par?: string | null
+          signature_organisme_user_id?: string | null
           statut?: Database["public"]["Enums"]["dossier_statut"]
           statut_crm?: Database["public"]["Enums"]["crm_statut"]
           tally_submission_id?: string | null
