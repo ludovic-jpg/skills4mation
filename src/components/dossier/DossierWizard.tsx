@@ -23,6 +23,10 @@ import {
   type DossierDonnees,
 } from "@/lib/dossier/types";
 import { appliquerFormation, type FormationCatalogue } from "@/lib/formations";
+import { useAuth } from "@/hooks/useAuth";
+import { memoriserEntreprise } from "@/lib/suggestions";
+import { ApprenantEmailField, EntrepriseNomField } from "@/components/dossier/SuggestionFields";
+
 
 type Props = {
   value: DossierDonnees;
