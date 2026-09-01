@@ -12,6 +12,7 @@ import { DossierWizard } from "@/components/dossier/DossierWizard";
 import type { FormationCatalogue } from "@/lib/formations";
 import { EnvoisPanel } from "@/components/dossier/EnvoisPanel";
 import { PiecesPanel } from "@/components/dossier/PiecesPanel";
+import { SignatureOrganismeBadge } from "@/components/dossier/SignatureOrganismeBadge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
@@ -270,6 +271,10 @@ function DossierDetail() {
                     {dossier.commentaire_admin}
                   </p>
                 ) : null}
+
+                <div className="mt-5">
+                  <SignatureOrganismeBadge dossier={dossier} />
+                </div>
 
                 <div className="mt-6 flex flex-wrap gap-3">
                   {dossier.drive_folder_url ? (

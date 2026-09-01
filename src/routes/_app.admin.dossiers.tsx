@@ -5,6 +5,7 @@ import { toast } from "sonner";
 
 import { AppShell } from "@/components/app/AppShell";
 import { CrmBadge } from "@/components/app/CrmBadge";
+import { SignatureOrganismeBadge } from "@/components/dossier/SignatureOrganismeBadge";
 import { adminNav } from "@/components/app/nav";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -37,6 +38,11 @@ type Row = {
   created_at: string;
   archived_at: string | null;
   drive_folder_url: string | null;
+  signature_organisme_date: string | null;
+  signature_organisme_par: string | null;
+  signature_organisme_hash: string | null;
+  signature_organisme_certificat_url: string | null;
+  signature_organisme_certificat_drive_url: string | null;
 };
 
 function AdminDossiers() {
@@ -55,7 +61,7 @@ function AdminDossiers() {
       const { data, error } = await supabase
         .from("dossiers")
         .select(
-          "id, formateur_id, dossier_nom, entreprise_nom, titre_formation, date_debut, statut_crm, created_at, archived_at, drive_folder_url",
+          "id, formateur_id, dossier_nom, entreprise_nom, titre_formation, date_debut, statut_crm, created_at, archived_at, drive_folder_url, signature_organisme_date, signature_organisme_par, signature_organisme_hash, signature_organisme_certificat_url, signature_organisme_certificat_drive_url",
         )
         .order("created_at", { ascending: false });
       if (error) throw error;
@@ -218,6 +224,7 @@ function AdminDossiers() {
                   </div>
                   <div className="flex flex-wrap items-center gap-2">
                     <CrmBadge statut={row.statut_crm} />
+                    <SignatureOrganismeBadge dossier={row} compact />
                     {row.drive_folder_url ? (
                       <Button asChild variant="outline" size="sm">
                         <a href={row.drive_folder_url} target="_blank" rel="noreferrer">
