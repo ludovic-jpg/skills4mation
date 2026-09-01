@@ -326,12 +326,24 @@ export function DossierWizard({ value, saving, onSave, modeles = [] }: Props) {
 
           {step === 1 ? (
             <div className="grid gap-4 sm:grid-cols-2">
-              <Field
-                label="Raison sociale"
+              <EntrepriseNomField
                 value={d.entreprise.nom}
                 onChange={(v) => set("entreprise", { nom: v })}
+                onSelect={(e) =>
+                  set("entreprise", {
+                    nom: e.nom,
+                    nomCommercial: e.nom_commercial ?? "",
+                    adresse: e.adresse ?? "",
+                    siret: e.siret ?? "",
+                    prenomRepresentant: e.prenom_contact ?? "",
+                    nomRepresentant: e.nom_contact ?? "",
+                    telephone: e.telephone ?? "",
+                    email: e.email ?? "",
+                  })
+                }
                 error={errors["entrepriseNom"]}
               />
+
               <Field
                 label="Nom commercial"
                 value={d.entreprise.nomCommercial}
