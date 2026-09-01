@@ -36,10 +36,10 @@ export const APPRENANT_NAV: NavItem[] = [
 
 export const ADMIN_NAV: NavItem[] = [
   { to: "/admin/validation", label: "File de validation", icon: ShieldCheck },
-  { to: "/admin", label: "Candidatures", icon: Users },
   { to: "/admin/pilotage", label: "Pilotage", icon: BarChart3 },
-  { to: "/admin/demandes", label: "Toutes les demandes", icon: Inbox },
   { to: "/admin/dossiers", label: "CRM dossiers", icon: FolderKanban },
+  { to: "/admin/demandes", label: "Toutes les demandes", icon: Inbox },
+  { to: "/admin", label: "Candidatures", icon: Users },
   { to: "/espace", label: "Espace formateur", icon: Folders },
 ];
 
@@ -49,6 +49,9 @@ export const SUPER_ADMIN_NAV: NavItem[] = [
   { to: "/espace", label: "Espace formateur", icon: Folders },
 ];
 
-export function adminNav(isSuperAdmin: boolean): NavItem[] {
-  return isSuperAdmin ? SUPER_ADMIN_NAV : ADMIN_NAV;
+export function adminNav({ isSuperAdmin, isConseillere }: { isSuperAdmin: boolean; isConseillere: boolean }): NavItem[] {
+  if (isSuperAdmin) return SUPER_ADMIN_NAV;
+  // La conseillère de formation n'a pas accès au pilotage financier complet.
+  if (isConseillere) return ADMIN_NAV.filter((item) => item.to !== "/admin/pilotage");
+  return ADMIN_NAV;
 }

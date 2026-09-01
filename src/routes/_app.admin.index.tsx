@@ -73,7 +73,7 @@ function PieceLink({ label, path }: { label: string; path: string | null }) {
 
 
 function AdminCandidatures() {
-  const { isAdmin, isSuperAdmin, loading } = useAuth();
+  const { isAdmin, isConseillere, isSuperAdmin, loading } = useAuth();
   const queryClient = useQueryClient();
 
   const { data, isLoading } = useQuery({
@@ -122,7 +122,7 @@ function AdminCandidatures() {
   if (!loading && !isAdmin) {
     return (
 
-      <AppShell items={adminNav(isSuperAdmin)} title="Back-office">
+      <AppShell items={adminNav({ isSuperAdmin, isConseillere })} title="Back-office">
         <Card className="rounded-2xl border-destructive/30">
           <CardContent className="p-8">
             <h2 className="text-base font-semibold">Accès réservé à l'équipe Skills4mation</h2>
@@ -139,7 +139,7 @@ function AdminCandidatures() {
 
   return (
     <AppShell
-      items={adminNav(isSuperAdmin)}
+      items={adminNav({ isSuperAdmin, isConseillere })}
       title="Candidatures formateurs"
       subtitle="Étudier, valider ou refuser les demandes d'adhésion au réseau"
     >

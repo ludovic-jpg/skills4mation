@@ -25,9 +25,9 @@ export function AppShell({
   const { profile, isAdmin, isSuperAdmin, isConseillere, signOut } = useAuth();
   const router = useRouter();
   const roleBadge = isSuperAdmin
-    ? { label: "Super admin", tone: "bg-secondary text-secondary-foreground" }
+    ? { label: "Super admin", tone: "bg-cta text-cta-foreground" }
     : isConseillere
-      ? { label: "Conseillère formation", tone: "bg-accent text-accent-foreground" }
+      ? { label: "Conseillère formation", tone: "bg-secondary text-secondary-foreground" }
       : { label: "Formateur partenaire", tone: "bg-muted text-muted-foreground" };
   const [open, setOpen] = useState(false);
 

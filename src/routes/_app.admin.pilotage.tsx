@@ -81,7 +81,7 @@ function Kpi({ label, value, hint }: { label: string; value: string; hint?: stri
 }
 
 function Pilotage() {
-  const { isSuperAdmin } = useAuth();
+  const { isSuperAdmin, isConseillere } = useAuth();
   const dossiers = useQuery({
     queryKey: ["pilotage-dossiers"],
     queryFn: async () => {
@@ -155,7 +155,7 @@ function Pilotage() {
 
   return (
     <AppShell
-      items={adminNav(isSuperAdmin)}
+      items={adminNav({ isSuperAdmin, isConseillere })}
       title="Pilotage"
       subtitle="Chiffre d'affaires porté, commission Skills4mation, avancement du pipeline et conversion des candidatures"
     >

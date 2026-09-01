@@ -47,7 +47,7 @@ const ATOUTS = [
 
 function AuthPage() {
   const router = useRouter();
-  const { session, isAdmin, isConseillere, isSuperAdmin, role, loading } = useAuth();
+  const { session, isConseillere, isSuperAdmin, role, loading } = useAuth();
   const { next } = Route.useSearch();
   const [busy, setBusy] = useState(false);
   const [mode, setMode] = useState<"login" | "reset">("login");
@@ -59,17 +59,16 @@ function AuthPage() {
         return;
       }
       void router.navigate({
-        to:
-          isConseillere || isSuperAdmin
+        to: isSuperAdmin
+          ? "/admin/pilotage"
+          : isConseillere
             ? "/admin/validation"
-            : isAdmin
-              ? "/admin"
-              : role === "apprenant"
-                ? "/apprenant"
-                : "/espace",
+            : role === "apprenant"
+              ? "/apprenant"
+              : "/espace",
       });
     }
-  }, [loading, session, isAdmin, isConseillere, isSuperAdmin, role, router, next]);
+  }, [loading, session, isConseillere, isSuperAdmin, role, router, next]);
 
   async function signIn(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
