@@ -246,6 +246,13 @@ function AdminDossiers() {
                     <Button size="sm" variant="outline" onClick={() => archiver.mutate(row)}>
                       {row.archived_at ? "Désarchiver" : "Archiver"}
                     </Button>
+                    {row.statut_crm === "brouillon" ? (
+                      <SupprimerDossierBouton
+                        dossierId={row.id}
+                        label={row.dossier_nom || dossierNom(row)}
+                        invalidateKeys={["admin-dossiers"]}
+                      />
+                    ) : null}
                   </div>
                 </div>
 
