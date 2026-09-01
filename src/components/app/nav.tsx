@@ -8,6 +8,7 @@ import {
   Handshake,
   Inbox,
   LayoutDashboard,
+  ShieldCheck,
   UserCog,
   Users,
 } from "lucide-react";
