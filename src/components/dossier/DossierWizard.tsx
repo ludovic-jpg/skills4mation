@@ -23,6 +23,10 @@ import {
   type DossierDonnees,
 } from "@/lib/dossier/types";
 import { appliquerFormation, type FormationCatalogue } from "@/lib/formations";
+import { useAuth } from "@/hooks/useAuth";
+import { memoriserEntreprise } from "@/lib/suggestions";
+import { ApprenantEmailField, EntrepriseNomField } from "@/components/dossier/SuggestionFields";
+
 
 type Props = {
   value: DossierDonnees;
@@ -88,9 +92,17 @@ function validateStep(step: number, d: DossierDonnees): Errs {
 }
 
 export function DossierWizard({ value, saving, onSave, modeles = [] }: Props) {
+  const { user } = useAuth();
   const [step, setStep] = useState(0);
   const [d, setD] = useState<DossierDonnees>(value);
   const [showBlocking, setShowBlocking] = useState(false);
+
+  /** Alimente l'annuaire partagé en arrière-plan, sans bloquer la saisie. */
+  function memoriser(donnees: DossierDonnees) {
+    if (!user?.id) return;
+    void memoriserEntreprise(donnees.entreprise, user.id).catch(() => undefined);
+  }
+
 
   // Resynchronise l'état interne quand la valeur enregistrée change côté serveur.
   const [syncRef, setSyncRef] = useState(value);
@@ -121,7 +133,15 @@ export function DossierWizard({ value, saving, onSave, modeles = [] }: Props) {
             </p>
           </div>
           <div className="flex flex-wrap gap-2">
-            <Button variant="cta" disabled={saving} onClick={() => onSave(d)}>
+            <Button
+              variant="cta"
+              disabled={saving}
+              onClick={() => {
+                memoriser(d);
+                onSave(d);
+              }}
+            >
+
               <Save className="mr-1.5 size-4" />
               {saving ? "Enregistrement…" : "Enregistrer le dossier"}
             </Button>
@@ -326,12 +346,24 @@ export function DossierWizard({ value, saving, onSave, modeles = [] }: Props) {
 
           {step === 1 ? (
             <div className="grid gap-4 sm:grid-cols-2">
-              <Field
-                label="Raison sociale"
+              <EntrepriseNomField
                 value={d.entreprise.nom}
                 onChange={(v) => set("entreprise", { nom: v })}
+                onSelect={(e) =>
+                  set("entreprise", {
+                    nom: e.nom,
+                    nomCommercial: e.nom_commercial ?? "",
+                    adresse: e.adresse ?? "",
+                    siret: e.siret ?? "",
+                    prenomRepresentant: e.prenom_contact ?? "",
+                    nomRepresentant: e.nom_contact ?? "",
+                    telephone: e.telephone ?? "",
+                    email: e.email ?? "",
+                  })
+                }
                 error={errors["entrepriseNom"]}
               />
+
               <Field
                 label="Nom commercial"
                 value={d.entreprise.nomCommercial}
@@ -709,18 +741,33 @@ export function DossierWizard({ value, saving, onSave, modeles = [] }: Props) {
                         })
                       }
                     />
-                    <Input
-                      placeholder="E-mail"
+                    <ApprenantEmailField
                       value={a.email ?? ""}
-                      onChange={(e) =>
+                      formateurId={user?.id}
+                      onChange={(v) =>
                         setD({
                           ...d,
                           apprenants: d.apprenants.map((x, j) =>
-                            j === i ? { ...x, email: e.target.value } : x,
+                            j === i ? { ...x, email: v } : x,
+                          ),
+                        })
+                      }
+                      onReprendre={(s) =>
+                        setD({
+                          ...d,
+                          apprenants: d.apprenants.map((x, j) =>
+                            j === i
+                              ? {
+                                  ...x,
+                                  nom: x.nom.trim() || `${s.prenom} ${s.nom}`.trim(),
+                                  telephone: x.telephone || s.telephone || "",
+                                }
+                              : x,
                           ),
                         })
                       }
                     />
+
                     <Input
                       placeholder="Téléphone"
                       value={a.telephone ?? ""}
@@ -848,7 +895,10 @@ export function DossierWizard({ value, saving, onSave, modeles = [] }: Props) {
           </Button>
           <Button
             variant="teal"
-            onClick={() => setStep((v) => Math.min(v + 1, ETAPES.length - 1))}
+            onClick={() => {
+              if (step === 1) memoriser(d);
+              setStep((v) => Math.min(v + 1, ETAPES.length - 1));
+            }}
           >
             {step === ETAPES.length - 1 ? "Dernière étape" : "Suivant"}
 

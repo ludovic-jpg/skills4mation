@@ -654,6 +654,51 @@ export type Database = {
         }
         Relationships: []
       }
+      entreprises_clientes: {
+        Row: {
+          adresse: string | null
+          created_at: string
+          created_by: string
+          email: string | null
+          id: string
+          nom: string
+          nom_commercial: string | null
+          nom_contact: string | null
+          prenom_contact: string | null
+          siret: string | null
+          telephone: string | null
+          updated_at: string
+        }
+        Insert: {
+          adresse?: string | null
+          created_at?: string
+          created_by: string
+          email?: string | null
+          id?: string
+          nom: string
+          nom_commercial?: string | null
+          nom_contact?: string | null
+          prenom_contact?: string | null
+          siret?: string | null
+          telephone?: string | null
+          updated_at?: string
+        }
+        Update: {
+          adresse?: string | null
+          created_at?: string
+          created_by?: string
+          email?: string | null
+          id?: string
+          nom?: string
+          nom_commercial?: string | null
+          nom_contact?: string | null
+          prenom_contact?: string | null
+          siret?: string | null
+          telephone?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       formations_catalogue: {
         Row: {
           accessibilite: string | null
