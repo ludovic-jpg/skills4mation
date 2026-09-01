@@ -6,13 +6,42 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Field, Toggle } from "@/components/dossier/fields";
+import { Combobox, Field, Toggle } from "@/components/dossier/fields";
 import type { StepProps } from "@/components/dossier/steps/types";
-import { TARIF_CERTIFICATION_ICDL, aDuPresentiel, type DossierDonnees } from "@/lib/dossier/types";
+import { calculerCommission, portageDepuisFinancement, tauxLabel } from "@/lib/commission";
+import { OPCOS } from "@/lib/referentiels";
+import {
+  TARIF_CERTIFICATION_ICDL,
+  aDuPresentiel,
+  euros,
+  type DossierDonnees,
+} from "@/lib/dossier/types";
+
+const nombre = (v: string) => {
+  const n = Number(String(v ?? "").replace(/\s/g, "").replace(",", "."));
+  return Number.isFinite(n) ? n : 0;
+};
 
 export function TarifsStep({ d, set }: StepProps) {
+  /** Prix total = prix unitaire × nombre de stagiaires (calcul automatique, HT). */
+  function setTarif(patch: Partial<DossierDonnees["tarifs"]>) {
+    const suivant = { ...d.tarifs, ...patch };
+    const total = nombre(suivant.prixUnitaire) * nombre(suivant.nbStagiaires);
+    set("tarifs", { ...patch, prixTotal: total > 0 ? String(total) : "" });
+  }
+
+  const portage = portageDepuisFinancement(d.tarifs.modeFinancement);
+  const calcul = calculerCommission({
+    montant: nombre(d.tarifs.prixTotal),
+    portage,
+    coutCertification: nombre(d.tarifs.coutCertification),
+  });
+
   return (
     <div className="grid gap-4 sm:grid-cols-2">
+      <p className="text-xs text-muted-foreground sm:col-span-2">
+        Les actions de formation sont exonérées de TVA : tous les montants saisis sont en euros HT.
+      </p>
       <div className="grid gap-2">
         <Label>Mode de financement</Label>
         <Select
@@ -32,35 +61,39 @@ export function TarifsStep({ d, set }: StepProps) {
         </Select>
       </div>
       {d.tarifs.modeFinancement === "opco" ? (
-        <Field
+        <Combobox
           label="OPCO / financeur"
           value={d.tarifs.opco}
           onChange={(v) => set("tarifs", { opco: v })}
+          options={OPCOS}
+          placeholder="Rechercher un OPCO…"
         />
       ) : null}
       <Field
-        label="Montant pris en charge (€)"
+        label="Montant pris en charge (€ HT)"
         value={d.tarifs.montantPrisEnCharge}
         onChange={(v) => set("tarifs", { montantPrisEnCharge: v })}
       />
       <Field
-        label="Prix unitaire par stagiaire (€)"
+        label="Prix unitaire par stagiaire (€ HT)"
         value={d.tarifs.prixUnitaire}
-        onChange={(v) => set("tarifs", { prixUnitaire: v })}
+        onChange={(v) => setTarif({ prixUnitaire: v })}
       />
       <Field
         label="Nombre de stagiaires"
         value={d.tarifs.nbStagiaires}
-        onChange={(v) => set("tarifs", { nbStagiaires: v })}
+        onChange={(v) => setTarif({ nbStagiaires: v })}
       />
       <Field
-        label="Prix total (€)"
+        label="Prix total (€ HT)"
         value={d.tarifs.prixTotal}
-        onChange={(v) => set("tarifs", { prixTotal: v })}
+        onChange={() => undefined}
+        readOnly
+        hint="Calculé automatiquement : prix unitaire × nombre de stagiaires."
       />
       {d.formation.format !== "distanciel" ? (
         <Field
-          label="Dont prix en présentiel (€, facultatif)"
+          label="Dont prix en présentiel (€ HT, facultatif)"
           value={d.tarifs.prixPresentiel}
           onChange={(v) => set("tarifs", { prixPresentiel: v })}
         />
@@ -96,11 +129,38 @@ export function TarifsStep({ d, set }: StepProps) {
       />
       {d.tarifs.certificationIcdl ? (
         <Field
-          label="Coût de la certification (€, ligne distincte)"
+          label="Coût de la certification (€, ligne distincte, prix coûtant)"
           value={d.tarifs.coutCertification}
           onChange={(v) => set("tarifs", { coutCertification: v })}
         />
       ) : null}
+
+      <div className="rounded-xl border border-border/70 bg-muted/40 p-4 text-sm sm:col-span-2">
+        <p className="font-semibold">
+          Portage {portage === "cpf" ? "CPF" : "Qualiopi"} — commission {tauxLabel(calcul.taux)}
+        </p>
+        <dl className="mt-2 grid gap-1 text-xs text-muted-foreground sm:grid-cols-3">
+          <div>
+            <dt>Base commissionnable</dt>
+            <dd className="font-semibold text-foreground">{euros(String(calcul.base))}</dd>
+          </div>
+          <div>
+            <dt>Commission Skills4mation</dt>
+            <dd className="font-semibold text-foreground">{euros(String(calcul.commission))}</dd>
+          </div>
+          <div>
+            <dt>Net formateur estimé</dt>
+            <dd className="font-semibold text-foreground">{euros(String(calcul.netFormateur))}</dd>
+          </div>
+        </dl>
+        {calcul.coutCertification > 0 ? (
+          <p className="mt-2 text-xs text-muted-foreground">
+            + certification {euros(String(calcul.coutCertification))} répercutée au prix coûtant
+            (hors commission).
+          </p>
+        ) : null}
+      </div>
+
       <Field
         label="Lieu de signature de la convention"
         value={d.convention.lieu}
@@ -118,31 +178,6 @@ export function TarifsStep({ d, set }: StepProps) {
           convention.
         </p>
       ) : null}
-
-      <h3 className="text-sm font-semibold sm:col-span-2">Facture formateur (F9)</h3>
-      <Field
-        label="Numéro de facture"
-        value={d.facture.numero}
-        onChange={(v) => set("facture", { numero: v })}
-      />
-      <Field
-        label="Date de facture"
-        type="date"
-        value={d.facture.date}
-        onChange={(v) => set("facture", { date: v })}
-      />
-      <Field
-        label="Montant HT (€)"
-        value={d.facture.montantHt}
-        onChange={(v) => set("facture", { montantHt: v })}
-      />
-      <Field label="TVA (%)" value={d.facture.tva} onChange={(v) => set("facture", { tva: v })} />
-      <Field
-        label="Montant TTC (€)"
-        value={d.facture.montantTtc}
-        onChange={(v) => set("facture", { montantTtc: v })}
-      />
-      <Field label="IBAN" value={d.facture.iban} onChange={(v) => set("facture", { iban: v })} />
     </div>
   );
 }
