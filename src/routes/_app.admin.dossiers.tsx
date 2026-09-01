@@ -47,7 +47,7 @@ type Row = {
 };
 
 function AdminDossiers() {
-  const { isAdmin, isSuperAdmin, loading, user } = useAuth();
+  const { isAdmin, isConseillere, isSuperAdmin, loading, user } = useAuth();
   const queryClient = useQueryClient();
   const [search, setSearch] = useState("");
   const [filtre, setFiltre] = useState("actifs");
@@ -138,7 +138,7 @@ function AdminDossiers() {
 
   if (!loading && !isAdmin) {
     return (
-      <AppShell items={adminNav(isSuperAdmin)} title="CRM dossiers">
+      <AppShell items={adminNav({ isSuperAdmin, isConseillere })} title="CRM dossiers">
         <Card className="rounded-2xl border-destructive/30">
           <CardContent className="p-8 text-sm text-muted-foreground">
             Accès réservé à l'équipe Skills4mation.
@@ -162,7 +162,7 @@ function AdminDossiers() {
 
   return (
     <AppShell
-      items={adminNav(isSuperAdmin)}
+      items={adminNav({ isSuperAdmin, isConseillere })}
       title="CRM suivi de dossier"
       subtitle="Pipeline en 7 étapes, de la demande de validation au paiement du formateur"
     >

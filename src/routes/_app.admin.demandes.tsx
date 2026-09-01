@@ -169,7 +169,7 @@ function AdminDemandes() {
 
   if (!loading && !isAdmin) {
     return (
-      <AppShell items={adminNav(isSuperAdmin)} title="Demandes">
+      <AppShell items={adminNav({ isSuperAdmin, isConseillere })} title="Demandes">
         <Card className="rounded-2xl border-destructive/30">
           <CardContent className="p-8">
             <h2 className="text-base font-semibold">Accès réservé à l'équipe Skills4mation</h2>
@@ -188,7 +188,7 @@ function AdminDemandes() {
 
   return (
     <AppShell
-      items={adminNav(isSuperAdmin)}
+      items={adminNav({ isSuperAdmin, isConseillere })}
       title="Toutes les demandes"
       subtitle="Candidatures, demandes de budget, demandes de formation et évaluations de droits — avec affectation à un collaborateur"
     >

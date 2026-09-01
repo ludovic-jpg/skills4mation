@@ -171,7 +171,7 @@ function AdminValidation() {
 
   if (!loading && !autorise) {
     return (
-      <AppShell items={adminNav(isSuperAdmin)} title="File de validation">
+      <AppShell items={adminNav({ isSuperAdmin, isConseillere })} title="File de validation">
         <Card className="rounded-2xl border-destructive/30">
           <CardContent className="p-8 text-sm text-muted-foreground">
             Accès réservé aux conseillères formation et super admins.
@@ -183,7 +183,7 @@ function AdminValidation() {
 
   return (
     <AppShell
-      items={adminNav(isSuperAdmin)}
+      items={adminNav({ isSuperAdmin, isConseillere })}
       title="File de validation"
       subtitle="Dossiers en attente de validation, du plus ancien au plus récent (objectif 24 h)"
     >

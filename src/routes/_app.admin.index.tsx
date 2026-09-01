@@ -122,7 +122,7 @@ function AdminCandidatures() {
   if (!loading && !isAdmin) {
     return (
 
-      <AppShell items={adminNav(isSuperAdmin)} title="Back-office">
+      <AppShell items={adminNav({ isSuperAdmin, isConseillere })} title="Back-office">
         <Card className="rounded-2xl border-destructive/30">
           <CardContent className="p-8">
             <h2 className="text-base font-semibold">Accès réservé à l'équipe Skills4mation</h2>
@@ -139,7 +139,7 @@ function AdminCandidatures() {
 
   return (
     <AppShell
-      items={adminNav(isSuperAdmin)}
+      items={adminNav({ isSuperAdmin, isConseillere })}
       title="Candidatures formateurs"
       subtitle="Étudier, valider ou refuser les demandes d'adhésion au réseau"
     >
