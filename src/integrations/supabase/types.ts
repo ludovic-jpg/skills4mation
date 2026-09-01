@@ -588,6 +588,7 @@ export type Database = {
           tally_submission_id: string | null
           titre_formation: string | null
           updated_at: string
+          validation_due_at: string | null
         }
         Insert: {
           archived_at?: string | null
@@ -609,6 +610,7 @@ export type Database = {
           tally_submission_id?: string | null
           titre_formation?: string | null
           updated_at?: string
+          validation_due_at?: string | null
         }
         Update: {
           archived_at?: string | null
@@ -630,6 +632,7 @@ export type Database = {
           tally_submission_id?: string | null
           titre_formation?: string | null
           updated_at?: string
+          validation_due_at?: string | null
         }
         Relationships: []
       }
