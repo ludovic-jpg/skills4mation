@@ -8,6 +8,7 @@ import {
   Handshake,
   Inbox,
   LayoutDashboard,
+  ShieldCheck,
   UserCog,
   Users,
 } from "lucide-react";
@@ -34,9 +35,20 @@ export const APPRENANT_NAV: NavItem[] = [
 ];
 
 export const ADMIN_NAV: NavItem[] = [
+  { to: "/admin/validation", label: "File de validation", icon: ShieldCheck },
   { to: "/admin", label: "Candidatures", icon: Users },
   { to: "/admin/pilotage", label: "Pilotage", icon: BarChart3 },
   { to: "/admin/demandes", label: "Toutes les demandes", icon: Inbox },
   { to: "/admin/dossiers", label: "CRM dossiers", icon: FolderKanban },
   { to: "/espace", label: "Espace formateur", icon: Folders },
 ];
+
+export const SUPER_ADMIN_NAV: NavItem[] = [
+  ...ADMIN_NAV.slice(0, 5),
+  { to: "/admin/comptes", label: "Comptes & rôles", icon: ShieldCheck },
+  { to: "/espace", label: "Espace formateur", icon: Folders },
+];
+
+export function adminNav(isSuperAdmin: boolean): NavItem[] {
+  return isSuperAdmin ? SUPER_ADMIN_NAV : ADMIN_NAV;
+}

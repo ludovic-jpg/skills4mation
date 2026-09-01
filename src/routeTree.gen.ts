@@ -31,9 +31,11 @@ import { Route as FormationsSlugRouteImport } from './routes/formations.$slug'
 import { Route as DotlovableOauthConsentRouteImport } from './routes/[.]lovable.oauth.consent'
 import { Route as Char91DotmcpChar93InvokeToolToolRouteImport } from './routes/[.mcp]/invoke-tool/$tool'
 import { Route as AppAdminIndexRouteImport } from './routes/_app.admin.index'
+import { Route as AppAdminComptesRouteImport } from './routes/_app.admin.comptes'
 import { Route as AppAdminDemandesRouteImport } from './routes/_app.admin.demandes'
 import { Route as AppAdminDossiersRouteImport } from './routes/_app.admin.dossiers'
 import { Route as AppAdminPilotageRouteImport } from './routes/_app.admin.pilotage'
+import { Route as AppAdminValidationRouteImport } from './routes/_app.admin.validation'
 import { Route as AppApprenantIndexRouteImport } from './routes/_app.apprenant.index'
 import { Route as AppEspaceIndexRouteImport } from './routes/_app.espace.index'
 import { Route as AppEspaceCandidatureRouteImport } from './routes/_app.espace.candidature'
@@ -165,6 +167,11 @@ const AppAdminIndexRoute = AppAdminIndexRouteImport.update({
   path: '/admin/',
   getParentRoute: () => AppRoute,
 } as any)
+const AppAdminComptesRoute = AppAdminComptesRouteImport.update({
+  id: '/admin/comptes',
+  path: '/admin/comptes',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppAdminDemandesRoute = AppAdminDemandesRouteImport.update({
   id: '/admin/demandes',
   path: '/admin/demandes',
@@ -178,6 +185,11 @@ const AppAdminDossiersRoute = AppAdminDossiersRouteImport.update({
 const AppAdminPilotageRoute = AppAdminPilotageRouteImport.update({
   id: '/admin/pilotage',
   path: '/admin/pilotage',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAdminValidationRoute = AppAdminValidationRouteImport.update({
+  id: '/admin/validation',
+  path: '/admin/validation',
   getParentRoute: () => AppRoute,
 } as any)
 const AppApprenantIndexRoute = AppApprenantIndexRouteImport.update({
@@ -290,9 +302,11 @@ export interface FileRoutesByFullPath {
   '/formations/': typeof FormationsIndexRoute
   '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
+  '/admin/comptes': typeof AppAdminComptesRoute
   '/admin/demandes': typeof AppAdminDemandesRoute
   '/admin/dossiers': typeof AppAdminDossiersRoute
   '/admin/pilotage': typeof AppAdminPilotageRoute
+  '/admin/validation': typeof AppAdminValidationRoute
   '/espace/candidature': typeof AppEspaceCandidatureRoute
   '/espace/parrainage': typeof AppEspaceParrainageRoute
   '/espace/profil': typeof AppEspaceProfilRoute
@@ -333,9 +347,11 @@ export interface FileRoutesByTo {
   '/formations': typeof FormationsIndexRoute
   '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
+  '/admin/comptes': typeof AppAdminComptesRoute
   '/admin/demandes': typeof AppAdminDemandesRoute
   '/admin/dossiers': typeof AppAdminDossiersRoute
   '/admin/pilotage': typeof AppAdminPilotageRoute
+  '/admin/validation': typeof AppAdminValidationRoute
   '/espace/candidature': typeof AppEspaceCandidatureRoute
   '/espace/parrainage': typeof AppEspaceParrainageRoute
   '/espace/profil': typeof AppEspaceProfilRoute
@@ -378,9 +394,11 @@ export interface FileRoutesById {
   '/formations/': typeof FormationsIndexRoute
   '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
+  '/_app/admin/comptes': typeof AppAdminComptesRoute
   '/_app/admin/demandes': typeof AppAdminDemandesRoute
   '/_app/admin/dossiers': typeof AppAdminDossiersRoute
   '/_app/admin/pilotage': typeof AppAdminPilotageRoute
+  '/_app/admin/validation': typeof AppAdminValidationRoute
   '/_app/espace/candidature': typeof AppEspaceCandidatureRoute
   '/_app/espace/parrainage': typeof AppEspaceParrainageRoute
   '/_app/espace/profil': typeof AppEspaceProfilRoute
@@ -423,9 +441,11 @@ export interface FileRouteTypes {
     | '/formations/'
     | '/.lovable/oauth/consent'
     | '/.mcp/invoke-tool/$tool'
+    | '/admin/comptes'
     | '/admin/demandes'
     | '/admin/dossiers'
     | '/admin/pilotage'
+    | '/admin/validation'
     | '/espace/candidature'
     | '/espace/parrainage'
     | '/espace/profil'
@@ -466,9 +486,11 @@ export interface FileRouteTypes {
     | '/formations'
     | '/.lovable/oauth/consent'
     | '/.mcp/invoke-tool/$tool'
+    | '/admin/comptes'
     | '/admin/demandes'
     | '/admin/dossiers'
     | '/admin/pilotage'
+    | '/admin/validation'
     | '/espace/candidature'
     | '/espace/parrainage'
     | '/espace/profil'
@@ -510,9 +532,11 @@ export interface FileRouteTypes {
     | '/formations/'
     | '/.lovable/oauth/consent'
     | '/.mcp/invoke-tool/$tool'
+    | '/_app/admin/comptes'
     | '/_app/admin/demandes'
     | '/_app/admin/dossiers'
     | '/_app/admin/pilotage'
+    | '/_app/admin/validation'
     | '/_app/espace/candidature'
     | '/_app/espace/parrainage'
     | '/_app/espace/profil'
@@ -719,6 +743,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppAdminIndexRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/admin/comptes': {
+      id: '/_app/admin/comptes'
+      path: '/admin/comptes'
+      fullPath: '/admin/comptes'
+      preLoaderRoute: typeof AppAdminComptesRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/_app/admin/demandes': {
       id: '/_app/admin/demandes'
       path: '/admin/demandes'
@@ -738,6 +769,13 @@ declare module '@tanstack/react-router' {
       path: '/admin/pilotage'
       fullPath: '/admin/pilotage'
       preLoaderRoute: typeof AppAdminPilotageRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/admin/validation': {
+      id: '/_app/admin/validation'
+      path: '/admin/validation'
+      fullPath: '/admin/validation'
+      preLoaderRoute: typeof AppAdminValidationRouteImport
       parentRoute: typeof AppRoute
     }
     '/_app/apprenant/': {
@@ -863,9 +901,11 @@ declare module '@tanstack/react-router' {
 }
 
 interface AppRouteChildren {
+  AppAdminComptesRoute: typeof AppAdminComptesRoute
   AppAdminDemandesRoute: typeof AppAdminDemandesRoute
   AppAdminDossiersRoute: typeof AppAdminDossiersRoute
   AppAdminPilotageRoute: typeof AppAdminPilotageRoute
+  AppAdminValidationRoute: typeof AppAdminValidationRoute
   AppEspaceCandidatureRoute: typeof AppEspaceCandidatureRoute
   AppEspaceParrainageRoute: typeof AppEspaceParrainageRoute
   AppEspaceProfilRoute: typeof AppEspaceProfilRoute
@@ -881,9 +921,11 @@ interface AppRouteChildren {
 }
 
 const AppRouteChildren: AppRouteChildren = {
+  AppAdminComptesRoute: AppAdminComptesRoute,
   AppAdminDemandesRoute: AppAdminDemandesRoute,
   AppAdminDossiersRoute: AppAdminDossiersRoute,
   AppAdminPilotageRoute: AppAdminPilotageRoute,
+  AppAdminValidationRoute: AppAdminValidationRoute,
   AppEspaceCandidatureRoute: AppEspaceCandidatureRoute,
   AppEspaceParrainageRoute: AppEspaceParrainageRoute,
   AppEspaceProfilRoute: AppEspaceProfilRoute,

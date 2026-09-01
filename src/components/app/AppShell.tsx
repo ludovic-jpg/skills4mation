@@ -22,8 +22,13 @@ export function AppShell({
   actions?: ReactNode;
   children: ReactNode;
 }) {
-  const { profile, isAdmin, signOut } = useAuth();
+  const { profile, isAdmin, isSuperAdmin, isConseillere, signOut } = useAuth();
   const router = useRouter();
+  const roleBadge = isSuperAdmin
+    ? { label: "Super admin", tone: "bg-secondary text-secondary-foreground" }
+    : isConseillere
+      ? { label: "Conseillère formation", tone: "bg-accent text-accent-foreground" }
+      : { label: "Formateur partenaire", tone: "bg-muted text-muted-foreground" };
   const [open, setOpen] = useState(false);
 
   const nav = (
@@ -99,7 +104,14 @@ export function AppShell({
               ) : null}
             </div>
           </div>
-          <div className="flex shrink-0 items-center gap-2">{actions}</div>
+          <div className="flex shrink-0 items-center gap-2">
+            <span
+              className={`hidden rounded-full px-3 py-1 text-xs font-semibold sm:inline-flex ${roleBadge.tone}`}
+            >
+              {roleBadge.label}
+            </span>
+            {actions}
+          </div>
         </header>
 
         <main className="flex-1 p-5 lg:p-8">{children}</main>

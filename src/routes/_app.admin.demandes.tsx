@@ -5,7 +5,7 @@ import { toast } from "sonner";
 import { UserPlus } from "lucide-react";
 
 import { AppShell } from "@/components/app/AppShell";
-import { ADMIN_NAV } from "@/components/app/nav";
+import { adminNav } from "@/components/app/nav";
 import { StatutBadge } from "@/components/StatutBadge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -115,7 +115,7 @@ const CANDIDATURE_OPTIONS = ["en_attente", "en_cours", "valide", "refuse"] as co
 const BUDGET_OPTIONS: BudgetStatut[] = ["en_attente", "en_cours_etude", "validee", "refusee"];
 
 function AdminDemandes() {
-  const { isAdmin, loading } = useAuth();
+  const { isAdmin, isSuperAdmin, loading } = useAuth();
   const queryClient = useQueryClient();
   const [source, setSource] = useState<Source>("demandes_droits_formation");
   const [openId, setOpenId] = useState<string | null>(null);
@@ -169,7 +169,7 @@ function AdminDemandes() {
 
   if (!loading && !isAdmin) {
     return (
-      <AppShell items={ADMIN_NAV} title="Demandes">
+      <AppShell items={adminNav(isSuperAdmin)} title="Demandes">
         <Card className="rounded-2xl border-destructive/30">
           <CardContent className="p-8">
             <h2 className="text-base font-semibold">Accès réservé à l'équipe Skills4mation</h2>
@@ -188,7 +188,7 @@ function AdminDemandes() {
 
   return (
     <AppShell
-      items={ADMIN_NAV}
+      items={adminNav(isSuperAdmin)}
       title="Toutes les demandes"
       subtitle="Candidatures, demandes de budget, demandes de formation et évaluations de droits — avec affectation à un collaborateur"
     >

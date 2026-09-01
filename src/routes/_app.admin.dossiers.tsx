@@ -5,7 +5,7 @@ import { toast } from "sonner";
 
 import { AppShell } from "@/components/app/AppShell";
 import { CrmBadge } from "@/components/app/CrmBadge";
-import { ADMIN_NAV } from "@/components/app/nav";
+import { adminNav } from "@/components/app/nav";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -40,7 +40,7 @@ type Row = {
 };
 
 function AdminDossiers() {
-  const { isAdmin, loading, user } = useAuth();
+  const { isAdmin, isSuperAdmin, loading, user } = useAuth();
   const queryClient = useQueryClient();
   const [search, setSearch] = useState("");
   const [filtre, setFiltre] = useState("actifs");
@@ -131,7 +131,7 @@ function AdminDossiers() {
 
   if (!loading && !isAdmin) {
     return (
-      <AppShell items={ADMIN_NAV} title="CRM dossiers">
+      <AppShell items={adminNav(isSuperAdmin)} title="CRM dossiers">
         <Card className="rounded-2xl border-destructive/30">
           <CardContent className="p-8 text-sm text-muted-foreground">
             Accès réservé à l'équipe Skills4mation.
@@ -155,7 +155,7 @@ function AdminDossiers() {
 
   return (
     <AppShell
-      items={ADMIN_NAV}
+      items={adminNav(isSuperAdmin)}
       title="CRM suivi de dossier"
       subtitle="Pipeline en 7 étapes, de la demande de validation au paiement du formateur"
     >
