@@ -258,22 +258,42 @@ export function DossierWizard({
           {step === 6 ? <RecapStep d={d} /> : null}
         </fieldset>
 
-        <div className="mt-6 flex items-center justify-between">
+        <div className="mt-6 flex flex-wrap items-center justify-between gap-3">
           <Button variant="outline" disabled={step === 0} onClick={() => setStep((v) => v - 1)}>
             Précédent
           </Button>
           {step === ETAPES.length - 1 ? (
-            <Button
-              variant="cta"
-              disabled={saving}
-              onClick={() => {
-                memoriser(d);
-                onSave(d);
-              }}
-            >
-              Enregistrer le dossier
-            </Button>
+            <div className="flex flex-wrap items-center gap-2">
+              {verrouille ? null : (
+                <Button
+                  variant="outline"
+                  disabled={saving}
+                  onClick={() => {
+                    memoriser(d);
+                    onSave(d);
+                  }}
+                >
+                  Enregistrer le dossier
+                </Button>
+              )}
+              {onDemanderValidation && !verrouille ? (
+                <Button
+                  variant="cta"
+                  disabled={demandeEnCours || totalManquants > 0}
+                  onClick={() => {
+                    memoriser(d);
+                    onSave(d);
+                    onDemanderValidation();
+                  }}
+                >
+                  {totalManquants > 0
+                    ? `${totalManquants} champ(s) à compléter`
+                    : "Demander la validation"}
+                </Button>
+              ) : null}
+            </div>
           ) : (
+
             <Button
               variant="teal"
               onClick={() => {
