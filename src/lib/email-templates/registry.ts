@@ -25,4 +25,6 @@ export interface TemplateEntry {
 export const TEMPLATES: Record<string, TemplateEntry> = {
   'signature-formateur': signatureFormateurTemplate,
   'depot-formateur': depotFormateurTemplate,
+  'demande-financement-opco': demandeFinancementOpcoTemplate,
+  'demande-financement-cpf': demandeFinancementCpfTemplate,
 }
