@@ -92,9 +92,17 @@ function validateStep(step: number, d: DossierDonnees): Errs {
 }
 
 export function DossierWizard({ value, saving, onSave, modeles = [] }: Props) {
+  const { user } = useAuth();
   const [step, setStep] = useState(0);
   const [d, setD] = useState<DossierDonnees>(value);
   const [showBlocking, setShowBlocking] = useState(false);
+
+  /** Alimente l'annuaire partagé en arrière-plan, sans bloquer la saisie. */
+  function memoriser(donnees: DossierDonnees) {
+    if (!user?.id) return;
+    void memoriserEntreprise(donnees.entreprise, user.id).catch(() => undefined);
+  }
+
 
   // Resynchronise l'état interne quand la valeur enregistrée change côté serveur.
   const [syncRef, setSyncRef] = useState(value);
