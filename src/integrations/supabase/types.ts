@@ -301,6 +301,62 @@ export type Database = {
         }
         Relationships: []
       }
+      demandes_financement: {
+        Row: {
+          cout_certification: number | null
+          created_at: string
+          destinataire_email: string | null
+          dossier_id: string
+          envoye_le: string | null
+          formateur_id: string
+          id: string
+          lien_moncompteformation: string | null
+          message: string | null
+          mode: string | null
+          montant: number | null
+          statut: string
+          updated_at: string
+        }
+        Insert: {
+          cout_certification?: number | null
+          created_at?: string
+          destinataire_email?: string | null
+          dossier_id: string
+          envoye_le?: string | null
+          formateur_id: string
+          id?: string
+          lien_moncompteformation?: string | null
+          message?: string | null
+          mode?: string | null
+          montant?: number | null
+          statut?: string
+          updated_at?: string
+        }
+        Update: {
+          cout_certification?: number | null
+          created_at?: string
+          destinataire_email?: string | null
+          dossier_id?: string
+          envoye_le?: string | null
+          formateur_id?: string
+          id?: string
+          lien_moncompteformation?: string | null
+          message?: string | null
+          mode?: string | null
+          montant?: number | null
+          statut?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "demandes_financement_dossier_id_fkey"
+            columns: ["dossier_id"]
+            isOneToOne: false
+            referencedRelation: "dossiers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       document_envois: {
         Row: {
           apprenant_id: string | null

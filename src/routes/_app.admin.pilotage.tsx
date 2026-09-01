@@ -16,11 +16,20 @@ import {
 
 import equipe from "@/assets/people-equipe.jpg";
 import { AppShell } from "@/components/app/AppShell";
-import { adminNav } from "@/components/app/nav";
+import { adminNav, SUPER_ADMIN_NAV } from "@/components/app/nav";
+import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
-import { CRM_STATUTS, type CrmStatut } from "@/lib/crm";
+import { CRM_PIPELINE, CRM_STATUTS, type CrmStatut } from "@/lib/crm";
 
 export const Route = createFileRoute("/_app/admin/pilotage")({
   component: Pilotage,
@@ -80,14 +89,39 @@ function Kpi({ label, value, hint }: { label: string; value: string; hint?: stri
   );
 }
 
+function IndicateurLigne({
+  label,
+  valeur,
+  part,
+}: {
+  label: string;
+  valeur: string;
+  part: string;
+}) {
+  return (
+    <li className="flex items-baseline justify-between gap-4 border-b border-border/50 pb-2 last:border-0">
+      <span className="text-muted-foreground">{label}</span>
+      <span className="whitespace-nowrap font-semibold">
+        {valeur}
+        {part !== "—" ? (
+          <span className="ml-2 text-xs font-normal text-muted-foreground">{part}</span>
+        ) : null}
+      </span>
+    </li>
+  );
+}
+
 function Pilotage() {
-  const { isSuperAdmin, isConseillere } = useAuth();
+  const { isSuperAdmin, isConseillere, loading } = useAuth();
   const dossiers = useQuery({
     queryKey: ["pilotage-dossiers"],
+    enabled: isSuperAdmin,
     queryFn: async () => {
       const { data, error } = await supabase
         .from("dossiers")
-        .select("id, formateur_id, statut_crm, donnees, created_at, updated_at");
+        .select(
+          "id, formateur_id, statut_crm, donnees, created_at, updated_at, dossier_nom, entreprise_nom, titre_formation, signature_organisme_date, signature_organisme_certificat_url, drive_folder_id",
+        );
       if (error) throw error;
       return data ?? [];
     },
@@ -95,12 +129,34 @@ function Pilotage() {
 
   const candidatures = useQuery({
     queryKey: ["pilotage-candidatures"],
+    enabled: isSuperAdmin,
     queryFn: async () => {
       const { data, error } = await supabase
         .from("candidatures")
         .select("id, profile_id, statut, created_at");
       if (error) throw error;
       return data ?? [];
+    },
+  });
+
+  /** Indicateurs Qualiopi : traçabilité des pièces et signatures, sous-traitance formateurs. */
+  const qualiopi = useQuery({
+    queryKey: ["pilotage-qualiopi"],
+    enabled: isSuperAdmin,
+    queryFn: async () => {
+      const [pieces, envois, profils] = await Promise.all([
+        supabase.from("dossier_pieces").select("dossier_id, statut"),
+        supabase.from("document_envois").select("dossier_id, statut, signature_date, drive_url"),
+        supabase.from("profiles").select("id, prenom, nom, numero_nda, siret"),
+      ]);
+      if (pieces.error) throw pieces.error;
+      if (envois.error) throw envois.error;
+      if (profils.error) throw profils.error;
+      return {
+        pieces: pieces.data ?? [],
+        envois: envois.data ?? [],
+        profils: profils.data ?? [],
+      };
     },
   });
 
@@ -153,11 +209,70 @@ function Pilotage() {
     danger: "hsl(var(--destructive))",
   };
 
+  /* ---------- Dossiers validés : répartition par statut et montants ---------- */
+
+  // Un dossier est « validé » dès qu'il a dépassé la demande de validation.
+  const ETAPES_VALIDEES = CRM_PIPELINE.filter(
+    (s) => (CRM_STATUTS[s].etape ?? 0) >= 2,
+  ) as CrmStatut[];
+  const valides = rows.filter((d) => ETAPES_VALIDEES.includes(d.statut_crm as CrmStatut));
+
+  const tableauValides = ETAPES_VALIDEES.map((statut) => {
+    const lot = valides.filter((d) => d.statut_crm === statut);
+    const montant = lot.reduce((s, d) => s + montantDossier(d.donnees), 0);
+    return {
+      statut,
+      label: CRM_STATUTS[statut].label,
+      tone: CRM_STATUTS[statut].tone,
+      nb: lot.length,
+      montant,
+      commission: montant * COMMISSION,
+    };
+  });
+  const montantValides = valides.reduce((s, d) => s + montantDossier(d.donnees), 0);
+
+  /* ---------------------- Indicateurs Qualiopi ---------------------- */
+
+  const q = qualiopi.data;
+  const piecesCompletes = (q?.pieces ?? []).filter((p) => p.statut === "complete").length;
+  const piecesTotal = (q?.pieces ?? []).length;
+  const envoisSignes = (q?.envois ?? []).filter((e) => e.signature_date).length;
+  const envoisTotal = (q?.envois ?? []).length;
+  const envoisArchives = (q?.envois ?? []).filter((e) => e.drive_url).length;
+  const validesSignes = valides.filter((d) => d.signature_organisme_date).length;
+  const validesCertificat = valides.filter((d) => d.signature_organisme_certificat_url).length;
+  const validesDrive = valides.filter((d) => d.drive_folder_id).length;
+
+  const formateursPortes = Array.from(new Set(valides.map((d) => d.formateur_id)));
+  const profilParId = new Map((q?.profils ?? []).map((p) => [p.id, p]));
+  const sousTraitantsConformes = formateursPortes.filter((id) => {
+    const p = profilParId.get(id);
+    return Boolean(p?.siret);
+  }).length;
+  const sousTraitantsNda = formateursPortes.filter((id) =>
+    Boolean(profilParId.get(id)?.numero_nda),
+  ).length;
+
+  const pct = (n: number, total: number) => (total ? `${Math.round((n / total) * 100)} %` : "—");
+
+  if (!loading && !isSuperAdmin) {
+    return (
+      <AppShell items={adminNav({ isSuperAdmin, isConseillere })} title="Pilotage">
+        <Card className="rounded-2xl border-destructive/30">
+          <CardContent className="p-8 text-sm text-muted-foreground">
+            Le pilotage financier et les indicateurs Qualiopi sont réservés aux super admins
+            Skills4mation.
+          </CardContent>
+        </Card>
+      </AppShell>
+    );
+  }
+
   return (
     <AppShell
-      items={adminNav({ isSuperAdmin, isConseillere })}
+      items={SUPER_ADMIN_NAV}
       title="Pilotage"
-      subtitle="Chiffre d'affaires porté, commission Skills4mation, avancement du pipeline et conversion des candidatures"
+      subtitle="Chiffre d'affaires porté, commission Skills4mation, dossiers validés, traçabilité Qualiopi et sous-traitance"
     >
       <div className="mb-6 overflow-hidden rounded-2xl border">
         <img
@@ -263,6 +378,134 @@ function Pilotage() {
                 </LineChart>
               </ResponsiveContainer>
             </div>
+          </CardContent>
+        </Card>
+      </div>
+
+      <Card className="mt-6">
+        <CardContent className="pt-6">
+          <h2 className="text-sm font-semibold">Dossiers validés par statut et montants</h2>
+          <p className="mt-1 text-xs text-muted-foreground">
+            Dossiers ayant passé la validation Skills4mation ({valides.length} dossiers,{" "}
+            {euros(montantValides)} portés).
+          </p>
+          <div className="mt-4 overflow-x-auto">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Statut</TableHead>
+                  <TableHead className="text-right">Dossiers</TableHead>
+                  <TableHead className="text-right">Montant porté</TableHead>
+                  <TableHead className="text-right">Commission 20 %</TableHead>
+                  <TableHead className="text-right">Part du portefeuille</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {tableauValides.map((r) => (
+                  <TableRow key={r.statut}>
+                    <TableCell className="font-medium">{r.label}</TableCell>
+                    <TableCell className="text-right">{r.nb}</TableCell>
+                    <TableCell className="text-right">{euros(r.montant)}</TableCell>
+                    <TableCell className="text-right">{euros(r.commission)}</TableCell>
+                    <TableCell className="text-right text-muted-foreground">
+                      {pct(r.montant, montantValides)}
+                    </TableCell>
+                  </TableRow>
+                ))}
+                <TableRow>
+                  <TableCell className="font-semibold">Total validé</TableCell>
+                  <TableCell className="text-right font-semibold">{valides.length}</TableCell>
+                  <TableCell className="text-right font-semibold">
+                    {euros(montantValides)}
+                  </TableCell>
+                  <TableCell className="text-right font-semibold">
+                    {euros(montantValides * COMMISSION)}
+                  </TableCell>
+                  <TableCell className="text-right">—</TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
+          </div>
+        </CardContent>
+      </Card>
+
+      <div className="mt-6 grid gap-6 lg:grid-cols-2">
+        <Card>
+          <CardContent className="pt-6">
+            <h2 className="text-sm font-semibold">Qualiopi — traçabilité</h2>
+            <ul className="mt-4 grid gap-3 text-sm">
+              <IndicateurLigne
+                label="Pièces du dossier complètes"
+                valeur={`${piecesCompletes}/${piecesTotal}`}
+                part={pct(piecesCompletes, piecesTotal)}
+              />
+              <IndicateurLigne
+                label="Documents signés par les apprenants"
+                valeur={`${envoisSignes}/${envoisTotal}`}
+                part={pct(envoisSignes, envoisTotal)}
+              />
+              <IndicateurLigne
+                label="Documents archivés sur Drive"
+                valeur={`${envoisArchives}/${envoisTotal}`}
+                part={pct(envoisArchives, envoisTotal)}
+              />
+              <IndicateurLigne
+                label="Signature Skills4mation apposée"
+                valeur={`${validesSignes}/${valides.length}`}
+                part={pct(validesSignes, valides.length)}
+              />
+              <IndicateurLigne
+                label="Certificat de signature archivé"
+                valeur={`${validesCertificat}/${valides.length}`}
+                part={pct(validesCertificat, valides.length)}
+              />
+              <IndicateurLigne
+                label="Dossiers rattachés à un espace Drive"
+                valeur={`${validesDrive}/${valides.length}`}
+                part={pct(validesDrive, valides.length)}
+              />
+            </ul>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardContent className="pt-6">
+            <h2 className="text-sm font-semibold">Qualiopi — sous-traitance formateurs</h2>
+            <p className="mt-1 text-xs text-muted-foreground">
+              Formateurs portés sur les dossiers validés : conformité des pièces exigées par le
+              critère 5 (sous-traitance et prestataires).
+            </p>
+            <ul className="mt-4 grid gap-3 text-sm">
+              <IndicateurLigne
+                label="Formateurs sous-traitants actifs"
+                valeur={String(formateursPortes.length)}
+                part="—"
+              />
+              <IndicateurLigne
+                label="SIRET renseigné au profil"
+                valeur={`${sousTraitantsConformes}/${formateursPortes.length}`}
+                part={pct(sousTraitantsConformes, formateursPortes.length)}
+              />
+              <IndicateurLigne
+                label="Numéro de déclaration d'activité (NDA)"
+                valeur={`${sousTraitantsNda}/${formateursPortes.length}`}
+                part={pct(sousTraitantsNda, formateursPortes.length)}
+              />
+              <IndicateurLigne
+                label="Dossiers portés par formateur (moyenne)"
+                valeur={
+                  formateursPortes.length
+                    ? (valides.length / formateursPortes.length).toFixed(1)
+                    : "—"
+                }
+                part="—"
+              />
+            </ul>
+            {formateursPortes.length && sousTraitantsConformes < formateursPortes.length ? (
+              <Badge variant="outline" className="mt-4 border-destructive/40 text-destructive">
+                {formateursPortes.length - sousTraitantsConformes} formateur(s) sans SIRET au profil
+              </Badge>
+            ) : null}
           </CardContent>
         </Card>
       </div>
