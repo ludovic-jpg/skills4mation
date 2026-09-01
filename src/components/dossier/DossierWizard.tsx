@@ -16,7 +16,12 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { aDuPresentiel, estCpf, type DossierDonnees } from "@/lib/dossier/types";
+import {
+  TARIF_CERTIFICATION_ICDL,
+  aDuPresentiel,
+  estCpf,
+  type DossierDonnees,
+} from "@/lib/dossier/types";
 import { appliquerFormation, type FormationCatalogue } from "@/lib/formations";
 
 type Props = {
