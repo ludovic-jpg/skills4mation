@@ -24,7 +24,7 @@ export const apposerSignatureOrganisme = createServerFn({ method: "POST" })
       .from("user_roles")
       .select("role")
       .eq("user_id", context.userId)
-      .in("role", ROLES_EQUIPE as unknown as string[]);
+      .in("role", [...ROLES_EQUIPE]);
     if (rolesError) throw new Error("Vérification des droits impossible.");
     if (!roles || roles.length === 0)
       throw new Error("Accès réservé aux conseillères formation et super admins.");
