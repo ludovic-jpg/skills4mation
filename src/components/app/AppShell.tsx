@@ -22,8 +22,13 @@ export function AppShell({
   actions?: ReactNode;
   children: ReactNode;
 }) {
-  const { profile, isAdmin, signOut } = useAuth();
+  const { profile, isAdmin, isSuperAdmin, isConseillere, signOut } = useAuth();
   const router = useRouter();
+  const roleBadge = isSuperAdmin
+    ? { label: "Super admin", tone: "bg-secondary text-secondary-foreground" }
+    : isConseillere
+      ? { label: "Conseillère formation", tone: "bg-accent text-accent-foreground" }
+      : { label: "Formateur partenaire", tone: "bg-muted text-muted-foreground" };
   const [open, setOpen] = useState(false);
 
   const nav = (
