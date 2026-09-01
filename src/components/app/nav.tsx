@@ -1,4 +1,5 @@
 import {
+  Banknote,
   BarChart3,
   BookOpen,
   FilePlus2,
@@ -38,13 +39,14 @@ export const ADMIN_NAV: NavItem[] = [
   { to: "/admin/validation", label: "File de validation", icon: ShieldCheck },
   { to: "/admin/pilotage", label: "Pilotage", icon: BarChart3 },
   { to: "/admin/dossiers", label: "CRM dossiers", icon: FolderKanban },
+  { to: "/admin/financements", label: "Demandes de financement", icon: Banknote },
   { to: "/admin/demandes", label: "Toutes les demandes", icon: Inbox },
   { to: "/admin", label: "Candidatures", icon: Users },
   { to: "/espace", label: "Espace formateur", icon: Folders },
 ];
 
 export const SUPER_ADMIN_NAV: NavItem[] = [
-  ...ADMIN_NAV.slice(0, 5),
+  ...ADMIN_NAV.slice(0, 6),
   { to: "/admin/comptes", label: "Comptes & rôles", icon: ShieldCheck },
   { to: "/espace", label: "Espace formateur", icon: Folders },
 ];

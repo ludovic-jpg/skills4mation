@@ -247,7 +247,7 @@ function AdminFinancements() {
                       </TableCell>
                       <TableCell className="text-right">
                         <Button asChild size="sm" variant="ghost">
-                          <Link to="/admin/dossiers" search={{ dossier: d.dossier_id }}>
+                          <Link to="/admin/dossiers">
                             Voir
                           </Link>
                         </Button>
