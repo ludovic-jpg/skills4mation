@@ -167,6 +167,8 @@ function icdl(d: DossierDonnees) {
     ${ligne("Seuil de réussite", "75 % de bonnes réponses par module")}
     ${ligne("Délai de passage", "À l'issue du parcours, dans un délai maximum de 3 mois")}
     ${ligne("Résultat", "Rapport de compétences et certificat remis au candidat, classés au dossier de l'apprenant")}
+    ${ligne("Coût de la certification", e(euros(d.tarifs.coutCertification)))}
+    ${ligne("Montant pris en charge par le financeur", e(euros(d.tarifs.montantPrisEnCharge)))}
     <h2>Candidats inscrits</h2>
     ${tableApprenants(d, true)}
     <div class="note">En cas d'échec, une session de rattrapage peut être organisée. Les aménagements pour situation de handicap sont étudiés avec le référent handicap de l'organisme.</div>`,
