@@ -153,7 +153,9 @@ function AdminComptes() {
                               <button
                                 type="button"
                                 disabled={soiMeme || retirer.isPending}
-                                onClick={() => retirer.mutate({ userId: p.id, role: r.role })}
+                                onClick={() =>
+                                  retirer.mutate({ userId: p.id, role: r.role as AppRole })
+                                }
                                 className="text-muted-foreground transition-colors hover:text-destructive disabled:opacity-40"
                               >
                                 ×
