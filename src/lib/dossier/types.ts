@@ -68,6 +68,11 @@ export type DossierDonnees = {
     montantPrisEnCharge: string;
     /** Certification ICDL visée pour la session. */
     certificationIcdl: boolean;
+    /**
+     * Coût de la certification (ICDL), strictement distinct du montant pris en charge :
+     * il apparaît toujours comme une ligne séparée sur les documents.
+     */
+    coutCertification: string;
   };
   convention: {
     lieu: string;
