@@ -1,51 +1,185 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import { FolderPlus } from "lucide-react";
+import {
+  ArrowUpRight,
+  BookOpen,
+  CalendarDays,
+  FilePlus2,
+  FolderPlus,
+  Folders,
+  Lock,
+  Sparkles,
+  TrendingUp,
+  Trophy,
+} from "lucide-react";
 
-import { AppShell } from "@/components/app/AppShell";
+import { AppShell, usePhotoProfil } from "@/components/app/AppShell";
 import { FORMATEUR_NAV } from "@/components/app/nav";
+import { CrmBadge } from "@/components/app/CrmBadge";
 import { StatutBadge } from "@/components/StatutBadge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { Progress } from "@/components/ui/progress";
 import { useAuth } from "@/hooks/useAuth";
-import { formatDate, type DossierStatut } from "@/lib/statuts";
+import { CRM_STATUTS, dossierNom, type CrmStatut } from "@/lib/crm";
+import { formatDate } from "@/lib/statuts";
 import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/_app/espace/")({
   component: EspaceAccueil,
+  head: () => ({
+    meta: [
+      { title: "Tableau de bord formateur | Skills4mation" },
+      {
+        name: "description",
+        content:
+          "Vos dossiers de formation, vos formations publiées, votre planning d'interventions et votre progression dans le portage Qualiopi Skills4mation.",
+      },
+      { property: "og:title", content: "Tableau de bord formateur Skills4mation" },
+      {
+        property: "og:description",
+        content: "Suivi des dossiers, planning des interventions et progression du portage.",
+      },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
+      { name: "robots", content: "noindex" },
+    ],
+  }),
 });
 
 type Dossier = {
   id: string;
+  dossier_nom: string | null;
   entreprise_nom: string | null;
-  statut: DossierStatut;
+  titre_formation: string | null;
+  statut_crm: CrmStatut;
+  date_debut: string | null;
+  date_fin: string | null;
   created_at: string;
 };
 
+const EN_COURS: CrmStatut[] = [
+  "demande_validation",
+  "dossier_valide",
+  "demande_financement",
+  "accord_financement",
+  "finalisation_administrative",
+  "formation_en_cours",
+];
+
 function EspaceAccueil() {
   const { profile, isValidatedFormateur } = useAuth();
+  const photo = usePhotoProfil(profile?.photo_url);
 
   const { data, isLoading } = useQuery({
-    queryKey: ["mes-dossiers"],
+    queryKey: ["tableau-de-bord-dossiers"],
     queryFn: async () => {
       const { data, error } = await supabase
         .from("dossiers")
-        .select("id, entreprise_nom, statut, created_at")
+        .select(
+          "id, dossier_nom, entreprise_nom, titre_formation, statut_crm, date_debut, date_fin, created_at",
+        )
         .order("created_at", { ascending: false });
       if (error) throw error;
       return (data ?? []) as Dossier[];
     },
   });
 
+  const { data: formations } = useQuery({
+    queryKey: ["tableau-de-bord-formations"],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("formations_catalogue")
+        .select("id, titre, publiee, slug")
+        .order("created_at", { ascending: false });
+      if (error) throw error;
+      return data ?? [];
+    },
+  });
+
   const dossiers = data ?? [];
-  const enCours = dossiers.filter((d) => d.statut !== "complet" && d.statut !== "archive");
-  const complets = dossiers.filter((d) => d.statut === "complet");
+  const brouillons = dossiers.filter((d) => d.statut_crm === "brouillon");
+  const enCours = dossiers.filter((d) => EN_COURS.includes(d.statut_crm));
+  const realises = dossiers.filter((d) =>
+    ["formation_realisee", "demande_paiement", "paiement_organisme", "paiement_formateur"].includes(
+      d.statut_crm,
+    ),
+  );
+
+  // Croissance : dossiers ouverts ce mois-ci comparés au mois précédent.
+  const maintenant = new Date();
+  const cleMois = (date: Date) => `${date.getFullYear()}-${date.getMonth()}`;
+  const moisPrecedent = new Date(maintenant.getFullYear(), maintenant.getMonth() - 1, 1);
+  const ceMois = dossiers.filter((d) => cleMois(new Date(d.created_at)) === cleMois(maintenant))
+    .length;
+  const moisDavant = dossiers.filter(
+    (d) => cleMois(new Date(d.created_at)) === cleMois(moisPrecedent),
+  ).length;
+  const croissance =
+    moisDavant === 0 ? (ceMois > 0 ? 100 : 0) : Math.round(((ceMois - moisDavant) / moisDavant) * 100);
+
+  // Planning : prochaines interventions issues des dossiers actifs.
+  const aujourdhui = new Date().toISOString().slice(0, 10);
+  const planning = dossiers
+    .filter((d) => d.date_debut && (d.date_fin ?? d.date_debut) >= aujourdhui)
+    .sort((a, b) => (a.date_debut ?? "").localeCompare(b.date_debut ?? ""))
+    .slice(0, 6);
+
+  const etapes = [
+    {
+      titre: "Profil complété",
+      atteint: Boolean(profile?.siret && profile?.numero_nda),
+      astuce: "Ajoutez votre SIRET et votre numéro de déclaration d'activité.",
+      lien: "/espace/profil" as const,
+    },
+    {
+      titre: "Candidature validée",
+      atteint: isValidatedFormateur,
+      astuce: "L'équipe Skills4mation valide votre dossier de candidature.",
+      lien: "/espace/candidature" as const,
+    },
+    {
+      titre: "Première formation créée",
+      atteint: (formations ?? []).length > 0,
+      astuce: "Créez une formation réutilisable dans tous vos dossiers.",
+      lien: "/espace/formations" as const,
+    },
+    {
+      titre: "Premier dossier ouvert",
+      atteint: dossiers.length > 0,
+      astuce: "Ouvrez un dossier : le numéro ADF est attribué automatiquement.",
+      lien: "/espace/dossiers/new" as const,
+    },
+    {
+      titre: "Dossier validé par Skills4mation",
+      atteint: dossiers.some((d) => (CRM_STATUTS[d.statut_crm]?.etape ?? 0) >= 2),
+      astuce: "Complétez un dossier puis demandez la validation.",
+      lien: "/espace/dossiers" as const,
+    },
+    {
+      titre: "Formation réalisée",
+      atteint: realises.length > 0,
+      astuce: "Signalez la fin de formation pour déclencher le paiement.",
+      lien: "/espace/dossiers" as const,
+    },
+  ];
+  const franchies = etapes.filter((e) => e.atteint).length;
+  const niveau = ["Nouveau venu", "Explorateur", "Formateur actif", "Formateur confirmé", "Expert du portage"][
+    Math.min(4, Math.floor((franchies / etapes.length) * 5))
+  ];
+
+  const kpis = [
+    { label: "Formations créées", valeur: (formations ?? []).length, icone: BookOpen, to: "/espace/formations" as const },
+    { label: "Dossiers en cours", valeur: enCours.length, icone: Folders, to: "/espace/dossiers" as const },
+    { label: "Total dossiers", valeur: dossiers.length, icone: Folders, to: "/espace/dossiers" as const },
+    { label: "Brouillons à finaliser", valeur: brouillons.length, icone: FilePlus2, to: "/espace/dossiers" as const },
+  ];
 
   return (
     <AppShell
       items={FORMATEUR_NAV}
-      title={`Bonjour ${profile?.prenom ?? ""}`.trim()}
-      subtitle="Vue d'ensemble de vos dossiers de formation"
+      title={`Bienvenue ${profile?.prenom ?? ""}`.trim()}
+      subtitle="Votre progression, vos dossiers et vos prochaines interventions"
       actions={
         <Button asChild variant="cta">
           <Link to="/espace/dossiers/new">
@@ -54,8 +188,78 @@ function EspaceAccueil() {
         </Button>
       }
     >
+      <div className="grid gap-5 lg:grid-cols-[1.1fr_1fr]">
+        <Card className="overflow-hidden rounded-2xl border-border/70 shadow-soft">
+          <CardContent className="flex flex-wrap items-center gap-5 p-6">
+            <span className="flex size-20 shrink-0 items-center justify-center overflow-hidden rounded-2xl bg-secondary/15 text-xl font-semibold text-secondary">
+              {photo ? (
+                <img src={photo} alt="Votre photo de profil" className="size-full object-cover" />
+              ) : (
+                `${profile?.prenom?.[0] ?? ""}${profile?.nom?.[0] ?? ""}`.toUpperCase() || "S4"
+              )}
+            </span>
+            <div className="min-w-0 flex-1">
+              <p className="text-lg font-semibold">
+                {`${profile?.prenom ?? ""} ${profile?.nom ?? ""}`.trim() || profile?.email}
+              </p>
+              <div className="mt-1 flex flex-wrap items-center gap-2">
+                <StatutBadge kind="candidature" statut={profile?.statut_candidature ?? "en_attente"} />
+                <span className="inline-flex items-center gap-1.5 rounded-full bg-cta/15 px-3 py-1 text-xs font-semibold text-cta-foreground">
+                  <Trophy className="size-3.5" /> {niveau}
+                </span>
+              </div>
+              {!photo ? (
+                <Link to="/espace/profil" className="mt-2 inline-block text-xs font-semibold underline">
+                  Ajouter votre photo de profil
+                </Link>
+              ) : null}
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card className="rounded-2xl border-border/70 shadow-soft">
+          <CardContent className="p-6">
+            <div className="flex items-center justify-between gap-3">
+              <h2 className="inline-flex items-center gap-2 text-base font-semibold">
+                <Sparkles className="size-4 text-cta-foreground" /> Votre parcours de portage
+              </h2>
+              <span className="text-sm font-semibold">
+                {franchies}/{etapes.length}
+              </span>
+            </div>
+            <Progress value={(franchies / etapes.length) * 100} className="mt-4" />
+            <ul className="mt-4 grid gap-2">
+              {etapes.map((etape) => (
+                <li key={etape.titre}>
+                  <Link
+                    to={etape.lien}
+                    className={`flex items-center gap-3 rounded-xl border p-3 text-sm transition ${
+                      etape.atteint
+                        ? "border-success/40 bg-success/10 font-semibold"
+                        : "border-dashed border-border/70 text-muted-foreground hover:bg-muted/60"
+                    }`}
+                  >
+                    {etape.atteint ? (
+                      <Trophy className="size-4 shrink-0 animate-in zoom-in-50 text-success duration-500" />
+                    ) : (
+                      <Lock className="size-4 shrink-0" />
+                    )}
+                    <span className="min-w-0">
+                      {etape.titre}
+                      {etape.atteint ? null : (
+                        <span className="block text-xs">{etape.astuce}</span>
+                      )}
+                    </span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </CardContent>
+        </Card>
+      </div>
+
       {!isValidatedFormateur ? (
-        <Card className="mb-6 rounded-2xl border-cta/40 bg-cta/10">
+        <Card className="mt-6 rounded-2xl border-cta/40 bg-cta/10">
           <CardContent className="p-6">
             <h2 className="text-base font-semibold">Candidature en cours de validation</h2>
             <p className="mt-2 text-sm text-muted-foreground">
@@ -66,24 +270,94 @@ function EspaceAccueil() {
         </Card>
       ) : null}
 
-      <div className="grid gap-5 sm:grid-cols-3">
-        {[
-          { label: "Dossiers en cours", valeur: enCours.length },
-          { label: "Dossiers complets", valeur: complets.length },
-          { label: "Total dossiers", valeur: dossiers.length },
-        ].map((stat) => (
-          <Card key={stat.label} className="rounded-2xl border-border/70 shadow-soft">
-            <CardContent className="p-6">
-              <p className="text-sm text-muted-foreground">{stat.label}</p>
-              <p className="mt-2 text-3xl font-semibold">{stat.valeur}</p>
-            </CardContent>
-          </Card>
+      <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        {kpis.map((kpi) => (
+          <Link key={kpi.label} to={kpi.to} className="group">
+            <Card className="h-full rounded-2xl border-border/70 shadow-soft transition group-hover:-translate-y-0.5 group-hover:border-secondary/50">
+              <CardContent className="p-6">
+                <div className="flex items-center justify-between">
+                  <p className="text-sm text-muted-foreground">{kpi.label}</p>
+                  <kpi.icone className="size-4 text-secondary" />
+                </div>
+                <p className="mt-2 text-3xl font-semibold">{kpi.valeur}</p>
+              </CardContent>
+            </Card>
+          </Link>
         ))}
+      </div>
+
+      <div className="mt-6 grid gap-5 lg:grid-cols-3">
+        <Card className="rounded-2xl border-border/70 shadow-soft">
+          <CardContent className="p-6">
+            <h2 className="inline-flex items-center gap-2 text-base font-semibold">
+              <TrendingUp className="size-4 text-secondary" /> Activité du mois
+            </h2>
+            <p className="mt-3 text-3xl font-semibold">
+              {croissance > 0 ? "+" : ""}
+              {croissance} %
+            </p>
+            <p className="mt-1 text-sm text-muted-foreground">
+              {ceMois} dossier(s) ouvert(s) ce mois-ci contre {moisDavant} le mois précédent.
+            </p>
+            <p className="mt-4 text-sm text-muted-foreground">
+              {realises.length} formation(s) réalisée(s) · {(formations ?? []).filter((f) => f.publiee).length}{" "}
+              formation(s) publiée(s) au catalogue.
+            </p>
+          </CardContent>
+        </Card>
+
+        <Card className="rounded-2xl border-border/70 shadow-soft lg:col-span-2">
+          <CardContent className="p-6">
+            <h2 className="inline-flex items-center gap-2 text-base font-semibold">
+              <CalendarDays className="size-4 text-secondary" /> Planning de mes interventions
+            </h2>
+            {planning.length === 0 ? (
+              <p className="mt-4 text-sm text-muted-foreground">
+                Aucune session programmée : ajoutez les dates de formation dans un dossier pour voir
+                votre planning ici.
+              </p>
+            ) : (
+              <ul className="mt-4 divide-y divide-border">
+                {planning.map((d) => (
+                  <li key={d.id} className="flex flex-wrap items-center justify-between gap-3 py-3">
+                    <div className="min-w-0">
+                      <p className="truncate text-sm font-semibold">
+                        {d.titre_formation || dossierNom(d)}
+                      </p>
+                      <p className="text-xs text-muted-foreground">
+                        {formatDate(d.date_debut)}
+                        {d.date_fin && d.date_fin !== d.date_debut
+                          ? ` → ${formatDate(d.date_fin)}`
+                          : ""}{" "}
+                        · {d.entreprise_nom || "Entreprise non renseignée"}
+                      </p>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <CrmBadge statut={d.statut_crm} />
+                      <Button asChild variant="ghost" size="icon" aria-label="Ouvrir le dossier">
+                        <Link to="/espace/dossiers/$id" params={{ id: d.id }}>
+                          <ArrowUpRight className="size-4" />
+                        </Link>
+                      </Button>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </CardContent>
+        </Card>
       </div>
 
       <Card className="mt-6 rounded-2xl border-border/70 shadow-soft">
         <CardContent className="p-6">
-          <h2 className="text-base font-semibold">Mes dossiers récents</h2>
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <h2 className="text-base font-semibold">Mes dossiers récents</h2>
+            {brouillons.length > 0 ? (
+              <span className="rounded-full bg-muted px-3 py-1 text-xs font-semibold">
+                {brouillons.length} brouillon(s) à finaliser
+              </span>
+            ) : null}
+          </div>
           {isLoading ? (
             <p className="mt-4 text-sm text-muted-foreground">Chargement…</p>
           ) : dossiers.length === 0 ? (
@@ -100,14 +374,18 @@ function EspaceAccueil() {
               {dossiers.slice(0, 8).map((d) => (
                 <li key={d.id} className="flex flex-wrap items-center justify-between gap-3 py-3">
                   <div className="min-w-0">
-                    <p className="truncate text-sm font-semibold">
-                      {d.entreprise_nom || "Entreprise non renseignée"}
-                    </p>
+                    <Link
+                      to="/espace/dossiers/$id"
+                      params={{ id: d.id }}
+                      className="truncate text-sm font-semibold hover:underline"
+                    >
+                      {d.dossier_nom || dossierNom(d)}
+                    </Link>
                     <p className="text-xs text-muted-foreground">
                       Créé le {formatDate(d.created_at)}
                     </p>
                   </div>
-                  <StatutBadge kind="dossier" statut={d.statut} />
+                  <CrmBadge statut={d.statut_crm} />
                 </li>
               ))}
             </ul>

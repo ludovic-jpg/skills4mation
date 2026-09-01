@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Check, Save } from "lucide-react";
+import { Check, Lock, Save } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -23,6 +23,11 @@ type Props = {
   onSave: (donnees: DossierDonnees) => void;
   /** Formations préenregistrées par le formateur, réutilisables en un clic. */
   modeles?: FormationCatalogue[];
+  /** Dossier entré dans le circuit de validation : lecture seule stricte. */
+  verrouille?: boolean;
+  /** Soumission du dossier complet à l'équipe Skills4mation. */
+  onDemanderValidation?: () => void;
+  demandeEnCours?: boolean;
 };
 
 const ETAPES = [
@@ -73,7 +78,15 @@ function validateStep(step: number, d: DossierDonnees): Errs {
   return err;
 }
 
-export function DossierWizard({ value, saving, onSave, modeles = [] }: Props) {
+export function DossierWizard({
+  value,
+  saving,
+  onSave,
+  modeles = [],
+  verrouille = false,
+  onDemanderValidation,
+  demandeEnCours = false,
+}: Props) {
   const { user } = useAuth();
   const [step, setStep] = useState(0);
   const [d, setD] = useState<DossierDonnees>(value);
@@ -101,11 +114,12 @@ export function DossierWizard({ value, saving, onSave, modeles = [] }: Props) {
   const onSaveRef = useRef(onSave);
   onSaveRef.current = onSave;
   useEffect(() => {
+    if (verrouille) return;
     if (d === value) return;
     if (JSON.stringify(d) === JSON.stringify(value)) return;
     const t = setTimeout(() => onSaveRef.current(d), 1000);
     return () => clearTimeout(t);
-  }, [d, value]);
+  }, [d, value, verrouille]);
 
   // Coche verte + message d'encouragement au moment où une section devient complète.
   const completes = parEtape.map((e) => Object.keys(e).length === 0);
@@ -137,23 +151,31 @@ export function DossierWizard({ value, saving, onSave, modeles = [] }: Props) {
             </p>
           </div>
           <div className="flex flex-wrap items-center gap-2">
-            <span className="text-xs text-muted-foreground">
-              {saving ? "Enregistrement automatique…" : "Enregistré automatiquement"}
-            </span>
-            <Button
-              variant="cta"
-              disabled={saving}
-              onClick={() => {
-                memoriser(d);
-                onSave(d);
-              }}
-            >
-              <Save className="mr-1.5 size-4" />
-              Enregistrer maintenant
-            </Button>
-            <Button variant="outline" onClick={() => setShowBlocking(true)}>
-              Vérifier avant génération
-            </Button>
+            {verrouille ? (
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-muted px-3 py-1 text-xs font-semibold">
+                <Lock className="size-3.5" /> Dossier verrouillé
+              </span>
+            ) : (
+              <>
+                <span className="text-xs text-muted-foreground">
+                  {saving ? "Enregistrement automatique…" : "Enregistré automatiquement"}
+                </span>
+                <Button
+                  variant="cta"
+                  disabled={saving}
+                  onClick={() => {
+                    memoriser(d);
+                    onSave(d);
+                  }}
+                >
+                  <Save className="mr-1.5 size-4" />
+                  Enregistrer maintenant
+                </Button>
+                <Button variant="outline" onClick={() => setShowBlocking(true)}>
+                  Vérifier avant génération
+                </Button>
+              </>
+            )}
           </div>
         </div>
 
@@ -219,7 +241,14 @@ export function DossierWizard({ value, saving, onSave, modeles = [] }: Props) {
           )
         ) : null}
 
-        <div className="mt-6 grid gap-4">
+        {verrouille ? (
+          <p className="mt-4 rounded-xl border border-secondary/40 bg-secondary/10 p-3 text-xs">
+            Ce dossier a été transmis à l'équipe Skills4mation : les variables ne sont plus
+            modifiables. Vous pouvez toujours consulter le dossier et ses documents.
+          </p>
+        ) : null}
+
+        <fieldset disabled={verrouille} className="mt-6 grid gap-4 disabled:opacity-95">
           {step === 0 ? <EntrepriseStep {...stepProps} /> : null}
           {step === 1 ? <FormationStep {...stepProps} modeles={modeles} /> : null}
           {step === 2 ? <SessionsStep {...stepProps} /> : null}
@@ -227,24 +256,44 @@ export function DossierWizard({ value, saving, onSave, modeles = [] }: Props) {
           {step === 4 ? <TarifsStep {...stepProps} /> : null}
           {step === 5 ? <FormateurStep {...stepProps} /> : null}
           {step === 6 ? <RecapStep d={d} /> : null}
-        </div>
+        </fieldset>
 
-        <div className="mt-6 flex items-center justify-between">
+        <div className="mt-6 flex flex-wrap items-center justify-between gap-3">
           <Button variant="outline" disabled={step === 0} onClick={() => setStep((v) => v - 1)}>
             Précédent
           </Button>
           {step === ETAPES.length - 1 ? (
-            <Button
-              variant="cta"
-              disabled={saving}
-              onClick={() => {
-                memoriser(d);
-                onSave(d);
-              }}
-            >
-              Valider le dossier
-            </Button>
+            <div className="flex flex-wrap items-center gap-2">
+              {verrouille ? null : (
+                <Button
+                  variant="outline"
+                  disabled={saving}
+                  onClick={() => {
+                    memoriser(d);
+                    onSave(d);
+                  }}
+                >
+                  Enregistrer le dossier
+                </Button>
+              )}
+              {onDemanderValidation && !verrouille ? (
+                <Button
+                  variant="cta"
+                  disabled={demandeEnCours || totalManquants > 0}
+                  onClick={() => {
+                    memoriser(d);
+                    onSave(d);
+                    onDemanderValidation();
+                  }}
+                >
+                  {totalManquants > 0
+                    ? `${totalManquants} champ(s) à compléter`
+                    : "Demander la validation"}
+                </Button>
+              ) : null}
+            </div>
           ) : (
+
             <Button
               variant="teal"
               onClick={() => {

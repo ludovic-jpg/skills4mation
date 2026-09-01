@@ -218,10 +218,19 @@ function DossierDetail() {
             <DossierWizard
               key={id}
               modeles={mesFormations.data ?? []}
-
               value={donnees}
               saving={saveDonnees.isPending}
               onSave={(next) => saveDonnees.mutate(next)}
+              verrouille={statut !== "brouillon"}
+              demandeEnCours={changerStatut.isPending}
+              onDemanderValidation={() =>
+                changerStatut.mutate({
+                  cible: "demande_validation",
+                  commentaire: "Dossier complet soumis à validation par le formateur.",
+                  message:
+                    "Dossier transmis à l'équipe Skills4mation : il est désormais verrouillé.",
+                })
+              }
             />
           </TabsContent>
 

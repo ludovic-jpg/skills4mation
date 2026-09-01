@@ -9,6 +9,7 @@ import {
   Handshake,
   Inbox,
   LayoutDashboard,
+  LifeBuoy,
   ShieldCheck,
   UserCog,
   Users,
@@ -18,12 +19,13 @@ import type { NavItem } from "@/components/app/AppShell";
 
 export const FORMATEUR_NAV: NavItem[] = [
   { to: "/espace", label: "Tableau de bord", icon: LayoutDashboard },
+  { to: "/espace/profil", label: "Profil / Pièces de candidature", icon: UserCog },
+  { to: "/espace/instructions", label: "Instructions", icon: LifeBuoy },
+  { to: "/espace/candidature", label: "Ma candidature", icon: Users },
   { to: "/espace/formations", label: "Mes formations", icon: BookOpen },
   { to: "/espace/dossiers", label: "Mes dossiers", icon: Folders },
   { to: "/espace/dossiers/new", label: "Nouveau dossier", icon: FilePlus2 },
-  { to: "/espace/parrainage", label: "Programme Ambassadeur", icon: Handshake },
-  { to: "/espace/candidature", label: "Ma candidature", icon: Users },
-  { to: "/espace/profil", label: "Mon profil", icon: UserCog },
+  { to: "/espace/parrainage", label: "Programme ambassadeur", icon: Handshake },
 ];
 
 export const CANDIDAT_NAV: NavItem[] = [

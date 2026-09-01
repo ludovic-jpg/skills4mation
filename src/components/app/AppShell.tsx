@@ -1,13 +1,42 @@
 import { Link, useRouter } from "@tanstack/react-router";
 import { LogOut, Menu } from "lucide-react";
-import { useState, type ComponentType, type ReactNode } from "react";
+import { useEffect, useState, type ComponentType, type ReactNode } from "react";
 
 import { Logo } from "@/components/Brand";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { useAuth } from "@/hooks/useAuth";
+import { supabase } from "@/integrations/supabase/client";
 
 export type NavItem = { to: string; label: string; icon: ComponentType<{ className?: string }> };
+
+/** Photo de profil : le bucket « profils » est privé, on signe l'URL à la volée. */
+export function usePhotoProfil(path: string | null | undefined) {
+  const [url, setUrl] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!path) {
+      setUrl(null);
+      return;
+    }
+    if (path.startsWith("http")) {
+      setUrl(path);
+      return;
+    }
+    let annule = false;
+    void supabase.storage
+      .from("profils")
+      .createSignedUrl(path, 3600)
+      .then(({ data }) => {
+        if (!annule) setUrl(data?.signedUrl ?? null);
+      });
+    return () => {
+      annule = true;
+    };
+  }, [path]);
+
+  return url;
+}
 
 export function AppShell({
   items,
@@ -24,12 +53,28 @@ export function AppShell({
 }) {
   const { profile, isAdmin, isSuperAdmin, isConseillere, signOut } = useAuth();
   const router = useRouter();
+  const photo = usePhotoProfil(profile?.photo_url);
   const roleBadge = isSuperAdmin
     ? { label: "Super admin", tone: "bg-cta text-cta-foreground" }
     : isConseillere
       ? { label: "Conseillère formation", tone: "bg-secondary text-secondary-foreground" }
       : { label: "Formateur partenaire", tone: "bg-muted text-muted-foreground" };
   const [open, setOpen] = useState(false);
+  const initiales = `${profile?.prenom?.[0] ?? ""}${profile?.nom?.[0] ?? ""}`.toUpperCase() || "S4";
+
+  const avatar = (
+    <span className="flex size-10 shrink-0 items-center justify-center overflow-hidden rounded-full bg-secondary/15 text-sm font-semibold text-secondary">
+      {photo ? (
+        <img
+          src={photo}
+          alt={`Photo de ${profile?.prenom ?? "profil"}`}
+          className="size-full object-cover"
+        />
+      ) : (
+        initiales
+      )}
+    </span>
+  );
 
   const nav = (
     <nav className="flex flex-col gap-1">
@@ -53,13 +98,16 @@ export function AppShell({
 
   const sidebarInner = (
     <div className="flex h-full flex-col">
-      <div className="rounded-xl bg-sidebar-accent/40 p-3">
-        <p className="text-sm font-semibold text-sidebar-foreground">
-          {profile ? `${profile.prenom} ${profile.nom}`.trim() || profile.email : "…"}
-        </p>
-        <p className="text-xs text-sidebar-foreground/70">
-          {isAdmin ? "Équipe Skills4mation" : "Formateur partenaire"}
-        </p>
+      <div className="flex items-center gap-3 rounded-xl bg-sidebar-accent/40 p-3">
+        {avatar}
+        <div className="min-w-0">
+          <p className="truncate text-sm font-semibold text-sidebar-foreground">
+            {profile ? `${profile.prenom} ${profile.nom}`.trim() || profile.email : "…"}
+          </p>
+          <p className="text-xs text-sidebar-foreground/70">
+            {isAdmin ? "Équipe Skills4mation" : "Formateur partenaire"}
+          </p>
+        </div>
       </div>
       <div className="mt-6 flex-1">{nav}</div>
       <button
@@ -104,13 +152,21 @@ export function AppShell({
               ) : null}
             </div>
           </div>
-          <div className="flex shrink-0 items-center gap-2">
+          <div className="flex shrink-0 items-center gap-3">
             <span
               className={`hidden rounded-full px-3 py-1 text-xs font-semibold sm:inline-flex ${roleBadge.tone}`}
             >
               {roleBadge.label}
             </span>
             {actions}
+            <div className="flex items-center gap-2">
+              {profile?.prenom ? (
+                <span className="hidden text-sm font-semibold md:inline">
+                  Bienvenue {profile.prenom}
+                </span>
+              ) : null}
+              {avatar}
+            </div>
           </div>
         </header>
 

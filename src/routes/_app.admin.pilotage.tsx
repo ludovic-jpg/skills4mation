@@ -29,6 +29,7 @@ import {
 } from "@/components/ui/table";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
+import { calculerCommission, portageDepuisFinancement } from "@/lib/commission";
 import { CRM_PIPELINE, CRM_STATUTS, type CrmStatut } from "@/lib/crm";
 
 export const Route = createFileRoute("/_app/admin/pilotage")({
@@ -41,7 +42,20 @@ export const Route = createFileRoute("/_app/admin/pilotage")({
   }),
 });
 
-const COMMISSION = 0.2;
+/** Le taux n'est plus fixe : il dépend du portage (CPF 30 %) et du CA porté annuel. */
+function commissionDossier(
+  d: { formateur_id?: string | null; donnees: unknown },
+  caParFormateur: Map<string, number>,
+) {
+  const donnees = (d.donnees ?? {}) as { tarifs?: { modeFinancement?: string; coutCertification?: string } };
+  const montant = montantDossier(d.donnees);
+  return calculerCommission({
+    montant,
+    caAnnuel: caParFormateur.get(d.formateur_id ?? "") ?? montant,
+    portage: portageDepuisFinancement(donnees.tarifs?.modeFinancement),
+    coutCertification: Number(String(donnees.tarifs?.coutCertification ?? "0").replace(",", ".")) || 0,
+  }).commission;
+}
 
 function moisCle(iso: string) {
   return iso.slice(0, 7);
@@ -163,6 +177,13 @@ function Pilotage() {
   const mois = douzeMois();
   const rows = dossiers.data ?? [];
 
+  // CA porté annuel par formateur : base du barème dégressif Qualiopi.
+  const caParFormateur = new Map<string, number>();
+  for (const d of rows) {
+    const cle = d.formateur_id ?? "";
+    caParFormateur.set(cle, (caParFormateur.get(cle) ?? 0) + montantDossier(d.donnees));
+  }
+
   const payes = rows.filter((d) => d.statut_crm === "paiement_organisme");
   const caTotal = payes.reduce((s, d) => s + montantDossier(d.donnees), 0);
 
@@ -170,7 +191,10 @@ function Pilotage() {
     const ca = payes
       .filter((d) => moisCle(d.updated_at ?? d.created_at) === cle)
       .reduce((s, d) => s + montantDossier(d.donnees), 0);
-    return { mois: moisLabel(cle), ca: Math.round(ca), commission: Math.round(ca * COMMISSION) };
+    const commission = payes
+      .filter((d) => moisCle(d.updated_at ?? d.created_at) === cle)
+      .reduce((s, d) => s + commissionDossier(d, caParFormateur), 0);
+    return { mois: moisLabel(cle), ca: Math.round(ca), commission: Math.round(commission) };
   });
 
   const parStatut = (Object.keys(CRM_STATUTS) as CrmStatut[])
@@ -226,10 +250,12 @@ function Pilotage() {
       tone: CRM_STATUTS[statut].tone,
       nb: lot.length,
       montant,
-      commission: montant * COMMISSION,
+      commission: lot.reduce((s, d) => s + commissionDossier(d, caParFormateur), 0),
     };
   });
   const montantValides = valides.reduce((s, d) => s + montantDossier(d.donnees), 0);
+  const commissionValides = valides.reduce((s, d) => s + commissionDossier(d, caParFormateur), 0);
+  const commissionTotale = payes.reduce((s, d) => s + commissionDossier(d, caParFormateur), 0);
 
   /* ---------------------- Indicateurs Qualiopi ---------------------- */
 
@@ -287,7 +313,7 @@ function Pilotage() {
         <Kpi label="CA porté (encaissé)" value={euros(caTotal)} hint="Dossiers au paiement organisme" />
         <Kpi
           label="Commission Skills4mation"
-          value={euros(caTotal * COMMISSION)}
+          value={euros(commissionTotale)}
           hint="20 % du CA porté"
         />
         <Kpi label="Dossiers suivis" value={String(rows.length)} hint="Toutes étapes confondues" />
@@ -419,7 +445,7 @@ function Pilotage() {
                     {euros(montantValides)}
                   </TableCell>
                   <TableCell className="text-right font-semibold">
-                    {euros(montantValides * COMMISSION)}
+                    {euros(commissionValides)}
                   </TableCell>
                   <TableCell className="text-right">—</TableCell>
                 </TableRow>

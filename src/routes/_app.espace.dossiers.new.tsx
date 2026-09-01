@@ -9,6 +9,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { DONNEES_VIDES } from "@/lib/dossier/types";
+import { genererNumeroAdf } from "@/lib/commission";
 
 export const Route = createFileRoute("/_app/espace/dossiers/new")({
   component: NouveauDossier,
@@ -25,6 +26,8 @@ function NouveauDossier() {
     void (async () => {
       const donnees = {
         ...DONNEES_VIDES,
+        // Numéro d'ADF unique attribué automatiquement dès la création du dossier.
+        adf: genererNumeroAdf(),
         formateur: {
           ...DONNEES_VIDES.formateur,
           prenom: profile?.prenom ?? "",

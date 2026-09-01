@@ -40,6 +40,7 @@ import { Route as AppAdminValidationRouteImport } from './routes/_app.admin.vali
 import { Route as AppApprenantIndexRouteImport } from './routes/_app.apprenant.index'
 import { Route as AppEspaceIndexRouteImport } from './routes/_app.espace.index'
 import { Route as AppEspaceCandidatureRouteImport } from './routes/_app.espace.candidature'
+import { Route as AppEspaceInstructionsRouteImport } from './routes/_app.espace.instructions'
 import { Route as AppEspaceParrainageRouteImport } from './routes/_app.espace.parrainage'
 import { Route as AppEspaceProfilRouteImport } from './routes/_app.espace.profil'
 import { Route as CatalogueCategoryIndexRouteImport } from './routes/catalogue.$category.index'
@@ -213,6 +214,11 @@ const AppEspaceCandidatureRoute = AppEspaceCandidatureRouteImport.update({
   path: '/espace/candidature',
   getParentRoute: () => AppRoute,
 } as any)
+const AppEspaceInstructionsRoute = AppEspaceInstructionsRouteImport.update({
+  id: '/espace/instructions',
+  path: '/espace/instructions',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppEspaceParrainageRoute = AppEspaceParrainageRouteImport.update({
   id: '/espace/parrainage',
   path: '/espace/parrainage',
@@ -315,6 +321,7 @@ export interface FileRoutesByFullPath {
   '/admin/pilotage': typeof AppAdminPilotageRoute
   '/admin/validation': typeof AppAdminValidationRoute
   '/espace/candidature': typeof AppEspaceCandidatureRoute
+  '/espace/instructions': typeof AppEspaceInstructionsRoute
   '/espace/parrainage': typeof AppEspaceParrainageRoute
   '/espace/profil': typeof AppEspaceProfilRoute
   '/catalogue/$category/$slug': typeof CatalogueCategorySlugRoute
@@ -361,6 +368,7 @@ export interface FileRoutesByTo {
   '/admin/pilotage': typeof AppAdminPilotageRoute
   '/admin/validation': typeof AppAdminValidationRoute
   '/espace/candidature': typeof AppEspaceCandidatureRoute
+  '/espace/instructions': typeof AppEspaceInstructionsRoute
   '/espace/parrainage': typeof AppEspaceParrainageRoute
   '/espace/profil': typeof AppEspaceProfilRoute
   '/catalogue/$category/$slug': typeof CatalogueCategorySlugRoute
@@ -409,6 +417,7 @@ export interface FileRoutesById {
   '/_app/admin/pilotage': typeof AppAdminPilotageRoute
   '/_app/admin/validation': typeof AppAdminValidationRoute
   '/_app/espace/candidature': typeof AppEspaceCandidatureRoute
+  '/_app/espace/instructions': typeof AppEspaceInstructionsRoute
   '/_app/espace/parrainage': typeof AppEspaceParrainageRoute
   '/_app/espace/profil': typeof AppEspaceProfilRoute
   '/catalogue/$category/$slug': typeof CatalogueCategorySlugRoute
@@ -457,6 +466,7 @@ export interface FileRouteTypes {
     | '/admin/pilotage'
     | '/admin/validation'
     | '/espace/candidature'
+    | '/espace/instructions'
     | '/espace/parrainage'
     | '/espace/profil'
     | '/catalogue/$category/$slug'
@@ -503,6 +513,7 @@ export interface FileRouteTypes {
     | '/admin/pilotage'
     | '/admin/validation'
     | '/espace/candidature'
+    | '/espace/instructions'
     | '/espace/parrainage'
     | '/espace/profil'
     | '/catalogue/$category/$slug'
@@ -550,6 +561,7 @@ export interface FileRouteTypes {
     | '/_app/admin/pilotage'
     | '/_app/admin/validation'
     | '/_app/espace/candidature'
+    | '/_app/espace/instructions'
     | '/_app/espace/parrainage'
     | '/_app/espace/profil'
     | '/catalogue/$category/$slug'
@@ -818,6 +830,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppEspaceCandidatureRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/espace/instructions': {
+      id: '/_app/espace/instructions'
+      path: '/espace/instructions'
+      fullPath: '/espace/instructions'
+      preLoaderRoute: typeof AppEspaceInstructionsRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/_app/espace/parrainage': {
       id: '/_app/espace/parrainage'
       path: '/espace/parrainage'
@@ -927,6 +946,7 @@ interface AppRouteChildren {
   AppAdminPilotageRoute: typeof AppAdminPilotageRoute
   AppAdminValidationRoute: typeof AppAdminValidationRoute
   AppEspaceCandidatureRoute: typeof AppEspaceCandidatureRoute
+  AppEspaceInstructionsRoute: typeof AppEspaceInstructionsRoute
   AppEspaceParrainageRoute: typeof AppEspaceParrainageRoute
   AppEspaceProfilRoute: typeof AppEspaceProfilRoute
   AppAdminIndexRoute: typeof AppAdminIndexRoute
@@ -948,6 +968,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppAdminPilotageRoute: AppAdminPilotageRoute,
   AppAdminValidationRoute: AppAdminValidationRoute,
   AppEspaceCandidatureRoute: AppEspaceCandidatureRoute,
+  AppEspaceInstructionsRoute: AppEspaceInstructionsRoute,
   AppEspaceParrainageRoute: AppEspaceParrainageRoute,
   AppEspaceProfilRoute: AppEspaceProfilRoute,
   AppAdminIndexRoute: AppAdminIndexRoute,

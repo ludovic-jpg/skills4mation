@@ -136,7 +136,6 @@ export function appliquerFormation(
     },
     facture: {
       ...donnees.facture,
-      tva: formation.tva !== null && formation.tva !== undefined ? String(formation.tva) : donnees.facture.tva,
     },
   };
 }
