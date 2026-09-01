@@ -18,6 +18,7 @@ import equipe from "@/assets/people-equipe.jpg";
 import { AppShell } from "@/components/app/AppShell";
 import { adminNav } from "@/components/app/nav";
 import { Card, CardContent } from "@/components/ui/card";
+import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { CRM_STATUTS, type CrmStatut } from "@/lib/crm";
 
@@ -80,6 +81,7 @@ function Kpi({ label, value, hint }: { label: string; value: string; hint?: stri
 }
 
 function Pilotage() {
+  const { isSuperAdmin } = useAuth();
   const dossiers = useQuery({
     queryKey: ["pilotage-dossiers"],
     queryFn: async () => {
