@@ -104,7 +104,14 @@ export function AppShell({
               ) : null}
             </div>
           </div>
-          <div className="flex shrink-0 items-center gap-2">{actions}</div>
+          <div className="flex shrink-0 items-center gap-2">
+            <span
+              className={`hidden rounded-full px-3 py-1 text-xs font-semibold sm:inline-flex ${roleBadge.tone}`}
+            >
+              {roleBadge.label}
+            </span>
+            {actions}
+          </div>
         </header>
 
         <main className="flex-1 p-5 lg:p-8">{children}</main>
