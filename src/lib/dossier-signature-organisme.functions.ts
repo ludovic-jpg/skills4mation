@@ -184,6 +184,8 @@ export const apposerSignatureOrganisme = createServerFn({ method: "POST" })
       envoye: false,
       message: "",
     };
+    /** Lien moncompteformation retenu (mode CPF), journalisé pour le suivi admin. */
+    let lienCpf: string | null = null;
 
     const notifier = async (titre: string, message: string) => {
       await supabaseAdmin.from("notifications").insert({
@@ -237,6 +239,8 @@ export const apposerSignatureOrganisme = createServerFn({ method: "POST" })
             .ilike("intitule", donnees.formation.titre || "")
             .eq("duree_heures", Number.isFinite(duree) ? Math.round(duree) : -1)
             .maybeSingle();
+          lienCpf = tarif?.url_moncompteformation ?? null;
+
 
           await sendTemplateEmail("demande-financement-cpf", formateur.email, {
             idempotencyKey: `financement-cpf-${dossier.id}`,
@@ -298,6 +302,26 @@ export const apposerSignatureOrganisme = createServerFn({ method: "POST" })
         };
       }
     }
+
+    // Traçabilité : chaque demande de financement transmise est journalisée pour
+    // l'écran admin de suivi (OPCO / CPF) — statut et date d'envoi.
+    const nombre = (v: string) => {
+      const n = Number(String(v ?? "").replace(/\s/g, "").replace(",", "."));
+      return Number.isFinite(n) && n > 0 ? n : null;
+    };
+    const { error: suiviError } = await supabaseAdmin.from("demandes_financement").insert({
+      dossier_id: dossier.id,
+      formateur_id: dossier.formateur_id,
+      mode: financement.mode,
+      montant: nombre(donnees.tarifs.prixTotal || donnees.tarifs.montantPrisEnCharge),
+      cout_certification: nombre(donnees.tarifs.coutCertification),
+      destinataire_email: formateur?.email ?? null,
+      lien_moncompteformation: lienCpf,
+      statut: financement.envoye ? "envoyee" : (financement.raison ?? "non_envoyee"),
+      message: financement.message,
+      envoye_le: financement.envoye ? new Date().toISOString() : null,
+    });
+    if (suiviError) console.error("[financement] journalisation impossible", suiviError);
 
     return { hash, signatureDate, certificatNom, certificatPath, driveUrl, financement };
   });
