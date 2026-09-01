@@ -57,23 +57,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     if (!userId) {
       setProfile(null);
       setRole(null);
+      setRoles([]);
       return;
     }
-    const [{ data: prof }, { data: roles }] = await Promise.all([
+    const [{ data: prof }, { data: roleRows }] = await Promise.all([
       supabase.from("profiles").select("*").eq("id", userId).maybeSingle(),
       supabase.from("user_roles").select("role").eq("user_id", userId),
     ]);
     setProfile((prof as Profile) ?? null);
-    const list = (roles ?? []).map((r) => r.role);
-    setRole(
-      list.includes("admin")
-        ? "admin"
-        : list.includes("formateur")
-          ? "formateur"
-          : list.includes("apprenant")
-            ? "apprenant"
-            : null,
-    );
+    const list = ((roleRows ?? []).map((r) => r.role) as AppRole[]) ?? [];
+    setRoles(list);
+    const priorite: AppRole[] = ["super_admin", "admin", "conseillere", "formateur", "apprenant"];
+    setRole(priorite.find((r) => list.includes(r)) ?? null);
   }
 
   useEffect(() => {
@@ -99,6 +94,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       if (event === "SIGNED_OUT") {
         setProfile(null);
         setRole(null);
+        setRoles([]);
         return;
       }
       void load(next?.user?.id);
@@ -110,14 +106,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     };
   }, []);
 
-  const value = useMemo<AuthState>(
-    () => ({
+  const value = useMemo<AuthState>(() => {
+    const isSuperAdmin = roles.includes("super_admin") || roles.includes("admin");
+    const isConseillere = roles.includes("conseillere");
+    return {
       session,
       user: session?.user ?? null,
       profile,
       role,
+      roles,
       loading,
-      isAdmin: role === "admin",
+      isAdmin: isSuperAdmin || isConseillere,
+      isSuperAdmin,
+      isConseillere,
       isValidatedFormateur: role === "formateur" && profile?.statut_candidature === "valide",
       refresh: async () => {
         await load(session?.user?.id);
@@ -125,9 +126,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       signOut: async () => {
         await supabase.auth.signOut();
       },
-    }),
-    [session, profile, role, loading],
-  );
+    };
+  }, [session, profile, role, roles, loading]);
+
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
