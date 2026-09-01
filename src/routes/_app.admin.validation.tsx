@@ -114,8 +114,13 @@ function AdminValidation() {
 
   const valider = useMutation({
     mutationFn: async (row: Row) => signer({ data: { dossierId: row.id } }),
-    onSuccess: () => {
+    onSuccess: (result) => {
       toast.success("Signature Skills4mation apposée : certificat archivé, dossier validé.");
+      const financement = result?.financement;
+      if (financement?.message) {
+        if (financement.envoye) toast.success(financement.message);
+        else toast.warning(financement.message);
+      }
       void queryClient.invalidateQueries({ queryKey: ["admin-validation"] });
       void queryClient.invalidateQueries({ queryKey: ["admin-dossiers"] });
     },
