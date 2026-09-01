@@ -8,10 +8,12 @@ import { FORMATEUR_NAV } from "@/components/app/nav";
 import { StatutBadge } from "@/components/StatutBadge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { Combobox } from "@/components/dossier/fields";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useAuth } from "@/hooks/useAuth";
+import { REGIONS_FR } from "@/lib/referentiels";
 import { supabase } from "@/integrations/supabase/client";
 import type { TablesUpdate } from "@/integrations/supabase/types";
 
@@ -233,7 +235,7 @@ function Profil() {
                 const form = new FormData(event.currentTarget);
                 void save("nda", {
                   numero_nda: text(form, "numero_nda", 30),
-                  nda_region: text(form, "nda_region", 100),
+                  nda_region: region.trim().slice(0, 100) || null,
                 });
               }}
             >
@@ -246,14 +248,13 @@ function Profil() {
                     defaultValue={profile?.numero_nda ?? ""}
                   />
                 </div>
-                <div className="grid gap-2">
-                  <Label htmlFor="nda_region">Région de dépôt</Label>
-                  <Input
-                    id="nda_region"
-                    name="nda_region"
-                    defaultValue={profile?.nda_region ?? ""}
-                  />
-                </div>
+                <Combobox
+                  label="Région de dépôt"
+                  value={region}
+                  onChange={setRegion}
+                  options={REGIONS_FR}
+                  placeholder="Rechercher une région…"
+                />
               </div>
               <DocField
                 label="Justificatif de déclaration d'activité"
