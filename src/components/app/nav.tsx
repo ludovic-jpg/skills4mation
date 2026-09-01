@@ -48,3 +48,7 @@ export const SUPER_ADMIN_NAV: NavItem[] = [
   { to: "/admin/comptes", label: "Comptes & rôles", icon: ShieldCheck },
   { to: "/espace", label: "Espace formateur", icon: Folders },
 ];
+
+export function adminNav(isSuperAdmin: boolean): NavItem[] {
+  return isSuperAdmin ? SUPER_ADMIN_NAV : ADMIN_NAV;
+}

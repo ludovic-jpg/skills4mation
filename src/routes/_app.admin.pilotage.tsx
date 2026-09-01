@@ -16,7 +16,7 @@ import {
 
 import equipe from "@/assets/people-equipe.jpg";
 import { AppShell } from "@/components/app/AppShell";
-import { ADMIN_NAV } from "@/components/app/nav";
+import { adminNav } from "@/components/app/nav";
 import { Card, CardContent } from "@/components/ui/card";
 import { supabase } from "@/integrations/supabase/client";
 import { CRM_STATUTS, type CrmStatut } from "@/lib/crm";
@@ -153,7 +153,7 @@ function Pilotage() {
 
   return (
     <AppShell
-      items={ADMIN_NAV}
+      items={adminNav(isSuperAdmin)}
       title="Pilotage"
       subtitle="Chiffre d'affaires porté, commission Skills4mation, avancement du pipeline et conversion des candidatures"
     >
