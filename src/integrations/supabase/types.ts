@@ -965,6 +965,39 @@ export type Database = {
         }
         Relationships: []
       }
+      tarifs_cpf: {
+        Row: {
+          categorie: string
+          created_at: string
+          duree_heures: number
+          id: string
+          intitule: string
+          prix_euros: number
+          updated_at: string
+          url_moncompteformation: string | null
+        }
+        Insert: {
+          categorie?: string
+          created_at?: string
+          duree_heures: number
+          id?: string
+          intitule: string
+          prix_euros: number
+          updated_at?: string
+          url_moncompteformation?: string | null
+        }
+        Update: {
+          categorie?: string
+          created_at?: string
+          duree_heures?: number
+          id?: string
+          intitule?: string
+          prix_euros?: number
+          updated_at?: string
+          url_moncompteformation?: string | null
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           id: string

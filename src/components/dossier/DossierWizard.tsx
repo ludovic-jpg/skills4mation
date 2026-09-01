@@ -16,7 +16,12 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { aDuPresentiel, estCpf, type DossierDonnees } from "@/lib/dossier/types";
+import {
+  TARIF_CERTIFICATION_ICDL,
+  aDuPresentiel,
+  estCpf,
+  type DossierDonnees,
+} from "@/lib/dossier/types";
 import { appliquerFormation, type FormationCatalogue } from "@/lib/formations";
 
 type Props = {
@@ -439,9 +444,25 @@ export function DossierWizard({ value, saving, onSave, modeles = [] }: Props) {
               <Toggle
                 label="Certification ICDL visée pour la session"
                 checked={d.tarifs.certificationIcdl}
-                onChange={(v) => set("tarifs", { certificationIcdl: v })}
+                onChange={(v) =>
+                  set("tarifs", {
+                    certificationIcdl: v,
+                    // Pré-remplissage au tarif de référence, jamais fusionné avec le montant pris en charge.
+                    coutCertification: v
+                      ? d.tarifs.coutCertification || TARIF_CERTIFICATION_ICDL
+                      : "",
+                  })
+                }
                 className="sm:col-span-2"
               />
+              {d.tarifs.certificationIcdl ? (
+                <Field
+                  label="Coût de la certification (€, ligne distincte)"
+                  value={d.tarifs.coutCertification}
+                  onChange={(v) => set("tarifs", { coutCertification: v })}
+                />
+              ) : null}
+
               <Field
                 label="Lieu de signature de la convention"
                 value={d.convention.lieu}

@@ -2,6 +2,8 @@ import type { ComponentType } from 'react'
 
 import { template as signatureFormateurTemplate } from './signature-formateur'
 import { template as depotFormateurTemplate } from './depot-formateur'
+import { template as demandeFinancementOpcoTemplate } from './demande-financement-opco'
+import { template as demandeFinancementCpfTemplate } from './demande-financement-cpf'
 
 export interface TemplateEntry {
   component: ComponentType<any>
@@ -23,4 +25,6 @@ export interface TemplateEntry {
 export const TEMPLATES: Record<string, TemplateEntry> = {
   'signature-formateur': signatureFormateurTemplate,
   'depot-formateur': depotFormateurTemplate,
+  'demande-financement-opco': demandeFinancementOpcoTemplate,
+  'demande-financement-cpf': demandeFinancementCpfTemplate,
 }

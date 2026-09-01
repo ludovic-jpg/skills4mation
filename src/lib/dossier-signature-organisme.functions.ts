@@ -156,5 +156,148 @@ export const apposerSignatureOrganisme = createServerFn({ method: "POST" })
       lien: `/espace/dossiers/${dossier.id}`,
     });
 
-    return { hash, signatureDate, certificatNom, certificatPath, driveUrl };
+    /* ------------------ Demande de financement automatique ------------------ */
+
+    // Mode brut : `mergeDonnees` retombe sur "opco" par défaut, on ne veut pas
+    // envoyer d'e-mail si la conseillère n'a rien de renseigné dans le dossier.
+    const modeBrut = (dossier.donnees as { tarifs?: { modeFinancement?: string } } | null)?.tarifs
+      ?.modeFinancement;
+    const { data: formateur } = await supabaseAdmin
+      .from("profiles")
+      .select("prenom, nom, email")
+      .eq("id", dossier.formateur_id)
+      .maybeSingle();
+
+    const { euros } = await import("@/lib/dossier/types");
+    const montant = euros(donnees.tarifs.prixTotal || donnees.tarifs.montantPrisEnCharge);
+    const coutCertification = donnees.tarifs.coutCertification
+      ? euros(donnees.tarifs.coutCertification)
+      : "";
+
+    let financement: {
+      mode: string | null;
+      envoye: boolean;
+      raison?: string;
+      message: string;
+    } = {
+      mode: modeBrut ?? null,
+      envoye: false,
+      message: "",
+    };
+
+    const notifier = async (titre: string, message: string) => {
+      await supabaseAdmin.from("notifications").insert({
+        user_id: dossier.formateur_id,
+        titre,
+        message,
+        lien: `/espace/dossiers/${dossier.id}`,
+      });
+    };
+
+    if (!modeBrut) {
+      financement = {
+        mode: null,
+        envoye: false,
+        raison: "mode_absent",
+        message:
+          "Aucun mode de financement n'est renseigné sur ce dossier : aucune demande de financement n'a été envoyée au formateur.",
+      };
+      await notifier(
+        "Mode de financement manquant",
+        `Le dossier « ${dossierLabel} » est validé mais aucun mode de financement n'est renseigné : la demande de financement n'a pas pu être transmise.`,
+      );
+    } else if (!formateur?.email) {
+      financement = {
+        mode: modeBrut,
+        envoye: false,
+        raison: "email_absent",
+        message:
+          "Le formateur n'a pas d'adresse e-mail dans son profil : la demande de financement n'a pas pu être envoyée.",
+      };
+    } else if (modeBrut === "fonds_propres") {
+      financement = {
+        mode: modeBrut,
+        envoye: false,
+        raison: "fonds_propres",
+        message:
+          "Financement sur fonds propres : aucun e-mail automatique, une notification interne a été envoyée au formateur.",
+      };
+      await notifier(
+        "Dossier validé — financement sur fonds propres",
+        `Le dossier « ${dossierLabel} » est validé. Aucune demande de financement externe n'est requise (fonds propres).`,
+      );
+    } else {
+      try {
+        const { sendTemplateEmail } = await import("@/lib/email-templates/send-email");
+        if (modeBrut === "cpf") {
+          const duree = Number(String(donnees.formation.heuresTotal).replace(",", "."));
+          const { data: tarif } = await supabaseAdmin
+            .from("tarifs_cpf")
+            .select("intitule, duree_heures, prix_euros, url_moncompteformation")
+            .ilike("intitule", donnees.formation.titre || "")
+            .eq("duree_heures", Number.isFinite(duree) ? Math.round(duree) : -1)
+            .maybeSingle();
+
+          await sendTemplateEmail("demande-financement-cpf", formateur.email, {
+            idempotencyKey: `financement-cpf-${dossier.id}`,
+            templateData: {
+              formateurPrenom: formateur.prenom ?? "",
+              apprenantNom: donnees.apprenants[0]?.nom || "l'apprenant",
+              dossierLabel,
+              formationIntitule: donnees.formation.titre,
+              dureeHeures: donnees.formation.heuresTotal,
+              prixCpf: tarif?.prix_euros ? euros(String(tarif.prix_euros)) : montant,
+              coutCertification,
+              lienMonCompteFormation: tarif?.url_moncompteformation ?? "",
+              lien: `https://skills4mation.com/espace/dossiers/${dossier.id}`,
+            },
+          });
+          financement = {
+            mode: modeBrut,
+            envoye: true,
+            message: tarif?.url_moncompteformation
+              ? "Demande de financement CPF envoyée au formateur avec le lien moncompteformation."
+              : "Demande de financement CPF envoyée, mais aucun lien moncompteformation ne correspond à cette formation et cette durée.",
+          };
+        } else {
+          await sendTemplateEmail("demande-financement-opco", formateur.email, {
+            idempotencyKey: `financement-opco-${dossier.id}`,
+            templateData: {
+              formateurPrenom: formateur.prenom ?? "",
+              entrepriseNom: donnees.entreprise.nom || dossier.entreprise_nom || "",
+              dossierLabel,
+              montant,
+              coutCertification,
+              opco: donnees.tarifs.opco,
+              pieces: [
+                { label: `Convention signée (${conventionNom})`, url: driveUrl ?? undefined },
+                { label: `Certificat de signature (${certificatNom})`, url: driveUrl ?? undefined },
+              ],
+              lien: `https://skills4mation.com/espace/dossiers/${dossier.id}`,
+            },
+          });
+          financement = {
+            mode: modeBrut,
+            envoye: true,
+            message: "Demande de financement OPCO envoyée au formateur.",
+          };
+        }
+
+        await notifier(
+          "Demande de financement transmise",
+          `Votre demande de financement (${modeBrut === "cpf" ? "CPF" : "OPCO"}) pour « ${dossierLabel} » a été transmise par e-mail.`,
+        );
+      } catch (mailError) {
+        console.error("[email] demande de financement non envoyée", mailError);
+        financement = {
+          mode: modeBrut,
+          envoye: false,
+          raison: "erreur_envoi",
+          message:
+            "La signature est enregistrée mais l'envoi de la demande de financement a échoué : relancez-la manuellement.",
+        };
+      }
+    }
+
+    return { hash, signatureDate, certificatNom, certificatPath, driveUrl, financement };
   });
