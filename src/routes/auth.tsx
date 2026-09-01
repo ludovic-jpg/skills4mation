@@ -47,7 +47,7 @@ const ATOUTS = [
 
 function AuthPage() {
   const router = useRouter();
-  const { session, isAdmin, isConseillere, isSuperAdmin, role, loading } = useAuth();
+  const { session, isConseillere, isSuperAdmin, role, loading } = useAuth();
   const { next } = Route.useSearch();
   const [busy, setBusy] = useState(false);
   const [mode, setMode] = useState<"login" | "reset">("login");
