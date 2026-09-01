@@ -40,7 +40,7 @@ type Row = {
 };
 
 function AdminDossiers() {
-  const { isAdmin, loading, user } = useAuth();
+  const { isAdmin, isSuperAdmin, loading, user } = useAuth();
   const queryClient = useQueryClient();
   const [search, setSearch] = useState("");
   const [filtre, setFiltre] = useState("actifs");

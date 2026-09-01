@@ -115,7 +115,7 @@ const CANDIDATURE_OPTIONS = ["en_attente", "en_cours", "valide", "refuse"] as co
 const BUDGET_OPTIONS: BudgetStatut[] = ["en_attente", "en_cours_etude", "validee", "refusee"];
 
 function AdminDemandes() {
-  const { isAdmin, loading } = useAuth();
+  const { isAdmin, isSuperAdmin, loading } = useAuth();
   const queryClient = useQueryClient();
   const [source, setSource] = useState<Source>("demandes_droits_formation");
   const [openId, setOpenId] = useState<string | null>(null);

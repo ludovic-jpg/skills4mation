@@ -73,7 +73,7 @@ function PieceLink({ label, path }: { label: string; path: string | null }) {
 
 
 function AdminCandidatures() {
-  const { isAdmin, loading } = useAuth();
+  const { isAdmin, isSuperAdmin, loading } = useAuth();
   const queryClient = useQueryClient();
 
   const { data, isLoading } = useQuery({
