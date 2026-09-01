@@ -6,6 +6,7 @@ import { FolderPlus } from "lucide-react";
 import { AppShell } from "@/components/app/AppShell";
 import { CrmBadge } from "@/components/app/CrmBadge";
 import { FORMATEUR_NAV } from "@/components/app/nav";
+import { SupprimerDossierBouton } from "@/components/dossier/SupprimerDossierBouton";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
