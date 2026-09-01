@@ -300,8 +300,24 @@ export function varsRecueil(d: DossierDonnees, apprenant?: Apprenant): Vars {
 /* Constructeurs de documents                                          */
 /* ------------------------------------------------------------------ */
 
+/**
+ * Ligne tarifaire distincte pour le coût de certification : elle n'est jamais
+ * fusionnée avec les coûts pédagogiques ni avec le montant pris en charge.
+ */
+function ligneCoutCertification(d: DossierDonnees) {
+  const montant = String(d.tarifs.coutCertification ?? "").trim();
+  if (!montant) return "";
+  return `<p class="cout-certification" style="margin-top:6px">Coût de la certification (ligne distincte des coûts pédagogiques) : <span class="var-tag">${escapeHtml(euros(montant))}</span> HT</p>`;
+}
+
 export function conventionHtml(d: DossierDonnees) {
-  return renderTemplate(conventionTpl, varsConvention(d)) + annexeApprenants(d);
+  let html = renderTemplate(conventionTpl, varsConvention(d));
+  const ligne = ligneCoutCertification(d);
+  if (ligne) {
+    const ancre = '<p class="font-bold mt-2">Modalités de règlement :</p>';
+    html = html.includes(ancre) ? html.replace(ancre, `${ligne}\n${ancre}`) : html + ligne;
+  }
+  return html + annexeApprenants(d);
 }
 
 export function planningHtml(d: DossierDonnees) {
