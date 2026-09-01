@@ -271,6 +271,10 @@ function DossierDetail() {
                   </p>
                 ) : null}
 
+                <div className="mt-5">
+                  <SignatureOrganismeBadge dossier={dossier} />
+                </div>
+
                 <div className="mt-6 flex flex-wrap gap-3">
                   {dossier.drive_folder_url ? (
                     <Button asChild variant="teal">
