@@ -254,6 +254,8 @@ function Pilotage() {
     };
   });
   const montantValides = valides.reduce((s, d) => s + montantDossier(d.donnees), 0);
+  const commissionValides = valides.reduce((s, d) => s + commissionDossier(d, caParFormateur), 0);
+  const commissionTotale = payes.reduce((s, d) => s + commissionDossier(d, caParFormateur), 0);
 
   /* ---------------------- Indicateurs Qualiopi ---------------------- */
 
@@ -311,7 +313,7 @@ function Pilotage() {
         <Kpi label="CA porté (encaissé)" value={euros(caTotal)} hint="Dossiers au paiement organisme" />
         <Kpi
           label="Commission Skills4mation"
-          value={euros(caTotal * COMMISSION)}
+          value={euros(commissionTotale)}
           hint="20 % du CA porté"
         />
         <Kpi label="Dossiers suivis" value={String(rows.length)} hint="Toutes étapes confondues" />
@@ -443,7 +445,7 @@ function Pilotage() {
                     {euros(montantValides)}
                   </TableCell>
                   <TableCell className="text-right font-semibold">
-                    {euros(montantValides * COMMISSION)}
+                    {euros(commissionValides)}
                   </TableCell>
                   <TableCell className="text-right">—</TableCell>
                 </TableRow>
