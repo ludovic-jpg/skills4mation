@@ -6,6 +6,7 @@ import { FolderPlus } from "lucide-react";
 import { AppShell } from "@/components/app/AppShell";
 import { CrmBadge } from "@/components/app/CrmBadge";
 import { FORMATEUR_NAV } from "@/components/app/nav";
+import { SupprimerDossierBouton } from "@/components/dossier/SupprimerDossierBouton";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -108,11 +109,11 @@ function MesDossiers() {
           ) : (
             <ul className="divide-y divide-border">
               {dossiers.map((d) => (
-                <li key={d.id}>
+                <li key={d.id} className="flex items-center gap-1 pr-2">
                   <Link
                     to="/espace/dossiers/$id"
                     params={{ id: d.id }}
-                    className="flex flex-wrap items-center justify-between gap-3 rounded-xl p-4 transition-colors hover:bg-muted/60"
+                    className="flex flex-1 flex-wrap items-center justify-between gap-3 rounded-xl p-4 transition-colors hover:bg-muted/60"
                   >
                     <div className="min-w-0">
                       <p className="truncate text-sm font-semibold">
@@ -125,6 +126,13 @@ function MesDossiers() {
                     </div>
                     <CrmBadge statut={d.statut_crm} />
                   </Link>
+                  {d.statut_crm === "brouillon" ? (
+                    <SupprimerDossierBouton
+                      dossierId={d.id}
+                      label={d.dossier_nom || dossierNom(d)}
+                      invalidateKeys={["mes-dossiers-liste"]}
+                    />
+                  ) : null}
                 </li>
               ))}
             </ul>
