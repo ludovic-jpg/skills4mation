@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useServerFn } from "@tanstack/react-start";
 import { useMemo, useState } from "react";
 import { toast } from "sonner";
 
@@ -10,6 +11,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useAuth } from "@/hooks/useAuth";
+import { apposerSignatureOrganisme } from "@/lib/dossier-signature-organisme.functions";
 import { supabase } from "@/integrations/supabase/client";
 import { dossierNom, type CrmStatut } from "@/lib/crm";
 import { mergeDonnees } from "@/lib/dossier/types";
@@ -108,28 +110,19 @@ function AdminValidation() {
     },
   });
 
+  const signer = useServerFn(apposerSignatureOrganisme);
+
   const valider = useMutation({
-    mutationFn: async (row: Row) => {
-      const { error } = await supabase
-        .from("dossiers")
-        .update({ statut_crm: "dossier_valide" })
-        .eq("id", row.id);
-      if (error) throw error;
-      const { error: histError } = await supabase.from("dossier_historique").insert({
-        dossier_id: row.id,
-        ancien_statut: row.statut_crm,
-        nouveau_statut: "dossier_valide",
-        auteur_id: user?.id ?? null,
-        commentaire: "Grille de conformité OPCO validée par l'équipe Skills4mation.",
-      });
-      if (histError) throw histError;
-    },
+    mutationFn: async (row: Row) => signer({ data: { dossierId: row.id } }),
     onSuccess: () => {
-      toast.success("Dossier validé.");
+      toast.success("Signature Skills4mation apposée : certificat archivé, dossier validé.");
       void queryClient.invalidateQueries({ queryKey: ["admin-validation"] });
       void queryClient.invalidateQueries({ queryKey: ["admin-dossiers"] });
     },
-    onError: () => toast.error("Validation impossible."),
+    onError: (error: unknown) =>
+      toast.error(
+        error instanceof Error ? error.message : "Signature impossible pour le moment.",
+      ),
   });
 
   const conformite = useMemo(() => {
@@ -261,7 +254,9 @@ function AdminValidation() {
                       disabled={!complet || valider.isPending}
                       onClick={() => valider.mutate(row)}
                     >
-                      Valider ce dossier
+                      {valider.isPending
+                        ? "Signature en cours…"
+                        : "Valider et apposer la signature Skills4mation"}
                     </Button>
                   </div>
                 </CardContent>
