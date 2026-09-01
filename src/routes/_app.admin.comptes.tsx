@@ -73,7 +73,7 @@ function AdminComptes() {
   });
 
   const retirer = useMutation({
-    mutationFn: async ({ userId, role }: { userId: string; role: string }) => {
+    mutationFn: async ({ userId, role }: { userId: string; role: AppRole }) => {
       const { error } = await supabase
         .from("user_roles")
         .delete()
