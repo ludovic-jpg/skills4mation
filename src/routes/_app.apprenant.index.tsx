@@ -7,6 +7,8 @@ import {
   CheckCircle2,
   ExternalLink,
   FileSignature,
+  FileText,
+
   GraduationCap,
   Send,
   ShieldCheck,
@@ -72,7 +74,22 @@ function EspaceApprenant() {
     },
   });
 
+  const { data: supports } = useQuery({
+    queryKey: ["apprenant-supports", user?.id],
+    enabled: Boolean(user),
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("supports_pedagogiques")
+        .select("id, titre, type, fichier_url, created_at, dossiers(titre_formation)")
+        .eq("visible_apprenants", true)
+        .order("created_at", { ascending: false });
+      if (error) throw error;
+      return data ?? [];
+    },
+  });
+
   const { data: documents } = useQuery({
+
     queryKey: ["apprenant-documents", user?.id],
     enabled: Boolean(user),
     queryFn: async () => {
@@ -149,9 +166,11 @@ function EspaceApprenant() {
         <TabsList>
           <TabsTrigger value="documents">Mes documents</TabsTrigger>
           <TabsTrigger value="formations">Mes formations</TabsTrigger>
+          <TabsTrigger value="supports">Support pédagogique</TabsTrigger>
           <TabsTrigger value="reponses">Mes réponses</TabsTrigger>
           <TabsTrigger value="profil">Mon profil</TabsTrigger>
         </TabsList>
+
 
         <TabsContent value="documents" className="grid gap-4">
           {aSigner.length === 0 ? (
@@ -250,6 +269,33 @@ function EspaceApprenant() {
             ))
           )}
         </TabsContent>
+
+        <TabsContent value="supports" className="grid gap-3">
+          {(supports ?? []).length === 0 ? (
+            <Card className="rounded-2xl">
+              <CardContent className="p-6 text-sm text-muted-foreground">
+                Aucun support pédagogique mis à disposition pour le moment.
+              </CardContent>
+            </Card>
+          ) : (
+            (supports ?? []).map((s) => (
+              <Card key={s.id} className="rounded-2xl border-border/70 shadow-soft">
+                <CardContent className="flex flex-wrap items-center gap-3 p-5 text-sm">
+                  <FileText className="size-4 shrink-0 text-muted-foreground" />
+                  <span className="min-w-0 flex-1 truncate font-medium">{s.titre}</span>
+                  <span className="text-xs text-muted-foreground">
+                    {s.dossiers?.titre_formation ?? ""}
+                  </span>
+                  <Button size="sm" variant="outline" onClick={() => void ouvrir(s.fichier_url)}>
+                    Télécharger
+                  </Button>
+                </CardContent>
+              </Card>
+            ))
+          )}
+        </TabsContent>
+
+
 
         <TabsContent value="reponses" className="grid gap-3">
           {reponses.length === 0 ? (

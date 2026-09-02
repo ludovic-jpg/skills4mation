@@ -12,6 +12,8 @@ import { DossierWizard } from "@/components/dossier/DossierWizard";
 import type { FormationCatalogue } from "@/lib/formations";
 import { EnvoisPanel } from "@/components/dossier/EnvoisPanel";
 import { PiecesPanel } from "@/components/dossier/PiecesPanel";
+import { SupportsPanel } from "@/components/dossier/SupportsPanel";
+
 import { SignatureOrganismeBadge } from "@/components/dossier/SignatureOrganismeBadge";
 import { FriseEtapes, etapeDeStatut } from "@/components/dossier/FriseEtapes";
 import { Badge } from "@/components/ui/badge";
@@ -277,7 +279,9 @@ function DossierDetail() {
             <TabsTrigger value="documents">Documents</TabsTrigger>
             <TabsTrigger value="signatures">Envoi &amp; signatures</TabsTrigger>
             <TabsTrigger value="pieces">Pièces &amp; génération</TabsTrigger>
+            <TabsTrigger value="supports">Supports pédagogiques</TabsTrigger>
           </TabsList>
+
 
           <TabsContent value="variables">
             <DossierWizard
@@ -316,6 +320,12 @@ function DossierDetail() {
               <PiecesPanel dossierId={id} formateurId={user.id} donnees={donnees} />
             ) : null}
           </TabsContent>
+
+          <TabsContent value="supports">
+            {user ? <SupportsPanel dossierId={id} formateurId={user.id} /> : null}
+          </TabsContent>
+
+
 
           <TabsContent value="suivi" className="grid gap-6 lg:grid-cols-[1.3fr_1fr]">
             <div className="grid gap-6">
