@@ -21,7 +21,10 @@ export type Session = {
 export type ModeFinancement = "opco" | "cpf" | "fonds_propres";
 
 export type DossierDonnees = {
+  /** Numéro de dossier attribué par Skills4mation à la validation (séquence `adf_numero_seq`). */
   adf: string;
+  /** Date d'attribution du numéro ADF (ISO), renseignée par le back-office. */
+  adfAttribueLe?: string;
   organisme: string;
   entreprise: {
     nom: string;
