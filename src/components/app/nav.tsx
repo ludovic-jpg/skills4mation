@@ -1,5 +1,6 @@
 import {
   Award,
+  Banknote,
   ClipboardList,
   Banknote,
   BarChart3,
@@ -27,6 +28,7 @@ export const FORMATEUR_NAV: NavItem[] = [
   { to: "/espace/formations", label: "Mes formations", icon: BookOpen },
   { to: "/espace/dossiers", label: "Mes dossiers", icon: Folders },
   { to: "/espace/dossiers/new", label: "Nouveau dossier", icon: FilePlus2 },
+  { to: "/espace/financement", label: "Convention & financement", icon: Banknote },
   { to: "/espace/outils", label: "Mes outils pédagogiques", icon: ClipboardList },
   { to: "/espace/parrainage", label: "Programme ambassadeur", icon: Handshake },
 ];
