@@ -2,7 +2,6 @@ import {
   Award,
   Banknote,
   ClipboardList,
-  Banknote,
   BarChart3,
   BookOpen,
   FilePlus2,
