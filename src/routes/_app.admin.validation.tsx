@@ -12,6 +12,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useAuth } from "@/hooks/useAuth";
 import { apposerSignatureOrganisme } from "@/lib/dossier-signature-organisme.functions";
+import { validerEtGenererAdf } from "@/lib/dossier-adf.functions";
 import { supabase } from "@/integrations/supabase/client";
 import { dossierNom, type CrmStatut } from "@/lib/crm";
 import { mergeDonnees } from "@/lib/dossier/types";
@@ -111,11 +112,21 @@ function AdminValidation() {
   });
 
   const signer = useServerFn(apposerSignatureOrganisme);
+  const genererAdf = useServerFn(validerEtGenererAdf);
 
   const valider = useMutation({
-    mutationFn: async (row: Row) => signer({ data: { dossierId: row.id } }),
+    mutationFn: async (row: Row) => {
+      // Le numéro ADF est attribué par le back-office avant l'apposition de la signature.
+      const adf = await genererAdf({ data: { dossierId: row.id } });
+      const result = await signer({ data: { dossierId: row.id } });
+      return { ...result, adf: adf?.adf };
+    },
     onSuccess: (result) => {
-      toast.success("Signature Skills4mation apposée : certificat archivé, dossier validé.");
+      toast.success(
+        result?.adf
+          ? `Dossier validé — numéro ADF ${result.adf} attribué et signature Skills4mation apposée.`
+          : "Signature Skills4mation apposée : certificat archivé, dossier validé.",
+      );
       const financement = result?.financement;
       if (financement?.message) {
         if (financement.envoye) toast.success(financement.message);
