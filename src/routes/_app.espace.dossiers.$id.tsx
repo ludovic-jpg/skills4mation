@@ -277,7 +277,9 @@ function DossierDetail() {
             <TabsTrigger value="documents">Documents</TabsTrigger>
             <TabsTrigger value="signatures">Envoi &amp; signatures</TabsTrigger>
             <TabsTrigger value="pieces">Pièces &amp; génération</TabsTrigger>
+            <TabsTrigger value="supports">Supports pédagogiques</TabsTrigger>
           </TabsList>
+
 
           <TabsContent value="variables">
             <DossierWizard
