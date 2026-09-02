@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Check, Clock, MapPin, Target, Users, Wallet } from "lucide-react";
 import { toast } from "sonner";
 
+import { AvisSection } from "@/components/formations/AvisSection";
 import { PublicLayout } from "@/components/site/PublicLayout";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
