@@ -133,6 +133,39 @@ export type Database = {
           },
         ]
       }
+      certifications: {
+        Row: {
+          actif: boolean
+          code_rs: string | null
+          created_at: string
+          eligible_cpf: boolean
+          id: string
+          marque: string
+          prix_formateur_ttc: number
+          thematique: string
+        }
+        Insert: {
+          actif?: boolean
+          code_rs?: string | null
+          created_at?: string
+          eligible_cpf?: boolean
+          id?: string
+          marque: string
+          prix_formateur_ttc?: number
+          thematique: string
+        }
+        Update: {
+          actif?: boolean
+          code_rs?: string | null
+          created_at?: string
+          eligible_cpf?: boolean
+          id?: string
+          marque?: string
+          prix_formateur_ttc?: number
+          thematique?: string
+        }
+        Relationships: []
+      }
       demandes_budget: {
         Row: {
           assigne_a: string | null
