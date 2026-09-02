@@ -326,8 +326,23 @@ export const DOCUMENTS: DocDef[] = [
   },
 ];
 
-export function documentsApplicables(d: DossierDonnees) {
-  return DOCUMENTS.filter((doc) => doc.applicable(d));
+/**
+ * Documents applicables au dossier. Les questions personnalisées du formateur
+ * (`profiles.recueil_besoins_questions_perso`) sont reprises automatiquement dans le
+ * recueil des besoins F0A ; sans questions, le rendu reste identique à l'existant.
+ */
+export function documentsApplicables(
+  d: DossierDonnees,
+  options?: { questionsPerso?: string[] | null },
+) {
+  const questions = (options?.questionsPerso ?? []).filter(
+    (q) => String(q ?? "").trim().length > 0,
+  );
+  return DOCUMENTS.filter((doc) => doc.applicable(d)).map((doc) =>
+    doc.code === "F0A" && questions.length
+      ? { ...doc, build: (donnees: DossierDonnees) => recueilBesoinsHtml(donnees, questions) }
+      : doc,
+  );
 }
 
 export function docFileName(code: string, d: DossierDonnees) {

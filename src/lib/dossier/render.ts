@@ -340,11 +340,39 @@ export function convocationHtml(d: DossierDonnees) {
     .join('<div style="page-break-before:always"></div>');
 }
 
-/** Un recueil des besoins par apprenant. */
-export function recueilBesoinsHtml(d: DossierDonnees) {
+/**
+ * Bloc de questions additionnelles propres au formateur, ajouté au recueil des besoins.
+ * Rendu uniquement si le formateur a défini au moins une question personnalisée :
+ * le document reste strictement identique pour les autres.
+ */
+function blocQuestionsPerso(questions: string[]) {
+  const items = questions
+    .map((q) => String(q ?? "").trim())
+    .filter(Boolean)
+    .map(
+      (q, i) => `<div style="border:1px solid #cbd5e1;border-radius:8px;padding:10px;margin-top:8px;background:#fff">
+      <p style="font-weight:700;margin:0 0 6px"><span style="display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:999px;background:#1e293b;color:#fff;font-size:10px;margin-right:6px">${i + 1}</span>${escapeHtml(q)}</p>
+      <div style="min-height:40px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:4px"></div>
+    </div>`,
+    )
+    .join("");
+  if (!items) return "";
+  return `<section class="avoid-break" style="max-width:210mm;margin:16px auto;padding:16px 24px;font-family:ui-sans-serif,system-ui,sans-serif;color:#0f172a;font-size:12px">
+    <h3 style="font-size:13px;text-transform:uppercase;letter-spacing:.05em;margin:0 0 4px">Questions complémentaires du formateur</h3>
+    ${items}
+  </section>`;
+}
+
+/** Un recueil des besoins par apprenant, avec les questions personnalisées du formateur. */
+export function recueilBesoinsHtml(d: DossierDonnees, questionsPerso: string[] = []) {
   const cibles = d.apprenants.length ? d.apprenants : [undefined];
+  const bloc = blocQuestionsPerso(questionsPerso);
   return cibles
-    .map((a) => renderTemplate(recueilTpl, varsRecueil(d, a)))
+    .map((a) => {
+      const html = renderTemplate(recueilTpl, varsRecueil(d, a));
+      if (!bloc) return html;
+      return html.includes("</body>") ? html.replace("</body>", `${bloc}\n</body>`) : html + bloc;
+    })
     .join('<div style="page-break-before:always"></div>');
 }
 

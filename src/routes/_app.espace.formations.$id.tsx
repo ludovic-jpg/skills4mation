@@ -4,6 +4,7 @@ import { toast } from "sonner";
 
 import { AppShell } from "@/components/app/AppShell";
 import { FORMATEUR_NAV } from "@/components/app/nav";
+import { AvisModeration } from "@/components/formations/AvisModeration";
 import { FormationEditor } from "@/components/formation/FormationEditor";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -189,6 +190,8 @@ function FormationDetail() {
             </div>
           </CardContent>
         </Card>
+
+        <AvisModeration formationId={id} />
       </div>
     </AppShell>
   );

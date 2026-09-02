@@ -27,6 +27,10 @@ export type Profile = {
   expertise: string | null;
   linkedin_url: string | null;
   linkedin_connected_at: string | null;
+  /** Questions additionnelles de recueil des besoins propres au formateur (tableau de chaînes). */
+  recueil_besoins_questions_perso: string[] | null;
+  /** Lien Tally personnalisé pour la satisfaction à chaud (alternative au formulaire interne). */
+  lien_tally_f5: string | null;
   statut_candidature: CandidatureStatut;
 
 };
