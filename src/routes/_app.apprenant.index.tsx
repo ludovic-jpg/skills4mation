@@ -7,6 +7,8 @@ import {
   CheckCircle2,
   ExternalLink,
   FileSignature,
+  FileText,
+
   GraduationCap,
   Send,
   ShieldCheck,
