@@ -61,6 +61,12 @@ function Profil() {
     setRegionSync(profile?.nda_region ?? "");
     setRegion(profile?.nda_region ?? "");
   }
+  const [secteur, setSecteur] = useState(profile?.secteur_activite ?? "");
+  const [secteurSync, setSecteurSync] = useState(profile?.secteur_activite ?? "");
+  if ((profile?.secteur_activite ?? "") !== secteurSync) {
+    setSecteurSync(profile?.secteur_activite ?? "");
+    setSecteur(profile?.secteur_activite ?? "");
+  }
 
 
   async function upload(kind: Piece, file: File) {
