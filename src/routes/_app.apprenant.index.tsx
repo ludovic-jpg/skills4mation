@@ -268,6 +268,33 @@ function EspaceApprenant() {
           )}
         </TabsContent>
 
+        <TabsContent value="supports" className="grid gap-3">
+          {(supports ?? []).length === 0 ? (
+            <Card className="rounded-2xl">
+              <CardContent className="p-6 text-sm text-muted-foreground">
+                Aucun support pédagogique mis à disposition pour le moment.
+              </CardContent>
+            </Card>
+          ) : (
+            (supports ?? []).map((s) => (
+              <Card key={s.id} className="rounded-2xl border-border/70 shadow-soft">
+                <CardContent className="flex flex-wrap items-center gap-3 p-5 text-sm">
+                  <FileText className="size-4 shrink-0 text-muted-foreground" />
+                  <span className="min-w-0 flex-1 truncate font-medium">{s.titre}</span>
+                  <span className="text-xs text-muted-foreground">
+                    {s.dossiers?.titre_formation ?? ""}
+                  </span>
+                  <Button size="sm" variant="outline" onClick={() => void ouvrir(s.fichier_url)}>
+                    Télécharger
+                  </Button>
+                </CardContent>
+              </Card>
+            ))
+          )}
+        </TabsContent>
+
+
+
         <TabsContent value="reponses" className="grid gap-3">
           {reponses.length === 0 ? (
             <Card className="rounded-2xl">
