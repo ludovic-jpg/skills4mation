@@ -1004,25 +1004,43 @@ export type Database = {
         Row: {
           created_at: string
           description: string | null
+          document_source_url: string | null
+          duree_heures: number | null
           formateur_id: string
+          genere_par_ia: boolean
           id: string
+          modules: Json
+          objectifs: string | null
           ordre: number
+          prerequis: string | null
           titre: string
         }
         Insert: {
           created_at?: string
           description?: string | null
+          document_source_url?: string | null
+          duree_heures?: number | null
           formateur_id: string
+          genere_par_ia?: boolean
           id?: string
+          modules?: Json
+          objectifs?: string | null
           ordre?: number
+          prerequis?: string | null
           titre: string
         }
         Update: {
           created_at?: string
           description?: string | null
+          document_source_url?: string | null
+          duree_heures?: number | null
           formateur_id?: string
+          genere_par_ia?: boolean
           id?: string
+          modules?: Json
+          objectifs?: string | null
           ordre?: number
+          prerequis?: string | null
           titre?: string
         }
         Relationships: []
