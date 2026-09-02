@@ -6,6 +6,7 @@ import { AppShell } from "@/components/app/AppShell";
 import { DocField } from "@/components/app/DocField";
 import { FORMATEUR_NAV } from "@/components/app/nav";
 import { LinkedinConnect } from "@/components/app/LinkedinConnect";
+import { ParcoursIaCard } from "@/components/app/ParcoursIaCard";
 import { StatutBadge } from "@/components/StatutBadge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -418,6 +419,7 @@ function Profil() {
             </form>
           </CardContent>
         </Card>
+        <ParcoursIaCard />
       </div>
     </AppShell>
   );
