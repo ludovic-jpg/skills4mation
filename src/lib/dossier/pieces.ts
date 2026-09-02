@@ -139,6 +139,15 @@ export const PIECES: PieceDef[] = [
     statutInitial: "a_generer",
   },
   {
+    code: "CERT-CONV",
+    label: "Convocation à l'examen de certification",
+    source: "pdf",
+    generable: true,
+    description:
+      "Convocation à la session d'examen de certification, organisée par Skills4mation à une date distincte de la formation. Envoi strictement manuel, jamais déclenché par un changement de statut.",
+    statutInitial: "a_generer",
+  },
+  {
     code: "TP",
     label: "Test de positionnement",
     source: "tableur",
