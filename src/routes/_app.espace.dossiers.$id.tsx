@@ -319,6 +319,12 @@ function DossierDetail() {
             ) : null}
           </TabsContent>
 
+          <TabsContent value="supports">
+            {user ? <SupportsPanel dossierId={id} formateurId={user.id} /> : null}
+          </TabsContent>
+
+
+
           <TabsContent value="suivi" className="grid gap-6 lg:grid-cols-[1.3fr_1fr]">
             <div className="grid gap-6">
             <Card className="rounded-2xl border-border/70 shadow-soft">
