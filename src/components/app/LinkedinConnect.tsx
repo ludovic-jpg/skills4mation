@@ -30,7 +30,9 @@ function lireIdentite(data: Record<string, unknown> | null | undefined): Trouve 
     return typeof brut === "string" && brut.trim() ? brut.trim() : null;
   };
   return {
-    nom: val("name") ?? [val("given_name"), val("family_name")].filter(Boolean).join(" ") || null,
+    nom:
+      val("name") ??
+      ([val("given_name"), val("family_name")].filter(Boolean).join(" ") || null),
     email: val("email"),
     poste: val("headline") ?? val("job_title"),
     url: val("profile") ?? val("public_profile_url") ?? val("website"),
