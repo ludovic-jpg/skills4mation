@@ -98,6 +98,8 @@ export type DossierDonnees = {
     niveauDepart: string;
     contraintes: string;
     modalitesEvaluation: string;
+    /** Test de positionnement enregistré associé au dossier (table `outils_positionnement`). */
+    testPositionnementId?: string;
   };
   facture: {
     numero: string;
