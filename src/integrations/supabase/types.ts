@@ -1327,7 +1327,7 @@ export type Database = {
       }
     }
     Functions: {
-      [_ in never]: never
+      next_adf_numero: { Args: never; Returns: string }
     }
     Enums: {
       app_role:
