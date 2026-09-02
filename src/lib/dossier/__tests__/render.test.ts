@@ -67,7 +67,7 @@ const dossier: DossierDonnees = {
     subrogation: "oui",
     modeFinancement: "opco",
     montantPrisEnCharge: "12000",
-    certificationIcdl: true,
+    certificationCode: "cert-test",
     coutCertification: "89",
   },
   convention: { lieu: "Paris", date: "2026-09-15" },
