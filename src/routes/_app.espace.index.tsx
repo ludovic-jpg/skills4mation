@@ -181,7 +181,7 @@ function EspaceAccueil() {
   ];
 
   const kpis = [
-    { label: "Formations créées", valeur: (formations ?? []).length, icone: BookOpen, to: "/espace/formations" as const },
+    { label: "Mes formations", valeur: (formations ?? []).length, icone: BookOpen, to: "/espace/formations" as const },
     { label: "Dossiers en cours", valeur: enCours.length, icone: Folders, to: "/espace/dossiers" as const },
     { label: "Total dossiers", valeur: dossiers.length, icone: Folders, to: "/espace/dossiers" as const },
     { label: "Brouillons à finaliser", valeur: brouillons.length, icone: FilePlus2, to: "/espace/dossiers" as const },
