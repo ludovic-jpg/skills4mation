@@ -6,7 +6,7 @@ import { toast } from "sonner";
 import { AppShell } from "@/components/app/AppShell";
 import { CrmBadge } from "@/components/app/CrmBadge";
 import { FORMATEUR_NAV } from "@/components/app/nav";
-import { CertificationSelect } from "@/components/dossier/CertificationSelect";
+import { CertificationSelect } from "@/components/app/CertificationSelect";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -220,12 +220,12 @@ function FinancementPage() {
                 <div className="sm:col-span-2">
                   <CertificationSelect
                     value={donnees.tarifs.certificationCode}
-                    onChange={(certificationCode, certification) =>
+                    cpfUniquement={donnees.tarifs.modeFinancement === "cpf"}
+                    label="Certification visée (ICDL / Lilliate)"
+                    onChange={(c) =>
                       setTarifs({
-                        certificationCode,
-                        ...(certification?.prix_formateur_ttc
-                          ? { coutCertification: String(certification.prix_formateur_ttc) }
-                          : {}),
+                        certificationCode: c?.id ?? null,
+                        coutCertification: c ? String(c.prix_formateur_ttc) : "",
                       })
                     }
                   />
