@@ -182,6 +182,64 @@ function Profil() {
 
         <Card className="rounded-2xl border-border/70 shadow-soft">
           <CardContent className="p-6">
+            <h2 className="text-base font-semibold">Mon expertise</h2>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Votre secteur principal et un résumé court de votre expertise (le parcours
+              professionnel détaillé reste plus bas).
+            </p>
+            <form
+              className="mt-4 grid gap-4 sm:grid-cols-2"
+              onSubmit={(event) => {
+                event.preventDefault();
+                const form = new FormData(event.currentTarget);
+                void save("expertise", {
+                  secteur_activite: secteur || null,
+                  expertise: String(form.get("expertise") ?? "").trim().slice(0, 500) || null,
+                });
+              }}
+            >
+              <div className="grid gap-2">
+                <Label htmlFor="secteur_activite">Secteur d'activité</Label>
+                <Select value={secteur} onValueChange={setSecteur}>
+                  <SelectTrigger id="secteur_activite">
+                    <SelectValue placeholder="Choisir un secteur" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {CATEGORIES.map((c) => (
+                      <SelectItem key={c.slug} value={c.slug}>
+                        {c.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="grid gap-2 sm:col-span-2">
+                <Label htmlFor="expertise">Résumé de mon expertise (500 caractères max)</Label>
+                <Textarea
+                  id="expertise"
+                  name="expertise"
+                  rows={4}
+                  maxLength={500}
+                  defaultValue={profile?.expertise ?? ""}
+                  placeholder="En quelques lignes : vos domaines de spécialité, publics et formats de prédilection…"
+                />
+              </div>
+              <Button
+                type="submit"
+                variant="cta"
+                className="justify-self-start sm:col-span-2"
+                disabled={saving === "expertise"}
+              >
+                {saving === "expertise" ? "Enregistrement…" : "Enregistrer mon expertise"}
+              </Button>
+            </form>
+          </CardContent>
+        </Card>
+
+
+
+        <Card className="rounded-2xl border-border/70 shadow-soft">
+          <CardContent className="p-6">
             <h2 className="text-base font-semibold">Entreprise</h2>
             <p className="mt-1 text-sm text-muted-foreground">
               Ces informations alimentent les conventions et contrats de sous-traitance.
