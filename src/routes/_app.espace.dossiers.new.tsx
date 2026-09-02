@@ -1,4 +1,5 @@
 import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
+import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
@@ -6,6 +7,14 @@ import { AppShell } from "@/components/app/AppShell";
 import { FORMATEUR_NAV } from "@/components/app/nav";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { DONNEES_VIDES } from "@/lib/dossier/types";
@@ -15,15 +24,45 @@ export const Route = createFileRoute("/_app/espace/dossiers/new")({
   component: NouveauDossier,
 });
 
+type Parcours = {
+  id: string;
+  titre: string;
+  objectifs: string | null;
+  prerequis: string | null;
+  duree_heures: number | null;
+};
+
 function NouveauDossier() {
   const { user, profile, isValidatedFormateur, loading } = useAuth();
   const router = useRouter();
   const [error, setError] = useState(false);
+  // null = le formateur n'a pas encore choisi ; "" = dossier vierge ; sinon id du parcours.
+  const [choix, setChoix] = useState<string | null>(null);
+  const [parcoursId, setParcoursId] = useState("");
+
+  const parcours = useQuery({
+    queryKey: ["mes-parcours", user?.id],
+    enabled: Boolean(user?.id),
+    queryFn: async () => {
+      const { data, error: queryError } = await supabase
+        .from("parcours_formation")
+        .select("id, titre, objectifs, prerequis, duree_heures")
+        .eq("formateur_id", user!.id)
+        .order("created_at", { ascending: false });
+      if (queryError) throw queryError;
+      return (data ?? []) as Parcours[];
+    },
+  });
+
+  const liste = parcours.data ?? [];
+  // Sans parcours enregistré, on garde le comportement historique : création immédiate.
+  const decide = choix !== null || (parcours.isSuccess && liste.length === 0);
 
   useEffect(() => {
-    if (loading || !user || !isValidatedFormateur) return;
+    if (loading || !user || !isValidatedFormateur || !decide) return;
     let cancelled = false;
     void (async () => {
+      const choisi = liste.find((p) => p.id === choix) ?? null;
       const donnees = {
         ...DONNEES_VIDES,
         // Numéro d'ADF unique attribué automatiquement dès la création du dossier.
@@ -40,7 +79,17 @@ function NouveauDossier() {
           nda: profile?.numero_nda ?? "",
           ndaRegion: profile?.nda_region ?? "",
         },
-
+        formation: {
+          ...DONNEES_VIDES.formation,
+          ...(choisi
+            ? {
+                titre: choisi.titre ?? "",
+                objectifs: choisi.objectifs ?? "",
+                prerequis: choisi.prerequis ?? "",
+                heuresTotal: choisi.duree_heures ? String(choisi.duree_heures) : "",
+              }
+            : {}),
+        },
       };
       const { data, error: insertError } = await supabase
         .from("dossiers")
@@ -63,7 +112,8 @@ function NouveauDossier() {
     return () => {
       cancelled = true;
     };
-  }, [loading, user, isValidatedFormateur, profile, router]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [loading, user, isValidatedFormateur, profile, router, decide]);
 
   if (!loading && !isValidatedFormateur) {
     return (
@@ -96,10 +146,47 @@ function NouveauDossier() {
               Le dossier n'a pas pu être initialisé. Rechargez la page ou contactez l'équipe
               Skills4mation.
             </p>
-          ) : (
+          ) : decide ? (
             <p className="text-sm text-muted-foreground">
               Initialisation du dossier et ouverture du formulaire…
             </p>
+          ) : (
+            <div className="grid gap-5">
+              <div>
+                <h2 className="text-base font-semibold">Partir d'un parcours existant ?</h2>
+                <p className="mt-1 text-sm text-muted-foreground">
+                  Le titre, les objectifs, les prérequis et la durée du parcours choisi sont
+                  préremplis dans le dossier. Vous pouvez aussi partir d'un dossier vierge.
+                </p>
+              </div>
+              <div className="grid gap-2 sm:max-w-md">
+                <Label htmlFor="parcours">Mes parcours de formation</Label>
+                <Select value={parcoursId} onValueChange={setParcoursId}>
+                  <SelectTrigger id="parcours">
+                    <SelectValue placeholder="Choisir un parcours" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {liste.map((p) => (
+                      <SelectItem key={p.id} value={p.id}>
+                        {p.titre}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="flex flex-wrap gap-3">
+                <Button
+                  variant="cta"
+                  disabled={!parcoursId}
+                  onClick={() => setChoix(parcoursId)}
+                >
+                  Créer depuis ce parcours
+                </Button>
+                <Button variant="outline" onClick={() => setChoix("")}>
+                  Partir d'un dossier vierge
+                </Button>
+              </div>
+            </div>
           )}
         </CardContent>
       </Card>
