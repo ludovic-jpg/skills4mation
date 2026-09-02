@@ -72,7 +72,22 @@ function EspaceApprenant() {
     },
   });
 
+  const { data: supports } = useQuery({
+    queryKey: ["apprenant-supports", user?.id],
+    enabled: Boolean(user),
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("supports_pedagogiques")
+        .select("id, titre, type, fichier_url, created_at, dossiers(titre_formation)")
+        .eq("visible_apprenants", true)
+        .order("created_at", { ascending: false });
+      if (error) throw error;
+      return data ?? [];
+    },
+  });
+
   const { data: documents } = useQuery({
+
     queryKey: ["apprenant-documents", user?.id],
     enabled: Boolean(user),
     queryFn: async () => {
@@ -149,9 +164,11 @@ function EspaceApprenant() {
         <TabsList>
           <TabsTrigger value="documents">Mes documents</TabsTrigger>
           <TabsTrigger value="formations">Mes formations</TabsTrigger>
+          <TabsTrigger value="supports">Support pédagogique</TabsTrigger>
           <TabsTrigger value="reponses">Mes réponses</TabsTrigger>
           <TabsTrigger value="profil">Mon profil</TabsTrigger>
         </TabsList>
+
 
         <TabsContent value="documents" className="grid gap-4">
           {aSigner.length === 0 ? (
