@@ -23,6 +23,10 @@ export type Profile = {
   deroule_pedagogique_url: string | null;
   parcours_formation: string | null;
   parcours_formation_url: string | null;
+  secteur_activite: string | null;
+  expertise: string | null;
+  linkedin_url: string | null;
+  linkedin_connected_at: string | null;
   statut_candidature: CandidatureStatut;
 
 };

@@ -1004,7 +1004,10 @@ export type Database = {
           email: string
           entreprise: string | null
           entreprise_adresse: string | null
+          expertise: string | null
           id: string
+          linkedin_connected_at: string | null
+          linkedin_url: string | null
           nda_document_url: string | null
           nda_region: string | null
           nom: string
@@ -1013,6 +1016,7 @@ export type Database = {
           parcours_formation_url: string | null
           photo_url: string | null
           prenom: string
+          secteur_activite: string | null
           siret: string | null
           statut_candidature: Database["public"]["Enums"]["candidature_statut"]
           telephone: string | null
@@ -1027,7 +1031,10 @@ export type Database = {
           email?: string
           entreprise?: string | null
           entreprise_adresse?: string | null
+          expertise?: string | null
           id: string
+          linkedin_connected_at?: string | null
+          linkedin_url?: string | null
           nda_document_url?: string | null
           nda_region?: string | null
           nom?: string
@@ -1036,6 +1043,7 @@ export type Database = {
           parcours_formation_url?: string | null
           photo_url?: string | null
           prenom?: string
+          secteur_activite?: string | null
           siret?: string | null
           statut_candidature?: Database["public"]["Enums"]["candidature_statut"]
           telephone?: string | null
@@ -1050,7 +1058,10 @@ export type Database = {
           email?: string
           entreprise?: string | null
           entreprise_adresse?: string | null
+          expertise?: string | null
           id?: string
+          linkedin_connected_at?: string | null
+          linkedin_url?: string | null
           nda_document_url?: string | null
           nda_region?: string | null
           nom?: string
@@ -1059,6 +1070,7 @@ export type Database = {
           parcours_formation_url?: string | null
           photo_url?: string | null
           prenom?: string
+          secteur_activite?: string | null
           siret?: string | null
           statut_candidature?: Database["public"]["Enums"]["candidature_statut"]
           telephone?: string | null
