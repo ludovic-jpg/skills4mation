@@ -72,7 +72,7 @@ export function CertificationSelect({
       <Label>{label}</Label>
       <Select
         value={value ?? "aucune"}
-        disabled={disabled}
+        disabled={disabled ?? false}
         onValueChange={(v) =>
           onChange(v === "aucune" ? null : (certifications.find((c) => c.id === v) ?? null))
         }
