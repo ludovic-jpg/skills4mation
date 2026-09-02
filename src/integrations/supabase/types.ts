@@ -788,6 +788,44 @@ export type Database = {
         }
         Relationships: []
       }
+      formation_avis: {
+        Row: {
+          apprenant_id: string
+          commentaire: string | null
+          created_at: string
+          formation_id: string
+          id: string
+          note: number
+          statut: string
+        }
+        Insert: {
+          apprenant_id: string
+          commentaire?: string | null
+          created_at?: string
+          formation_id: string
+          id?: string
+          note: number
+          statut?: string
+        }
+        Update: {
+          apprenant_id?: string
+          commentaire?: string | null
+          created_at?: string
+          formation_id?: string
+          id?: string
+          note?: number
+          statut?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "formation_avis_formation_id_fkey"
+            columns: ["formation_id"]
+            isOneToOne: false
+            referencedRelation: "formations_catalogue"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       formations_catalogue: {
         Row: {
           accessibilite: string | null
@@ -1000,6 +1038,90 @@ export type Database = {
         }
         Relationships: []
       }
+      outils_evaluation_acquis: {
+        Row: {
+          created_at: string
+          formateur_id: string
+          id: string
+          parcours_id: string | null
+          questions: Json
+          titre: string
+        }
+        Insert: {
+          created_at?: string
+          formateur_id: string
+          id?: string
+          parcours_id?: string | null
+          questions?: Json
+          titre: string
+        }
+        Update: {
+          created_at?: string
+          formateur_id?: string
+          id?: string
+          parcours_id?: string | null
+          questions?: Json
+          titre?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "outils_evaluation_acquis_parcours_id_fkey"
+            columns: ["parcours_id"]
+            isOneToOne: false
+            referencedRelation: "catalogue_public"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "outils_evaluation_acquis_parcours_id_fkey"
+            columns: ["parcours_id"]
+            isOneToOne: false
+            referencedRelation: "parcours_formation"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      outils_positionnement: {
+        Row: {
+          created_at: string
+          formateur_id: string
+          id: string
+          parcours_id: string | null
+          questions: Json
+          titre: string
+        }
+        Insert: {
+          created_at?: string
+          formateur_id: string
+          id?: string
+          parcours_id?: string | null
+          questions?: Json
+          titre: string
+        }
+        Update: {
+          created_at?: string
+          formateur_id?: string
+          id?: string
+          parcours_id?: string | null
+          questions?: Json
+          titre?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "outils_positionnement_parcours_id_fkey"
+            columns: ["parcours_id"]
+            isOneToOne: false
+            referencedRelation: "catalogue_public"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "outils_positionnement_parcours_id_fkey"
+            columns: ["parcours_id"]
+            isOneToOne: false
+            referencedRelation: "parcours_formation"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       parcours_formation: {
         Row: {
           created_at: string
@@ -1057,6 +1179,7 @@ export type Database = {
           entreprise_adresse: string | null
           expertise: string | null
           id: string
+          lien_tally_f5: string | null
           linkedin_connected_at: string | null
           linkedin_url: string | null
           nda_document_url: string | null
@@ -1067,6 +1190,7 @@ export type Database = {
           parcours_formation_url: string | null
           photo_url: string | null
           prenom: string
+          recueil_besoins_questions_perso: Json
           secteur_activite: string | null
           siret: string | null
           statut_candidature: Database["public"]["Enums"]["candidature_statut"]
@@ -1084,6 +1208,7 @@ export type Database = {
           entreprise_adresse?: string | null
           expertise?: string | null
           id: string
+          lien_tally_f5?: string | null
           linkedin_connected_at?: string | null
           linkedin_url?: string | null
           nda_document_url?: string | null
@@ -1094,6 +1219,7 @@ export type Database = {
           parcours_formation_url?: string | null
           photo_url?: string | null
           prenom?: string
+          recueil_besoins_questions_perso?: Json
           secteur_activite?: string | null
           siret?: string | null
           statut_candidature?: Database["public"]["Enums"]["candidature_statut"]
@@ -1111,6 +1237,7 @@ export type Database = {
           entreprise_adresse?: string | null
           expertise?: string | null
           id?: string
+          lien_tally_f5?: string | null
           linkedin_connected_at?: string | null
           linkedin_url?: string | null
           nda_document_url?: string | null
@@ -1121,6 +1248,7 @@ export type Database = {
           parcours_formation_url?: string | null
           photo_url?: string | null
           prenom?: string
+          recueil_besoins_questions_perso?: Json
           secteur_activite?: string | null
           siret?: string | null
           statut_candidature?: Database["public"]["Enums"]["candidature_statut"]
