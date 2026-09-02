@@ -12,6 +12,8 @@ import { DossierWizard } from "@/components/dossier/DossierWizard";
 import type { FormationCatalogue } from "@/lib/formations";
 import { EnvoisPanel } from "@/components/dossier/EnvoisPanel";
 import { PiecesPanel } from "@/components/dossier/PiecesPanel";
+import { SupportsPanel } from "@/components/dossier/SupportsPanel";
+
 import { SignatureOrganismeBadge } from "@/components/dossier/SignatureOrganismeBadge";
 import { FriseEtapes, etapeDeStatut } from "@/components/dossier/FriseEtapes";
 import { Badge } from "@/components/ui/badge";
