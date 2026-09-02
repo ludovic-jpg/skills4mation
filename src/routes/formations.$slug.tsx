@@ -260,6 +260,8 @@ function PageFormation() {
                 ))}
             </CardContent>
           </Card>
+
+          <AvisSection formationId={f.id} />
         </div>
 
         <div className="grid gap-6">
