@@ -70,6 +70,11 @@ function validateStep(step: number, d: DossierDonnees): Errs {
         err[`apprenant-${i}`] = "Numéro de dossier CPF requis pour un financement CPF.";
     });
   }
+  if (step === 4) {
+    if (estCpf(d) && !d.tarifs.certificationCode)
+      err["certification"] =
+        "Le financement CPF n'est ouvert qu'aux formations certifiantes ICDL, Lilliate ou langues.";
+  }
   if (step === 5) {
     if (!d.formateur.nom.trim()) err["formateurNom"] = "Nom du formateur requis.";
     if (!d.formateur.email.trim() || !isEmail(d.formateur.email))

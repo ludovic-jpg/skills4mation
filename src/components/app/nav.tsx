@@ -1,4 +1,5 @@
 import {
+  Award,
   Banknote,
   BarChart3,
   BookOpen,
@@ -49,6 +50,7 @@ export const ADMIN_NAV: NavItem[] = [
 
 export const SUPER_ADMIN_NAV: NavItem[] = [
   ...ADMIN_NAV.slice(0, 6),
+  { to: "/admin/certifications", label: "Certifications", icon: Award },
   { to: "/admin/comptes", label: "Comptes & rôles", icon: ShieldCheck },
   { to: "/espace", label: "Espace formateur", icon: Folders },
 ];
