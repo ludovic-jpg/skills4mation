@@ -17,11 +17,15 @@ import { AppShell, usePhotoProfil } from "@/components/app/AppShell";
 import { FORMATEUR_NAV } from "@/components/app/nav";
 import { CrmBadge } from "@/components/app/CrmBadge";
 import { StatutBadge } from "@/components/StatutBadge";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { useAuth } from "@/hooks/useAuth";
+import { CATEGORIES } from "@/data/catalogue";
 import { CRM_STATUTS, dossierNom, type CrmStatut } from "@/lib/crm";
+import { visuelUrl } from "@/lib/formations";
 import { formatDate } from "@/lib/statuts";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -68,8 +72,14 @@ const EN_COURS: CrmStatut[] = [
 ];
 
 function EspaceAccueil() {
-  const { profile, isValidatedFormateur } = useAuth();
+  const { profile, user, isValidatedFormateur } = useAuth();
   const photo = usePhotoProfil(profile?.photo_url);
+  const initiales =
+    `${profile?.prenom?.[0] ?? ""}${profile?.nom?.[0] ?? ""}`.toUpperCase() || "S4";
+  const secteurLabel = profile?.secteur_activite
+    ? (CATEGORIES.find((c) => c.slug === profile.secteur_activite)?.label ??
+      profile.secteur_activite)
+    : null;
 
   const { data, isLoading } = useQuery({
     queryKey: ["tableau-de-bord-dossiers"],
@@ -86,11 +96,13 @@ function EspaceAccueil() {
   });
 
   const { data: formations } = useQuery({
-    queryKey: ["tableau-de-bord-formations"],
+    queryKey: ["tableau-de-bord-formations", user?.id],
+    enabled: Boolean(user?.id),
     queryFn: async () => {
       const { data, error } = await supabase
         .from("formations_catalogue")
-        .select("id, titre, publiee, slug")
+        .select("id, slug, titre, publiee, visuel_url")
+        .eq("formateur_id", user!.id)
         .order("created_at", { ascending: false });
       if (error) throw error;
       return data ?? [];
@@ -191,19 +203,19 @@ function EspaceAccueil() {
       <div className="grid gap-5 lg:grid-cols-[1.1fr_1fr]">
         <Card className="overflow-hidden rounded-2xl border-border/70 shadow-soft">
           <CardContent className="flex flex-wrap items-center gap-5 p-6">
-            <span className="flex size-20 shrink-0 items-center justify-center overflow-hidden rounded-2xl bg-secondary/15 text-xl font-semibold text-secondary">
-              {photo ? (
-                <img src={photo} alt="Votre photo de profil" className="size-full object-cover" />
-              ) : (
-                `${profile?.prenom?.[0] ?? ""}${profile?.nom?.[0] ?? ""}`.toUpperCase() || "S4"
-              )}
-            </span>
+            <Avatar className="size-24 shrink-0 rounded-full border-2 border-border">
+              {photo ? <AvatarImage src={photo} alt="Votre photo de profil" /> : null}
+              <AvatarFallback className="bg-secondary/15 text-2xl font-semibold text-secondary">
+                {initiales}
+              </AvatarFallback>
+            </Avatar>
             <div className="min-w-0 flex-1">
-              <p className="text-lg font-semibold">
+              <p className="text-xl font-semibold">
                 {`${profile?.prenom ?? ""} ${profile?.nom ?? ""}`.trim() || profile?.email}
               </p>
-              <div className="mt-1 flex flex-wrap items-center gap-2">
+              <div className="mt-1.5 flex flex-wrap items-center gap-2">
                 <StatutBadge kind="candidature" statut={profile?.statut_candidature ?? "en_attente"} />
+                {secteurLabel ? <Badge variant="secondary">{secteurLabel}</Badge> : null}
                 <span className="inline-flex items-center gap-1.5 rounded-full bg-cta/15 px-3 py-1 text-xs font-semibold text-cta-foreground">
                   <Trophy className="size-3.5" /> {niveau}
                 </span>
@@ -257,6 +269,25 @@ function EspaceAccueil() {
           </CardContent>
         </Card>
       </div>
+
+      <Card className="mt-6 rounded-2xl border-border/70 shadow-soft">
+        <CardContent className="p-6">
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <h2 className="text-base font-semibold">Mon expertise</h2>
+            <Link to="/espace/profil" className="text-xs font-semibold underline">
+              {profile?.expertise ? "Modifier mon profil" : "Compléter mon profil"}
+            </Link>
+          </div>
+          {profile?.expertise ? (
+            <p className="mt-3 line-clamp-4 text-sm text-muted-foreground">{profile.expertise}</p>
+          ) : (
+            <p className="mt-3 text-sm text-muted-foreground">
+              Décrivez votre expertise en quelques lignes : elle valorise vos formations publiées et
+              vos dossiers.
+            </p>
+          )}
+        </CardContent>
+      </Card>
 
       {!isValidatedFormateur ? (
         <Card className="mt-6 rounded-2xl border-cta/40 bg-cta/10">
@@ -347,6 +378,51 @@ function EspaceAccueil() {
           </CardContent>
         </Card>
       </div>
+
+      <Card className="mt-6 rounded-2xl border-border/70 shadow-soft">
+        <CardContent className="p-6">
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <h2 className="inline-flex items-center gap-2 text-base font-semibold">
+              <BookOpen className="size-4 text-secondary" /> Aperçu de mes formations
+            </h2>
+            <Link to="/espace/formations" className="text-xs font-semibold underline">
+              Voir toutes mes formations
+            </Link>
+          </div>
+          {(formations ?? []).length === 0 ? (
+            <p className="mt-4 text-sm text-muted-foreground">
+              Aucune formation enregistrée pour l'instant.
+            </p>
+          ) : (
+            <ul className="mt-4 grid gap-3 sm:grid-cols-3">
+              {(formations ?? []).slice(0, 3).map((f) => {
+                const image = visuelUrl(f.visuel_url);
+                return (
+                  <li key={f.id}>
+                    <Link
+                      to="/espace/formations/$id"
+                      params={{ id: f.id }}
+                      className="block rounded-xl border border-border/70 p-3 transition hover:border-secondary/50"
+                    >
+                      <div className="aspect-video w-full overflow-hidden rounded-lg bg-muted">
+                        {image ? (
+                          <img src={image} alt="" className="size-full object-cover" />
+                        ) : null}
+                      </div>
+                      <p className="mt-2 truncate text-sm font-semibold">{f.titre}</p>
+                      <Badge variant={f.publiee ? "default" : "secondary"} className="mt-1">
+                        {f.publiee ? "Publiée" : "Brouillon"}
+                      </Badge>
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
+          )}
+        </CardContent>
+      </Card>
+
+
 
       <Card className="mt-6 rounded-2xl border-border/70 shadow-soft">
         <CardContent className="p-6">
