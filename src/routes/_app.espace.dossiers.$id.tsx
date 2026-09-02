@@ -32,6 +32,12 @@ import { CRM_PIPELINE, CRM_STATUTS, crmProgress, dossierNom, type CrmStatut } fr
 import { mergeDonnees, type DossierDonnees } from "@/lib/dossier/types";
 import { DOCUMENT_TYPES, formatDate, type DocumentType } from "@/lib/statuts";
 
+const CERTIFICATION_LABELS = {
+  en_cours: "En cours",
+  obtenue: "Obtenue",
+  non_obtenue: "Non obtenue",
+} as const;
+
 export const Route = createFileRoute("/_app/espace/dossiers/$id")({
   component: DossierDetail,
 });
@@ -238,6 +244,7 @@ function DossierDetail() {
 
   const statut = (dossier?.statut_crm ?? "brouillon") as CrmStatut;
   const donnees = mergeDonnees(dossier?.donnees);
+  const etape = etapeDeStatut(statut);
   const emargementsPrets = (pieces ?? []).some(
     (p) => p.code === "F3" && (p.statut === "complete" || Boolean(p.fichier_url)),
   );
@@ -329,6 +336,10 @@ function DossierDetail() {
                   <Info label="Formation" value={dossier.titre_formation} />
                   <Info label="Début" value={formatDate(dossier.date_debut)} />
                   <Info label="Fin" value={formatDate(dossier.date_fin)} />
+                  <Info
+                    label="Numéro ADF"
+                    value={donnees.adf || "En attente de validation par Skills4mation"}
+                  />
                   <Info label="Référence" value={dossier.id} />
                 </dl>
 
@@ -404,6 +415,121 @@ function DossierDetail() {
                 </div>
               </CardContent>
             </Card>
+
+            {etape === "B" ? (
+              <Card className="rounded-2xl border-border/70 shadow-soft">
+                <CardContent className="grid gap-4 p-6">
+                  <h2 className="text-base font-semibold">Étape B — Demande de financement</h2>
+                  <p className="text-sm text-muted-foreground">
+                    Reprenez si besoin les informations de financement d'un autre dossier actif,
+                    puis complétez la convention.
+                  </p>
+                  <div className="flex flex-wrap items-end gap-3">
+                    <div className="grid min-w-64 gap-1.5">
+                      <span className="text-xs text-muted-foreground">
+                        Dossier servant de base
+                      </span>
+                      <Select value={baseFinancement} onValueChange={setBaseFinancement}>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Choisir un dossier actif" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {(autresDossiers.data ?? []).map((d) => (
+                            <SelectItem key={d.id} value={d.id}>
+                              {d.dossier_nom || dossierNom(d)}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <Button
+                      variant="outline"
+                      disabled={!baseFinancement || reprendreFinancement.isPending}
+                      onClick={() => reprendreFinancement.mutate(baseFinancement)}
+                    >
+                      Reprendre ces informations
+                    </Button>
+                    <Button asChild variant="teal">
+                      <Link to="/espace/financement">Rédiger la convention</Link>
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            ) : null}
+
+            {etape === "C" ? (
+              <Card className="rounded-2xl border-border/70 shadow-soft">
+                <CardContent className="grid gap-4 p-6">
+                  <h2 className="text-base font-semibold">
+                    Étape C — Obtention du financement
+                  </h2>
+                  <p className="text-sm text-muted-foreground">
+                    Finalisez la convention et les dernières pièces administratives avant le
+                    démarrage.
+                  </p>
+                  <div className="flex flex-wrap gap-3">
+                    <Button asChild variant="teal">
+                      <Link to="/espace/financement">Espace convention</Link>
+                    </Button>
+                    <Button variant="outline" onClick={() => setOnglet("signatures")}>
+                      Envoi &amp; signatures
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            ) : null}
+
+            {etape === "D" ? (
+              <Card className="rounded-2xl border-border/70 shadow-soft">
+                <CardContent className="grid gap-4 p-6">
+                  <h2 className="text-base font-semibold">Étape D — Fin de la formation</h2>
+                  <div className="flex flex-wrap gap-3">
+                    <Button variant="outline" onClick={() => setOnglet("pieces")}>
+                      Émargements (F3)
+                    </Button>
+                    <Button variant="outline" onClick={() => setOnglet("pieces")}>
+                      Évaluation des acquis (EA)
+                    </Button>
+                    <Button variant="outline" onClick={() => setOnglet("signatures")}>
+                      Satisfaction à chaud (F5)
+                    </Button>
+                    <Button asChild variant="outline">
+                      <Link to="/espace/outils">Commentaires</Link>
+                    </Button>
+                  </div>
+                  <div className="grid gap-2 border-t border-border pt-4">
+                    <div className="flex flex-wrap items-center gap-2">
+                      <h3 className="text-sm font-semibold">Résultat de la certification</h3>
+                      <Badge variant="outline">
+                        {CERTIFICATION_LABELS[
+                          (dossier.certification_statut ?? "") as keyof typeof CERTIFICATION_LABELS
+                        ] ?? "Non renseigné"}
+                      </Badge>
+                    </div>
+                    <p className="text-xs text-muted-foreground">
+                      À renseigner après l'évaluation des acquis. La convocation à l'examen de
+                      certification s'envoie manuellement depuis l'onglet « Envoi &amp;
+                      signatures ».
+                    </p>
+                    <div className="flex flex-wrap gap-3 pt-1">
+                      {(["en_cours", "obtenue", "non_obtenue"] as const).map((valeur) => (
+                        <Button
+                          key={valeur}
+                          size="sm"
+                          variant={
+                            dossier.certification_statut === valeur ? "cta" : "outline"
+                          }
+                          disabled={majCertification.isPending}
+                          onClick={() => majCertification.mutate(valeur)}
+                        >
+                          {CERTIFICATION_LABELS[valeur]}
+                        </Button>
+                      ))}
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            ) : null}
 
             <Card className="rounded-2xl border-border/70 shadow-soft">
               <CardContent className="p-6">
