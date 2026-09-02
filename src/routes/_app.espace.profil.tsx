@@ -5,6 +5,7 @@ import { toast } from "sonner";
 import { AppShell } from "@/components/app/AppShell";
 import { DocField } from "@/components/app/DocField";
 import { FORMATEUR_NAV } from "@/components/app/nav";
+import { LinkedinConnect } from "@/components/app/LinkedinConnect";
 import { StatutBadge } from "@/components/StatutBadge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -130,6 +131,12 @@ function Profil() {
                 statut={profile?.statut_candidature ?? "en_attente"}
               />
             </div>
+
+            <div className="mt-4">
+              <LinkedinConnect />
+            </div>
+
+
 
             <form
               className="mt-5 grid gap-4"
