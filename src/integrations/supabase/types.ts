@@ -1260,6 +1260,47 @@ export type Database = {
         }
         Relationships: []
       }
+      supports_pedagogiques: {
+        Row: {
+          created_at: string
+          dossier_id: string
+          fichier_url: string
+          formateur_id: string
+          id: string
+          titre: string
+          type: string
+          visible_apprenants: boolean
+        }
+        Insert: {
+          created_at?: string
+          dossier_id: string
+          fichier_url: string
+          formateur_id: string
+          id?: string
+          titre: string
+          type?: string
+          visible_apprenants?: boolean
+        }
+        Update: {
+          created_at?: string
+          dossier_id?: string
+          fichier_url?: string
+          formateur_id?: string
+          id?: string
+          titre?: string
+          type?: string
+          visible_apprenants?: boolean
+        }
+        Relationships: [
+          {
+            foreignKeyName: "supports_pedagogiques_dossier_id_fkey"
+            columns: ["dossier_id"]
+            isOneToOne: false
+            referencedRelation: "dossiers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       tarifs_cpf: {
         Row: {
           categorie: string
