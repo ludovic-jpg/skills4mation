@@ -13,6 +13,8 @@ import type { FormationCatalogue } from "@/lib/formations";
 import { EnvoisPanel } from "@/components/dossier/EnvoisPanel";
 import { PiecesPanel } from "@/components/dossier/PiecesPanel";
 import { SignatureOrganismeBadge } from "@/components/dossier/SignatureOrganismeBadge";
+import { FriseEtapes, etapeDeStatut } from "@/components/dossier/FriseEtapes";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
@@ -50,6 +52,8 @@ function DossierDetail() {
   const { user } = useAuth();
   const queryClient = useQueryClient();
   const [type, setType] = useState<DocumentType>("signe");
+  const [onglet, setOnglet] = useState("suivi");
+  const [baseFinancement, setBaseFinancement] = useState("");
   const [uploading, setUploading] = useState(false);
 
   const { data: dossier, isLoading } = useQuery({
@@ -98,6 +102,58 @@ function DossierDetail() {
       if (error) throw error;
       return data ?? [];
     },
+  });
+
+  const autresDossiers = useQuery({
+    queryKey: ["dossiers-base-financement", user?.id],
+    enabled: Boolean(user?.id),
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("dossiers")
+        .select("id, dossier_nom, entreprise_nom, titre_formation, statut_crm, donnees, created_at")
+        .eq("formateur_id", user!.id)
+        .in("statut_crm", ["dossier_valide", "demande_financement"])
+        .order("created_at", { ascending: false });
+      if (error) throw error;
+      return (data ?? []).filter((d) => d.id !== id);
+    },
+  });
+
+  /** Reprend les éléments de financement d'un autre dossier actif comme base de travail. */
+  const reprendreFinancement = useMutation({
+    mutationFn: async (sourceId: string) => {
+      const source = (autresDossiers.data ?? []).find((d) => d.id === sourceId);
+      if (!source) throw new Error("Dossier source introuvable.");
+      const src = mergeDonnees(source.donnees);
+      const next: DossierDonnees = {
+        ...donnees,
+        tarifs: { ...src.tarifs },
+        convention: { ...src.convention },
+      };
+      const { error } = await supabase.from("dossiers").update({ donnees: next }).eq("id", id);
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      toast.success("Informations de financement reprises depuis le dossier sélectionné.");
+      void queryClient.invalidateQueries({ queryKey: ["dossier", id] });
+    },
+    onError: () => toast.error("Reprise impossible."),
+  });
+
+  /** Résultat de certification, saisi après l'évaluation des acquis (EA). */
+  const majCertification = useMutation({
+    mutationFn: async (valeur: "en_cours" | "obtenue" | "non_obtenue") => {
+      const { error } = await supabase
+        .from("dossiers")
+        .update({ certification_statut: valeur })
+        .eq("id", id);
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      toast.success("Résultat de certification enregistré.");
+      void queryClient.invalidateQueries({ queryKey: ["dossier", id] });
+    },
+    onError: () => toast.error("Enregistrement impossible."),
   });
 
   const changerStatut = useMutation({
@@ -205,7 +261,9 @@ function DossierDetail() {
       ) : !dossier ? (
         <p className="text-sm text-muted-foreground">Dossier introuvable.</p>
       ) : (
-        <Tabs defaultValue="suivi" className="gap-6">
+        <Tabs value={onglet} onValueChange={setOnglet} className="gap-6">
+          <FriseEtapes statut={statut} />
+
           <TabsList>
             <TabsTrigger value="suivi">Suivi</TabsTrigger>
             <TabsTrigger value="variables">Formulaire du dossier</TabsTrigger>
