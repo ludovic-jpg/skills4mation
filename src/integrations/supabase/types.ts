@@ -659,6 +659,7 @@ export type Database = {
       dossiers: {
         Row: {
           archived_at: string | null
+          certification_statut: string | null
           commentaire_admin: string | null
           created_at: string
           date_debut: string | null
@@ -687,6 +688,7 @@ export type Database = {
         }
         Insert: {
           archived_at?: string | null
+          certification_statut?: string | null
           commentaire_admin?: string | null
           created_at?: string
           date_debut?: string | null
@@ -715,6 +717,7 @@ export type Database = {
         }
         Update: {
           archived_at?: string | null
+          certification_statut?: string | null
           commentaire_admin?: string | null
           created_at?: string
           date_debut?: string | null
@@ -1324,7 +1327,7 @@ export type Database = {
       }
     }
     Functions: {
-      [_ in never]: never
+      next_adf_numero: { Args: never; Returns: string }
     }
     Enums: {
       app_role:

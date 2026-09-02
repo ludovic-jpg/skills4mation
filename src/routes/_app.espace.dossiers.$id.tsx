@@ -13,6 +13,8 @@ import type { FormationCatalogue } from "@/lib/formations";
 import { EnvoisPanel } from "@/components/dossier/EnvoisPanel";
 import { PiecesPanel } from "@/components/dossier/PiecesPanel";
 import { SignatureOrganismeBadge } from "@/components/dossier/SignatureOrganismeBadge";
+import { FriseEtapes, etapeDeStatut } from "@/components/dossier/FriseEtapes";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
@@ -29,6 +31,12 @@ import { supabase } from "@/integrations/supabase/client";
 import { CRM_PIPELINE, CRM_STATUTS, crmProgress, dossierNom, type CrmStatut } from "@/lib/crm";
 import { mergeDonnees, type DossierDonnees } from "@/lib/dossier/types";
 import { DOCUMENT_TYPES, formatDate, type DocumentType } from "@/lib/statuts";
+
+const CERTIFICATION_LABELS = {
+  en_cours: "En cours",
+  obtenue: "Obtenue",
+  non_obtenue: "Non obtenue",
+} as const;
 
 export const Route = createFileRoute("/_app/espace/dossiers/$id")({
   component: DossierDetail,
@@ -50,6 +58,8 @@ function DossierDetail() {
   const { user } = useAuth();
   const queryClient = useQueryClient();
   const [type, setType] = useState<DocumentType>("signe");
+  const [onglet, setOnglet] = useState("suivi");
+  const [baseFinancement, setBaseFinancement] = useState("");
   const [uploading, setUploading] = useState(false);
 
   const { data: dossier, isLoading } = useQuery({
@@ -98,6 +108,58 @@ function DossierDetail() {
       if (error) throw error;
       return data ?? [];
     },
+  });
+
+  const autresDossiers = useQuery({
+    queryKey: ["dossiers-base-financement", user?.id],
+    enabled: Boolean(user?.id),
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("dossiers")
+        .select("id, dossier_nom, entreprise_nom, titre_formation, statut_crm, donnees, created_at")
+        .eq("formateur_id", user!.id)
+        .in("statut_crm", ["dossier_valide", "demande_financement"])
+        .order("created_at", { ascending: false });
+      if (error) throw error;
+      return (data ?? []).filter((d) => d.id !== id);
+    },
+  });
+
+  /** Reprend les éléments de financement d'un autre dossier actif comme base de travail. */
+  const reprendreFinancement = useMutation({
+    mutationFn: async (sourceId: string) => {
+      const source = (autresDossiers.data ?? []).find((d) => d.id === sourceId);
+      if (!source) throw new Error("Dossier source introuvable.");
+      const src = mergeDonnees(source.donnees);
+      const next: DossierDonnees = {
+        ...donnees,
+        tarifs: { ...src.tarifs },
+        convention: { ...src.convention },
+      };
+      const { error } = await supabase.from("dossiers").update({ donnees: next }).eq("id", id);
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      toast.success("Informations de financement reprises depuis le dossier sélectionné.");
+      void queryClient.invalidateQueries({ queryKey: ["dossier", id] });
+    },
+    onError: () => toast.error("Reprise impossible."),
+  });
+
+  /** Résultat de certification, saisi après l'évaluation des acquis (EA). */
+  const majCertification = useMutation({
+    mutationFn: async (valeur: "en_cours" | "obtenue" | "non_obtenue") => {
+      const { error } = await supabase
+        .from("dossiers")
+        .update({ certification_statut: valeur })
+        .eq("id", id);
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      toast.success("Résultat de certification enregistré.");
+      void queryClient.invalidateQueries({ queryKey: ["dossier", id] });
+    },
+    onError: () => toast.error("Enregistrement impossible."),
   });
 
   const changerStatut = useMutation({
@@ -182,6 +244,7 @@ function DossierDetail() {
 
   const statut = (dossier?.statut_crm ?? "brouillon") as CrmStatut;
   const donnees = mergeDonnees(dossier?.donnees);
+  const etape = etapeDeStatut(statut);
   const emargementsPrets = (pieces ?? []).some(
     (p) => p.code === "F3" && (p.statut === "complete" || Boolean(p.fichier_url)),
   );
@@ -205,7 +268,9 @@ function DossierDetail() {
       ) : !dossier ? (
         <p className="text-sm text-muted-foreground">Dossier introuvable.</p>
       ) : (
-        <Tabs defaultValue="suivi" className="gap-6">
+        <Tabs value={onglet} onValueChange={setOnglet} className="gap-6">
+          <FriseEtapes statut={statut} />
+
           <TabsList>
             <TabsTrigger value="suivi">Suivi</TabsTrigger>
             <TabsTrigger value="variables">Formulaire du dossier</TabsTrigger>
@@ -271,6 +336,10 @@ function DossierDetail() {
                   <Info label="Formation" value={dossier.titre_formation} />
                   <Info label="Début" value={formatDate(dossier.date_debut)} />
                   <Info label="Fin" value={formatDate(dossier.date_fin)} />
+                  <Info
+                    label="Numéro ADF"
+                    value={donnees.adf || "En attente de validation par Skills4mation"}
+                  />
                   <Info label="Référence" value={dossier.id} />
                 </dl>
 
@@ -346,6 +415,121 @@ function DossierDetail() {
                 </div>
               </CardContent>
             </Card>
+
+            {etape === "B" ? (
+              <Card className="rounded-2xl border-border/70 shadow-soft">
+                <CardContent className="grid gap-4 p-6">
+                  <h2 className="text-base font-semibold">Étape B — Demande de financement</h2>
+                  <p className="text-sm text-muted-foreground">
+                    Reprenez si besoin les informations de financement d'un autre dossier actif,
+                    puis complétez la convention.
+                  </p>
+                  <div className="flex flex-wrap items-end gap-3">
+                    <div className="grid min-w-64 gap-1.5">
+                      <span className="text-xs text-muted-foreground">
+                        Dossier servant de base
+                      </span>
+                      <Select value={baseFinancement} onValueChange={setBaseFinancement}>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Choisir un dossier actif" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {(autresDossiers.data ?? []).map((d) => (
+                            <SelectItem key={d.id} value={d.id}>
+                              {d.dossier_nom || dossierNom(d)}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <Button
+                      variant="outline"
+                      disabled={!baseFinancement || reprendreFinancement.isPending}
+                      onClick={() => reprendreFinancement.mutate(baseFinancement)}
+                    >
+                      Reprendre ces informations
+                    </Button>
+                    <Button asChild variant="teal">
+                      <Link to="/espace/financement">Rédiger la convention</Link>
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            ) : null}
+
+            {etape === "C" ? (
+              <Card className="rounded-2xl border-border/70 shadow-soft">
+                <CardContent className="grid gap-4 p-6">
+                  <h2 className="text-base font-semibold">
+                    Étape C — Obtention du financement
+                  </h2>
+                  <p className="text-sm text-muted-foreground">
+                    Finalisez la convention et les dernières pièces administratives avant le
+                    démarrage.
+                  </p>
+                  <div className="flex flex-wrap gap-3">
+                    <Button asChild variant="teal">
+                      <Link to="/espace/financement">Espace convention</Link>
+                    </Button>
+                    <Button variant="outline" onClick={() => setOnglet("signatures")}>
+                      Envoi &amp; signatures
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            ) : null}
+
+            {etape === "D" ? (
+              <Card className="rounded-2xl border-border/70 shadow-soft">
+                <CardContent className="grid gap-4 p-6">
+                  <h2 className="text-base font-semibold">Étape D — Fin de la formation</h2>
+                  <div className="flex flex-wrap gap-3">
+                    <Button variant="outline" onClick={() => setOnglet("pieces")}>
+                      Émargements (F3)
+                    </Button>
+                    <Button variant="outline" onClick={() => setOnglet("pieces")}>
+                      Évaluation des acquis (EA)
+                    </Button>
+                    <Button variant="outline" onClick={() => setOnglet("signatures")}>
+                      Satisfaction à chaud (F5)
+                    </Button>
+                    <Button asChild variant="outline">
+                      <Link to="/espace/outils">Commentaires</Link>
+                    </Button>
+                  </div>
+                  <div className="grid gap-2 border-t border-border pt-4">
+                    <div className="flex flex-wrap items-center gap-2">
+                      <h3 className="text-sm font-semibold">Résultat de la certification</h3>
+                      <Badge variant="outline">
+                        {CERTIFICATION_LABELS[
+                          (dossier.certification_statut ?? "") as keyof typeof CERTIFICATION_LABELS
+                        ] ?? "Non renseigné"}
+                      </Badge>
+                    </div>
+                    <p className="text-xs text-muted-foreground">
+                      À renseigner après l'évaluation des acquis. La convocation à l'examen de
+                      certification s'envoie manuellement depuis l'onglet « Envoi &amp;
+                      signatures ».
+                    </p>
+                    <div className="flex flex-wrap gap-3 pt-1">
+                      {(["en_cours", "obtenue", "non_obtenue"] as const).map((valeur) => (
+                        <Button
+                          key={valeur}
+                          size="sm"
+                          variant={
+                            dossier.certification_statut === valeur ? "cta" : "outline"
+                          }
+                          disabled={majCertification.isPending}
+                          onClick={() => majCertification.mutate(valeur)}
+                        >
+                          {CERTIFICATION_LABELS[valeur]}
+                        </Button>
+                      ))}
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            ) : null}
 
             <Card className="rounded-2xl border-border/70 shadow-soft">
               <CardContent className="p-6">

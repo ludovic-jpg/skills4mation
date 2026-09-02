@@ -177,6 +177,33 @@ function icdl(d: DossierDonnees) {
 
 
 
+/**
+ * Convocation à la session d'examen de certification, distincte de la convocation
+ * de formation (pièce 3A) : la session est organisée par Skills4mation à une date
+ * qui ne coïncide pas nécessairement avec la fin de la formation.
+ */
+function convocationExamen(d: DossierDonnees) {
+  const cibles = d.apprenants.length ? d.apprenants : [undefined];
+  return cibles
+    .map((a) =>
+      shell(
+        "Convocation à l'examen de certification",
+        `${entete(d, "Convocation à l'examen de certification", "Session organisée par Skills4mation")}
+    <p>Madame, Monsieur ${v(a?.nom)},</p>
+    <p>Vous êtes convoqué(e) à la session d'examen de la certification visée dans le cadre de votre parcours de formation. Cette session est organisée par ${v(d.organisme)} et se déroule indépendamment des dates de la formation.</p>
+    ${ligne("Candidat", v(a?.nom))}
+    ${ligne("Formation préparatoire", v(d.formation.titre))}
+    ${ligne("Certification visée", v(a?.certification || d.tarifs.certificationCode))}
+    ${ligne("Date et heure de l'examen", `<span class="vide">à confirmer par Skills4mation</span>`)}
+    ${ligne("Modalité", "Examen surveillé — présentiel ou distanciel selon la convocation définitive")}
+    ${ligne("Lieu / lien de connexion", v(d.lieu.intitule || d.formation.lienConnexion))}
+    <div class="note">Merci de vous présenter 15 minutes avant le début de l'épreuve, muni(e) d'une pièce d'identité en cours de validité. En cas d'empêchement, prévenez Skills4mation au plus tôt afin d'être repositionné(e) sur une autre session. Les aménagements liés à une situation de handicap sont étudiés avec le référent handicap.</div>
+    ${signatures("Le candidat", "Pour Skills4mation")}`,
+      ),
+    )
+    .join('<div style="page-break-before:always"></div>');
+}
+
 function satisfaction(d: DossierDonnees, chaud: boolean) {
   const questions = chaud
     ? [
@@ -315,6 +342,13 @@ export const DOCUMENTS: DocDef[] = [
     label: "Satisfaction à froid",
     build: (d) => satisfaction(d, false),
     applicable: () => true,
+    destinataires: (d) => d.apprenants.map((a) => a.email ?? ""),
+  },
+  {
+    code: "CERT-CONV",
+    label: "Convocation à l'examen de certification",
+    build: convocationExamen,
+    applicable: (d) => viseCertification(d) || Boolean(d.tarifs.certificationCode),
     destinataires: (d) => d.apprenants.map((a) => a.email ?? ""),
   },
   {

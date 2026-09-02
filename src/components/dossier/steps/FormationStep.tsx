@@ -11,6 +11,35 @@ import type { StepProps } from "@/components/dossier/steps/types";
 import { appliquerFormation, type FormationCatalogue } from "@/lib/formations";
 import type { DossierDonnees } from "@/lib/dossier/types";
 
+/**
+ * Le numéro ADF est attribué par Skills4mation à la validation du dossier :
+ * il n'est jamais saisi ni modifié par le formateur.
+ */
+function AdfField({ d }: { d: DossierDonnees }) {
+  const attribueLe = d.adfAttribueLe
+    ? new Date(d.adfAttribueLe).toLocaleDateString("fr-FR")
+    : null;
+  return (
+    <div className="grid gap-1.5">
+      <Label>Numéro ADF</Label>
+      {d.adf ? (
+        <>
+          <p className="rounded-lg border border-border bg-muted/50 px-3 py-2 text-sm font-semibold">
+            {d.adf}
+          </p>
+          <p className="text-xs text-muted-foreground">
+            Numéro attribué par Skills4mation{attribueLe ? ` le ${attribueLe}` : ""}.
+          </p>
+        </>
+      ) : (
+        <p className="rounded-lg border border-dashed border-border px-3 py-2 text-sm text-muted-foreground">
+          Numéro ADF en attente de validation
+        </p>
+      )}
+    </div>
+  );
+}
+
 export function FormationStep({
   d,
   setD,
@@ -46,7 +75,7 @@ export function FormationStep({
           </p>
         </div>
       ) : null}
-      <Field label="Numéro ADF" value={d.adf} onChange={(v) => setD({ ...d, adf: v })} />
+      <AdfField d={d} />
       <Field
         label="Organisme de formation"
         value={d.organisme}
