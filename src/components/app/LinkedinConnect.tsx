@@ -15,6 +15,7 @@ import {
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { formatDate } from "@/lib/statuts";
+import type { TablesUpdate } from "@/integrations/supabase/types";
 
 type Trouve = {
   nom: string | null;
@@ -78,14 +79,14 @@ export function LinkedinConnect() {
   async function importer() {
     if (!user || !trouve) return;
     setBusy(true);
-    const patch: Record<string, string | null> = {
+    const patch: TablesUpdate<"profiles"> = {
       linkedin_connected_at: new Date().toISOString(),
+      ...(trouve.url ? { linkedin_url: trouve.url } : {}),
+      // On complète sans jamais écraser un parcours déjà rédigé.
+      ...(!profile?.parcours_formation && trouve.poste
+        ? { parcours_formation: trouve.poste }
+        : {}),
     };
-    if (trouve.url) patch.linkedin_url = trouve.url;
-    // On complète sans jamais écraser un parcours déjà rédigé.
-    if (!profile?.parcours_formation && trouve.poste) {
-      patch.parcours_formation = trouve.poste;
-    }
     const { error } = await supabase.from("profiles").update(patch).eq("id", user.id);
     setBusy(false);
     if (error) {
