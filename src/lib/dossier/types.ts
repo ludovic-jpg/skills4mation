@@ -66,8 +66,8 @@ export type DossierDonnees = {
     subrogation: "oui" | "non";
     modeFinancement: ModeFinancement;
     montantPrisEnCharge: string;
-    /** Certification ICDL visée pour la session. */
-    certificationIcdl: boolean;
+    /** Identifiant de la certification visée (table `certifications`). */
+    certificationCode: string | null;
     /**
      * Coût de la certification (ICDL), strictement distinct du montant pris en charge :
      * il apparaît toujours comme une ligne séparée sur les documents.
@@ -148,7 +148,7 @@ export const DONNEES_VIDES: DossierDonnees = {
     subrogation: "non",
     modeFinancement: "opco",
     montantPrisEnCharge: "",
-    certificationIcdl: false,
+    certificationCode: null,
     coutCertification: "",
   },
   convention: { lieu: "", date: "" },
@@ -231,17 +231,15 @@ export function aDuPresentiel(d: DossierDonnees) {
   );
 }
 
-/** Tarif de référence de la certification ICDL (paramétrable ici, un seul endroit). */
-export const TARIF_CERTIFICATION_ICDL = "89";
-
 export function estCpf(d: DossierDonnees) {
   return d.tarifs.modeFinancement === "cpf";
 }
 
-export function viseIcdl(d: DossierDonnees) {
+/** Vrai dès qu'une certification du catalogue est rattachée au dossier. */
+export function viseCertification(d: DossierDonnees) {
   return (
-    d.tarifs.certificationIcdl ||
-    d.apprenants.some((a) => (a.certification ?? "").toLowerCase().includes("icdl"))
+    Boolean(d.tarifs.certificationCode) ||
+    d.apprenants.some((a) => (a.certification ?? "").trim().length > 0)
   );
 }
 

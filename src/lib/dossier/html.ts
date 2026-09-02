@@ -5,7 +5,7 @@ import {
   euros,
   FINANCEMENT_LABELS,
   FORMAT_LABELS,
-  viseIcdl,
+  viseCertification,
   type DossierDonnees,
 } from "./types";
 import {
@@ -89,14 +89,14 @@ function tableApprenants(d: DossierDonnees, avecContact = false) {
     return `<p class="vide">Aucun apprenant renseigné dans le dossier.</p>`;
   return `<table><thead><tr><th>#</th><th>Apprenant</th><th>Poste / fonction</th>${
     avecContact ? "<th>E-mail</th><th>Téléphone</th>" : ""
-  }${estCpf(d) ? "<th>N° CPF</th>" : ""}${viseIcdl(d) ? "<th>Certification</th>" : ""}</tr></thead><tbody>
+  }${estCpf(d) ? "<th>N° CPF</th>" : ""}${viseCertification(d) ? "<th>Certification</th>" : ""}</tr></thead><tbody>
   ${d.apprenants
     .map(
       (a, i) =>
         `<tr><td>${i + 1}</td><td>${v(a.nom)}</td><td>${v(a.poste)}</td>${
           avecContact ? `<td>${v(a.email)}</td><td>${v(a.telephone)}</td>` : ""
         }${estCpf(d) ? `<td>${v(a.numeroCpf)}</td>` : ""}${
-          viseIcdl(d) ? `<td>${v(a.certification || "ICDL")}</td>` : ""
+          viseCertification(d) ? `<td>${v(a.certification || "ICDL")}</td>` : ""
         }</tr>`,
     )
     .join("")}
@@ -143,7 +143,7 @@ function attestation(d: DossierDonnees) {
       ${ligne("Période", `${v(dateFr(d.formation.dateDebut))} au ${v(dateFr(d.formation.dateFin))}`)}
       ${ligne("Durée réalisée", `${v(d.formation.heuresTotal)} heures`)}
       ${ligne("Modalité", e(FORMAT_LABELS[d.formation.format]))}
-      ${viseIcdl(d) ? ligne("Certification visée", v(a.certification || "ICDL")) : ""}
+      ${viseCertification(d) ? ligne("Certification visée", v(a.certification || "ICDL")) : ""}
       <div class="note">Les objectifs pédagogiques suivants ont été évalués comme atteints : ${multiline(d.formation.objectifs)}</div>
       <p style="margin-top:16px">Fait à ${v(d.convention.lieu)}, le ${v(dateFr(d.convention.date))}.</p>
       ${signatures("Le responsable de l'organisme", "Cachet")}
@@ -279,7 +279,7 @@ export const DOCUMENTS: DocDef[] = [
     code: "3B",
     label: "Certification ICDL",
     build: icdl,
-    applicable: viseIcdl,
+    applicable: viseCertification,
     destinataires: (d) => d.apprenants.map((a) => a.email ?? ""),
   },
   {

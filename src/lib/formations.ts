@@ -121,9 +121,6 @@ export function appliquerFormation(
     tarifs: {
       ...donnees.tarifs,
       prixUnitaire: formation.tarif_ht ? String(formation.tarif_ht) : donnees.tarifs.prixUnitaire,
-      certificationIcdl:
-        donnees.tarifs.certificationIcdl ||
-        (formation.certification ?? "").toLowerCase().includes("icdl"),
     },
     formateur: {
       ...donnees.formateur,

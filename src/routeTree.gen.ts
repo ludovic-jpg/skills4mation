@@ -31,6 +31,7 @@ import { Route as FormationsSlugRouteImport } from './routes/formations.$slug'
 import { Route as DotlovableOauthConsentRouteImport } from './routes/[.]lovable.oauth.consent'
 import { Route as Char91DotmcpChar93InvokeToolToolRouteImport } from './routes/[.mcp]/invoke-tool/$tool'
 import { Route as AppAdminIndexRouteImport } from './routes/_app.admin.index'
+import { Route as AppAdminCertificationsRouteImport } from './routes/_app.admin.certifications'
 import { Route as AppAdminComptesRouteImport } from './routes/_app.admin.comptes'
 import { Route as AppAdminDemandesRouteImport } from './routes/_app.admin.demandes'
 import { Route as AppAdminDossiersRouteImport } from './routes/_app.admin.dossiers'
@@ -167,6 +168,11 @@ const Char91DotmcpChar93InvokeToolToolRoute =
 const AppAdminIndexRoute = AppAdminIndexRouteImport.update({
   id: '/admin/',
   path: '/admin/',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAdminCertificationsRoute = AppAdminCertificationsRouteImport.update({
+  id: '/admin/certifications',
+  path: '/admin/certifications',
   getParentRoute: () => AppRoute,
 } as any)
 const AppAdminComptesRoute = AppAdminComptesRouteImport.update({
@@ -314,6 +320,7 @@ export interface FileRoutesByFullPath {
   '/formations/': typeof FormationsIndexRoute
   '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
+  '/admin/certifications': typeof AppAdminCertificationsRoute
   '/admin/comptes': typeof AppAdminComptesRoute
   '/admin/demandes': typeof AppAdminDemandesRoute
   '/admin/dossiers': typeof AppAdminDossiersRoute
@@ -361,6 +368,7 @@ export interface FileRoutesByTo {
   '/formations': typeof FormationsIndexRoute
   '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
+  '/admin/certifications': typeof AppAdminCertificationsRoute
   '/admin/comptes': typeof AppAdminComptesRoute
   '/admin/demandes': typeof AppAdminDemandesRoute
   '/admin/dossiers': typeof AppAdminDossiersRoute
@@ -410,6 +418,7 @@ export interface FileRoutesById {
   '/formations/': typeof FormationsIndexRoute
   '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
+  '/_app/admin/certifications': typeof AppAdminCertificationsRoute
   '/_app/admin/comptes': typeof AppAdminComptesRoute
   '/_app/admin/demandes': typeof AppAdminDemandesRoute
   '/_app/admin/dossiers': typeof AppAdminDossiersRoute
@@ -459,6 +468,7 @@ export interface FileRouteTypes {
     | '/formations/'
     | '/.lovable/oauth/consent'
     | '/.mcp/invoke-tool/$tool'
+    | '/admin/certifications'
     | '/admin/comptes'
     | '/admin/demandes'
     | '/admin/dossiers'
@@ -506,6 +516,7 @@ export interface FileRouteTypes {
     | '/formations'
     | '/.lovable/oauth/consent'
     | '/.mcp/invoke-tool/$tool'
+    | '/admin/certifications'
     | '/admin/comptes'
     | '/admin/demandes'
     | '/admin/dossiers'
@@ -554,6 +565,7 @@ export interface FileRouteTypes {
     | '/formations/'
     | '/.lovable/oauth/consent'
     | '/.mcp/invoke-tool/$tool'
+    | '/_app/admin/certifications'
     | '/_app/admin/comptes'
     | '/_app/admin/demandes'
     | '/_app/admin/dossiers'
@@ -767,6 +779,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppAdminIndexRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/admin/certifications': {
+      id: '/_app/admin/certifications'
+      path: '/admin/certifications'
+      fullPath: '/admin/certifications'
+      preLoaderRoute: typeof AppAdminCertificationsRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/_app/admin/comptes': {
       id: '/_app/admin/comptes'
       path: '/admin/comptes'
@@ -939,6 +958,7 @@ declare module '@tanstack/react-router' {
 }
 
 interface AppRouteChildren {
+  AppAdminCertificationsRoute: typeof AppAdminCertificationsRoute
   AppAdminComptesRoute: typeof AppAdminComptesRoute
   AppAdminDemandesRoute: typeof AppAdminDemandesRoute
   AppAdminDossiersRoute: typeof AppAdminDossiersRoute
@@ -961,6 +981,7 @@ interface AppRouteChildren {
 }
 
 const AppRouteChildren: AppRouteChildren = {
+  AppAdminCertificationsRoute: AppAdminCertificationsRoute,
   AppAdminComptesRoute: AppAdminComptesRoute,
   AppAdminDemandesRoute: AppAdminDemandesRoute,
   AppAdminDossiersRoute: AppAdminDossiersRoute,

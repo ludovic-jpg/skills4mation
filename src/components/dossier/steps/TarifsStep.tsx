@@ -6,23 +6,19 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Combobox, Field, Toggle } from "@/components/dossier/fields";
+import { CertificationSelect } from "@/components/app/CertificationSelect";
+import { Combobox, Field } from "@/components/dossier/fields";
 import type { StepProps } from "@/components/dossier/steps/types";
 import { calculerCommission, portageDepuisFinancement, tauxLabel } from "@/lib/commission";
 import { OPCOS } from "@/lib/referentiels";
-import {
-  TARIF_CERTIFICATION_ICDL,
-  aDuPresentiel,
-  euros,
-  type DossierDonnees,
-} from "@/lib/dossier/types";
+import { aDuPresentiel, euros, type DossierDonnees } from "@/lib/dossier/types";
 
 const nombre = (v: string) => {
   const n = Number(String(v ?? "").replace(/\s/g, "").replace(",", "."));
   return Number.isFinite(n) ? n : 0;
 };
 
-export function TarifsStep({ d, set }: StepProps) {
+export function TarifsStep({ d, set, errors }: StepProps) {
   /** Prix total = prix unitaire × nombre de stagiaires (calcul automatique, HT). */
   function setTarif(patch: Partial<DossierDonnees["tarifs"]>) {
     const suivant = { ...d.tarifs, ...patch };
@@ -115,24 +111,27 @@ export function TarifsStep({ d, set }: StepProps) {
           </SelectContent>
         </Select>
       </div>
-      <Toggle
-        label="Certification ICDL visée pour la session"
-        checked={d.tarifs.certificationIcdl}
-        onChange={(v) =>
+      <CertificationSelect
+        value={d.tarifs.certificationCode}
+        cpfUniquement={d.tarifs.modeFinancement === "cpf"}
+        label="Certification visée (ICDL / Lilliate)"
+        onChange={(c) =>
           set("tarifs", {
-            certificationIcdl: v,
-            // Pré-remplissage au tarif de référence, jamais fusionné avec le montant pris en charge.
-            coutCertification: v ? d.tarifs.coutCertification || TARIF_CERTIFICATION_ICDL : "",
+            certificationCode: c?.id ?? null,
+            // Prix coûtant de la certification, toujours distinct du montant de formation.
+            coutCertification: c ? String(c.prix_formateur_ttc) : "",
           })
         }
-        className="sm:col-span-2"
       />
-      {d.tarifs.certificationIcdl ? (
-        <Field
-          label="Coût de la certification (€, ligne distincte, prix coûtant)"
-          value={d.tarifs.coutCertification}
-          onChange={(v) => set("tarifs", { coutCertification: v })}
-        />
+      <Field
+        label="Coût de la certification (€, ligne distincte, prix coûtant)"
+        value={d.tarifs.coutCertification}
+        onChange={() => undefined}
+        readOnly
+        hint="Renseigné automatiquement depuis la certification sélectionnée."
+      />
+      {errors["certification"] ? (
+        <p className="text-xs text-destructive sm:col-span-2">{errors["certification"]}</p>
       ) : null}
 
       <div className="rounded-xl border border-border/70 bg-muted/40 p-4 text-sm sm:col-span-2">
