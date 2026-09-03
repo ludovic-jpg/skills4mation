@@ -3977,3 +3977,7 @@ export const FORMATION_DETAILS: Record<string, FormationDetail> = {
     ],
   },
 };
+
+export function formationDetail(slug: string): FormationDetail | undefined {
+  return FORMATION_DETAILS[slug];
+}
