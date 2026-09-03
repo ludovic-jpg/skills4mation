@@ -44,7 +44,7 @@ export const Route = createFileRoute("/bilan-de-competences")({
 const PHASES = [
   {
     titre: "Phase préliminaire",
-    duree: "3 h",
+    duree: "2 h",
     icon: Compass,
     points: [
       "Analyse de la demande et du contexte professionnel",
@@ -54,7 +54,7 @@ const PHASES = [
   },
   {
     titre: "Phase d'investigation",
-    duree: "16 h",
+    duree: "8 h",
     icon: Users,
     points: [
       "Exploration du parcours, des compétences et des motivations",
@@ -64,7 +64,7 @@ const PHASES = [
   },
   {
     titre: "Phase de conclusion",
-    duree: "5 h",
+    duree: "3 h",
     icon: ClipboardCheck,
     points: [
       "Document de synthèse remis exclusivement au bénéficiaire",
@@ -75,10 +75,10 @@ const PHASES = [
 ];
 
 const FORMULE = [
-  { label: "Durée totale", valeur: "24 h", detail: "réparties sur 8 à 12 semaines" },
-  { label: "Modalité", valeur: "Visio ou présentiel", detail: "entretiens individuels" },
-  { label: "Financement", valeur: "CPF · OPCO · Entreprise", detail: "ou fonds propres" },
-  { label: "Suivi", valeur: "6 mois", detail: "entretien de suivi inclus" },
+  { label: "Durée totale", valeur: "13 h", detail: "réparties sur 2 mois" },
+  { label: "Modalité", valeur: "Présentiel ou distanciel", detail: "entretiens individuels" },
+  { label: "Tarif", valeur: "1 600 €", detail: "tout inclus, suivi à 6 mois compris" },
+  { label: "Financement", valeur: "OPCO · Entreprise", detail: "ou fonds propres" },
 ];
 
 const PORTAGE = [
