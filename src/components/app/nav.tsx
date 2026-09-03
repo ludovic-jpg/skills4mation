@@ -12,6 +12,8 @@ import {
   Inbox,
   LayoutDashboard,
   LifeBuoy,
+  MessageSquareWarning,
+
   ShieldCheck,
   UserCog,
   Users,
