@@ -4,6 +4,7 @@ import { template as signatureFormateurTemplate } from './signature-formateur'
 import { template as depotFormateurTemplate } from './depot-formateur'
 import { template as demandeFinancementOpcoTemplate } from './demande-financement-opco'
 import { template as demandeFinancementCpfTemplate } from './demande-financement-cpf'
+import { template as relanceDemandeFinancementTemplate } from './relance-demande-financement'
 
 export interface TemplateEntry {
   component: ComponentType<any>
@@ -27,4 +28,5 @@ export const TEMPLATES: Record<string, TemplateEntry> = {
   'depot-formateur': depotFormateurTemplate,
   'demande-financement-opco': demandeFinancementOpcoTemplate,
   'demande-financement-cpf': demandeFinancementCpfTemplate,
+  'relance-demande-financement': relanceDemandeFinancementTemplate,
 }

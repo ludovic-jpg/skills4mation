@@ -8,6 +8,8 @@ import {
   viseCertification,
   type DossierDonnees,
 } from "./types";
+import type { CrmStatut } from "@/lib/crm";
+import { pieceVisibleSelonStatut } from "./visibilite";
 import {
   contratSousTraitanceHtml,
   conventionHtml,
@@ -367,12 +369,18 @@ export const DOCUMENTS: DocDef[] = [
  */
 export function documentsApplicables(
   d: DossierDonnees,
-  options?: { questionsPerso?: string[] | null },
+  options?: { questionsPerso?: string[] | null; statutCrm?: CrmStatut | null },
 ) {
   const questions = (options?.questionsPerso ?? []).filter(
     (q) => String(q ?? "").trim().length > 0,
   );
-  return DOCUMENTS.filter((doc) => doc.applicable(d)).map((doc) =>
+  return DOCUMENTS.filter(
+    (doc) =>
+      doc.applicable(d) &&
+      (options?.statutCrm === undefined
+        ? true
+        : pieceVisibleSelonStatut(doc.code, options.statutCrm)),
+  ).map((doc) =>
     doc.code === "F0A" && questions.length
       ? { ...doc, build: (donnees: DossierDonnees) => recueilBesoinsHtml(donnees, questions) }
       : doc,
