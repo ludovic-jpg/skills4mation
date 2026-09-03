@@ -2576,7 +2576,7 @@ export const FORMATIONS: Formation[] = [
      "Majuscules, accents, ponctuation, chiffres",
      "Méthode de relecture active",
      "Exercices",
-     ": Quiz interactifs, dictées à trous, séries d’entraînement type Le Robert"
+     ": Quiz interactifs, dictées à trous, séries d’entraînement progressives"
     ]
    },
    {
