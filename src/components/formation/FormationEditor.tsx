@@ -249,15 +249,19 @@ export function FormationEditor({ value, saving, onSave }: Props) {
             onChange={(v) => set("intro", v)}
             className="sm:col-span-2"
           />
-          <Field
+          <SelectAutre
             label="Niveau"
             value={f.niveau ?? ""}
             onChange={(v) => set("niveau", v)}
+            options={NIVEAUX_OPTIONS}
+            rows={2}
           />
-          <Field
+          <SelectAutre
             label="Public visé"
             value={f.public_cible ?? ""}
             onChange={(v) => set("public_cible", v)}
+            options={PUBLICS_OPTIONS}
+            rows={2}
           />
           <Area
             label="Objectif général"
