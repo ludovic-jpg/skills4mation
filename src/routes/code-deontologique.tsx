@@ -427,6 +427,148 @@ function CodeDeontologique() {
         ))}
       </section>
 
+      <section className="bg-muted/50 py-14">
+        <div className="section-shell max-w-4xl">
+          <p className="eyebrow text-secondary">Référentiel national qualité</p>
+          <h2 className="mt-2 text-2xl font-semibold">
+            Qualiopi : cadre, indicateurs et charte professionnelle
+          </h2>
+          <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            {SOMMAIRE_REFERENTIEL.map((item) => (
+              <a
+                key={item.id}
+                href={`#${item.id}`}
+                className="group rounded-2xl border border-border/70 bg-card p-5 shadow-soft transition-colors hover:border-primary/40"
+              >
+                <span className="inline-flex rounded-xl bg-accent p-2.5 text-accent-foreground">
+                  <item.icon className="size-4" aria-hidden />
+                </span>
+                <p className="mt-3 text-sm font-semibold leading-snug group-hover:text-primary">
+                  {item.label}
+                </p>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="referentiel" className="section-shell max-w-4xl scroll-mt-24 py-14">
+        <p className="eyebrow text-secondary">A</p>
+        <h2 className="mt-2 text-2xl font-semibold">Présentation du référentiel Qualiopi</h2>
+        <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+          La certification Qualiopi atteste de la qualité du processus mis en œuvre par les
+          prestataires d'actions concourant au développement des compétences. Elle repose sur le
+          Référentiel national qualité (RNQ), organisé en 7 critères déclinés en 32 indicateurs, et
+          conditionne l'accès aux financements publics et mutualisés (OPCO, France Travail, CPF,
+          Régions, État). Skills4mation en assure le portage pour l'ensemble de ses formateurs et
+          consultants : les processus, les preuves et les audits sont pilotés par notre équipe, les
+          intervenants restant responsables de la qualité pédagogique de leurs actions.
+        </p>
+        <div className="mt-8 space-y-4">
+          {CRITERES.map((critere) => (
+            <Card key={critere.num} className="rounded-2xl border-border/70 shadow-soft">
+              <CardContent className="p-6">
+                <div className="flex flex-wrap items-center gap-3">
+                  <p className="eyebrow text-secondary">{critere.num}</p>
+                  <span className="rounded-full bg-accent px-3 py-1 text-xs font-semibold text-accent-foreground">
+                    {critere.indicateurs}
+                  </span>
+                </div>
+                <p className="mt-2 text-base font-semibold leading-snug">{critere.titre}</p>
+                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{critere.texte}</p>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </section>
+
+      <section id="indicateurs" className="bg-muted/50 py-14">
+        <div className="section-shell max-w-4xl scroll-mt-24">
+          <p className="eyebrow text-secondary">B</p>
+          <h2 className="mt-2 text-2xl font-semibold">Les indicateurs associés</h2>
+          <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+            Les 32 indicateurs du RNQ se traduisent, chez Skills4mation, par des preuves produites
+            automatiquement à chaque dossier de formation via le portail administratif.
+          </p>
+          <div className="mt-8 space-y-4">
+            {INDICATEURS_CLES.map((groupe) => (
+              <Card key={groupe.titre} className="rounded-2xl border-border/70 shadow-soft">
+                <CardContent className="p-6">
+                  <p className="text-base font-semibold leading-snug">{groupe.titre}</p>
+                  <ul className="mt-4 space-y-2.5">
+                    {groupe.points.map((point) => (
+                      <li key={point} className="flex gap-3 text-sm text-muted-foreground">
+                        <BadgeCheck className="mt-0.5 size-4 shrink-0 text-secondary" aria-hidden />
+                        <span className="leading-relaxed">{point}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="charte-professionnelle" className="section-shell max-w-4xl scroll-mt-24 py-14">
+        <p className="eyebrow text-secondary">C</p>
+        <h2 className="mt-2 text-2xl font-semibold">Charte professionnelle de l'intervenant</h2>
+        <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+          Cette charte est acceptée par chaque formateur ou consultant au moment de sa candidature,
+          puis signée avant sa première mission.
+        </p>
+        <Card className="mt-6 rounded-2xl border-border/70 shadow-soft">
+          <CardContent className="p-6">
+            <ul className="space-y-3">
+              {CHARTE_PRO.map((engagement) => (
+                <li key={engagement} className="flex gap-3 text-sm text-muted-foreground">
+                  <BadgeCheck className="mt-0.5 size-4 shrink-0 text-secondary" aria-hidden />
+                  <span className="leading-relaxed">{engagement}</span>
+                </li>
+              ))}
+            </ul>
+            <div className="mt-6">
+              <Button asChild variant="cta">
+                <Link to="/pole-formateur" hash="candidature">
+                  Rejoindre Skills4mation
+                </Link>
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+      </section>
+
+      <section id="sous-traitance" className="bg-muted/50 py-14">
+        <div className="section-shell max-w-4xl scroll-mt-24">
+          <p className="eyebrow text-secondary">Sous-traitance</p>
+          <h2 className="mt-2 text-2xl font-semibold">
+            Notre politique de sous-traitance et de portage
+          </h2>
+          <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+            Skills4mation confie des actions de formation et des bilans de compétences à des
+            intervenants externes et à des salariés portés. Cette délégation ne réduit en rien le
+            niveau d'exigence qualité : elle est encadrée, contractualisée et contrôlée.
+          </p>
+          <div className="mt-8 space-y-4">
+            {SOUS_TRAITANCE.map((item) => (
+              <Card key={item.titre} className="rounded-2xl border-border/70 shadow-soft">
+                <CardContent className="flex gap-4 p-6">
+                  <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                    <ShieldCheck className="size-5" aria-hidden />
+                  </span>
+                  <div>
+                    <p className="text-base font-semibold leading-snug">{item.titre}</p>
+                    <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{item.texte}</p>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+
+
       <section className="section-shell max-w-4xl py-12">
         <Card className="rounded-3xl border-cta/40 bg-cta/10 shadow-soft">
           <CardContent className="p-8">
