@@ -97,6 +97,9 @@ export function SiteFooter() {
               <Link to="/code-deontologique">Code déontologique</Link>
             </li>
             <li>
+              <Link to="/bilan-de-competences">Bilan de compétences</Link>
+            </li>
+            <li>
               <Link to="/evaluer-droit-formation">Évaluer mes droits formation</Link>
             </li>
             <li>

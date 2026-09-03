@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useRef, useState } from "react";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -98,6 +98,7 @@ function PoleFormateur() {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [files, setFiles] = useState<Partial<Record<PieceName, File>>>({});
   const [step, setStep] = useState(0);
+  const [engagement, setEngagement] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
 
   const ETAPES_FORM = ["Vos coordonnées", "Votre expertise", "Vos pièces"] as const;
@@ -142,6 +143,7 @@ function PoleFormateur() {
     if (!parsed.success) {
       for (const issue of parsed.error.issues) map[String(issue.path[0])] = issue.message;
     }
+    if (!engagement) map["engagement"] = "Merci de confirmer vos engagements déontologiques";
     for (const piece of PIECES) {
       const file = files[piece.name];
       if (!file) map[piece.name] = "Pièce obligatoire";
@@ -365,6 +367,36 @@ function PoleFormateur() {
                       </div>
                     );
                   })}
+                  <label
+                    htmlFor="engagement"
+                    className="mt-2 flex gap-3 rounded-xl border border-border/70 bg-background p-4 text-xs leading-relaxed text-muted-foreground"
+                  >
+                    <input
+                      id="engagement"
+                      type="checkbox"
+                      checked={engagement}
+                      aria-invalid={!!errors["engagement"]}
+                      onChange={(event) => setEngagement(event.target.checked)}
+                      className="mt-0.5 size-4 shrink-0 accent-primary"
+                    />
+                    <span>
+                      Je confirme avoir pris connaissance de l'obligation de respecter le référentiel
+                      national qualité <strong>Qualiopi</strong>, de respecter la charte
+                      professionnelle de ma profession, de m'exprimer de manière sincère et de
+                      répondre aux attentes de Skills4mation en cas de contrôle.{" "}
+                      <Link
+                        to="/code-deontologique"
+                        hash="charte-professionnelle"
+                        className="font-semibold text-primary underline"
+                      >
+                        Consulter la charte
+                      </Link>
+                      .
+                    </span>
+                  </label>
+                  {errors["engagement"] ? (
+                    <p className="text-xs text-destructive">{errors["engagement"]}</p>
+                  ) : null}
                 </div>
 
                 <div className="flex flex-wrap items-center gap-3">

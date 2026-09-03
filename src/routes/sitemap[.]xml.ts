@@ -37,6 +37,7 @@ export const Route = createFileRoute("/sitemap.xml")({
           { path: "/mentions-legales", changefreq: "yearly", priority: "0.2" },
           { path: "/politique-de-confidentialite", changefreq: "yearly", priority: "0.2" },
           { path: "/code-deontologique", changefreq: "yearly", priority: "0.3" },
+          { path: "/bilan-de-competences", changefreq: "monthly", priority: "0.9" },
           ...formations.map((f) => ({
             path: `/formations/${f.slug}`,
             changefreq: "monthly" as const,
