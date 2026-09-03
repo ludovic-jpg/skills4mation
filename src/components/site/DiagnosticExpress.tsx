@@ -139,9 +139,6 @@ export function DiagnosticExpress({ variant = "compact" }: { variant?: "compact"
     return { cout: total, prise: priseEnCharge, reste: total - priseEnCharge };
   }, [heures, selection]);
 
-  function toggleDispositif(value: string, checked: boolean) {
-    setDispositifs((prev) => (checked ? [...prev, value] : prev.filter((d) => d !== value)));
-  }
 
   async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
