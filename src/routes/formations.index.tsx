@@ -1,52 +1,50 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { Search } from "lucide-react";
 import { useMemo, useState } from "react";
 
+import { FormationCard, type CarteFormation } from "@/components/formations/FormationCard";
+import { Media } from "@/components/site/Media";
 import { PublicLayout } from "@/components/site/PublicLayout";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
 import { categoryLabel } from "@/data/catalogue";
+import { FORMATIONS_STATIQUES } from "@/data/formations-statiques";
+import { SPHERES } from "@/data/spheres";
 import { supabase } from "@/integrations/supabase/client";
 import { dureeLabel, tarifLabel, visuelUrl } from "@/lib/formations";
-import apprenantsDuo from "@/assets/apprenants-duo.jpg";
 
 const BASE = "https://skills4mation.com";
 const DESC =
-  "Le catalogue Skills4mation : formations professionnelles du réseau et parcours proposés par nos formateurs indépendants. Programme, durée, tarifs et inscription directe.";
+  "Le catalogue Skills4mation : bureautique & digital, langues, RH & management, ventes, RSE, business, bien-être et métiers spécifiques. Programme complet, durée, tarifs et inscription directe.";
 
-type Ligne = {
+type LigneFormateur = {
   id: string;
   slug: string;
   titre: string;
   categorie: string | null;
-  intro: string | null;
   duree_heures: number | null;
   duree_jours: number | null;
   duree_texte: string | null;
   tarif_ht: number | null;
   tarif_unite: string;
   tarif_details: string | null;
-  certification: string | null;
   visuel_url: string | null;
   formateur_nom: string | null;
-  source: string;
 };
 
 export const Route = createFileRoute("/formations/")({
   validateSearch: (search: Record<string, unknown>): { categorie?: string } =>
-    typeof search['categorie'] === "string" && search['categorie']
-      ? { categorie: search['categorie'] as string }
+    typeof search["categorie"] === "string" && search["categorie"]
+      ? { categorie: search["categorie"] as string }
       : {},
   loader: async () => {
     const { data } = await supabase
       .from("formations_catalogue")
       .select(
-        "id, slug, titre, categorie, intro, duree_heures, duree_jours, duree_texte, tarif_ht, tarif_unite, tarif_details, certification, visuel_url, formateur_nom, source",
+        "id, slug, titre, categorie, duree_heures, duree_jours, duree_texte, tarif_ht, tarif_unite, tarif_details, visuel_url, formateur_nom",
       )
       .eq("publiee", true)
+      .eq("source", "formateur")
       .order("titre", { ascending: true });
-    return { formations: (data ?? []) as Ligne[] };
+    return { formateurs: (data ?? []) as LigneFormateur[] };
   },
   head: () => ({
     meta: [
@@ -69,96 +67,121 @@ export const Route = createFileRoute("/formations/")({
       </section>
     </PublicLayout>
   ),
-  notFoundComponent: () => (
-    <PublicLayout>
-      <section className="section-shell py-20">
-        <h1 className="text-2xl font-semibold">Aucune formation publiée</h1>
-      </section>
-    </PublicLayout>
-  ),
 });
 
 function CataloguePublic() {
-  const { formations } = Route.useLoaderData();
+  const { formateurs } = Route.useLoaderData();
   const { categorie } = Route.useSearch();
   const navigate = Route.useNavigate();
   const [q, setQ] = useState("");
 
+  const toutes = useMemo<CarteFormation[]>(
+    () => [
+      ...FORMATIONS_STATIQUES.map((f) => ({
+        slug: f.slug,
+        titre: f.title,
+        categorie: f.cat as string,
+        image: f.img,
+      })),
+      ...formateurs.map((f) => ({
+        slug: f.slug,
+        titre: f.titre,
+        categorie: f.categorie,
+        image: visuelUrl(f.visuel_url),
+        meta:
+          [dureeLabel(f), tarifLabel(f), f.formateur_nom ? `Animée par ${f.formateur_nom}` : null]
+            .filter(Boolean)
+            .join(" · ") || null,
+      })),
+    ],
+    [formateurs],
+  );
+
   const categories = useMemo(() => {
     const compte = new Map<string, number>();
-    for (const f of formations) {
+    for (const f of toutes) {
       if (!f.categorie) continue;
       compte.set(f.categorie, (compte.get(f.categorie) ?? 0) + 1);
     }
-    return [...compte.entries()].sort((a, b) => categoryLabel(a[0]).localeCompare(categoryLabel(b[0])));
-  }, [formations]);
+    return [...compte.entries()].sort((a, b) =>
+      categoryLabel(a[0]).localeCompare(categoryLabel(b[0])),
+    );
+  }, [toutes]);
 
   const results = useMemo(() => {
     const term = q.trim().toLowerCase();
-    return formations.filter(
+    return toutes.filter(
       (f) =>
         (!categorie || f.categorie === categorie) &&
         (!term ||
-          `${f.titre} ${f.intro ?? ""} ${categoryLabel(f.categorie ?? "")}`
-            .toLowerCase()
-            .includes(term)),
+          `${f.titre} ${categoryLabel(f.categorie ?? "")}`.toLowerCase().includes(term)),
     );
-  }, [formations, categorie, q]);
+  }, [toutes, categorie, q]);
+
+  const sphere = SPHERES.find((s) => s.cat === categorie);
 
   const setCat = (value: string | undefined) =>
-    navigate({ search: value ? { categorie: value } : ({} as { categorie?: string }), resetScroll: false });
+    navigate({
+      search: value ? { categorie: value } : ({} as { categorie?: string }),
+      resetScroll: false,
+    });
 
   return (
     <PublicLayout>
       <section className="bg-gradient-hero py-16 text-primary-foreground">
-        <div className="section-shell grid items-center gap-10 lg:grid-cols-[1.1fr_0.9fr]">
-          <div className="max-w-3xl">
-            <p className="eyebrow text-cta">Catalogue</p>
+        <div className="section-shell grid items-center gap-10 md:grid-cols-[1.3fr_1fr]">
+          <div>
+            <p className="eyebrow text-cta">Nos formations</p>
             <h1 className="mt-3 text-4xl font-semibold text-primary-foreground sm:text-5xl">
-              Formez-vous auprès du formateur de votre choix
+              Notre catalogue de formations
             </h1>
-            <p className="mt-4 text-base text-primary-foreground/80">{DESC}</p>
+            <p className="mt-5 max-w-xl text-base leading-relaxed text-primary-foreground/80">
+              Digital, langues, management, commerce, RSE, bien-être : parcourez l'ensemble de nos
+              parcours et trouvez la formation qui fera avancer votre carrière. Chaque programme est
+              animé par un expert de son domaine et adapté à votre niveau.
+            </p>
+            <div className="mt-7 flex max-w-md items-center gap-2 rounded-full border border-primary-foreground/20 bg-primary-foreground/10 px-4 py-2.5">
+              <Search className="size-4 text-primary-foreground/70" aria-hidden />
+              <input
+                value={q}
+                onChange={(e) => setQ(e.target.value)}
+                placeholder="Rechercher une formation…"
+                aria-label="Rechercher une formation"
+                className="w-full bg-transparent text-sm text-primary-foreground outline-none placeholder:text-primary-foreground/60"
+              />
+            </div>
           </div>
-          <img
-            src={apprenantsDuo}
-            alt="Deux apprenants souriants explorant le catalogue de formations Skills4mation"
-            width={1408}
-            height={1008}
-            className="h-64 w-full rounded-3xl object-cover shadow-elevated sm:h-72"
+          <Media
+            src="/images/catalogue.webp"
+            alt="Apprenants en formation professionnelle avec Skills4mation"
+            ratio="4/3"
+            mdRatio="4/5"
+            position="top"
+            className="rounded-2xl shadow-elevated"
+            priority
           />
         </div>
       </section>
 
-      <section className="section-shell py-12">
-        <div className="relative max-w-md">
-          <Search className="absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
-          <Input
-            value={q}
-            onChange={(e) => setQ(e.target.value)}
-            placeholder="Rechercher une formation…"
-            aria-label="Rechercher une formation"
-            className="rounded-full pl-9"
-          />
-        </div>
-
-        <div className="mt-6 flex flex-wrap gap-2">
+      <section className="section-shell py-14">
+        <div className="flex flex-wrap gap-2">
           <button
             type="button"
             onClick={() => setCat(undefined)}
-            className={`rounded-full border px-4 py-1.5 text-sm font-medium transition-colors ${
+            className={`rounded-full border px-4 py-2 text-sm font-medium transition-colors ${
               !categorie
                 ? "border-primary bg-primary text-primary-foreground"
                 : "border-border hover:border-primary"
             }`}
           >
-            Tout ({formations.length})
+            Tout ({toutes.length})
           </button>
           {categories.map(([slug, n]) => (
             <button
               key={slug}
               type="button"
               onClick={() => setCat(slug)}
-              className={`rounded-full border px-4 py-1.5 text-sm font-medium transition-colors ${
+              className={`rounded-full border px-4 py-2 text-sm font-medium transition-colors ${
                 categorie === slug
                   ? "border-primary bg-primary text-primary-foreground"
                   : "border-border hover:border-primary"
@@ -169,51 +192,22 @@ function CataloguePublic() {
           ))}
         </div>
 
-        <p className="mt-4 text-sm text-muted-foreground">
+        {sphere ? (
+          <div className="mt-8 rounded-2xl bg-accent p-6">
+            <h2 className="text-lg font-semibold">{sphere.name}</h2>
+            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{sphere.intro}</p>
+          </div>
+        ) : null}
+
+        <p className="mt-6 text-sm text-muted-foreground">
           {results.length} formation{results.length > 1 ? "s" : ""} disponible
           {results.length > 1 ? "s" : ""}
         </p>
 
-        <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {results.map((f) => {
-            const image = visuelUrl(f.visuel_url);
-            return (
-              <Card key={f.id} className="overflow-hidden rounded-2xl border-border/70 shadow-soft">
-                {image ? (
-                  <img src={image} alt={f.titre} loading="lazy" className="h-44 w-full object-cover" />
-                ) : null}
-                <CardContent className="flex h-full flex-col p-6">
-                  {f.categorie ? (
-                    <p className="eyebrow text-secondary">{categoryLabel(f.categorie)}</p>
-                  ) : null}
-                  <h2 className="mt-2 text-base font-semibold">{f.titre}</h2>
-                  <p className="mt-2 flex-1 text-sm text-muted-foreground">
-                    {(f.intro ?? "").slice(0, 160)}
-                    {(f.intro ?? "").length > 160 ? "…" : ""}
-                  </p>
-                  <div className="mt-4 flex flex-wrap gap-2 text-xs text-muted-foreground">
-                    {dureeLabel(f) ? (
-                      <span className="rounded-full bg-accent px-3 py-1">{dureeLabel(f)}</span>
-                    ) : null}
-                    {f.certification ? (
-                      <span className="rounded-full bg-accent px-3 py-1">{f.certification}</span>
-                    ) : null}
-                    {tarifLabel(f) ? (
-                      <span className="rounded-full bg-accent px-3 py-1">{tarifLabel(f)}</span>
-                    ) : null}
-                  </div>
-                  {f.source === "formateur" && f.formateur_nom ? (
-                    <p className="mt-3 text-xs text-muted-foreground">Animée par {f.formateur_nom}</p>
-                  ) : null}
-                  <Button asChild variant="outline" className="mt-5 w-full">
-                    <Link to="/formations/$slug" params={{ slug: f.slug }}>
-                      Voir la formation
-                    </Link>
-                  </Button>
-                </CardContent>
-              </Card>
-            );
-          })}
+        <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          {results.map((f) => (
+            <FormationCard key={f.slug} formation={f} />
+          ))}
         </div>
 
         {results.length === 0 ? (

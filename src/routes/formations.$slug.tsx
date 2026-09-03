@@ -4,6 +4,7 @@ import { Check, Clock, MapPin, ShieldCheck, Target, Users, Wallet } from "lucide
 import { toast } from "sonner";
 
 import { AvisSection } from "@/components/formations/AvisSection";
+import { FicheStatique } from "@/components/formations/FicheStatique";
 import { PublicLayout } from "@/components/site/PublicLayout";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -18,7 +19,8 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { categoryLabel } from "@/data/catalogue";
-import { formationDetail } from "@/data/formation-details";
+import { FORMATION_DETAILS, formationDetail, type FormationDetail } from "@/data/formation-details";
+import { formationStatique, type FormationStatique } from "@/data/formations-statiques";
 import { supabase } from "@/integrations/supabase/client";
 import {
   FINANCEMENTS_APPRENANT,
@@ -32,8 +34,16 @@ import {
 
 const BASE = "https://skills4mation.com";
 
+type Donnees =
+  | { kind: "statique"; statique: FormationStatique; detail: FormationDetail }
+  | { kind: "db"; formation: FormationCatalogue };
+
 export const Route = createFileRoute("/formations/$slug")({
-  loader: async ({ params }) => {
+  loader: async ({ params }): Promise<Donnees> => {
+    const statique = formationStatique(params.slug);
+    const detail = FORMATION_DETAILS[params.slug];
+    if (statique && detail) return { kind: "statique", statique, detail };
+
     const { data, error } = await supabase
       .from("formations_catalogue")
       .select("*")
@@ -41,7 +51,7 @@ export const Route = createFileRoute("/formations/$slug")({
       .eq("publiee", true)
       .maybeSingle();
     if (error || !data) throw notFound();
-    return { formation: data as FormationCatalogue };
+    return { kind: "db", formation: data as FormationCatalogue };
   },
   head: ({ loaderData, params }) => {
     if (!loaderData) {
@@ -52,17 +62,33 @@ export const Route = createFileRoute("/formations/$slug")({
         ],
       };
     }
-    const f = loaderData.formation;
-    const description = (f.intro ?? `Formation ${f.titre} avec Skills4mation.`).slice(0, 155);
     const url = `${BASE}/formations/${params.slug}`;
-    const image = f.visuel_url ? `${BASE}${visuelUrl(f.visuel_url)}` : null;
+    const titre =
+      loaderData.kind === "statique"
+        ? loaderData.statique.title
+        : loaderData.formation.titre;
+    const description = (
+      loaderData.kind === "statique"
+        ? loaderData.detail.intro || loaderData.detail.objectif
+        : loaderData.formation.intro ?? `Formation ${titre} avec Skills4mation.`
+    ).slice(0, 155);
+    const image =
+      loaderData.kind === "statique"
+        ? `${BASE}${loaderData.statique.img}`
+        : loaderData.formation.visuel_url
+          ? `${BASE}${visuelUrl(loaderData.formation.visuel_url)}`
+          : null;
+    const certification =
+      loaderData.kind === "statique"
+        ? loaderData.detail.certification?.libelle
+        : loaderData.formation.certification;
     return {
       meta: [
-        { title: `${f.titre} — Formation Skills4mation` },
+        { title: `${titre} — Formation Skills4mation` },
         { name: "description", content: description },
         { property: "og:type", content: "article" },
         { name: "twitter:card", content: "summary_large_image" },
-        { property: "og:title", content: `${f.titre} — Formation Skills4mation` },
+        { property: "og:title", content: `${titre} — Formation Skills4mation` },
         { property: "og:description", content: description },
         { property: "og:url", content: url },
         ...(image
@@ -79,17 +105,17 @@ export const Route = createFileRoute("/formations/$slug")({
           children: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "Course",
-            name: f.titre,
+            name: titre,
             description,
             url,
             provider: { "@type": "Organization", name: "Skills4mation", url: BASE },
-            ...(f.certification ? { educationalCredentialAwarded: f.certification } : {}),
+            ...(certification ? { educationalCredentialAwarded: certification } : {}),
           }),
         },
       ],
     };
   },
-  component: PageFormation,
+  component: PageFormationRoute,
   notFoundComponent: () => (
     <PublicLayout>
       <section className="section-shell py-20">
@@ -113,11 +139,25 @@ export const Route = createFileRoute("/formations/$slug")({
   ),
 });
 
+function PageFormationRoute() {
+  const data = Route.useLoaderData();
+  if (data.kind === "statique") {
+    return (
+      <PublicLayout>
+        <FicheStatique formation={data.statique} detail={data.detail} />
+      </PublicLayout>
+    );
+  }
+  return <PageFormation />;
+}
+
 function PageFormation() {
-  const { formation: f } = Route.useLoaderData();
+  const data = Route.useLoaderData();
+  const f = (data as { kind: "db"; formation: FormationCatalogue }).formation;
   const programme = parseProgramme(f.programme);
   const detail = formationDetail(f.slug);
   const visuel = visuelUrl(f.visuel_url);
+
   const photo = visuelUrl(f.photo_formateur_url);
   const format = FORMAT_OPTIONS.find((o) => o.value === f.format)?.label ?? f.format;
 

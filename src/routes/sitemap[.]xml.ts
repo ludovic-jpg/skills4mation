@@ -1,6 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import type {} from "@tanstack/react-start";
 import { blogPosts } from "@/data/blog";
+import { FORMATIONS_STATIQUES } from "@/data/formations-statiques";
+
 import { supabase } from "@/integrations/supabase/client";
 
 const BASE_URL = "https://skills4mation.com";
@@ -19,7 +21,12 @@ export const Route = createFileRoute("/sitemap.xml")({
           .from("formations_catalogue")
           .select("slug")
           .eq("publiee", true);
-        const formations = data ?? [];
+        const slugs = new Set<string>([
+          ...FORMATIONS_STATIQUES.map((f) => f.slug),
+          ...(data ?? []).map((f) => f.slug),
+        ]);
+        const formations = [...slugs].map((slug) => ({ slug }));
+
 
         const entries: SitemapEntry[] = [
           { path: "/", changefreq: "weekly", priority: "1.0" },
