@@ -449,7 +449,7 @@ function Colonne({
   piecesTotal: number;
   compteurPieces: Map<string, number>;
   derniereEtape: Map<string, string>;
-  nomFormateur?: (id: string) => string;
+  nomFormateur?: ((id: string) => string) | undefined;
   onOpen: (id: string) => void;
 }) {
   const { setNodeRef, isOver } = useDroppable({ id: statut });
@@ -512,7 +512,7 @@ function Carte({
   piecesTotal: number;
   piecesCompletes: number;
   depuis: string;
-  formateur?: string;
+  formateur?: string | undefined;
   onOpen: (id: string) => void;
 }) {
   const { attributes, listeners, setNodeRef, isDragging } = useDraggable({ id: row.id });
