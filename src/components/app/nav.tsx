@@ -13,6 +13,8 @@ import {
   LayoutDashboard,
   LifeBuoy,
   MessageSquareWarning,
+  MessagesSquare,
+
 
   ShieldCheck,
   UserCog,
