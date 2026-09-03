@@ -140,3 +140,43 @@ export function appliquerFormation(
 export const FORMATION_VIDE = {
   ...DONNEES_VIDES,
 };
+
+/** Référentiels de saisie des formations (menus déroulants côté formateur). */
+export const NIVEAUX_OPTIONS: string[] = [
+  "Débutant",
+  "Avancé",
+  "Expert",
+  "Tous les niveaux",
+];
+
+export const PUBLICS_OPTIONS: string[] = [
+  "Tout public",
+  "Salariés",
+  "Dirigeants et cadres",
+  "Managers et encadrants",
+  "Indépendants et créateurs d'entreprise",
+  "Demandeurs d'emploi",
+  "Professionnels en reconversion",
+];
+
+export const MODALITES_OPTIONS: string[] = [
+  "Formation en présentiel, en groupe",
+  "Formation en distanciel synchrone (classe virtuelle)",
+  "Formation mixte (présentiel et distanciel)",
+  "Formation individuelle sur mesure",
+  "Alternance d'apports théoriques et de mises en situation",
+];
+
+export const MOYENS_OPTIONS: string[] = [
+  "Support de formation remis à chaque participant, paperboard, vidéoprojecteur",
+  "Plateforme de visioconférence, support numérique partagé, exercices en ligne",
+  "Salle équipée, postes informatiques et logiciels dédiés",
+  "Études de cas, jeux de rôles et outils d'auto-diagnostic",
+];
+
+export const EVALUATION_OPTIONS: string[] = [
+  "Test de positionnement en amont, évaluation des acquis en fin de formation, questionnaire de satisfaction",
+  "Quiz de validation à chaque module et évaluation finale des acquis",
+  "Mises en situation évaluées et grille d'observation du formateur",
+  "Passage d'une certification en fin de parcours",
+];
