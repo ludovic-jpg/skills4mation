@@ -2610,9 +2610,10 @@ export const FORMATIONS: Formation[] = [
     ]
    },
    {
-    "titre": "Module 6 – Entraînement à la Certification Le Robert (5h)",
-    "points": [
-     ": Se préparer efficacement à l’examen officiel",
+    "titre": "Module 6 – Entraînement final et consolidation (5h)",
+     "points": [
+      ": Consolider ses acquis et se préparer aux mises en situation finales",
+
      "Simulation d’épreuves en condition réelle (durée, environnement)",
      "Astuces pour gagner du temps et éviter les pièges",
      "Bilan personnalisé et dernières recommandations",
