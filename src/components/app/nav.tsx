@@ -23,9 +23,8 @@ import type { NavItem } from "@/components/app/AppShell";
 
 export const FORMATEUR_NAV: NavItem[] = [
   { to: "/espace", label: "Tableau de bord", icon: LayoutDashboard },
-  { to: "/espace/profil", label: "Profil / Pièces de candidature", icon: UserCog },
   { to: "/espace/instructions", label: "Instructions", icon: LifeBuoy },
-  { to: "/espace/candidature", label: "Ma candidature", icon: Users },
+  { to: "/espace/profil", label: "Profil / Pièces de candidature", icon: UserCog },
   { to: "/espace/formations", label: "Mes formations", icon: BookOpen },
   { to: "/espace/dossiers", label: "Mes dossiers", icon: Folders },
   { to: "/espace/dossiers/new", label: "Nouveau dossier", icon: FilePlus2 },
