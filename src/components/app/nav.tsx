@@ -26,10 +26,11 @@ export const FORMATEUR_NAV: NavItem[] = [
   { to: "/espace/instructions", label: "Instructions", icon: LifeBuoy },
   { to: "/espace/profil", label: "Profil / Pièces de candidature", icon: UserCog },
   { to: "/espace/formations", label: "Mes formations", icon: BookOpen },
+  { to: "/espace/outils", label: "Mes outils pédagogiques", icon: ClipboardList },
   { to: "/espace/dossiers", label: "Mes dossiers", icon: Folders },
   { to: "/espace/dossiers/new", label: "Nouveau dossier", icon: FilePlus2 },
   { to: "/espace/financement", label: "Convention & financement", icon: Banknote },
-  { to: "/espace/outils", label: "Mes outils pédagogiques", icon: ClipboardList },
+
   { to: "/espace/parrainage", label: "Programme ambassadeur", icon: Handshake },
 ];
 
