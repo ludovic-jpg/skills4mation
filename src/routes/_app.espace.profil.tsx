@@ -6,22 +6,12 @@ import { AppShell } from "@/components/app/AppShell";
 import { DocField } from "@/components/app/DocField";
 import { FORMATEUR_NAV } from "@/components/app/nav";
 import { LinkedinConnect } from "@/components/app/LinkedinConnect";
-import { ParcoursIaCard } from "@/components/app/ParcoursIaCard";
 import { StatutBadge } from "@/components/StatutBadge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Combobox } from "@/components/dossier/fields";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
-import { CATEGORIES } from "@/data/catalogue";
 import { useAuth } from "@/hooks/useAuth";
 import { REGIONS_FR } from "@/lib/referentiels";
 import { supabase } from "@/integrations/supabase/client";
@@ -33,7 +23,7 @@ export const Route = createFileRoute("/_app/espace/profil")({
 
 type ProfilPatch = TablesUpdate<"profiles">;
 
-type Piece = "photo" | "nda" | "cv" | "parcours" | "deroule";
+type Piece = "photo" | "nda" | "cv" | "deroule";
 
 const PIECES: Record<
   Piece,
@@ -42,11 +32,6 @@ const PIECES: Record<
   photo: { bucket: "profils", colonne: "photo_url", accept: "image/*" },
   nda: { bucket: "profils", colonne: "nda_document_url", accept: "application/pdf" },
   cv: { bucket: "candidatures", colonne: "cv_url", accept: "application/pdf" },
-  parcours: {
-    bucket: "candidatures",
-    colonne: "parcours_formation_url",
-    accept: "application/pdf",
-  },
   deroule: {
     bucket: "candidatures",
     colonne: "deroule_pedagogique_url",
@@ -63,13 +48,6 @@ function Profil() {
     setRegionSync(profile?.nda_region ?? "");
     setRegion(profile?.nda_region ?? "");
   }
-  const [secteur, setSecteur] = useState(profile?.secteur_activite ?? "");
-  const [secteurSync, setSecteurSync] = useState(profile?.secteur_activite ?? "");
-  if ((profile?.secteur_activite ?? "") !== secteurSync) {
-    setSecteurSync(profile?.secteur_activite ?? "");
-    setSecteur(profile?.secteur_activite ?? "");
-  }
-
 
   async function upload(kind: Piece, file: File) {
     if (!user) return;
@@ -104,11 +82,48 @@ function Profil() {
     const { error } = await supabase.from("profiles").update(patch).eq("id", user.id);
     setSaving(null);
     if (error) {
-      toast.error("Enregistrement impossible.");
+      toast.error("Enregistrement impossible.", { id: "profil-save" });
       return;
     }
     await refresh();
-    toast.success("Profil mis à jour.");
+    toast.success("Profil mis à jour.", { id: "profil-save" });
+  }
+
+  /** Déclenche l'enregistrement de toutes les sections du profil d'un seul geste. */
+  function enregistrerTout() {
+    document
+      .querySelectorAll<HTMLFormElement>("form[data-profil]")
+      .forEach((form) => form.requestSubmit());
+  }
+
+  const manquant: string[] = [];
+  if (!profile?.prenom || !profile?.nom) manquant.push("votre identité");
+  if (!profile?.telephone) manquant.push("votre téléphone");
+  if (!profile?.entreprise || !profile?.siret) manquant.push("votre entreprise (raison sociale et SIRET)");
+  if (!profile?.cv_url) manquant.push("votre CV");
+  if (!profile?.deroule_pedagogique_url) manquant.push("votre déroulé pédagogique");
+
+  const statut = profile?.statut_candidature ?? "en_attente";
+  const soumise = statut === "en_cours" || statut === "valide";
+
+  async function soumettre() {
+    if (!user) return;
+    if (manquant.length) {
+      toast.error(`Complétez d'abord : ${manquant.join(", ")}.`);
+      return;
+    }
+    setSaving("candidature");
+    const { error } = await supabase
+      .from("profiles")
+      .update({ statut_candidature: "en_cours" })
+      .eq("id", user.id);
+    setSaving(null);
+    if (error) {
+      toast.error("La candidature n'a pas pu être soumise.");
+      return;
+    }
+    await refresh();
+    toast.success("Candidature soumise à l'équipe Skills4mation.");
   }
 
   function text(form: FormData, key: string, max = 200) {
@@ -127,19 +142,15 @@ function Profil() {
           <CardContent className="p-6">
             <div className="flex flex-wrap items-center justify-between gap-3">
               <h2 className="text-base font-semibold">Identité</h2>
-              <StatutBadge
-                kind="candidature"
-                statut={profile?.statut_candidature ?? "en_attente"}
-              />
+              <StatutBadge kind="candidature" statut={statut} />
             </div>
 
             <div className="mt-4">
               <LinkedinConnect />
             </div>
 
-
-
             <form
+              data-profil
               className="mt-5 grid gap-4"
               onSubmit={(event) => {
                 event.preventDefault();
@@ -204,69 +215,12 @@ function Profil() {
 
         <Card className="rounded-2xl border-border/70 shadow-soft">
           <CardContent className="p-6">
-            <h2 className="text-base font-semibold">Mon expertise</h2>
-            <p className="mt-1 text-sm text-muted-foreground">
-              Votre secteur principal et un résumé court de votre expertise (le parcours
-              professionnel détaillé reste plus bas).
-            </p>
-            <form
-              className="mt-4 grid gap-4 sm:grid-cols-2"
-              onSubmit={(event) => {
-                event.preventDefault();
-                const form = new FormData(event.currentTarget);
-                void save("expertise", {
-                  secteur_activite: secteur || null,
-                  expertise: String(form.get("expertise") ?? "").trim().slice(0, 500) || null,
-                });
-              }}
-            >
-              <div className="grid gap-2">
-                <Label htmlFor="secteur_activite">Secteur d'activité</Label>
-                <Select value={secteur} onValueChange={setSecteur}>
-                  <SelectTrigger id="secteur_activite">
-                    <SelectValue placeholder="Choisir un secteur" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {CATEGORIES.map((c) => (
-                      <SelectItem key={c.slug} value={c.slug}>
-                        {c.label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-              <div className="grid gap-2 sm:col-span-2">
-                <Label htmlFor="expertise">Résumé de mon expertise (500 caractères max)</Label>
-                <Textarea
-                  id="expertise"
-                  name="expertise"
-                  rows={4}
-                  maxLength={500}
-                  defaultValue={profile?.expertise ?? ""}
-                  placeholder="En quelques lignes : vos domaines de spécialité, publics et formats de prédilection…"
-                />
-              </div>
-              <Button
-                type="submit"
-                variant="cta"
-                className="justify-self-start sm:col-span-2"
-                disabled={saving === "expertise"}
-              >
-                {saving === "expertise" ? "Enregistrement…" : "Enregistrer mon expertise"}
-              </Button>
-            </form>
-          </CardContent>
-        </Card>
-
-
-
-        <Card className="rounded-2xl border-border/70 shadow-soft">
-          <CardContent className="p-6">
-            <h2 className="text-base font-semibold">Entreprise</h2>
+            <h2 className="text-base font-semibold">Mon entreprise</h2>
             <p className="mt-1 text-sm text-muted-foreground">
               Ces informations alimentent les conventions et contrats de sous-traitance.
             </p>
             <form
+              data-profil
               className="mt-5 grid gap-4"
               onSubmit={(event) => {
                 event.preventDefault();
@@ -316,6 +270,7 @@ function Profil() {
           <CardContent className="p-6">
             <h2 className="text-base font-semibold">Déclaration d'activité (NDA)</h2>
             <form
+              data-profil
               className="mt-5 grid gap-4"
               onSubmit={(event) => {
                 event.preventDefault();
@@ -362,8 +317,7 @@ function Profil() {
           <CardContent className="p-6">
             <h2 className="text-base font-semibold">Pièces pédagogiques</h2>
             <p className="mt-1 text-sm text-muted-foreground">
-              CV, parcours de formation et déroulé(s) pédagogique(s) — téléchargeables à tout
-              moment.
+              CV et déroulé(s) pédagogique(s) — téléchargeables à tout moment.
             </p>
             <div className="mt-5 grid gap-4">
               <DocField
@@ -374,13 +328,6 @@ function Profil() {
                 onFile={(file) => void upload("cv", file)}
               />
               <DocField
-                label="Parcours de formation (document)"
-                bucket="candidatures"
-                path={profile?.parcours_formation_url ?? null}
-                busy={saving === "parcours"}
-                onFile={(file) => void upload("parcours", file)}
-              />
-              <DocField
                 label="Déroulé(s) pédagogique(s)"
                 bucket="candidatures"
                 path={profile?.deroule_pedagogique_url ?? null}
@@ -388,38 +335,43 @@ function Profil() {
                 onFile={(file) => void upload("deroule", file)}
               />
             </div>
-
-            <form
-              className="mt-6 grid gap-2"
-              onSubmit={(event) => {
-                event.preventDefault();
-                const form = new FormData(event.currentTarget);
-                void save("parcours-texte", {
-                  parcours_formation: String(form.get("parcours_formation") ?? "").slice(0, 5000),
-                });
-              }}
-            >
-              <Label htmlFor="parcours_formation">Parcours professionnel et pédagogique</Label>
-              <Textarea
-                id="parcours_formation"
-                name="parcours_formation"
-                rows={6}
-                maxLength={5000}
-                defaultValue={profile?.parcours_formation ?? ""}
-                placeholder="Expériences, publics formés, thématiques maîtrisées…"
-              />
-              <Button
-                type="submit"
-                variant="cta"
-                className="justify-self-start"
-                disabled={saving === "parcours-texte"}
-              >
-                {saving === "parcours-texte" ? "Enregistrement…" : "Enregistrer mon parcours"}
-              </Button>
-            </form>
           </CardContent>
         </Card>
-        <ParcoursIaCard />
+
+        <Card className="rounded-2xl border-secondary/40 bg-secondary/5 shadow-soft">
+          <CardContent className="grid gap-4 p-6">
+            <div>
+              <h2 className="text-base font-semibold">Enregistrer et soumettre</h2>
+              <p className="mt-1 text-sm text-muted-foreground">
+                Enregistrez vos informations autant de fois que nécessaire, puis soumettez votre
+                candidature à l'équipe Skills4mation pour validation.
+              </p>
+            </div>
+            {manquant.length ? (
+              <p className="text-sm text-muted-foreground">
+                À compléter avant de soumettre : {manquant.join(", ")}.
+              </p>
+            ) : null}
+            <div className="flex flex-wrap gap-3">
+              <Button variant="outline" onClick={enregistrerTout}>
+                Enregistrer
+              </Button>
+              <Button
+                variant="cta"
+                disabled={saving === "candidature" || soumise || manquant.length > 0}
+                onClick={() => void soumettre()}
+              >
+                {statut === "valide"
+                  ? "Candidature validée"
+                  : soumise
+                    ? "Candidature soumise"
+                    : saving === "candidature"
+                      ? "Envoi…"
+                      : "Soumettre la candidature"}
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
       </div>
     </AppShell>
   );
