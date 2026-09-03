@@ -1,6 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import type {} from "@tanstack/react-start";
 import { blogPosts } from "@/data/blog";
+import { FORMATIONS_STATIQUES } from "@/data/formations-statiques";
+
 import { supabase } from "@/integrations/supabase/client";
 
 const BASE_URL = "https://skills4mation.com";
