@@ -231,6 +231,139 @@ const INDICATEURS = [
   { valeur: "0 %", label: "Taux d'abandon" },
 ];
 
+const SOMMAIRE_REFERENTIEL = [
+  { id: "referentiel", label: "A. Le référentiel national qualité", icon: ShieldCheck },
+  { id: "indicateurs", label: "B. Les indicateurs associés", icon: BadgeCheck },
+  { id: "charte-professionnelle", label: "C. Charte professionnelle", icon: Scale },
+  { id: "sous-traitance", label: "Sous-traitance & portage", icon: HeartHandshake },
+];
+
+const CRITERES = [
+  {
+    num: "Critère 1",
+    titre: "Information du public",
+    texte:
+      "Conditions d'information du public sur les prestations proposées, les délais d'accès et les résultats obtenus.",
+    indicateurs: "Indicateurs 1 à 3",
+  },
+  {
+    num: "Critère 2",
+    titre: "Objectifs et adaptation",
+    texte:
+      "Identification précise des objectifs des prestations et adaptation de celles-ci aux publics bénéficiaires.",
+    indicateurs: "Indicateurs 4 à 8",
+  },
+  {
+    num: "Critère 3",
+    titre: "Accueil, accompagnement, suivi et évaluation",
+    texte:
+      "Adaptation aux publics bénéficiaires des prestations et des modalités d'accueil, d'accompagnement, de suivi et d'évaluation.",
+    indicateurs: "Indicateurs 9 à 16",
+  },
+  {
+    num: "Critère 4",
+    titre: "Moyens pédagogiques et techniques",
+    texte:
+      "Adéquation des moyens pédagogiques, techniques et d'encadrement aux prestations mises en œuvre.",
+    indicateurs: "Indicateurs 17 à 21",
+  },
+  {
+    num: "Critère 5",
+    titre: "Qualification et développement des compétences",
+    texte:
+      "Qualification et développement des connaissances et compétences des personnels chargés de mettre en œuvre les prestations.",
+    indicateurs: "Indicateurs 22 et 23",
+  },
+  {
+    num: "Critère 6",
+    titre: "Investissement dans son environnement",
+    texte:
+      "Inscription et investissement du prestataire dans son environnement professionnel : veille légale, veille métier, réseau de partenaires, handicap.",
+    indicateurs: "Indicateurs 24 à 29",
+  },
+  {
+    num: "Critère 7",
+    titre: "Recueil et amélioration continue",
+    texte:
+      "Recueil et prise en compte des appréciations et réclamations formulées par les parties prenantes, et mise en œuvre d'actions d'amélioration.",
+    indicateurs: "Indicateurs 30 à 32",
+  },
+];
+
+const INDICATEURS_CLES = [
+  {
+    titre: "Traçabilité de l'information (ind. 1 à 3)",
+    points: [
+      "Programmes publiés avec objectifs, prérequis, durée, modalités, tarifs et délais d'accès.",
+      "Indicateurs de résultats publiés annuellement (satisfaction, réussite, abandon).",
+    ],
+  },
+  {
+    titre: "Analyse du besoin et positionnement (ind. 4 à 8)",
+    points: [
+      "Recueil des besoins formalisé avant chaque action (formulaire F0A).",
+      "Test de positionnement systématique pour adapter le déroulé pédagogique.",
+    ],
+  },
+  {
+    titre: "Accueil, suivi et évaluation (ind. 9 à 16)",
+    points: [
+      "Convocation, convention, émargements et attestations générés depuis le portail.",
+      "Évaluations des acquis en début, en cours et en fin de parcours, archivées au dossier.",
+      "Prise en compte des situations de handicap et désignation d'un référent.",
+    ],
+  },
+  {
+    titre: "Moyens et compétences (ind. 17 à 23)",
+    points: [
+      "Vérification des CV, diplômes et références de chaque intervenant avant mission.",
+      "Suivi du développement des compétences des formateurs (veille, perfectionnement).",
+    ],
+  },
+  {
+    titre: "Environnement et amélioration continue (ind. 24 à 32)",
+    points: [
+      "Veille légale, réglementaire, métier et handicap diffusée aux intervenants.",
+      "Recueil des appréciations (F5) et traitement des réclamations et aléas.",
+      "Plan d'amélioration continue revu au moins une fois par an.",
+    ],
+  },
+];
+
+const CHARTE_PRO = [
+  "J'exerce mon activité dans le strict respect du référentiel national qualité (Qualiopi) et de la réglementation de la formation professionnelle.",
+  "Je respecte la charte professionnelle de ma profession, ainsi que le présent code déontologique dans l'ensemble de mes missions.",
+  "Je m'exprime de manière sincère et loyale auprès des bénéficiaires, des financeurs et de Skills4mation.",
+  "Je n'interviens que dans mes domaines de compétence et refuse toute mission qui porterait atteinte à mon indépendance professionnelle.",
+  "Je garantis la confidentialité des informations recueillies et le secret professionnel, y compris après la fin de la mission.",
+  "Je réponds aux attentes de Skills4mation en cas de contrôle (financeur, organisme certificateur, administration) en fournissant sans délai les pièces demandées.",
+  "Je signale sans délai tout aléa, difficulté ou réclamation susceptible d'affecter la qualité de la prestation.",
+];
+
+const SOUS_TRAITANCE = [
+  {
+    titre: "Une charte d'engagement signée avant la première mission",
+    texte:
+      "Tout intervenant externe, sous-traitant ou salarié porté signe, avant sa première mission, une charte d'engagement au référentiel national qualité et au présent code déontologique. Aucune action de formation n'est confiée avant réception de cette charte signée.",
+  },
+  {
+    titre: "Vérification des compétences en amont",
+    texte:
+      "Le dossier de l'intervenant (CV, diplômes, références, parcours de formation, déroulé pédagogique) est instruit et validé par l'équipe Skills4mation avant l'ouverture de son accès au portail administratif.",
+  },
+  {
+    titre: "Une conformité vérifiée périodiquement",
+    texte:
+      "La conformité de chaque intervenant est réexaminée au moins une fois par an et à chaque renouvellement de mission : mise à jour des pièces, preuve de veille et de perfectionnement, résultats des évaluations à chaud et des appréciations recueillies.",
+  },
+  {
+    titre: "Des écarts traités et documentés",
+    texte:
+      "Tout écart constaté (pièce manquante, engagement non respecté, réclamation fondée) fait l'objet d'un plan d'action tracé. Le maintien de l'accès au portage est conditionné à la levée de l'écart.",
+  },
+];
+
+
 function CodeDeontologique() {
   return (
     <PublicLayout>
