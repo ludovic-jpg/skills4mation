@@ -180,3 +180,11 @@ export const EVALUATION_OPTIONS: string[] = [
   "Mises en situation évaluées et grille d'observation du formateur",
   "Passage d'une certification en fin de parcours",
 ];
+
+export const CERTIFICATION_OPTIONS: string[] = [
+  "ICDL — Certification des compétences numériques",
+  "LILATE — Certification en langues",
+  "Le Robert — Certification en français professionnel",
+  "Certification AEC DISC",
+  "Formation non certifiante",
+];
