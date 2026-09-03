@@ -382,26 +382,6 @@ export function FormationEditor({ value, saving, onSave }: Props) {
             value={str(f.tarif_ht)}
             onChange={(v) => set("tarif_ht", num(v))}
           />
-          <div className="grid gap-2">
-            <Label>Unité du tarif</Label>
-            <Select value={f.tarif_unite} onValueChange={(v) => set("tarif_unite", v)}>
-              <SelectTrigger>
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                {TARIF_UNITES.map((o) => (
-                  <SelectItem key={o.value} value={o.value}>
-                    {o.label}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-          <Field
-            label="Coût horaire formateur (interne)"
-            value={str(f.cout_horaire)}
-            onChange={(v) => set("cout_horaire", num(v))}
-          />
           <Area
             label="Précisions tarifaires affichées sur le site"
             value={f.tarif_details ?? ""}
