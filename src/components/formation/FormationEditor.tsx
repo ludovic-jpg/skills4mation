@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { ExternalLink, ImagePlus, Plus, Save, Trash2 } from "lucide-react";
+import { ExternalLink, ImagePlus, Save } from "lucide-react";
 import { toast } from "sonner";
 
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -15,17 +16,41 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import { SelectAutre } from "@/components/formation/SelectAutre";
 import { CATEGORIES } from "@/data/catalogue";
 import { supabase } from "@/integrations/supabase/client";
 import {
+  CERTIFICATION_OPTIONS,
+  EVALUATION_OPTIONS,
   FORMAT_OPTIONS,
-  TARIF_UNITES,
+  MODALITES_OPTIONS,
+  MOYENS_OPTIONS,
+  NIVEAUX_OPTIONS,
+  PUBLICS_OPTIONS,
   parseProgramme,
   slugify,
   visuelUrl,
   type FormationCatalogue,
   type ModuleProgramme,
 } from "@/lib/formations";
+
+const NB_MODULES = 6;
+
+const PUBLICATION_BADGE: Record<
+  string,
+  { label: string; variant: "secondary" | "outline" | "default" | "destructive" }
+> = {
+  brouillon: { label: "Non soumise", variant: "outline" },
+  en_attente: { label: "En attente de validation Skills4mation", variant: "secondary" },
+  publiee: { label: "Publiée sur le site", variant: "default" },
+  refusee: { label: "Parution refusée", variant: "destructive" },
+};
+
+function sixModules(list: ModuleProgramme[]): ModuleProgramme[] {
+  const base = list.slice(0, NB_MODULES);
+  while (base.length < NB_MODULES) base.push({ titre: "", points: [] });
+  return base;
+}
 
 type Props = {
   value: FormationCatalogue;
@@ -132,14 +157,23 @@ const str = (v: number | null | undefined) => (v === null || v === undefined ? "
 
 export function FormationEditor({ value, saving, onSave }: Props) {
   const [f, setF] = useState<FormationCatalogue>(value);
-  const [programme, setProgramme] = useState<ModuleProgramme[]>(parseProgramme(value.programme));
+  const [modules, setModules] = useState<ModuleProgramme[]>(
+    sixModules(parseProgramme(value.programme)),
+  );
   const [uploading, setUploading] = useState<string | null>(null);
 
   const [syncRef, setSyncRef] = useState(value);
   if (value !== syncRef) {
     setSyncRef(value);
     setF(value);
-    setProgramme(parseProgramme(value.programme));
+    setModules(sixModules(parseProgramme(value.programme)));
+  }
+
+  const etatPublication = (value.publication_statut ?? "brouillon") as keyof typeof PUBLICATION_BADGE;
+  const badge = PUBLICATION_BADGE[etatPublication] ?? PUBLICATION_BADGE["brouillon"]!;
+
+  function majModule(index: number, patch: Partial<ModuleProgramme>) {
+    setModules((prev) => prev.map((m, i) => (i === index ? { ...m, ...patch } : m)));
   }
 
   function set<K extends keyof FormationCatalogue>(key: K, v: FormationCatalogue[K]) {
@@ -169,10 +203,6 @@ export function FormationEditor({ value, saving, onSave }: Props) {
       toast.error("Le titre de la formation est requis.");
       return;
     }
-    if (f.publiee && (!f.intro?.trim() || f.tarif_ht === null)) {
-      toast.error("Pour publier la page, renseignez la présentation et le tarif.");
-      return;
-    }
     onSave({
       titre,
       slug: slugify(f.slug || titre),
@@ -187,21 +217,16 @@ export function FormationEditor({ value, saving, onSave }: Props) {
       duree_jours: f.duree_jours,
       format: f.format,
       lieu_defaut: f.lieu_defaut,
-      lien_connexion: f.lien_connexion,
       modalites: (f.modalites ?? []).filter((m) => m.trim()),
       moyens_pedagogiques: f.moyens_pedagogiques,
       modalites_evaluation: f.modalites_evaluation,
-      accessibilite: f.accessibilite,
-      programme: programme.filter((m) => m.titre.trim() || m.points.length),
+      programme: modules.filter((m) => m.titre.trim() || m.points.length),
       certification: f.certification,
       tarif_ht: f.tarif_ht,
-      tarif_unite: f.tarif_unite,
       tarif_details: f.tarif_details,
       tva: f.tva,
-      cout_horaire: f.cout_horaire,
       formateur_nom: f.formateur_nom,
       formateur_bio: f.formateur_bio,
-      publiee: f.publiee,
       inscriptions_ouvertes: f.inscriptions_ouvertes,
     });
   }
@@ -249,15 +274,19 @@ export function FormationEditor({ value, saving, onSave }: Props) {
             onChange={(v) => set("intro", v)}
             className="sm:col-span-2"
           />
-          <Field
+          <SelectAutre
             label="Niveau"
             value={f.niveau ?? ""}
             onChange={(v) => set("niveau", v)}
+            options={NIVEAUX_OPTIONS}
+            rows={2}
           />
-          <Field
+          <SelectAutre
             label="Public visé"
             value={f.public_cible ?? ""}
             onChange={(v) => set("public_cible", v)}
+            options={PUBLICS_OPTIONS}
+            rows={2}
           />
           <Area
             label="Objectif général"
@@ -314,40 +343,30 @@ export function FormationEditor({ value, saving, onSave }: Props) {
             value={f.lieu_defaut ?? ""}
             onChange={(v) => set("lieu_defaut", v)}
           />
-          <Field
-            label="Lien de connexion (distanciel)"
-            value={f.lien_connexion ?? ""}
-            onChange={(v) => set("lien_connexion", v)}
-            className="sm:col-span-2"
-          />
-          <Area
-            label="Modalités pédagogiques (une par ligne)"
+          <SelectAutre
+            label="Modalités pédagogiques"
             value={listeTexte(f.modalites)}
-            onChange={(v) => set("modalites", v.split("\n"))}
-            rows={3}
+            onChange={(v) => set("modalites", [v])}
+            options={MODALITES_OPTIONS}
           />
-          <Area
+          <SelectAutre
             label="Moyens pédagogiques et techniques"
             value={f.moyens_pedagogiques ?? ""}
             onChange={(v) => set("moyens_pedagogiques", v)}
-            rows={3}
+            options={MOYENS_OPTIONS}
           />
-          <Area
+          <SelectAutre
             label="Modalités d'évaluation"
             value={f.modalites_evaluation ?? ""}
             onChange={(v) => set("modalites_evaluation", v)}
-            rows={3}
+            options={EVALUATION_OPTIONS}
           />
-          <Area
-            label="Accessibilité et handicap"
-            value={f.accessibilite ?? ""}
-            onChange={(v) => set("accessibilite", v)}
-            rows={3}
-          />
-          <Field
+          <SelectAutre
             label="Certification visée (ex. ICDL)"
             value={f.certification ?? ""}
             onChange={(v) => set("certification", v)}
+            options={CERTIFICATION_OPTIONS}
+            placeholder="Aucune certification"
             className="sm:col-span-2"
           />
         </CardContent>
@@ -355,52 +374,24 @@ export function FormationEditor({ value, saving, onSave }: Props) {
 
       <Card className="rounded-2xl border-border/70 shadow-soft">
         <CardContent className="p-6">
-          <div className="flex flex-wrap items-center justify-between gap-3">
-            <h2 className="text-base font-semibold">Programme détaillé</h2>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => setProgramme((p) => [...p, { titre: "", points: [] }])}
-            >
-              <Plus className="mr-1.5 size-4" /> Ajouter un module
-            </Button>
-          </div>
-          <div className="mt-4 grid gap-4">
-            {programme.length === 0 ? (
-              <p className="text-sm text-muted-foreground">
-                Aucun module. Ajoutez les séquences de votre formation.
-              </p>
-            ) : null}
-            {programme.map((module, index) => (
+          <h2 className="text-base font-semibold">Programme détaillé</h2>
+          <p className="mt-1 text-sm text-muted-foreground">
+            Six modules : indiquez un titre et le contenu de chacun. Les modules laissés vides ne
+            sont pas affichés sur la page publique.
+          </p>
+          <div className="mt-4 grid gap-4 sm:grid-cols-2">
+            {modules.map((module, index) => (
               <div key={index} className="grid gap-3 rounded-xl border border-border p-4">
-                <div className="flex items-end gap-3">
-                  <Field
-                    label={`Module ${index + 1}`}
-                    value={module.titre}
-                    onChange={(v) =>
-                      setProgramme((p) =>
-                        p.map((m, i) => (i === index ? { ...m, titre: v } : m)),
-                      )
-                    }
-                    className="flex-1"
-                  />
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    onClick={() => setProgramme((p) => p.filter((_, i) => i !== index))}
-                  >
-                    <Trash2 className="size-4" />
-                  </Button>
-                </div>
+                <Field
+                  label={`Module ${index + 1} — titre`}
+                  value={module.titre}
+                  onChange={(v) => majModule(index, { titre: v })}
+                />
                 <Area
-                  label="Contenus (un par ligne)"
+                  label="Contenu (un point par ligne)"
                   value={module.points.join("\n")}
-                  onChange={(v) =>
-                    setProgramme((p) =>
-                      p.map((m, i) => (i === index ? { ...m, points: v.split("\n") } : m)),
-                    )
-                  }
-                  rows={3}
+                  onChange={(v) => majModule(index, { points: v.split("\n") })}
+                  rows={4}
                 />
               </div>
             ))}
@@ -415,26 +406,6 @@ export function FormationEditor({ value, saving, onSave }: Props) {
             label="Tarif HT"
             value={str(f.tarif_ht)}
             onChange={(v) => set("tarif_ht", num(v))}
-          />
-          <div className="grid gap-2">
-            <Label>Unité du tarif</Label>
-            <Select value={f.tarif_unite} onValueChange={(v) => set("tarif_unite", v)}>
-              <SelectTrigger>
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                {TARIF_UNITES.map((o) => (
-                  <SelectItem key={o.value} value={o.value}>
-                    {o.label}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-          <Field
-            label="Coût horaire formateur (interne)"
-            value={str(f.cout_horaire)}
-            onChange={(v) => set("cout_horaire", num(v))}
           />
           <Area
             label="Précisions tarifaires affichées sur le site"
@@ -482,19 +453,40 @@ export function FormationEditor({ value, saving, onSave }: Props) {
       <Card className="rounded-2xl border-border/70 shadow-soft">
         <CardContent className="grid gap-4 p-6">
           <h2 className="text-base font-semibold">Publication sur le site Skills4mation</h2>
-          <label className="flex items-start gap-3 text-sm">
-            <Checkbox
-              checked={f.publiee}
-              onCheckedChange={(v) => set("publiee", Boolean(v))}
-              className="mt-0.5"
-            />
-            <span>
-              Publier la page de cette formation sur le site public
-              <span className="block text-xs text-muted-foreground">
-                Présentation et tarif requis pour la publication.
-              </span>
-            </span>
-          </label>
+          <div className="flex flex-wrap items-center gap-3 rounded-xl border border-border bg-muted/40 p-4">
+            <Badge variant={badge.variant}>{badge.label}</Badge>
+            <p className="text-xs text-muted-foreground">
+              La parution sur le site est validée par l'équipe Skills4mation.
+            </p>
+          </div>
+          {value.publication_motif && etatPublication === "refusee" ? (
+            <p className="text-sm text-destructive">Motif : {value.publication_motif}</p>
+          ) : null}
+          {etatPublication === "en_attente" ? (
+            <Button
+              variant="outline"
+              className="justify-self-start"
+              disabled={saving}
+              onClick={() => onSave({ publication_statut: "brouillon" })}
+            >
+              Annuler ma demande de parution
+            </Button>
+          ) : etatPublication === "publiee" ? null : (
+            <Button
+              variant="cta"
+              className="justify-self-start"
+              disabled={saving}
+              onClick={() => {
+                if (!f.intro?.trim() || f.tarif_ht === null) {
+                  toast.error("Pour demander la parution, renseignez la présentation et le tarif.");
+                  return;
+                }
+                onSave({ publication_statut: "en_attente" });
+              }}
+            >
+              Demander la parution sur le site
+            </Button>
+          )}
           <label className="flex items-start gap-3 text-sm">
             <Checkbox
               checked={f.inscriptions_ouvertes}

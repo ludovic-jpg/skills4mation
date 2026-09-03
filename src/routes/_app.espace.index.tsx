@@ -148,7 +148,7 @@ function EspaceAccueil() {
       titre: "Candidature validée",
       atteint: isValidatedFormateur,
       astuce: "L'équipe Skills4mation valide votre dossier de candidature.",
-      lien: "/espace/candidature" as const,
+      lien: "/espace/profil" as const,
     },
     {
       titre: "Première formation créée",

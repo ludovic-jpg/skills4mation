@@ -858,6 +858,10 @@ export type Database = {
           prerequis: string | null
           programme: Json
           public_cible: string | null
+          publication_decidee_le: string | null
+          publication_demandee_le: string | null
+          publication_motif: string | null
+          publication_statut: string
           publiee: boolean
           slug: string
           source: string
@@ -897,6 +901,10 @@ export type Database = {
           prerequis?: string | null
           programme?: Json
           public_cible?: string | null
+          publication_decidee_le?: string | null
+          publication_demandee_le?: string | null
+          publication_motif?: string | null
+          publication_statut?: string
           publiee?: boolean
           slug: string
           source?: string
@@ -936,6 +944,10 @@ export type Database = {
           prerequis?: string | null
           programme?: Json
           public_cible?: string | null
+          publication_decidee_le?: string | null
+          publication_demandee_le?: string | null
+          publication_motif?: string | null
+          publication_statut?: string
           publiee?: boolean
           slug?: string
           source?: string
