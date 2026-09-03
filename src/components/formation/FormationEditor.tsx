@@ -157,14 +157,23 @@ const str = (v: number | null | undefined) => (v === null || v === undefined ? "
 
 export function FormationEditor({ value, saving, onSave }: Props) {
   const [f, setF] = useState<FormationCatalogue>(value);
-  const [programme, setProgramme] = useState<ModuleProgramme[]>(parseProgramme(value.programme));
+  const [modules, setModules] = useState<ModuleProgramme[]>(
+    sixModules(parseProgramme(value.programme)),
+  );
   const [uploading, setUploading] = useState<string | null>(null);
 
   const [syncRef, setSyncRef] = useState(value);
   if (value !== syncRef) {
     setSyncRef(value);
     setF(value);
-    setProgramme(parseProgramme(value.programme));
+    setModules(sixModules(parseProgramme(value.programme)));
+  }
+
+  const etatPublication = (value.publication_statut ?? "brouillon") as keyof typeof PUBLICATION_BADGE;
+  const badge = PUBLICATION_BADGE[etatPublication] ?? PUBLICATION_BADGE["brouillon"]!;
+
+  function majModule(index: number, patch: Partial<ModuleProgramme>) {
+    setModules((prev) => prev.map((m, i) => (i === index ? { ...m, ...patch } : m)));
   }
 
   function set<K extends keyof FormationCatalogue>(key: K, v: FormationCatalogue[K]) {
