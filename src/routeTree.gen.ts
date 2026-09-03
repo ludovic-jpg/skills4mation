@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppRouteImport } from './routes/_app'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as BilanDeCompetencesRouteImport } from './routes/bilan-de-competences'
 import { Route as CodeDeontologiqueRouteImport } from './routes/code-deontologique'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as EvaluerDroitFormationRouteImport } from './routes/evaluer-droit-formation'
@@ -73,6 +74,11 @@ const AppRoute = AppRouteImport.update({
 const AuthRoute = AuthRouteImport.update({
   id: '/auth',
   path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BilanDeCompetencesRoute = BilanDeCompetencesRouteImport.update({
+  id: '/bilan-de-competences',
+  path: '/bilan-de-competences',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CodeDeontologiqueRoute = CodeDeontologiqueRouteImport.update({
@@ -326,6 +332,7 @@ const LovableEmailTransactionalPreviewRoute =
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/bilan-de-competences': typeof BilanDeCompetencesRoute
   '/code-deontologique': typeof CodeDeontologiqueRoute
   '/contact': typeof ContactRoute
   '/evaluer-droit-formation': typeof EvaluerDroitFormationRoute
@@ -378,6 +385,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/bilan-de-competences': typeof BilanDeCompetencesRoute
   '/code-deontologique': typeof CodeDeontologiqueRoute
   '/contact': typeof ContactRoute
   '/evaluer-droit-formation': typeof EvaluerDroitFormationRoute
@@ -432,6 +440,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_app': typeof AppRouteWithChildren
   '/auth': typeof AuthRoute
+  '/bilan-de-competences': typeof BilanDeCompetencesRoute
   '/code-deontologique': typeof CodeDeontologiqueRoute
   '/contact': typeof ContactRoute
   '/evaluer-droit-formation': typeof EvaluerDroitFormationRoute
@@ -486,6 +495,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/auth'
+    | '/bilan-de-competences'
     | '/code-deontologique'
     | '/contact'
     | '/evaluer-droit-formation'
@@ -538,6 +548,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/auth'
+    | '/bilan-de-competences'
     | '/code-deontologique'
     | '/contact'
     | '/evaluer-droit-formation'
@@ -591,6 +602,7 @@ export interface FileRouteTypes {
     | '/'
     | '/_app'
     | '/auth'
+    | '/bilan-de-competences'
     | '/code-deontologique'
     | '/contact'
     | '/evaluer-droit-formation'
@@ -645,6 +657,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AppRoute: typeof AppRouteWithChildren
   AuthRoute: typeof AuthRoute
+  BilanDeCompetencesRoute: typeof BilanDeCompetencesRoute
   CodeDeontologiqueRoute: typeof CodeDeontologiqueRoute
   ContactRoute: typeof ContactRoute
   EvaluerDroitFormationRoute: typeof EvaluerDroitFormationRoute
@@ -693,6 +706,13 @@ declare module '@tanstack/react-router' {
       path: '/auth'
       fullPath: '/auth'
       preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/bilan-de-competences': {
+      id: '/bilan-de-competences'
+      path: '/bilan-de-competences'
+      fullPath: '/bilan-de-competences'
+      preLoaderRoute: typeof BilanDeCompetencesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/code-deontologique': {
@@ -1092,6 +1112,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AppRoute: AppRouteWithChildren,
   AuthRoute: AuthRoute,
+  BilanDeCompetencesRoute: BilanDeCompetencesRoute,
   CodeDeontologiqueRoute: CodeDeontologiqueRoute,
   ContactRoute: ContactRoute,
   EvaluerDroitFormationRoute: EvaluerDroitFormationRoute,

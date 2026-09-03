@@ -231,6 +231,139 @@ const INDICATEURS = [
   { valeur: "0 %", label: "Taux d'abandon" },
 ];
 
+const SOMMAIRE_REFERENTIEL = [
+  { id: "referentiel", label: "A. Le référentiel national qualité", icon: ShieldCheck },
+  { id: "indicateurs", label: "B. Les indicateurs associés", icon: BadgeCheck },
+  { id: "charte-professionnelle", label: "C. Charte professionnelle", icon: Scale },
+  { id: "sous-traitance", label: "Sous-traitance & portage", icon: HeartHandshake },
+];
+
+const CRITERES = [
+  {
+    num: "Critère 1",
+    titre: "Information du public",
+    texte:
+      "Conditions d'information du public sur les prestations proposées, les délais d'accès et les résultats obtenus.",
+    indicateurs: "Indicateurs 1 à 3",
+  },
+  {
+    num: "Critère 2",
+    titre: "Objectifs et adaptation",
+    texte:
+      "Identification précise des objectifs des prestations et adaptation de celles-ci aux publics bénéficiaires.",
+    indicateurs: "Indicateurs 4 à 8",
+  },
+  {
+    num: "Critère 3",
+    titre: "Accueil, accompagnement, suivi et évaluation",
+    texte:
+      "Adaptation aux publics bénéficiaires des prestations et des modalités d'accueil, d'accompagnement, de suivi et d'évaluation.",
+    indicateurs: "Indicateurs 9 à 16",
+  },
+  {
+    num: "Critère 4",
+    titre: "Moyens pédagogiques et techniques",
+    texte:
+      "Adéquation des moyens pédagogiques, techniques et d'encadrement aux prestations mises en œuvre.",
+    indicateurs: "Indicateurs 17 à 21",
+  },
+  {
+    num: "Critère 5",
+    titre: "Qualification et développement des compétences",
+    texte:
+      "Qualification et développement des connaissances et compétences des personnels chargés de mettre en œuvre les prestations.",
+    indicateurs: "Indicateurs 22 et 23",
+  },
+  {
+    num: "Critère 6",
+    titre: "Investissement dans son environnement",
+    texte:
+      "Inscription et investissement du prestataire dans son environnement professionnel : veille légale, veille métier, réseau de partenaires, handicap.",
+    indicateurs: "Indicateurs 24 à 29",
+  },
+  {
+    num: "Critère 7",
+    titre: "Recueil et amélioration continue",
+    texte:
+      "Recueil et prise en compte des appréciations et réclamations formulées par les parties prenantes, et mise en œuvre d'actions d'amélioration.",
+    indicateurs: "Indicateurs 30 à 32",
+  },
+];
+
+const INDICATEURS_CLES = [
+  {
+    titre: "Traçabilité de l'information (ind. 1 à 3)",
+    points: [
+      "Programmes publiés avec objectifs, prérequis, durée, modalités, tarifs et délais d'accès.",
+      "Indicateurs de résultats publiés annuellement (satisfaction, réussite, abandon).",
+    ],
+  },
+  {
+    titre: "Analyse du besoin et positionnement (ind. 4 à 8)",
+    points: [
+      "Recueil des besoins formalisé avant chaque action (formulaire F0A).",
+      "Test de positionnement systématique pour adapter le déroulé pédagogique.",
+    ],
+  },
+  {
+    titre: "Accueil, suivi et évaluation (ind. 9 à 16)",
+    points: [
+      "Convocation, convention, émargements et attestations générés depuis le portail.",
+      "Évaluations des acquis en début, en cours et en fin de parcours, archivées au dossier.",
+      "Prise en compte des situations de handicap et désignation d'un référent.",
+    ],
+  },
+  {
+    titre: "Moyens et compétences (ind. 17 à 23)",
+    points: [
+      "Vérification des CV, diplômes et références de chaque intervenant avant mission.",
+      "Suivi du développement des compétences des formateurs (veille, perfectionnement).",
+    ],
+  },
+  {
+    titre: "Environnement et amélioration continue (ind. 24 à 32)",
+    points: [
+      "Veille légale, réglementaire, métier et handicap diffusée aux intervenants.",
+      "Recueil des appréciations (F5) et traitement des réclamations et aléas.",
+      "Plan d'amélioration continue revu au moins une fois par an.",
+    ],
+  },
+];
+
+const CHARTE_PRO = [
+  "J'exerce mon activité dans le strict respect du référentiel national qualité (Qualiopi) et de la réglementation de la formation professionnelle.",
+  "Je respecte la charte professionnelle de ma profession, ainsi que le présent code déontologique dans l'ensemble de mes missions.",
+  "Je m'exprime de manière sincère et loyale auprès des bénéficiaires, des financeurs et de Skills4mation.",
+  "Je n'interviens que dans mes domaines de compétence et refuse toute mission qui porterait atteinte à mon indépendance professionnelle.",
+  "Je garantis la confidentialité des informations recueillies et le secret professionnel, y compris après la fin de la mission.",
+  "Je réponds aux attentes de Skills4mation en cas de contrôle (financeur, organisme certificateur, administration) en fournissant sans délai les pièces demandées.",
+  "Je signale sans délai tout aléa, difficulté ou réclamation susceptible d'affecter la qualité de la prestation.",
+];
+
+const SOUS_TRAITANCE = [
+  {
+    titre: "Une charte d'engagement signée avant la première mission",
+    texte:
+      "Tout intervenant externe, sous-traitant ou salarié porté signe, avant sa première mission, une charte d'engagement au référentiel national qualité et au présent code déontologique. Aucune action de formation n'est confiée avant réception de cette charte signée.",
+  },
+  {
+    titre: "Vérification des compétences en amont",
+    texte:
+      "Le dossier de l'intervenant (CV, diplômes, références, parcours de formation, déroulé pédagogique) est instruit et validé par l'équipe Skills4mation avant l'ouverture de son accès au portail administratif.",
+  },
+  {
+    titre: "Une conformité vérifiée périodiquement",
+    texte:
+      "La conformité de chaque intervenant est réexaminée au moins une fois par an et à chaque renouvellement de mission : mise à jour des pièces, preuve de veille et de perfectionnement, résultats des évaluations à chaud et des appréciations recueillies.",
+  },
+  {
+    titre: "Des écarts traités et documentés",
+    texte:
+      "Tout écart constaté (pièce manquante, engagement non respecté, réclamation fondée) fait l'objet d'un plan d'action tracé. Le maintien de l'accès au portage est conditionné à la levée de l'écart.",
+  },
+];
+
+
 function CodeDeontologique() {
   return (
     <PublicLayout>
@@ -293,6 +426,148 @@ function CodeDeontologique() {
           </div>
         ))}
       </section>
+
+      <section className="bg-muted/50 py-14">
+        <div className="section-shell max-w-4xl">
+          <p className="eyebrow text-secondary">Référentiel national qualité</p>
+          <h2 className="mt-2 text-2xl font-semibold">
+            Qualiopi : cadre, indicateurs et charte professionnelle
+          </h2>
+          <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            {SOMMAIRE_REFERENTIEL.map((item) => (
+              <a
+                key={item.id}
+                href={`#${item.id}`}
+                className="group rounded-2xl border border-border/70 bg-card p-5 shadow-soft transition-colors hover:border-primary/40"
+              >
+                <span className="inline-flex rounded-xl bg-accent p-2.5 text-accent-foreground">
+                  <item.icon className="size-4" aria-hidden />
+                </span>
+                <p className="mt-3 text-sm font-semibold leading-snug group-hover:text-primary">
+                  {item.label}
+                </p>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="referentiel" className="section-shell max-w-4xl scroll-mt-24 py-14">
+        <p className="eyebrow text-secondary">A</p>
+        <h2 className="mt-2 text-2xl font-semibold">Présentation du référentiel Qualiopi</h2>
+        <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+          La certification Qualiopi atteste de la qualité du processus mis en œuvre par les
+          prestataires d'actions concourant au développement des compétences. Elle repose sur le
+          Référentiel national qualité (RNQ), organisé en 7 critères déclinés en 32 indicateurs, et
+          conditionne l'accès aux financements publics et mutualisés (OPCO, France Travail, CPF,
+          Régions, État). Skills4mation en assure le portage pour l'ensemble de ses formateurs et
+          consultants : les processus, les preuves et les audits sont pilotés par notre équipe, les
+          intervenants restant responsables de la qualité pédagogique de leurs actions.
+        </p>
+        <div className="mt-8 space-y-4">
+          {CRITERES.map((critere) => (
+            <Card key={critere.num} className="rounded-2xl border-border/70 shadow-soft">
+              <CardContent className="p-6">
+                <div className="flex flex-wrap items-center gap-3">
+                  <p className="eyebrow text-secondary">{critere.num}</p>
+                  <span className="rounded-full bg-accent px-3 py-1 text-xs font-semibold text-accent-foreground">
+                    {critere.indicateurs}
+                  </span>
+                </div>
+                <p className="mt-2 text-base font-semibold leading-snug">{critere.titre}</p>
+                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{critere.texte}</p>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </section>
+
+      <section id="indicateurs" className="bg-muted/50 py-14">
+        <div className="section-shell max-w-4xl scroll-mt-24">
+          <p className="eyebrow text-secondary">B</p>
+          <h2 className="mt-2 text-2xl font-semibold">Les indicateurs associés</h2>
+          <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+            Les 32 indicateurs du RNQ se traduisent, chez Skills4mation, par des preuves produites
+            automatiquement à chaque dossier de formation via le portail administratif.
+          </p>
+          <div className="mt-8 space-y-4">
+            {INDICATEURS_CLES.map((groupe) => (
+              <Card key={groupe.titre} className="rounded-2xl border-border/70 shadow-soft">
+                <CardContent className="p-6">
+                  <p className="text-base font-semibold leading-snug">{groupe.titre}</p>
+                  <ul className="mt-4 space-y-2.5">
+                    {groupe.points.map((point) => (
+                      <li key={point} className="flex gap-3 text-sm text-muted-foreground">
+                        <BadgeCheck className="mt-0.5 size-4 shrink-0 text-secondary" aria-hidden />
+                        <span className="leading-relaxed">{point}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="charte-professionnelle" className="section-shell max-w-4xl scroll-mt-24 py-14">
+        <p className="eyebrow text-secondary">C</p>
+        <h2 className="mt-2 text-2xl font-semibold">Charte professionnelle de l'intervenant</h2>
+        <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+          Cette charte est acceptée par chaque formateur ou consultant au moment de sa candidature,
+          puis signée avant sa première mission.
+        </p>
+        <Card className="mt-6 rounded-2xl border-border/70 shadow-soft">
+          <CardContent className="p-6">
+            <ul className="space-y-3">
+              {CHARTE_PRO.map((engagement) => (
+                <li key={engagement} className="flex gap-3 text-sm text-muted-foreground">
+                  <BadgeCheck className="mt-0.5 size-4 shrink-0 text-secondary" aria-hidden />
+                  <span className="leading-relaxed">{engagement}</span>
+                </li>
+              ))}
+            </ul>
+            <div className="mt-6">
+              <Button asChild variant="cta">
+                <Link to="/pole-formateur" hash="candidature">
+                  Rejoindre Skills4mation
+                </Link>
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+      </section>
+
+      <section id="sous-traitance" className="bg-muted/50 py-14">
+        <div className="section-shell max-w-4xl scroll-mt-24">
+          <p className="eyebrow text-secondary">Sous-traitance</p>
+          <h2 className="mt-2 text-2xl font-semibold">
+            Notre politique de sous-traitance et de portage
+          </h2>
+          <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+            Skills4mation confie des actions de formation et des bilans de compétences à des
+            intervenants externes et à des salariés portés. Cette délégation ne réduit en rien le
+            niveau d'exigence qualité : elle est encadrée, contractualisée et contrôlée.
+          </p>
+          <div className="mt-8 space-y-4">
+            {SOUS_TRAITANCE.map((item) => (
+              <Card key={item.titre} className="rounded-2xl border-border/70 shadow-soft">
+                <CardContent className="flex gap-4 p-6">
+                  <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                    <ShieldCheck className="size-5" aria-hidden />
+                  </span>
+                  <div>
+                    <p className="text-base font-semibold leading-snug">{item.titre}</p>
+                    <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{item.texte}</p>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+
 
       <section className="section-shell max-w-4xl py-12">
         <Card className="rounded-3xl border-cta/40 bg-cta/10 shadow-soft">
