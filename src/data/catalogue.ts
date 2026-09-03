@@ -2548,8 +2548,9 @@ export const FORMATIONS: Formation[] = [
    "Identifier et corriger les fautes d’orthographe les plus courantes",
    "Appliquer les règles de grammaire, d’accord et de conjugaison",
    "Utiliser un vocabulaire adapté au monde professionnel",
-   "Structurer ses phrases avec clarté et précision",
-   "Réussir l’épreuve de Certification Le Robert dans de bonnes conditions"
+    "Structurer ses phrases avec clarté et précision",
+    "Gagner en fiabilité et en aisance à l’écrit dans un contexte professionnel"
+
   ],
   "modalites": [
    "Tout professionnel souhaitant améliorer la qualité de son français écrit",
@@ -2563,7 +2564,7 @@ export const FORMATIONS: Formation[] = [
     "points": [
      ": Identifier ses forces et faiblesses pour personnaliser le parcours",
      "Évaluation diagnostique basée sur les typologies d’erreurs",
-     "Présentation de la certification Le Robert : structure, attentes, scores",
+     "Présentation du parcours : étapes, attentes, critères de progression",
      ": Profil personnel d’apprentissage et plan de progression"
     ]
    },
@@ -2575,7 +2576,7 @@ export const FORMATIONS: Formation[] = [
      "Majuscules, accents, ponctuation, chiffres",
      "Méthode de relecture active",
      "Exercices",
-     ": Quiz interactifs, dictées à trous, séries d’entraînement type Le Robert"
+     ": Quiz interactifs, dictées à trous, séries d’entraînement progressives"
     ]
    },
    {
@@ -2609,9 +2610,10 @@ export const FORMATIONS: Formation[] = [
     ]
    },
    {
-    "titre": "Module 6 – Entraînement à la Certification Le Robert (5h)",
-    "points": [
-     ": Se préparer efficacement à l’examen officiel",
+    "titre": "Module 6 – Entraînement final et consolidation (5h)",
+     "points": [
+      ": Consolider ses acquis et se préparer aux mises en situation finales",
+
      "Simulation d’épreuves en condition réelle (durée, environnement)",
      "Astuces pour gagner du temps et éviter les pièges",
      "Bilan personnalisé et dernières recommandations",

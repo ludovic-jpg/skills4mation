@@ -1,6 +1,6 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useState } from "react";
-import { Check, Clock, MapPin, Target, Users, Wallet } from "lucide-react";
+import { Check, Clock, MapPin, ShieldCheck, Target, Users, Wallet } from "lucide-react";
 import { toast } from "sonner";
 
 import { AvisSection } from "@/components/formations/AvisSection";
@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { categoryLabel } from "@/data/catalogue";
+import { formationDetail } from "@/data/formation-details";
 import { supabase } from "@/integrations/supabase/client";
 import {
   FINANCEMENTS_APPRENANT,
@@ -115,6 +116,7 @@ export const Route = createFileRoute("/formations/$slug")({
 function PageFormation() {
   const { formation: f } = Route.useLoaderData();
   const programme = parseProgramme(f.programme);
+  const detail = formationDetail(f.slug);
   const visuel = visuelUrl(f.visuel_url);
   const photo = visuelUrl(f.photo_formateur_url);
   const format = FORMAT_OPTIONS.find((o) => o.value === f.format)?.label ?? f.format;
@@ -236,6 +238,59 @@ function PageFormation() {
               </CardContent>
             </Card>
           ) : null}
+
+          {detail ? (
+            <Card className="rounded-2xl border-border/70">
+              <CardContent className="grid gap-4 p-6 text-sm">
+                <h2 className="inline-flex items-center gap-2 text-lg font-semibold">
+                  <ShieldCheck className="size-5 text-secondary" /> Informations réglementaires
+                </h2>
+                {detail.certification ? (
+                  <>
+                    <div className="grid gap-4 sm:grid-cols-2">
+                      {[
+                        ["Intitulé exact de la certification", detail.certification.libelle],
+                        [
+                          "N° d'enregistrement au Répertoire spécifique",
+                          detail.certification.code,
+                        ],
+                        ["Certificateur", detail.certification.certificateur],
+                        [
+                          "Date d'enregistrement",
+                          detail.certification.dateEnregistrement,
+                        ],
+                        ...(detail.certification.validiteJusquau
+                          ? [["Validité jusqu'au", detail.certification.validiteJusquau]]
+                          : []),
+                      ].map(([label, value]) => (
+                        <div key={label as string}>
+                          <p className="text-xs uppercase tracking-wide text-muted-foreground">
+                            {label}
+                          </p>
+                          <p className="mt-1">{value}</p>
+                        </div>
+                      ))}
+                    </div>
+                    <div>
+                      <p className="font-semibold">Ce que la certification valide</p>
+                      <p className="mt-1 text-muted-foreground">
+                        {detail.certification.description}
+                      </p>
+                    </div>
+                    <div>
+                      <p className="font-semibold">Comment se déroule la certification ?</p>
+                      <p className="mt-1 whitespace-pre-line text-muted-foreground">
+                        {detail.certification.modalitesEvaluation}
+                      </p>
+                    </div>
+                  </>
+                ) : (
+                  <p className="text-muted-foreground">Non renseigné — en cours de mise à jour</p>
+                )}
+              </CardContent>
+            </Card>
+          ) : null}
+
 
           <Card className="rounded-2xl border-border/70">
             <CardContent className="grid gap-4 p-6 text-sm sm:grid-cols-2">
