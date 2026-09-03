@@ -605,6 +605,10 @@ function DetailDossier({
         </Button>
       </div>
 
+      <ChecklistPaiement dossierId={row.id} statutCrm={row.statut_crm} />
+
+
+
       <Tabs defaultValue="documents">
         <TabsList className="flex h-auto flex-wrap justify-start">
           <TabsTrigger value="documents">Documents numériques (PDF)</TabsTrigger>
