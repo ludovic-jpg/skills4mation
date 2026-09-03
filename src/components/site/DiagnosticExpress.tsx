@@ -5,7 +5,6 @@ import { Calculator, CheckCircle2, ChevronDown } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
@@ -52,13 +51,14 @@ const STATUTS = [
   },
 ] as const;
 
-const DISPOSITIFS = [
-  "OPCO / plan de développement des compétences",
-  "Projet de transition professionnelle (Transitions Pro)",
-  "Fonds d'assurance formation (FIFPL, AGEFICE, FAFCEA…)",
-  "Aide Individuelle à la Formation / dispositif régional",
-  "Financement personnel",
-  "Je ne sais pas encore",
+const SITUATIONS = [
+  "Salarié(e) en CDI",
+  "Salarié(e) en CDD",
+  "Dirigeant(e) d'entreprise",
+  "Indépendant(e) / profession libérale",
+  "En recherche d'emploi",
+  "En reconversion professionnelle",
+  "Autre situation",
 ];
 
 const TARIF_HORAIRE = 90;
@@ -74,13 +74,17 @@ const schema = z.object({
   nom: z.string().trim().min(1, "Nom requis").max(80),
   email: z.string().trim().email("Email invalide").max(255),
   telephone: z.string().trim().max(30).optional(),
-  situation: z.string().trim().max(300).optional(),
+  entreprise_nom: z.string().trim().min(1, "Nom de l'entreprise requis").max(160),
+  entreprise_siret: z
+    .string()
+    .trim()
+    .regex(/^\d{14}$/, "SIRET à 14 chiffres"),
+  theme_formation: z.string().trim().min(2, "Thème de formation requis").max(200),
   objectif_professionnel: z
     .string()
     .trim()
     .min(5, "Décrivez votre objectif professionnel")
     .max(1000),
-  disponibilites: z.string().trim().max(300).optional(),
   message: z.string().trim().max(1500).optional(),
 });
 
@@ -121,7 +125,7 @@ export function DiagnosticExpress({ variant = "compact" }: { variant?: "compact"
   const [formation, setFormation] = useState("");
   const [heures, setHeures] = useState(14);
   const [open, setOpen] = useState(full);
-  const [dispositifs, setDispositifs] = useState<string[]>([]);
+  const [situation, setSituation] = useState<string>(SITUATIONS[0] ?? "");
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [sending, setSending] = useState(false);
   const [sent, setSent] = useState(false);
@@ -134,9 +138,6 @@ export function DiagnosticExpress({ variant = "compact" }: { variant?: "compact"
     return { cout: total, prise: priseEnCharge, reste: total - priseEnCharge };
   }, [heures, selection]);
 
-  function toggleDispositif(value: string, checked: boolean) {
-    setDispositifs((prev) => (checked ? [...prev, value] : prev.filter((d) => d !== value)));
-  }
 
   async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -157,13 +158,20 @@ export function DiagnosticExpress({ variant = "compact" }: { variant?: "compact"
       email: parsed.data.email,
       telephone: parsed.data.telephone || null,
       statut_pro: statut,
-      formation_visee: formation || null,
-      situation: parsed.data.situation || null,
+      formation_visee: formation || parsed.data.theme_formation,
+      situation: situation || null,
       objectif_professionnel: parsed.data.objectif_professionnel,
-      disponibilites: parsed.data.disponibilites || null,
+      disponibilites: null,
       budget_estime: `${euros.format(reste)} de reste estimé (sur ${euros.format(cout)})`,
-      message: parsed.data.message ? `${parsed.data.message}\n\n${recap}` : recap,
-      dispositifs: dispositifs.length > 0 ? dispositifs : null,
+      message: [
+        parsed.data.message,
+        `Entreprise employeuse : ${parsed.data.entreprise_nom} (SIRET ${parsed.data.entreprise_siret})`,
+        `Thème de formation souhaité : ${parsed.data.theme_formation}`,
+        recap,
+      ]
+        .filter(Boolean)
+        .join("\n\n"),
+      dispositifs: null,
     });
     setSending(false);
     if (error) {
@@ -311,31 +319,40 @@ export function DiagnosticExpress({ variant = "compact" }: { variant?: "compact"
                 </div>
 
                 <Champ
-                  label="Votre situation actuelle (employeur, secteur…)"
-                  name="situation"
-                  error={errors["situation"]}
+                  label="Nom de l'entreprise employeuse *"
+                  name="entreprise_nom"
+                  error={errors["entreprise_nom"]}
                 />
                 <Champ
-                  label="Vos disponibilités"
-                  name="disponibilites"
-                  placeholder="Soirs, semaine, 100 % distanciel…"
-                  error={errors["disponibilites"]}
+                  label="SIRET de l'entreprise *"
+                  name="entreprise_siret"
+                  placeholder="14 chiffres"
+                  error={errors["entreprise_siret"]}
                 />
 
-                <div className="sm:col-span-2">
-                  <p className="text-sm font-medium">Dispositifs de financement envisagés</p>
-                  <div className="mt-3 grid gap-2.5 sm:grid-cols-2">
-                    {DISPOSITIFS.map((d) => (
-                      <label key={d} className="flex items-start gap-2.5 text-sm">
-                        <Checkbox
-                          checked={dispositifs.includes(d)}
-                          onCheckedChange={(checked) => toggleDispositif(d, checked === true)}
-                        />
-                        <span className="leading-snug text-muted-foreground">{d}</span>
-                      </label>
+                <Champ
+                  label="Thème de la formation souhaité *"
+                  name="theme_formation"
+                  placeholder="Ex. management, bureautique, langues, bilan de compétences…"
+                  error={errors["theme_formation"]}
+                />
+
+                <div>
+                  <Label htmlFor="situation">Votre situation actuelle</Label>
+                  <select
+                    id="situation"
+                    value={situation}
+                    onChange={(event) => setSituation(event.target.value)}
+                    className="mt-2 h-10 w-full rounded-xl border border-input bg-background px-3 text-sm"
+                  >
+                    {SITUATIONS.map((item) => (
+                      <option key={item} value={item}>
+                        {item}
+                      </option>
                     ))}
-                  </div>
+                  </select>
                 </div>
+
 
                 <div className="sm:col-span-2">
                   <Label htmlFor="message">Précisions complémentaires</Label>

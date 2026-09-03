@@ -21,9 +21,9 @@ import { Card, CardContent } from "@/components/ui/card";
 import heroImage from "@/assets/formatrice-tablette.jpg";
 import consultantsImage from "@/assets/people-equipe.jpg";
 
-const TITLE = "Bilan de compétences & portage pour consultants CBC — Skills4mation";
+const TITLE = "Bilan de compétences 13 h — 1 600 € — Skills4mation";
 const DESCRIPTION =
-  "Notre formule de bilan de compétences (24 h, 3 phases, financement CPF/OPCO) et notre service de portage Qualiopi pour les consultants CBC : conformité, contractualisation, confidentialité garantie.";
+  "Bilan de compétences de 13 h en présentiel ou distanciel, réparti sur 2 mois, au tarif de 1 600 €. Trois phases réglementaires, confidentialité garantie et portage Qualiopi pour les consultants CBC.";
 
 export const Route = createFileRoute("/bilan-de-competences")({
   head: () => ({
@@ -44,7 +44,7 @@ export const Route = createFileRoute("/bilan-de-competences")({
 const PHASES = [
   {
     titre: "Phase préliminaire",
-    duree: "3 h",
+    duree: "2 h",
     icon: Compass,
     points: [
       "Analyse de la demande et du contexte professionnel",
@@ -54,7 +54,7 @@ const PHASES = [
   },
   {
     titre: "Phase d'investigation",
-    duree: "16 h",
+    duree: "8 h",
     icon: Users,
     points: [
       "Exploration du parcours, des compétences et des motivations",
@@ -64,7 +64,7 @@ const PHASES = [
   },
   {
     titre: "Phase de conclusion",
-    duree: "5 h",
+    duree: "3 h",
     icon: ClipboardCheck,
     points: [
       "Document de synthèse remis exclusivement au bénéficiaire",
@@ -75,10 +75,10 @@ const PHASES = [
 ];
 
 const FORMULE = [
-  { label: "Durée totale", valeur: "24 h", detail: "réparties sur 8 à 12 semaines" },
-  { label: "Modalité", valeur: "Visio ou présentiel", detail: "entretiens individuels" },
-  { label: "Financement", valeur: "CPF · OPCO · Entreprise", detail: "ou fonds propres" },
-  { label: "Suivi", valeur: "6 mois", detail: "entretien de suivi inclus" },
+  { label: "Durée totale", valeur: "13 h", detail: "réparties sur 2 mois" },
+  { label: "Modalité", valeur: "Présentiel ou distanciel", detail: "entretiens individuels" },
+  { label: "Tarif", valeur: "1 600 €", detail: "tout inclus, suivi à 6 mois compris" },
+  { label: "Financement", valeur: "OPCO · Entreprise", detail: "ou fonds propres" },
 ];
 
 const PORTAGE = [
@@ -147,7 +147,7 @@ function BilanDeCompetences() {
       <PageHero
         eyebrow="Bilan de compétences"
         title="Faire le point, décider, avancer."
-        description="Un bilan de compétences de 24 h, mené par un consultant CBC, dans un cadre strictement confidentiel. Et pour les consultants : le portage Qualiopi de votre activité de bilan."
+        description="Un bilan de compétences de 13 h (présentiel ou distanciel, sur 2 mois), mené par un consultant CBC, dans un cadre strictement confidentiel. Et pour les consultants : le portage Qualiopi de votre activité de bilan."
       />
 
       <section className="section-shell grid gap-8 py-14 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
@@ -155,7 +155,7 @@ function BilanDeCompetences() {
           <p className="eyebrow text-secondary">Notre formule</p>
           <h2 className="mt-2 text-3xl font-semibold">Trois phases, un projet qui tient debout</h2>
           <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
-            Le bilan de compétences Skills4mation suit les trois phases prévues par le Code du
+            Le bilan de compétences Skills4mation — 13 h sur 2 mois, 1 600 € — suit les trois phases prévues par le Code du
             travail (art. R. 6313-4 à R. 6313-8) : préliminaire, investigation, conclusion. Chaque
             parcours est individualisé selon votre projet professionnel et votre disponibilité, en
             soirée ou sur temps de travail.
@@ -189,7 +189,7 @@ function BilanDeCompetences() {
       <section className="bg-muted/50 py-14">
         <div className="section-shell">
           <p className="eyebrow text-secondary">Déroulé</p>
-          <h2 className="mt-2 text-2xl font-semibold">Les 24 heures de votre bilan</h2>
+          <h2 className="mt-2 text-2xl font-semibold">Les 13 heures de votre bilan</h2>
           <div className="mt-8 grid gap-4 lg:grid-cols-3">
             {PHASES.map((phase) => (
               <Card key={phase.titre} className="rounded-2xl border-border/70 shadow-soft">
