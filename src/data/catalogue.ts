@@ -2548,8 +2548,9 @@ export const FORMATIONS: Formation[] = [
    "Identifier et corriger les fautes d’orthographe les plus courantes",
    "Appliquer les règles de grammaire, d’accord et de conjugaison",
    "Utiliser un vocabulaire adapté au monde professionnel",
-   "Structurer ses phrases avec clarté et précision",
-   "Réussir l’épreuve de Certification Le Robert dans de bonnes conditions"
+    "Structurer ses phrases avec clarté et précision",
+    "Gagner en fiabilité et en aisance à l’écrit dans un contexte professionnel"
+
   ],
   "modalites": [
    "Tout professionnel souhaitant améliorer la qualité de son français écrit",
