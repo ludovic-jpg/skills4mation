@@ -160,12 +160,19 @@ export function DiagnosticExpress({ variant = "compact" }: { variant?: "compact"
       telephone: parsed.data.telephone || null,
       statut_pro: statut,
       formation_visee: formation || null,
-      situation: parsed.data.situation || null,
+      situation: situation || null,
       objectif_professionnel: parsed.data.objectif_professionnel,
-      disponibilites: parsed.data.disponibilites || null,
+      disponibilites: null,
       budget_estime: `${euros.format(reste)} de reste estimé (sur ${euros.format(cout)})`,
-      message: parsed.data.message ? `${parsed.data.message}\n\n${recap}` : recap,
-      dispositifs: dispositifs.length > 0 ? dispositifs : null,
+      message: [
+        parsed.data.message,
+        `Entreprise employeuse : ${parsed.data.entreprise_nom} (SIRET ${parsed.data.entreprise_siret})`,
+        `Thème de formation souhaité : ${parsed.data.theme_formation}`,
+        recap,
+      ]
+        .filter(Boolean)
+        .join("\n\n"),
+      dispositifs: null,
     });
     setSending(false);
     if (error) {
