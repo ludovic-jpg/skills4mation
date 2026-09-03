@@ -23,7 +23,7 @@ export const Route = createFileRoute("/_app/espace/profil")({
 
 type ProfilPatch = TablesUpdate<"profiles">;
 
-type Piece = "photo" | "nda" | "cv" | "deroule";
+type Piece = "photo" | "nda" | "cv" | "parcours" | "deroule";
 
 const PIECES: Record<
   Piece,
@@ -32,6 +32,11 @@ const PIECES: Record<
   photo: { bucket: "profils", colonne: "photo_url", accept: "image/*" },
   nda: { bucket: "profils", colonne: "nda_document_url", accept: "application/pdf" },
   cv: { bucket: "candidatures", colonne: "cv_url", accept: "application/pdf" },
+  parcours: {
+    bucket: "candidatures",
+    colonne: "parcours_formation_url",
+    accept: "application/pdf",
+  },
   deroule: {
     bucket: "candidatures",
     colonne: "deroule_pedagogique_url",
@@ -317,7 +322,8 @@ function Profil() {
           <CardContent className="p-6">
             <h2 className="text-base font-semibold">Pièces pédagogiques</h2>
             <p className="mt-1 text-sm text-muted-foreground">
-              CV et déroulé(s) pédagogique(s) — téléchargeables à tout moment.
+              CV, parcours de formation et déroulé(s) pédagogique(s) — téléchargeables à tout
+              moment.
             </p>
             <div className="mt-5 grid gap-4">
               <DocField
@@ -326,6 +332,13 @@ function Profil() {
                 path={profile?.cv_url ?? null}
                 busy={saving === "cv"}
                 onFile={(file) => void upload("cv", file)}
+              />
+              <DocField
+                label="Parcours de formation (document)"
+                bucket="candidatures"
+                path={profile?.parcours_formation_url ?? null}
+                busy={saving === "parcours"}
+                onFile={(file) => void upload("parcours", file)}
               />
               <DocField
                 label="Déroulé(s) pédagogique(s)"
