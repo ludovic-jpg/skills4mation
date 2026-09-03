@@ -245,7 +245,36 @@ function satisfaction(d: DossierDonnees, chaud: boolean) {
   );
 }
 
+function programme(d: DossierDonnees) {
+  const objectifs = (d.formation.objectifs || "")
+    .split(/\r?\n|;/)
+    .map((o) => o.trim())
+    .filter(Boolean);
+  return shell(
+    "Programme de formation",
+    `${entete(d, "Programme de formation", v(d.formation.titre))}
+    <div class="grid">
+      <div>${ligne("Intitulé", v(d.formation.titre))}${ligne("Durée", `${v(d.formation.heuresTotal)} h — ${v(d.formation.nbJours)} jour(s)`)}${ligne("Format", v(FORMAT_LABELS[d.formation.format]))}</div>
+      <div>${ligne("Période", `${v(dateFr(d.formation.dateDebut))} au ${v(dateFr(d.formation.dateFin))}`)}${ligne("Niveau visé", v(d.formation.niveau))}${ligne("Effectif", String(d.apprenants.length || "—"))}</div>
+    </div>
+    <h2>Objectifs pédagogiques</h2>
+    ${objectifs.length ? `<ul>${objectifs.map((o) => `<li>${e(o)}</li>`).join("")}</ul>` : `<p>${v(d.formation.objectifs)}</p>`}
+    <h2>Prérequis et public visé</h2>
+    <p>${v(d.formation.prerequis)}</p>
+    <h2>Contenus et déroulé</h2>
+    <p>${v(d.besoins.contexte)}</p>
+    <h2>Moyens et modalités pédagogiques</h2>
+    <p>Formation animée par ${v(`${d.formateur.prenom} ${d.formateur.nom}`.trim())} en ${v(FORMAT_LABELS[d.formation.format])}. Alternance d'apports théoriques, de mises en situation et d'exercices pratiques. Supports remis aux participants via le portail Skills4mation.</p>
+    <h2>Modalités d'évaluation</h2>
+    <p>${v(d.besoins.modalitesEvaluation || "Test de positionnement en entrée, évaluation des acquis en fin de parcours et questionnaire de satisfaction.")}</p>
+    <h2>Accessibilité</h2>
+    <p>Les personnes en situation de handicap sont invitées à contacter le référent handicap de Skills4mation afin d'étudier les aménagements nécessaires.</p>
+    ${signatures("L'apprenant", "Pour Skills4mation")}`,
+  );
+}
+
 function facture(d: DossierDonnees) {
+
   const f = d.facture;
   return shell(
     "Facture formateur",
@@ -296,7 +325,15 @@ export const DOCUMENTS: DocDef[] = [
     applicable: estCpf,
     destinataires: (d) => d.apprenants.map((a) => a.email ?? ""),
   },
+  {
+    code: "1C",
+    label: "Programme de formation",
+    build: programme,
+    applicable: () => true,
+    destinataires: (d) => d.apprenants.map((a) => a.email ?? ""),
+  },
   { code: "2", label: "Planning", build: planningHtml, applicable: () => true, destinataires: (d) => [d.entreprise.email] },
+
   {
     code: "3A",
     label: "Convocation des stagiaires",
@@ -363,29 +400,22 @@ export const DOCUMENTS: DocDef[] = [
 ];
 
 /**
- * Documents applicables au dossier. Les questions personnalisées du formateur
- * (`profiles.recueil_besoins_questions_perso`) sont reprises automatiquement dans le
- * recueil des besoins F0A ; sans questions, le rendu reste identique à l'existant.
+ * Documents applicables au dossier. Le recueil des besoins F0A utilise toujours le
+ * modèle interne unique (aucune personnalisation par formateur).
  */
 export function documentsApplicables(
   d: DossierDonnees,
-  options?: { questionsPerso?: string[] | null; statutCrm?: CrmStatut | null },
+  options?: { statutCrm?: CrmStatut | null },
 ) {
-  const questions = (options?.questionsPerso ?? []).filter(
-    (q) => String(q ?? "").trim().length > 0,
-  );
   return DOCUMENTS.filter(
     (doc) =>
       doc.applicable(d) &&
       (options?.statutCrm === undefined
         ? true
         : pieceVisibleSelonStatut(doc.code, options.statutCrm)),
-  ).map((doc) =>
-    doc.code === "F0A" && questions.length
-      ? { ...doc, build: (donnees: DossierDonnees) => recueilBesoinsHtml(donnees, questions) }
-      : doc,
   );
 }
+
 
 export function docFileName(code: string, d: DossierDonnees) {
   const base = `${code}-${d.adf || "dossier"}-${d.entreprise.nom || "client"}`;

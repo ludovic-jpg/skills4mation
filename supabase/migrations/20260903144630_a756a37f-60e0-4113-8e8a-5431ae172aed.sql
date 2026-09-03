@@ -1,0 +1,1 @@
+ALTER TABLE public.document_envois ADD COLUMN IF NOT EXISTS reponse_json jsonb;
