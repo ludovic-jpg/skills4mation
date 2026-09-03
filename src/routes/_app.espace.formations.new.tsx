@@ -64,7 +64,7 @@ function NouvelleFormation() {
               La création de formations est activée dès que votre candidature est acceptée.
             </p>
             <Button asChild variant="cta" className="mt-4">
-              <Link to="/espace/candidature">Voir ma candidature</Link>
+              <Link to="/espace/profil">Voir ma candidature</Link>
             </Button>
           </CardContent>
         </Card>
