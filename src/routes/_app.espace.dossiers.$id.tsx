@@ -436,6 +436,10 @@ function DossierDetail() {
               </CardContent>
             </Card>
 
+            <ChecklistPaiement dossierId={id} statutCrm={statut} />
+
+
+
             {etape === "B" ? (
               <Card className="rounded-2xl border-border/70 shadow-soft">
                 <CardContent className="grid gap-4 p-6">
