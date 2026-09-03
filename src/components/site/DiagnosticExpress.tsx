@@ -75,13 +75,17 @@ const schema = z.object({
   nom: z.string().trim().min(1, "Nom requis").max(80),
   email: z.string().trim().email("Email invalide").max(255),
   telephone: z.string().trim().max(30).optional(),
-  situation: z.string().trim().max(300).optional(),
+  entreprise_nom: z.string().trim().min(1, "Nom de l'entreprise requis").max(160),
+  entreprise_siret: z
+    .string()
+    .trim()
+    .regex(/^\d{14}$/, "SIRET à 14 chiffres"),
+  theme_formation: z.string().trim().min(2, "Thème de formation requis").max(200),
   objectif_professionnel: z
     .string()
     .trim()
     .min(5, "Décrivez votre objectif professionnel")
     .max(1000),
-  disponibilites: z.string().trim().max(300).optional(),
   message: z.string().trim().max(1500).optional(),
 });
 
