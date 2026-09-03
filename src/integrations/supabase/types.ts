@@ -407,6 +407,7 @@ export type Database = {
           label: string
           nom_archive: string | null
           received_at: string | null
+          reponse_json: Json | null
           reponse_nom: string | null
           reponse_url: string | null
           sent_at: string | null
@@ -433,6 +434,7 @@ export type Database = {
           label?: string
           nom_archive?: string | null
           received_at?: string | null
+          reponse_json?: Json | null
           reponse_nom?: string | null
           reponse_url?: string | null
           sent_at?: string | null
@@ -459,6 +461,7 @@ export type Database = {
           label?: string
           nom_archive?: string | null
           received_at?: string | null
+          reponse_json?: Json | null
           reponse_nom?: string | null
           reponse_url?: string | null
           sent_at?: string | null

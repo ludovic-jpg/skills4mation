@@ -13,6 +13,8 @@ import {
   LayoutDashboard,
   LifeBuoy,
   MessageSquareWarning,
+  MessagesSquare,
+
 
   ShieldCheck,
   UserCog,
@@ -27,6 +29,8 @@ export const FORMATEUR_NAV: NavItem[] = [
   { to: "/espace/profil", label: "Profil / Pièces de candidature", icon: UserCog },
   { to: "/espace/formations", label: "Mes formations", icon: BookOpen },
   { to: "/espace/outils", label: "Mes outils pédagogiques", icon: ClipboardList },
+  { to: "/espace/communication", label: "Communication avec Apprenant", icon: MessagesSquare },
+
   { to: "/espace/dossiers", label: "Mes dossiers", icon: Folders },
   { to: "/espace/dossiers/new", label: "Nouveau dossier", icon: FilePlus2 },
   { to: "/espace/financement", label: "Convention & financement", icon: Banknote },

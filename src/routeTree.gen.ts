@@ -44,6 +44,7 @@ import { Route as AppAdminReclamationsRouteImport } from './routes/_app.admin.re
 import { Route as AppAdminValidationRouteImport } from './routes/_app.admin.validation'
 import { Route as AppApprenantIndexRouteImport } from './routes/_app.apprenant.index'
 import { Route as AppEspaceIndexRouteImport } from './routes/_app.espace.index'
+import { Route as AppEspaceCommunicationRouteImport } from './routes/_app.espace.communication'
 import { Route as AppEspaceFinancementRouteImport } from './routes/_app.espace.financement'
 import { Route as AppEspaceInstructionsRouteImport } from './routes/_app.espace.instructions'
 import { Route as AppEspaceOutilsRouteImport } from './routes/_app.espace.outils'
@@ -240,6 +241,11 @@ const AppEspaceIndexRoute = AppEspaceIndexRouteImport.update({
   path: '/espace/',
   getParentRoute: () => AppRoute,
 } as any)
+const AppEspaceCommunicationRoute = AppEspaceCommunicationRouteImport.update({
+  id: '/espace/communication',
+  path: '/espace/communication',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppEspaceFinancementRoute = AppEspaceFinancementRouteImport.update({
   id: '/espace/financement',
   path: '/espace/financement',
@@ -361,6 +367,7 @@ export interface FileRoutesByFullPath {
   '/admin/pilotage': typeof AppAdminPilotageRoute
   '/admin/reclamations': typeof AppAdminReclamationsRoute
   '/admin/validation': typeof AppAdminValidationRoute
+  '/espace/communication': typeof AppEspaceCommunicationRoute
   '/espace/financement': typeof AppEspaceFinancementRoute
   '/espace/instructions': typeof AppEspaceInstructionsRoute
   '/espace/outils': typeof AppEspaceOutilsRoute
@@ -414,6 +421,7 @@ export interface FileRoutesByTo {
   '/admin/pilotage': typeof AppAdminPilotageRoute
   '/admin/reclamations': typeof AppAdminReclamationsRoute
   '/admin/validation': typeof AppAdminValidationRoute
+  '/espace/communication': typeof AppEspaceCommunicationRoute
   '/espace/financement': typeof AppEspaceFinancementRoute
   '/espace/instructions': typeof AppEspaceInstructionsRoute
   '/espace/outils': typeof AppEspaceOutilsRoute
@@ -469,6 +477,7 @@ export interface FileRoutesById {
   '/_app/admin/pilotage': typeof AppAdminPilotageRoute
   '/_app/admin/reclamations': typeof AppAdminReclamationsRoute
   '/_app/admin/validation': typeof AppAdminValidationRoute
+  '/_app/espace/communication': typeof AppEspaceCommunicationRoute
   '/_app/espace/financement': typeof AppEspaceFinancementRoute
   '/_app/espace/instructions': typeof AppEspaceInstructionsRoute
   '/_app/espace/outils': typeof AppEspaceOutilsRoute
@@ -524,6 +533,7 @@ export interface FileRouteTypes {
     | '/admin/pilotage'
     | '/admin/reclamations'
     | '/admin/validation'
+    | '/espace/communication'
     | '/espace/financement'
     | '/espace/instructions'
     | '/espace/outils'
@@ -577,6 +587,7 @@ export interface FileRouteTypes {
     | '/admin/pilotage'
     | '/admin/reclamations'
     | '/admin/validation'
+    | '/espace/communication'
     | '/espace/financement'
     | '/espace/instructions'
     | '/espace/outils'
@@ -631,6 +642,7 @@ export interface FileRouteTypes {
     | '/_app/admin/pilotage'
     | '/_app/admin/reclamations'
     | '/_app/admin/validation'
+    | '/_app/espace/communication'
     | '/_app/espace/financement'
     | '/_app/espace/instructions'
     | '/_app/espace/outils'
@@ -932,6 +944,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppEspaceIndexRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/espace/communication': {
+      id: '/_app/espace/communication'
+      path: '/espace/communication'
+      fullPath: '/espace/communication'
+      preLoaderRoute: typeof AppEspaceCommunicationRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/_app/espace/financement': {
       id: '/_app/espace/financement'
       path: '/espace/financement'
@@ -1064,6 +1083,7 @@ interface AppRouteChildren {
   AppAdminPilotageRoute: typeof AppAdminPilotageRoute
   AppAdminReclamationsRoute: typeof AppAdminReclamationsRoute
   AppAdminValidationRoute: typeof AppAdminValidationRoute
+  AppEspaceCommunicationRoute: typeof AppEspaceCommunicationRoute
   AppEspaceFinancementRoute: typeof AppEspaceFinancementRoute
   AppEspaceInstructionsRoute: typeof AppEspaceInstructionsRoute
   AppEspaceOutilsRoute: typeof AppEspaceOutilsRoute
@@ -1090,6 +1110,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppAdminPilotageRoute: AppAdminPilotageRoute,
   AppAdminReclamationsRoute: AppAdminReclamationsRoute,
   AppAdminValidationRoute: AppAdminValidationRoute,
+  AppEspaceCommunicationRoute: AppEspaceCommunicationRoute,
   AppEspaceFinancementRoute: AppEspaceFinancementRoute,
   AppEspaceInstructionsRoute: AppEspaceInstructionsRoute,
   AppEspaceOutilsRoute: AppEspaceOutilsRoute,

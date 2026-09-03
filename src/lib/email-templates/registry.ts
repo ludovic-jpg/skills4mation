@@ -5,6 +5,9 @@ import { template as depotFormateurTemplate } from './depot-formateur'
 import { template as demandeFinancementOpcoTemplate } from './demande-financement-opco'
 import { template as demandeFinancementCpfTemplate } from './demande-financement-cpf'
 import { template as relanceDemandeFinancementTemplate } from './relance-demande-financement'
+import { template as documentsFinancementTemplate } from './documents-financement'
+import { template as demandePaiementApprenantTemplate } from './demande-paiement-apprenant'
+
 
 export interface TemplateEntry {
   component: ComponentType<any>
@@ -29,4 +32,7 @@ export const TEMPLATES: Record<string, TemplateEntry> = {
   'demande-financement-opco': demandeFinancementOpcoTemplate,
   'demande-financement-cpf': demandeFinancementCpfTemplate,
   'relance-demande-financement': relanceDemandeFinancementTemplate,
+  'documents-financement': documentsFinancementTemplate,
+  'demande-paiement-apprenant': demandePaiementApprenantTemplate,
 }
+

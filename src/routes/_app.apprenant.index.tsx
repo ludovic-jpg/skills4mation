@@ -26,6 +26,9 @@ import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { archiverReponseApprenant } from "@/lib/dossier-envois.functions";
 import { horodatageFr, sha256Hex } from "@/lib/dossier/signature";
+import { pieceMode } from "@/lib/dossier/pieces";
+import { FormulaireEnvoi } from "@/components/apprenant/FormulaireEnvoi";
+
 
 export const Route = createFileRoute("/_app/apprenant/")({
   head: () => ({
@@ -180,8 +183,12 @@ function EspaceApprenant() {
               </CardContent>
             </Card>
           ) : (
-            aSigner.map((doc) => (
+            aSigner.map((doc) =>
+              pieceMode(doc.code) === "formulaire" ? (
+                <FormulaireEnvoi key={doc.id} envoi={doc} />
+              ) : (
               <Card key={doc.id} className="rounded-2xl border-border/70 shadow-soft">
+
                 <CardContent className="grid gap-3 p-6">
                   <div className="flex flex-wrap items-center gap-2">
                     <FileSignature className="size-4 text-muted-foreground" />
@@ -240,7 +247,9 @@ function EspaceApprenant() {
                   </div>
                 </CardContent>
               </Card>
-            ))
+              ),
+            )
+
           )}
         </TabsContent>
 

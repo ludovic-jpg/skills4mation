@@ -50,6 +50,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { CRM_STATUTS, dossierNom, type CrmStatut } from "@/lib/crm";
 import { PIECES } from "@/lib/dossier/pieces";
+import { ChecklistPaiement } from "@/components/dossier/ChecklistPaiement";
 import { mergeDonnees } from "@/lib/dossier/types";
 import { pieceVisibleSelonStatut } from "@/lib/dossier/visibilite";
 import { envoyerRelanceFinancement } from "@/lib/dossier-relance-financement.functions";
@@ -604,6 +605,10 @@ function DetailDossier({
           {relanceEnCours ? "Envoi…" : "Renvoyer l'e-mail"}
         </Button>
       </div>
+
+      <ChecklistPaiement dossierId={row.id} statutCrm={row.statut_crm} />
+
+
 
       <Tabs defaultValue="documents">
         <TabsList className="flex h-auto flex-wrap justify-start">
