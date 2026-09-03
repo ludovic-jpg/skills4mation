@@ -47,16 +47,18 @@ export const ADMIN_NAV: NavItem[] = [
   { to: "/admin/dossiers", label: "CRM dossiers", icon: FolderKanban },
   { to: "/admin/financements", label: "Demandes de financement", icon: Banknote },
   { to: "/admin/demandes", label: "Toutes les demandes", icon: Inbox },
+  { to: "/admin/reclamations", label: "Réclamations & aléas", icon: MessageSquareWarning },
   { to: "/admin", label: "Candidatures", icon: Users },
   { to: "/espace", label: "Espace formateur", icon: Folders },
 ];
 
 export const SUPER_ADMIN_NAV: NavItem[] = [
-  ...ADMIN_NAV.slice(0, 6),
+  ...ADMIN_NAV.slice(0, 7),
   { to: "/admin/certifications", label: "Certifications", icon: Award },
   { to: "/admin/comptes", label: "Comptes & rôles", icon: ShieldCheck },
   { to: "/espace", label: "Espace formateur", icon: Folders },
 ];
+
 
 export function adminNav({ isSuperAdmin, isConseillere }: { isSuperAdmin: boolean; isConseillere: boolean }): NavItem[] {
   if (isSuperAdmin) return SUPER_ADMIN_NAV;
