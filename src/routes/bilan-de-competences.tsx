@@ -147,7 +147,7 @@ function BilanDeCompetences() {
       <PageHero
         eyebrow="Bilan de compétences"
         title="Faire le point, décider, avancer."
-        description="Un bilan de compétences de 24 h, mené par un consultant CBC, dans un cadre strictement confidentiel. Et pour les consultants : le portage Qualiopi de votre activité de bilan."
+        description="Un bilan de compétences de 13 h (présentiel ou distanciel, sur 2 mois), mené par un consultant CBC, dans un cadre strictement confidentiel. Et pour les consultants : le portage Qualiopi de votre activité de bilan."
       />
 
       <section className="section-shell grid gap-8 py-14 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
@@ -155,7 +155,7 @@ function BilanDeCompetences() {
           <p className="eyebrow text-secondary">Notre formule</p>
           <h2 className="mt-2 text-3xl font-semibold">Trois phases, un projet qui tient debout</h2>
           <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
-            Le bilan de compétences Skills4mation suit les trois phases prévues par le Code du
+            Le bilan de compétences Skills4mation — 13 h sur 2 mois, 1 600 € — suit les trois phases prévues par le Code du
             travail (art. R. 6313-4 à R. 6313-8) : préliminaire, investigation, conclusion. Chaque
             parcours est individualisé selon votre projet professionnel et votre disponibilité, en
             soirée ou sur temps de travail.
@@ -189,7 +189,7 @@ function BilanDeCompetences() {
       <section className="bg-muted/50 py-14">
         <div className="section-shell">
           <p className="eyebrow text-secondary">Déroulé</p>
-          <h2 className="mt-2 text-2xl font-semibold">Les 24 heures de votre bilan</h2>
+          <h2 className="mt-2 text-2xl font-semibold">Les 13 heures de votre bilan</h2>
           <div className="mt-8 grid gap-4 lg:grid-cols-3">
             {PHASES.map((phase) => (
               <Card key={phase.titre} className="rounded-2xl border-border/70 shadow-soft">
