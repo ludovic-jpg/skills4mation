@@ -305,7 +305,12 @@ function DossierDetail() {
 
           <TabsContent value="documents">
             {user ? (
-              <DocumentsPanel dossierId={id} formateurId={user.id} donnees={donnees} />
+              <DocumentsPanel
+                dossierId={id}
+                formateurId={user.id}
+                donnees={donnees}
+                statutCrm={statut}
+              />
             ) : null}
           </TabsContent>
 
@@ -317,7 +322,12 @@ function DossierDetail() {
 
           <TabsContent value="pieces">
             {user ? (
-              <PiecesPanel dossierId={id} formateurId={user.id} donnees={donnees} />
+              <PiecesPanel
+                dossierId={id}
+                formateurId={user.id}
+                donnees={donnees}
+                statutCrm={statut}
+              />
             ) : null}
           </TabsContent>
 

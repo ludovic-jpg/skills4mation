@@ -6,6 +6,7 @@ import { FolderPlus } from "lucide-react";
 import { AppShell } from "@/components/app/AppShell";
 import { CrmBadge } from "@/components/app/CrmBadge";
 import { FORMATEUR_NAV } from "@/components/app/nav";
+import { KanbanDossiers } from "@/components/dossier/KanbanDossiers";
 import { SupprimerDossierBouton } from "@/components/dossier/SupprimerDossierBouton";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -37,6 +38,7 @@ type Row = {
 };
 
 function MesDossiers() {
+  const [vue, setVue] = useState<"liste" | "kanban">("liste");
   const [search, setSearch] = useState("");
   const [filtre, setFiltre] = useState<string>("tous");
 
@@ -74,7 +76,30 @@ function MesDossiers() {
         </Button>
       }
     >
-      <div className="flex flex-wrap gap-3">
+      <div className="flex flex-wrap items-center gap-2">
+        <Button
+          size="sm"
+          variant={vue === "liste" ? "teal" : "outline"}
+          onClick={() => setVue("liste")}
+        >
+          Liste
+        </Button>
+        <Button
+          size="sm"
+          variant={vue === "kanban" ? "teal" : "outline"}
+          onClick={() => setVue("kanban")}
+        >
+          Kanban
+        </Button>
+      </div>
+
+      {vue === "kanban" ? (
+        <div className="mt-6">
+          <KanbanDossiers mode="formateur" />
+        </div>
+      ) : (
+      <>
+      <div className="mt-6 flex flex-wrap gap-3">
         <Input
           placeholder="Rechercher une entreprise, une formation…"
           value={search}
@@ -139,6 +164,8 @@ function MesDossiers() {
           )}
         </CardContent>
       </Card>
+      </>
+      )}
     </AppShell>
   );
 }
