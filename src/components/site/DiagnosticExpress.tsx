@@ -5,7 +5,6 @@ import { Calculator, CheckCircle2, ChevronDown } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
@@ -159,7 +158,7 @@ export function DiagnosticExpress({ variant = "compact" }: { variant?: "compact"
       email: parsed.data.email,
       telephone: parsed.data.telephone || null,
       statut_pro: statut,
-      formation_visee: formation || null,
+      formation_visee: formation || parsed.data.theme_formation,
       situation: situation || null,
       objectif_professionnel: parsed.data.objectif_professionnel,
       disponibilites: null,
