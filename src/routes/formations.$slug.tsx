@@ -237,6 +237,59 @@ function PageFormation() {
             </Card>
           ) : null}
 
+          {detail ? (
+            <Card className="rounded-2xl border-border/70">
+              <CardContent className="grid gap-4 p-6 text-sm">
+                <h2 className="inline-flex items-center gap-2 text-lg font-semibold">
+                  <ShieldCheck className="size-5 text-secondary" /> Informations réglementaires
+                </h2>
+                {detail.certification ? (
+                  <>
+                    <div className="grid gap-4 sm:grid-cols-2">
+                      {[
+                        ["Intitulé exact de la certification", detail.certification.libelle],
+                        [
+                          "N° d'enregistrement au Répertoire spécifique",
+                          detail.certification.code,
+                        ],
+                        ["Certificateur", detail.certification.certificateur],
+                        [
+                          "Date d'enregistrement",
+                          detail.certification.dateEnregistrement,
+                        ],
+                        ...(detail.certification.validiteJusquau
+                          ? [["Validité jusqu'au", detail.certification.validiteJusquau]]
+                          : []),
+                      ].map(([label, value]) => (
+                        <div key={label as string}>
+                          <p className="text-xs uppercase tracking-wide text-muted-foreground">
+                            {label}
+                          </p>
+                          <p className="mt-1">{value}</p>
+                        </div>
+                      ))}
+                    </div>
+                    <div>
+                      <p className="font-semibold">Ce que la certification valide</p>
+                      <p className="mt-1 text-muted-foreground">
+                        {detail.certification.description}
+                      </p>
+                    </div>
+                    <div>
+                      <p className="font-semibold">Comment se déroule la certification ?</p>
+                      <p className="mt-1 whitespace-pre-line text-muted-foreground">
+                        {detail.certification.modalitesEvaluation}
+                      </p>
+                    </div>
+                  </>
+                ) : (
+                  <p className="text-muted-foreground">Non renseigné — en cours de mise à jour</p>
+                )}
+              </CardContent>
+            </Card>
+          ) : null}
+
+
           <Card className="rounded-2xl border-border/70">
             <CardContent className="grid gap-4 p-6 text-sm sm:grid-cols-2">
               <h2 className="text-lg font-semibold sm:col-span-2">Informations pratiques</h2>
