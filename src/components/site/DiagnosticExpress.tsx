@@ -52,13 +52,14 @@ const STATUTS = [
   },
 ] as const;
 
-const DISPOSITIFS = [
-  "OPCO / plan de développement des compétences",
-  "Projet de transition professionnelle (Transitions Pro)",
-  "Fonds d'assurance formation (FIFPL, AGEFICE, FAFCEA…)",
-  "Aide Individuelle à la Formation / dispositif régional",
-  "Financement personnel",
-  "Je ne sais pas encore",
+const SITUATIONS = [
+  "Salarié(e) en CDI",
+  "Salarié(e) en CDD",
+  "Dirigeant(e) d'entreprise",
+  "Indépendant(e) / profession libérale",
+  "En recherche d'emploi",
+  "En reconversion professionnelle",
+  "Autre situation",
 ];
 
 const TARIF_HORAIRE = 90;
