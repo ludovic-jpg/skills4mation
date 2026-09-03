@@ -318,40 +318,30 @@ export function FormationEditor({ value, saving, onSave }: Props) {
             value={f.lieu_defaut ?? ""}
             onChange={(v) => set("lieu_defaut", v)}
           />
-          <Field
-            label="Lien de connexion (distanciel)"
-            value={f.lien_connexion ?? ""}
-            onChange={(v) => set("lien_connexion", v)}
-            className="sm:col-span-2"
-          />
-          <Area
-            label="Modalités pédagogiques (une par ligne)"
+          <SelectAutre
+            label="Modalités pédagogiques"
             value={listeTexte(f.modalites)}
-            onChange={(v) => set("modalites", v.split("\n"))}
-            rows={3}
+            onChange={(v) => set("modalites", [v])}
+            options={MODALITES_OPTIONS}
           />
-          <Area
+          <SelectAutre
             label="Moyens pédagogiques et techniques"
             value={f.moyens_pedagogiques ?? ""}
             onChange={(v) => set("moyens_pedagogiques", v)}
-            rows={3}
+            options={MOYENS_OPTIONS}
           />
-          <Area
+          <SelectAutre
             label="Modalités d'évaluation"
             value={f.modalites_evaluation ?? ""}
             onChange={(v) => set("modalites_evaluation", v)}
-            rows={3}
+            options={EVALUATION_OPTIONS}
           />
-          <Area
-            label="Accessibilité et handicap"
-            value={f.accessibilite ?? ""}
-            onChange={(v) => set("accessibilite", v)}
-            rows={3}
-          />
-          <Field
+          <SelectAutre
             label="Certification visée (ex. ICDL)"
             value={f.certification ?? ""}
             onChange={(v) => set("certification", v)}
+            options={certificationsOptions}
+            placeholder="Aucune certification"
             className="sm:col-span-2"
           />
         </CardContent>
