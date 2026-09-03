@@ -428,19 +428,42 @@ export function FormationEditor({ value, saving, onSave }: Props) {
       <Card className="rounded-2xl border-border/70 shadow-soft">
         <CardContent className="grid gap-4 p-6">
           <h2 className="text-base font-semibold">Publication sur le site Skills4mation</h2>
-          <label className="flex items-start gap-3 text-sm">
-            <Checkbox
-              checked={f.publiee}
-              onCheckedChange={(v) => set("publiee", Boolean(v))}
-              className="mt-0.5"
-            />
-            <span>
-              Publier la page de cette formation sur le site public
-              <span className="block text-xs text-muted-foreground">
-                Présentation et tarif requis pour la publication.
-              </span>
-            </span>
-          </label>
+          <div className="flex flex-wrap items-center gap-3 rounded-xl border border-border bg-muted/40 p-4">
+            <Badge variant={PUBLICATION_BADGE[etatPublication].variant}>
+              {PUBLICATION_BADGE[etatPublication].label}
+            </Badge>
+            <p className="text-xs text-muted-foreground">
+              La parution sur le site est validée par l'équipe Skills4mation.
+            </p>
+          </div>
+          {value.publication_motif && etatPublication === "refusee" ? (
+            <p className="text-sm text-destructive">Motif : {value.publication_motif}</p>
+          ) : null}
+          {etatPublication === "en_attente" ? (
+            <Button
+              variant="outline"
+              className="justify-self-start"
+              disabled={saving}
+              onClick={() => onSave({ publication_statut: "brouillon" })}
+            >
+              Annuler ma demande de parution
+            </Button>
+          ) : etatPublication === "publiee" ? null : (
+            <Button
+              variant="cta"
+              className="justify-self-start"
+              disabled={saving}
+              onClick={() => {
+                if (!f.intro?.trim() || f.tarif_ht === null) {
+                  toast.error("Pour demander la parution, renseignez la présentation et le tarif.");
+                  return;
+                }
+                onSave({ publication_statut: "en_attente" });
+              }}
+            >
+              Demander la parution sur le site
+            </Button>
+          )}
           <label className="flex items-start gap-3 text-sm">
             <Checkbox
               checked={f.inscriptions_ouvertes}
