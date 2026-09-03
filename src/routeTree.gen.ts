@@ -38,6 +38,7 @@ import { Route as AppAdminComptesRouteImport } from './routes/_app.admin.comptes
 import { Route as AppAdminDemandesRouteImport } from './routes/_app.admin.demandes'
 import { Route as AppAdminDossiersRouteImport } from './routes/_app.admin.dossiers'
 import { Route as AppAdminFinancementsRouteImport } from './routes/_app.admin.financements'
+import { Route as AppAdminFormationsRouteImport } from './routes/_app.admin.formations'
 import { Route as AppAdminPilotageRouteImport } from './routes/_app.admin.pilotage'
 import { Route as AppAdminReclamationsRouteImport } from './routes/_app.admin.reclamations'
 import { Route as AppAdminValidationRouteImport } from './routes/_app.admin.validation'
@@ -209,6 +210,11 @@ const AppAdminFinancementsRoute = AppAdminFinancementsRouteImport.update({
   path: '/admin/financements',
   getParentRoute: () => AppRoute,
 } as any)
+const AppAdminFormationsRoute = AppAdminFormationsRouteImport.update({
+  id: '/admin/formations',
+  path: '/admin/formations',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppAdminPilotageRoute = AppAdminPilotageRouteImport.update({
   id: '/admin/pilotage',
   path: '/admin/pilotage',
@@ -351,6 +357,7 @@ export interface FileRoutesByFullPath {
   '/admin/demandes': typeof AppAdminDemandesRoute
   '/admin/dossiers': typeof AppAdminDossiersRoute
   '/admin/financements': typeof AppAdminFinancementsRoute
+  '/admin/formations': typeof AppAdminFormationsRoute
   '/admin/pilotage': typeof AppAdminPilotageRoute
   '/admin/reclamations': typeof AppAdminReclamationsRoute
   '/admin/validation': typeof AppAdminValidationRoute
@@ -403,6 +410,7 @@ export interface FileRoutesByTo {
   '/admin/demandes': typeof AppAdminDemandesRoute
   '/admin/dossiers': typeof AppAdminDossiersRoute
   '/admin/financements': typeof AppAdminFinancementsRoute
+  '/admin/formations': typeof AppAdminFormationsRoute
   '/admin/pilotage': typeof AppAdminPilotageRoute
   '/admin/reclamations': typeof AppAdminReclamationsRoute
   '/admin/validation': typeof AppAdminValidationRoute
@@ -457,6 +465,7 @@ export interface FileRoutesById {
   '/_app/admin/demandes': typeof AppAdminDemandesRoute
   '/_app/admin/dossiers': typeof AppAdminDossiersRoute
   '/_app/admin/financements': typeof AppAdminFinancementsRoute
+  '/_app/admin/formations': typeof AppAdminFormationsRoute
   '/_app/admin/pilotage': typeof AppAdminPilotageRoute
   '/_app/admin/reclamations': typeof AppAdminReclamationsRoute
   '/_app/admin/validation': typeof AppAdminValidationRoute
@@ -511,6 +520,7 @@ export interface FileRouteTypes {
     | '/admin/demandes'
     | '/admin/dossiers'
     | '/admin/financements'
+    | '/admin/formations'
     | '/admin/pilotage'
     | '/admin/reclamations'
     | '/admin/validation'
@@ -563,6 +573,7 @@ export interface FileRouteTypes {
     | '/admin/demandes'
     | '/admin/dossiers'
     | '/admin/financements'
+    | '/admin/formations'
     | '/admin/pilotage'
     | '/admin/reclamations'
     | '/admin/validation'
@@ -616,6 +627,7 @@ export interface FileRouteTypes {
     | '/_app/admin/demandes'
     | '/_app/admin/dossiers'
     | '/_app/admin/financements'
+    | '/_app/admin/formations'
     | '/_app/admin/pilotage'
     | '/_app/admin/reclamations'
     | '/_app/admin/validation'
@@ -878,6 +890,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppAdminFinancementsRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/admin/formations': {
+      id: '/_app/admin/formations'
+      path: '/admin/formations'
+      fullPath: '/admin/formations'
+      preLoaderRoute: typeof AppAdminFormationsRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/_app/admin/pilotage': {
       id: '/_app/admin/pilotage'
       path: '/admin/pilotage'
@@ -1041,6 +1060,7 @@ interface AppRouteChildren {
   AppAdminDemandesRoute: typeof AppAdminDemandesRoute
   AppAdminDossiersRoute: typeof AppAdminDossiersRoute
   AppAdminFinancementsRoute: typeof AppAdminFinancementsRoute
+  AppAdminFormationsRoute: typeof AppAdminFormationsRoute
   AppAdminPilotageRoute: typeof AppAdminPilotageRoute
   AppAdminReclamationsRoute: typeof AppAdminReclamationsRoute
   AppAdminValidationRoute: typeof AppAdminValidationRoute
@@ -1066,6 +1086,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppAdminDemandesRoute: AppAdminDemandesRoute,
   AppAdminDossiersRoute: AppAdminDossiersRoute,
   AppAdminFinancementsRoute: AppAdminFinancementsRoute,
+  AppAdminFormationsRoute: AppAdminFormationsRoute,
   AppAdminPilotageRoute: AppAdminPilotageRoute,
   AppAdminReclamationsRoute: AppAdminReclamationsRoute,
   AppAdminValidationRoute: AppAdminValidationRoute,
