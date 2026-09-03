@@ -34,27 +34,32 @@ export const FORMATEUR_NAV: NavItem[] = [
 ];
 
 export const CANDIDAT_NAV: NavItem[] = [
-  { to: "/espace/candidature", label: "Ma candidature", icon: Users },
-  { to: "/espace/profil", label: "Mon profil", icon: UserCog },
+  { to: "/espace/instructions", label: "Instructions", icon: LifeBuoy },
+  { to: "/espace/profil", label: "Mon profil / Ma candidature", icon: UserCog },
 ];
 
 export const APPRENANT_NAV: NavItem[] = [
   { to: "/apprenant", label: "Mon espace apprenant", icon: GraduationCap },
 ];
 
-export const ADMIN_NAV: NavItem[] = [
+const ADMIN_BASE: NavItem[] = [
   { to: "/admin/validation", label: "File de validation", icon: ShieldCheck },
+  { to: "/admin/formations", label: "Parutions formations", icon: BookOpen },
   { to: "/admin/pilotage", label: "Pilotage", icon: BarChart3 },
   { to: "/admin/dossiers", label: "CRM dossiers", icon: FolderKanban },
   { to: "/admin/financements", label: "Demandes de financement", icon: Banknote },
   { to: "/admin/demandes", label: "Toutes les demandes", icon: Inbox },
   { to: "/admin/reclamations", label: "Réclamations & aléas", icon: MessageSquareWarning },
   { to: "/admin", label: "Candidatures", icon: Users },
+];
+
+export const ADMIN_NAV: NavItem[] = [
+  ...ADMIN_BASE,
   { to: "/espace", label: "Espace formateur", icon: Folders },
 ];
 
 export const SUPER_ADMIN_NAV: NavItem[] = [
-  ...ADMIN_NAV.slice(0, 7),
+  ...ADMIN_BASE,
   { to: "/admin/certifications", label: "Certifications", icon: Award },
   { to: "/admin/comptes", label: "Comptes & rôles", icon: ShieldCheck },
   { to: "/espace", label: "Espace formateur", icon: Folders },
