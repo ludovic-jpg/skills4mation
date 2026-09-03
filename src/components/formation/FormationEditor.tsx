@@ -203,10 +203,6 @@ export function FormationEditor({ value, saving, onSave }: Props) {
       toast.error("Le titre de la formation est requis.");
       return;
     }
-    if (f.publiee && (!f.intro?.trim() || f.tarif_ht === null)) {
-      toast.error("Pour publier la page, renseignez la présentation et le tarif.");
-      return;
-    }
     onSave({
       titre,
       slug: slugify(f.slug || titre),
@@ -221,21 +217,16 @@ export function FormationEditor({ value, saving, onSave }: Props) {
       duree_jours: f.duree_jours,
       format: f.format,
       lieu_defaut: f.lieu_defaut,
-      lien_connexion: f.lien_connexion,
       modalites: (f.modalites ?? []).filter((m) => m.trim()),
       moyens_pedagogiques: f.moyens_pedagogiques,
       modalites_evaluation: f.modalites_evaluation,
-      accessibilite: f.accessibilite,
-      programme: programme.filter((m) => m.titre.trim() || m.points.length),
+      programme: modules.filter((m) => m.titre.trim() || m.points.length),
       certification: f.certification,
       tarif_ht: f.tarif_ht,
-      tarif_unite: f.tarif_unite,
       tarif_details: f.tarif_details,
       tva: f.tva,
-      cout_horaire: f.cout_horaire,
       formateur_nom: f.formateur_nom,
       formateur_bio: f.formateur_bio,
-      publiee: f.publiee,
       inscriptions_ouvertes: f.inscriptions_ouvertes,
     });
   }
@@ -374,7 +365,7 @@ export function FormationEditor({ value, saving, onSave }: Props) {
             label="Certification visée (ex. ICDL)"
             value={f.certification ?? ""}
             onChange={(v) => set("certification", v)}
-            options={certificationsOptions}
+            options={CERTIFICATION_OPTIONS}
             placeholder="Aucune certification"
             className="sm:col-span-2"
           />
@@ -463,9 +454,7 @@ export function FormationEditor({ value, saving, onSave }: Props) {
         <CardContent className="grid gap-4 p-6">
           <h2 className="text-base font-semibold">Publication sur le site Skills4mation</h2>
           <div className="flex flex-wrap items-center gap-3 rounded-xl border border-border bg-muted/40 p-4">
-            <Badge variant={PUBLICATION_BADGE[etatPublication].variant}>
-              {PUBLICATION_BADGE[etatPublication].label}
-            </Badge>
+            <Badge variant={badge.variant}>{badge.label}</Badge>
             <p className="text-xs text-muted-foreground">
               La parution sur le site est validée par l'équipe Skills4mation.
             </p>
