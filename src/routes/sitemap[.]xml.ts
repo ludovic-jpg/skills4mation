@@ -19,7 +19,12 @@ export const Route = createFileRoute("/sitemap.xml")({
           .from("formations_catalogue")
           .select("slug")
           .eq("publiee", true);
-        const formations = data ?? [];
+        const slugs = new Set<string>([
+          ...FORMATIONS_STATIQUES.map((f) => f.slug),
+          ...(data ?? []).map((f) => f.slug),
+        ]);
+        const formations = [...slugs].map((slug) => ({ slug }));
+
 
         const entries: SitemapEntry[] = [
           { path: "/", changefreq: "weekly", priority: "1.0" },
