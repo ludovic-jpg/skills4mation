@@ -7,6 +7,7 @@ import { AppShell } from "@/components/app/AppShell";
 import { CrmBadge } from "@/components/app/CrmBadge";
 import { SignatureOrganismeBadge } from "@/components/dossier/SignatureOrganismeBadge";
 import { SupprimerDossierBouton } from "@/components/dossier/SupprimerDossierBouton";
+import { KanbanDossiers } from "@/components/dossier/KanbanDossiers";
 import { adminNav } from "@/components/app/nav";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -49,6 +50,7 @@ type Row = {
 function AdminDossiers() {
   const { isAdmin, isConseillere, isSuperAdmin, loading, user } = useAuth();
   const queryClient = useQueryClient();
+  const [vue, setVue] = useState<"liste" | "kanban">("liste");
   const [search, setSearch] = useState("");
   const [filtre, setFiltre] = useState("actifs");
   const [openId, setOpenId] = useState<string | null>(null);
@@ -166,7 +168,30 @@ function AdminDossiers() {
       title="CRM suivi de dossier"
       subtitle="Pipeline en 7 étapes, de la demande de validation au paiement du formateur"
     >
-      <div className="grid gap-3 sm:grid-cols-4 xl:grid-cols-8">
+      <div className="flex flex-wrap items-center gap-2">
+        <Button
+          size="sm"
+          variant={vue === "liste" ? "teal" : "outline"}
+          onClick={() => setVue("liste")}
+        >
+          Liste
+        </Button>
+        <Button
+          size="sm"
+          variant={vue === "kanban" ? "teal" : "outline"}
+          onClick={() => setVue("kanban")}
+        >
+          Kanban
+        </Button>
+      </div>
+
+      {vue === "kanban" ? (
+        <div className="mt-6">
+          <KanbanDossiers mode="admin" />
+        </div>
+      ) : (
+      <>
+      <div className="mt-6 grid gap-3 sm:grid-cols-4 xl:grid-cols-8">
         {compteurs.map((c) => (
           <Card key={c.statut} className="rounded-xl border-border/70">
             <CardContent className="p-4">
@@ -298,6 +323,8 @@ function AdminDossiers() {
           ))
         )}
       </div>
+      </>
+      )}
     </AppShell>
   );
 }

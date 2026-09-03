@@ -16,7 +16,6 @@ import {
 import { supabase } from "@/integrations/supabase/client";
 import {
   PIECES,
-  PIECES_GENERABLES,
   PIECE_SOURCES,
   PIECE_STATUTS,
   type PieceStatut,
@@ -28,6 +27,8 @@ import {
   renderPieceBlob,
 } from "@/lib/dossier/pdf";
 import type { DossierDonnees } from "@/lib/dossier/types";
+import { pieceVisibleSelonStatut } from "@/lib/dossier/visibilite";
+import type { CrmStatut } from "@/lib/crm";
 
 type PieceRow = {
   id: string;
@@ -40,11 +41,15 @@ export function PiecesPanel({
   dossierId,
   formateurId,
   donnees,
+  statutCrm,
 }: {
   dossierId: string;
   formateurId: string;
   donnees: DossierDonnees;
+  /** Masque les pièces non encore révélées à ce stade du pipeline (3A, F0C). */
+  statutCrm?: CrmStatut | null;
 }) {
+  const pieces = PIECES.filter((p) => pieceVisibleSelonStatut(p.code, statutCrm ?? undefined));
   const queryClient = useQueryClient();
   const [busy, setBusy] = useState<string | null>(null);
   const [zipping, setZipping] = useState(false);
@@ -102,11 +107,11 @@ export function PiecesPanel({
   async function exportZip() {
     setZipping(true);
     try {
-      const recap = PIECES.map(
+      const recap = pieces.map(
         (p) => `${p.code};${p.label};${PIECE_SOURCES[p.source]};${PIECE_STATUTS[statutOf(p.code)].label}`,
       );
       const blob = await exportDossierZip(
-        PIECES_GENERABLES.map((p) => p.code),
+        pieces.filter((p) => p.generable).map((p) => p.code),
         donnees,
         [
           {
@@ -124,7 +129,7 @@ export function PiecesPanel({
     }
   }
 
-  const complets = PIECES.filter((p) => statutOf(p.code) === "complete").length;
+  const complets = pieces.filter((p) => statutOf(p.code) === "complete").length;
 
   return (
     <Card className="rounded-2xl border-border/70 shadow-soft">
@@ -133,7 +138,7 @@ export function PiecesPanel({
           <div>
             <h2 className="text-base font-semibold">Pièces du dossier formation</h2>
             <p className="text-sm text-muted-foreground">
-              {complets}/{PIECES.length} pièces complétées
+              {complets}/{pieces.length} pièces complétées
             </p>
           </div>
           <Button variant="cta" disabled={zipping} onClick={() => void exportZip()}>
@@ -143,7 +148,7 @@ export function PiecesPanel({
         </div>
 
         <ul className="mt-5 divide-y divide-border">
-          {PIECES.map((piece) => {
+          {pieces.map((piece) => {
             const statut = statutOf(piece.code);
             const row = rows?.find((r) => r.code === piece.code);
             return (

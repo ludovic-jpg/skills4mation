@@ -48,6 +48,7 @@ export const TONE_CLASSES: Record<Tone, string> = {
 export const DOCUMENT_TYPES = {
   signe: "Document signé",
   accord_financement: "Accord de financement",
+  refus_financement: "Refus de financement",
   qualiopi_final: "Pack Qualiopi final",
 } as const;
 

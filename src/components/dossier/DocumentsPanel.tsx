@@ -10,17 +10,24 @@ import { Label } from "@/components/ui/label";
 import { supabase } from "@/integrations/supabase/client";
 import { docFileName, documentsApplicables } from "@/lib/dossier/html";
 import { nomRangement, type DossierDonnees } from "@/lib/dossier/types";
+import type { CrmStatut } from "@/lib/crm";
 
 export function DocumentsPanel({
   dossierId,
   formateurId,
   donnees,
+  statutCrm,
 }: {
   dossierId: string;
   formateurId: string;
   donnees: DossierDonnees;
+  /** Masque 3A / F0C avant l'accord de financement et sur la branche « refusé ». */
+  statutCrm?: CrmStatut | null;
 }) {
-  const docs = useMemo(() => documentsApplicables(donnees), [donnees]);
+  const docs = useMemo(
+    () => documentsApplicables(donnees, { statutCrm: statutCrm ?? null }),
+    [donnees, statutCrm],
+  );
   const [active, setActive] = useState(docs[0]?.code ?? "1A");
   const [zipping, setZipping] = useState(false);
   const [uploading, setUploading] = useState(false);
