@@ -2564,7 +2564,7 @@ export const FORMATIONS: Formation[] = [
     "points": [
      ": Identifier ses forces et faiblesses pour personnaliser le parcours",
      "Évaluation diagnostique basée sur les typologies d’erreurs",
-     "Présentation de la certification Le Robert : structure, attentes, scores",
+     "Présentation du parcours : étapes, attentes, critères de progression",
      ": Profil personnel d’apprentissage et plan de progression"
     ]
    },
