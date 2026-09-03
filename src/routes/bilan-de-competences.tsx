@@ -21,9 +21,9 @@ import { Card, CardContent } from "@/components/ui/card";
 import heroImage from "@/assets/formatrice-tablette.jpg";
 import consultantsImage from "@/assets/people-equipe.jpg";
 
-const TITLE = "Bilan de compétences & portage pour consultants CBC — Skills4mation";
+const TITLE = "Bilan de compétences 13 h — 1 600 € — Skills4mation";
 const DESCRIPTION =
-  "Notre formule de bilan de compétences (24 h, 3 phases, financement CPF/OPCO) et notre service de portage Qualiopi pour les consultants CBC : conformité, contractualisation, confidentialité garantie.";
+  "Bilan de compétences de 13 h en présentiel ou distanciel, réparti sur 2 mois, au tarif de 1 600 €. Trois phases réglementaires, confidentialité garantie et portage Qualiopi pour les consultants CBC.";
 
 export const Route = createFileRoute("/bilan-de-competences")({
   head: () => ({
