@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { ExternalLink, ImagePlus, Plus, Save, Trash2 } from "lucide-react";
+import { ExternalLink, ImagePlus, Save } from "lucide-react";
 import { toast } from "sonner";
 
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -15,17 +16,41 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import { SelectAutre } from "@/components/formation/SelectAutre";
 import { CATEGORIES } from "@/data/catalogue";
 import { supabase } from "@/integrations/supabase/client";
 import {
+  CERTIFICATION_OPTIONS,
+  EVALUATION_OPTIONS,
   FORMAT_OPTIONS,
-  TARIF_UNITES,
+  MODALITES_OPTIONS,
+  MOYENS_OPTIONS,
+  NIVEAUX_OPTIONS,
+  PUBLICS_OPTIONS,
   parseProgramme,
   slugify,
   visuelUrl,
   type FormationCatalogue,
   type ModuleProgramme,
 } from "@/lib/formations";
+
+const NB_MODULES = 6;
+
+const PUBLICATION_BADGE: Record<
+  string,
+  { label: string; variant: "secondary" | "outline" | "default" | "destructive" }
+> = {
+  brouillon: { label: "Non soumise", variant: "outline" },
+  en_attente: { label: "En attente de validation Skills4mation", variant: "secondary" },
+  publiee: { label: "Publiée sur le site", variant: "default" },
+  refusee: { label: "Parution refusée", variant: "destructive" },
+};
+
+function sixModules(list: ModuleProgramme[]): ModuleProgramme[] {
+  const base = list.slice(0, NB_MODULES);
+  while (base.length < NB_MODULES) base.push({ titre: "", points: [] });
+  return base;
+}
 
 type Props = {
   value: FormationCatalogue;
