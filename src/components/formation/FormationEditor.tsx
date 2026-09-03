@@ -349,52 +349,24 @@ export function FormationEditor({ value, saving, onSave }: Props) {
 
       <Card className="rounded-2xl border-border/70 shadow-soft">
         <CardContent className="p-6">
-          <div className="flex flex-wrap items-center justify-between gap-3">
-            <h2 className="text-base font-semibold">Programme détaillé</h2>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => setProgramme((p) => [...p, { titre: "", points: [] }])}
-            >
-              <Plus className="mr-1.5 size-4" /> Ajouter un module
-            </Button>
-          </div>
-          <div className="mt-4 grid gap-4">
-            {programme.length === 0 ? (
-              <p className="text-sm text-muted-foreground">
-                Aucun module. Ajoutez les séquences de votre formation.
-              </p>
-            ) : null}
-            {programme.map((module, index) => (
+          <h2 className="text-base font-semibold">Programme détaillé</h2>
+          <p className="mt-1 text-sm text-muted-foreground">
+            Six modules : indiquez un titre et le contenu de chacun. Les modules laissés vides ne
+            sont pas affichés sur la page publique.
+          </p>
+          <div className="mt-4 grid gap-4 sm:grid-cols-2">
+            {modules.map((module, index) => (
               <div key={index} className="grid gap-3 rounded-xl border border-border p-4">
-                <div className="flex items-end gap-3">
-                  <Field
-                    label={`Module ${index + 1}`}
-                    value={module.titre}
-                    onChange={(v) =>
-                      setProgramme((p) =>
-                        p.map((m, i) => (i === index ? { ...m, titre: v } : m)),
-                      )
-                    }
-                    className="flex-1"
-                  />
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    onClick={() => setProgramme((p) => p.filter((_, i) => i !== index))}
-                  >
-                    <Trash2 className="size-4" />
-                  </Button>
-                </div>
+                <Field
+                  label={`Module ${index + 1} — titre`}
+                  value={module.titre}
+                  onChange={(v) => majModule(index, { titre: v })}
+                />
                 <Area
-                  label="Contenus (un par ligne)"
+                  label="Contenu (un point par ligne)"
                   value={module.points.join("\n")}
-                  onChange={(v) =>
-                    setProgramme((p) =>
-                      p.map((m, i) => (i === index ? { ...m, points: v.split("\n") } : m)),
-                    )
-                  }
-                  rows={3}
+                  onChange={(v) => majModule(index, { points: v.split("\n") })}
+                  rows={4}
                 />
               </div>
             ))}
