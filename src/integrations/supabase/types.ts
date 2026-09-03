@@ -1260,6 +1260,48 @@ export type Database = {
         }
         Relationships: []
       }
+      reclamations: {
+        Row: {
+          created_at: string
+          email: string
+          formation_concernee: string | null
+          id: string
+          message: string
+          nom: string
+          repondu_le: string | null
+          repondu_par: string | null
+          reponse: string | null
+          statut: Database["public"]["Enums"]["reclamation_statut"]
+          type: Database["public"]["Enums"]["reclamation_type"]
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          formation_concernee?: string | null
+          id?: string
+          message: string
+          nom: string
+          repondu_le?: string | null
+          repondu_par?: string | null
+          reponse?: string | null
+          statut?: Database["public"]["Enums"]["reclamation_statut"]
+          type?: Database["public"]["Enums"]["reclamation_type"]
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          formation_concernee?: string | null
+          id?: string
+          message?: string
+          nom?: string
+          repondu_le?: string | null
+          repondu_par?: string | null
+          reponse?: string | null
+          statut?: Database["public"]["Enums"]["reclamation_statut"]
+          type?: Database["public"]["Enums"]["reclamation_type"]
+        }
+        Relationships: []
+      }
       supports_pedagogiques: {
         Row: {
           created_at: string
@@ -1409,6 +1451,8 @@ export type Database = {
         | "en_attente_tally"
         | "rapport_a_classer"
         | "complete"
+      reclamation_statut: "nouvelle" | "en_cours" | "traitee"
+      reclamation_type: "reclamation" | "difficulte" | "alea" | "appreciation"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -1578,6 +1622,8 @@ export const Constants = {
         "rapport_a_classer",
         "complete",
       ],
+      reclamation_statut: ["nouvelle", "en_cours", "traitee"],
+      reclamation_type: ["reclamation", "difficulte", "alea", "appreciation"],
     },
   },
 } as const

@@ -99,7 +99,12 @@ export function SiteFooter() {
             <li>
               <Link to="/evaluer-droit-formation">Évaluer mes droits formation</Link>
             </li>
+            <li>
+              <Link to="/reclamations">Réclamation ou difficulté ?</Link>
+            </li>
           </ul>
+
+
           <div className="mt-5 flex flex-wrap gap-3">
             <QualiopiBadge />
             <CharteDeontologieBadge />

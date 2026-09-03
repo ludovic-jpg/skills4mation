@@ -138,7 +138,19 @@ function Contact() {
             </Button>
           </CardContent>
         </Card>
+
+        <Card className="mt-4 rounded-2xl border-border/70 shadow-soft">
+          <CardContent className="flex flex-wrap items-center justify-between gap-4 p-6">
+            <p className="max-w-2xl text-sm font-medium">
+              Une réclamation, une difficulté ou un aléa à signaler sur une action de formation ?
+            </p>
+            <Button asChild variant="outline">
+              <Link to="/reclamations">Réclamation ou difficulté ?</Link>
+            </Button>
+          </CardContent>
+        </Card>
       </section>
+
 
       <section id="formulaire" className="section-shell scroll-mt-24 pb-20">
         <Card className="rounded-3xl border-border/70 shadow-soft">

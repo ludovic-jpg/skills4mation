@@ -20,6 +20,7 @@ import { Route as MentionsLegalesRouteImport } from './routes/mentions-legales'
 import { Route as PoleFormateurRouteImport } from './routes/pole-formateur'
 import { Route as PolitiqueDeConfidentialiteRouteImport } from './routes/politique-de-confidentialite'
 import { Route as PortageQualiopiRouteImport } from './routes/portage-qualiopi'
+import { Route as ReclamationsRouteImport } from './routes/reclamations'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as Char91DotmcpChar93ListToolsRouteImport } from './routes/[.mcp]/list-tools'
 import { Route as Char91DotwellKnownChar93OauthProtectedResourceRouteImport } from './routes/[.well-known]/oauth-protected-resource'
@@ -37,6 +38,7 @@ import { Route as AppAdminDemandesRouteImport } from './routes/_app.admin.demand
 import { Route as AppAdminDossiersRouteImport } from './routes/_app.admin.dossiers'
 import { Route as AppAdminFinancementsRouteImport } from './routes/_app.admin.financements'
 import { Route as AppAdminPilotageRouteImport } from './routes/_app.admin.pilotage'
+import { Route as AppAdminReclamationsRouteImport } from './routes/_app.admin.reclamations'
 import { Route as AppAdminValidationRouteImport } from './routes/_app.admin.validation'
 import { Route as AppApprenantIndexRouteImport } from './routes/_app.apprenant.index'
 import { Route as AppEspaceIndexRouteImport } from './routes/_app.espace.index'
@@ -112,6 +114,11 @@ const PolitiqueDeConfidentialiteRoute =
 const PortageQualiopiRoute = PortageQualiopiRouteImport.update({
   id: '/portage-qualiopi',
   path: '/portage-qualiopi',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReclamationsRoute = ReclamationsRouteImport.update({
+  id: '/reclamations',
+  path: '/reclamations',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
@@ -200,6 +207,11 @@ const AppAdminFinancementsRoute = AppAdminFinancementsRouteImport.update({
 const AppAdminPilotageRoute = AppAdminPilotageRouteImport.update({
   id: '/admin/pilotage',
   path: '/admin/pilotage',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAdminReclamationsRoute = AppAdminReclamationsRouteImport.update({
+  id: '/admin/reclamations',
+  path: '/admin/reclamations',
   getParentRoute: () => AppRoute,
 } as any)
 const AppAdminValidationRoute = AppAdminValidationRouteImport.update({
@@ -322,6 +334,7 @@ export interface FileRoutesByFullPath {
   '/pole-formateur': typeof PoleFormateurRoute
   '/politique-de-confidentialite': typeof PolitiqueDeConfidentialiteRoute
   '/portage-qualiopi': typeof PortageQualiopiRoute
+  '/reclamations': typeof ReclamationsRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
@@ -338,6 +351,7 @@ export interface FileRoutesByFullPath {
   '/admin/dossiers': typeof AppAdminDossiersRoute
   '/admin/financements': typeof AppAdminFinancementsRoute
   '/admin/pilotage': typeof AppAdminPilotageRoute
+  '/admin/reclamations': typeof AppAdminReclamationsRoute
   '/admin/validation': typeof AppAdminValidationRoute
   '/espace/candidature': typeof AppEspaceCandidatureRoute
   '/espace/financement': typeof AppEspaceFinancementRoute
@@ -372,6 +386,7 @@ export interface FileRoutesByTo {
   '/pole-formateur': typeof PoleFormateurRoute
   '/politique-de-confidentialite': typeof PolitiqueDeConfidentialiteRoute
   '/portage-qualiopi': typeof PortageQualiopiRoute
+  '/reclamations': typeof ReclamationsRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
@@ -388,6 +403,7 @@ export interface FileRoutesByTo {
   '/admin/dossiers': typeof AppAdminDossiersRoute
   '/admin/financements': typeof AppAdminFinancementsRoute
   '/admin/pilotage': typeof AppAdminPilotageRoute
+  '/admin/reclamations': typeof AppAdminReclamationsRoute
   '/admin/validation': typeof AppAdminValidationRoute
   '/espace/candidature': typeof AppEspaceCandidatureRoute
   '/espace/financement': typeof AppEspaceFinancementRoute
@@ -424,6 +440,7 @@ export interface FileRoutesById {
   '/pole-formateur': typeof PoleFormateurRoute
   '/politique-de-confidentialite': typeof PolitiqueDeConfidentialiteRoute
   '/portage-qualiopi': typeof PortageQualiopiRoute
+  '/reclamations': typeof ReclamationsRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
@@ -440,6 +457,7 @@ export interface FileRoutesById {
   '/_app/admin/dossiers': typeof AppAdminDossiersRoute
   '/_app/admin/financements': typeof AppAdminFinancementsRoute
   '/_app/admin/pilotage': typeof AppAdminPilotageRoute
+  '/_app/admin/reclamations': typeof AppAdminReclamationsRoute
   '/_app/admin/validation': typeof AppAdminValidationRoute
   '/_app/espace/candidature': typeof AppEspaceCandidatureRoute
   '/_app/espace/financement': typeof AppEspaceFinancementRoute
@@ -476,6 +494,7 @@ export interface FileRouteTypes {
     | '/pole-formateur'
     | '/politique-de-confidentialite'
     | '/portage-qualiopi'
+    | '/reclamations'
     | '/sitemap.xml'
     | '/.mcp/list-tools'
     | '/.well-known/oauth-protected-resource'
@@ -492,6 +511,7 @@ export interface FileRouteTypes {
     | '/admin/dossiers'
     | '/admin/financements'
     | '/admin/pilotage'
+    | '/admin/reclamations'
     | '/admin/validation'
     | '/espace/candidature'
     | '/espace/financement'
@@ -526,6 +546,7 @@ export interface FileRouteTypes {
     | '/pole-formateur'
     | '/politique-de-confidentialite'
     | '/portage-qualiopi'
+    | '/reclamations'
     | '/sitemap.xml'
     | '/.mcp/list-tools'
     | '/.well-known/oauth-protected-resource'
@@ -542,6 +563,7 @@ export interface FileRouteTypes {
     | '/admin/dossiers'
     | '/admin/financements'
     | '/admin/pilotage'
+    | '/admin/reclamations'
     | '/admin/validation'
     | '/espace/candidature'
     | '/espace/financement'
@@ -577,6 +599,7 @@ export interface FileRouteTypes {
     | '/pole-formateur'
     | '/politique-de-confidentialite'
     | '/portage-qualiopi'
+    | '/reclamations'
     | '/sitemap.xml'
     | '/.mcp/list-tools'
     | '/.well-known/oauth-protected-resource'
@@ -593,6 +616,7 @@ export interface FileRouteTypes {
     | '/_app/admin/dossiers'
     | '/_app/admin/financements'
     | '/_app/admin/pilotage'
+    | '/_app/admin/reclamations'
     | '/_app/admin/validation'
     | '/_app/espace/candidature'
     | '/_app/espace/financement'
@@ -629,6 +653,7 @@ export interface RootRouteChildren {
   PoleFormateurRoute: typeof PoleFormateurRoute
   PolitiqueDeConfidentialiteRoute: typeof PolitiqueDeConfidentialiteRoute
   PortageQualiopiRoute: typeof PortageQualiopiRoute
+  ReclamationsRoute: typeof ReclamationsRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   Char91DotmcpChar93ListToolsRoute: typeof Char91DotmcpChar93ListToolsRoute
   Char91DotwellKnownChar93OauthProtectedResourceRoute: typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
@@ -724,6 +749,13 @@ declare module '@tanstack/react-router' {
       path: '/portage-qualiopi'
       fullPath: '/portage-qualiopi'
       preLoaderRoute: typeof PortageQualiopiRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reclamations': {
+      id: '/reclamations'
+      path: '/reclamations'
+      fullPath: '/reclamations'
+      preLoaderRoute: typeof ReclamationsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/sitemap.xml': {
@@ -843,6 +875,13 @@ declare module '@tanstack/react-router' {
       path: '/admin/pilotage'
       fullPath: '/admin/pilotage'
       preLoaderRoute: typeof AppAdminPilotageRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/admin/reclamations': {
+      id: '/_app/admin/reclamations'
+      path: '/admin/reclamations'
+      fullPath: '/admin/reclamations'
+      preLoaderRoute: typeof AppAdminReclamationsRouteImport
       parentRoute: typeof AppRoute
     }
     '/_app/admin/validation': {
@@ -1002,6 +1041,7 @@ interface AppRouteChildren {
   AppAdminDossiersRoute: typeof AppAdminDossiersRoute
   AppAdminFinancementsRoute: typeof AppAdminFinancementsRoute
   AppAdminPilotageRoute: typeof AppAdminPilotageRoute
+  AppAdminReclamationsRoute: typeof AppAdminReclamationsRoute
   AppAdminValidationRoute: typeof AppAdminValidationRoute
   AppEspaceCandidatureRoute: typeof AppEspaceCandidatureRoute
   AppEspaceFinancementRoute: typeof AppEspaceFinancementRoute
@@ -1027,6 +1067,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppAdminDossiersRoute: AppAdminDossiersRoute,
   AppAdminFinancementsRoute: AppAdminFinancementsRoute,
   AppAdminPilotageRoute: AppAdminPilotageRoute,
+  AppAdminReclamationsRoute: AppAdminReclamationsRoute,
   AppAdminValidationRoute: AppAdminValidationRoute,
   AppEspaceCandidatureRoute: AppEspaceCandidatureRoute,
   AppEspaceFinancementRoute: AppEspaceFinancementRoute,
@@ -1059,6 +1100,7 @@ const rootRouteChildren: RootRouteChildren = {
   PoleFormateurRoute: PoleFormateurRoute,
   PolitiqueDeConfidentialiteRoute: PolitiqueDeConfidentialiteRoute,
   PortageQualiopiRoute: PortageQualiopiRoute,
+  ReclamationsRoute: ReclamationsRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   Char91DotmcpChar93ListToolsRoute: Char91DotmcpChar93ListToolsRoute,
   Char91DotwellKnownChar93OauthProtectedResourceRoute:
