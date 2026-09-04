@@ -257,3 +257,10 @@ export function pieceLabel(code: string) {
 export function pieceMode(code: string): PieceMode {
   return PIECES.find((p) => p.code === code)?.mode ?? "signature";
 }
+
+/**
+ * Socle documentaire présenté au formateur dans « Mes documents » : ces six pièces
+ * sont générées automatiquement à la soumission du dossier et consultables ensuite
+ * en lecture seule. Les autres pièces restent gérées par les circuits existants.
+ */
+export const PIECES_SOCLE = ["1A", "1C", "2", "F0A", "F3", "F5"] as const;

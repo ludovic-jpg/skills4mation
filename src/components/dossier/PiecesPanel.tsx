@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { toast } from "sonner";
-import { Archive, ExternalLink, FileDown, FileText } from "lucide-react";
+import { Archive, FileDown, FileText } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -14,18 +14,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { supabase } from "@/integrations/supabase/client";
-import {
-  PIECES,
-  PIECE_SOURCES,
-  PIECE_STATUTS,
-  type PieceStatut,
-} from "@/lib/dossier/pieces";
-import {
-  downloadBlob,
-  exportDossierZip,
-  pieceFileName,
-  renderPieceBlob,
-} from "@/lib/dossier/pdf";
+import { PIECES, PIECE_SOURCES, PIECE_STATUTS, type PieceStatut } from "@/lib/dossier/pieces";
+import { downloadBlob, exportDossierZip, pieceFileName, renderPieceBlob } from "@/lib/dossier/pdf";
 import type { DossierDonnees } from "@/lib/dossier/types";
 import { pieceVisibleSelonStatut } from "@/lib/dossier/visibilite";
 import type { CrmStatut } from "@/lib/crm";
@@ -108,7 +98,8 @@ export function PiecesPanel({
     setZipping(true);
     try {
       const recap = pieces.map(
-        (p) => `${p.code};${p.label};${PIECE_SOURCES[p.source]};${PIECE_STATUTS[statutOf(p.code)].label}`,
+        (p) =>
+          `${p.code};${p.label};${PIECE_SOURCES[p.source]};${PIECE_STATUTS[statutOf(p.code)].label}`,
       );
       const blob = await exportDossierZip(
         pieces.filter((p) => p.generable).map((p) => p.code),
@@ -172,13 +163,8 @@ export function PiecesPanel({
                     <p className="mt-1 text-sm text-muted-foreground">{piece.description}</p>
                   </div>
                   <div className="flex shrink-0 flex-wrap items-center gap-2">
-                    {piece.matrice ? (
-                      <Button asChild variant="outline" size="sm">
-                        <a href={piece.matrice} target="_blank" rel="noreferrer">
-                          <ExternalLink className="size-4" /> Matrice
-                        </a>
-                      </Button>
-                    ) : null}
+                    {/* Le lien vers la matrice interne n'est jamais exposé au formateur. */}
+
                     {piece.generable ? (
                       <Button
                         variant="teal"
