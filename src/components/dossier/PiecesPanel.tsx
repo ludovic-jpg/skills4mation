@@ -18,7 +18,11 @@ import { supabase } from "@/integrations/supabase/client";
 import { PIECES, PIECE_SOURCES, PIECE_STATUTS, type PieceStatut } from "@/lib/dossier/pieces";
 import { downloadBlob, exportDossierZip, pieceFileName, renderPieceBlob } from "@/lib/dossier/pdf";
 import type { DossierDonnees } from "@/lib/dossier/types";
-import { pieceVisibleSelonStatut } from "@/lib/dossier/visibilite";
+import {
+  PIECES_ENVOI_TIERS,
+  pieceVisibleSelonStatut,
+  prerequisEnvoiTiersManquants,
+} from "@/lib/dossier/visibilite";
 import type { CrmStatut } from "@/lib/crm";
 
 type PieceRow = {
@@ -87,6 +91,13 @@ export function PiecesPanel({
     if (row) return row.statut;
     return PIECES.find((p) => p.code === code)?.statutInitial ?? "a_generer";
   }
+
+  // Signal (non bloquant) : 1A / 1C / 2 ne devraient partir chez un tiers qu'après
+  // retour du recueil des besoins (F0A) et du test de positionnement (TP).
+  const prerequisManquants = prerequisEnvoiTiersManquants({
+    F0A: statutOf("F0A"),
+    TP: statutOf("TP"),
+  });
 
   async function generer(code: string) {
     setBusy(code);
@@ -169,6 +180,16 @@ export function PiecesPanel({
                       </span>
                     </div>
                     <p className="mt-1 text-sm text-muted-foreground">{piece.description}</p>
+                    {PIECES_ENVOI_TIERS.includes(piece.code) && prerequisManquants.length > 0 ? (
+                      <p className="mt-1 text-xs text-amber-600">
+                        À envoyer de préférence après retour de{" "}
+                        {prerequisManquants
+                          .map((c) => (c === "F0A" ? "Recueil des besoins (F0A)" : "Test de positionnement (TP)"))
+                          .join(" et ")}{" "}
+                        : sans cela, la convention et le programme partent sans connaître le niveau
+                        réel de l'apprenant.
+                      </p>
+                    ) : null}
                   </div>
                   <div className="flex shrink-0 flex-wrap items-center gap-2">
                     {/* Le lien vers la matrice interne n'est jamais exposé au formateur. */}

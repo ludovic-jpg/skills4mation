@@ -25,6 +25,10 @@ import { envoyerDocumentsFinancement } from "@/lib/dossier-communication.functio
 import { DOCUMENTS } from "@/lib/dossier/html";
 import { mergeDonnees } from "@/lib/dossier/types";
 import { pieceLabel } from "@/lib/dossier/pieces";
+import {
+  PREREQUIS_ENVOI_TIERS,
+  prerequisEnvoiTiersManquants,
+} from "@/lib/dossier/visibilite";
 import { parseQuestions } from "@/lib/outils";
 
 export const Route = createFileRoute("/_app/espace/communication")({
@@ -158,6 +162,29 @@ function CommunicationPage() {
   const statut = ligne?.dossiers?.statut_crm;
   const donnees = useMemo(() => mergeDonnees(ligne?.dossiers?.donnees), [ligne]);
 
+  // Statuts des pièces retournées par l'apprenant, pour signaler un envoi trop précoce.
+  const { data: piecesRetour } = useQuery({
+    queryKey: ["communication-prerequis", dossierId],
+    enabled: Boolean(dossierId),
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("dossier_pieces")
+        .select("code, statut")
+        .eq("dossier_id", dossierId)
+        .in("code", PREREQUIS_ENVOI_TIERS);
+      if (error) throw error;
+      return data ?? [];
+    },
+  });
+
+  const prerequisManquants = useMemo(
+    () =>
+      prerequisEnvoiTiersManquants(
+        Object.fromEntries((piecesRetour ?? []).map((p) => [p.code, p.statut])),
+      ),
+    [piecesRetour],
+  );
+
   const envoiSimple = useMutation({
     mutationFn: async ({ code, html, label }: { code: string; html: string; label: string }) => {
       if (!ligne) throw new Error("Choisissez un apprenant et un dossier.");
@@ -272,6 +299,15 @@ function CommunicationPage() {
             bouton="Envoyer les 3 pièces"
             occupe={occupe}
             onClick={() => envoiFinancement.mutate()}
+            avertissement={
+              prerequisManquants.length > 0
+                ? `À envoyer de préférence après retour de ${prerequisManquants
+                    .map((c) =>
+                      c === "F0A" ? "Recueil des besoins (F0A)" : "Test de positionnement (TP)",
+                    )
+                    .join(" et ")} : sans cela, la convention et le programme partent sans connaître le niveau réel de l'apprenant.`
+                : undefined
+            }
           />
 
           <Card className="rounded-2xl border-border/70 shadow-soft">
@@ -387,6 +423,7 @@ function Action({
   bouton,
   occupe,
   onClick,
+  avertissement,
 }: {
   icon: typeof Send;
   titre: string;
@@ -394,6 +431,8 @@ function Action({
   bouton: string;
   occupe: boolean;
   onClick: () => void;
+  /** Signal non bloquant affiché au-dessus du bouton d'envoi. */
+  avertissement?: string | undefined;
 }) {
   return (
     <Card className="rounded-2xl border-border/70 shadow-soft">
@@ -403,6 +442,7 @@ function Action({
           <h2 className="text-base font-semibold">{titre}</h2>
         </div>
         <p className="text-sm text-muted-foreground">{texte}</p>
+        {avertissement ? <p className="text-xs text-amber-600">{avertissement}</p> : null}
         <Button variant="teal" disabled={occupe} onClick={onClick} className="w-fit">
           <Send className="size-4" /> {bouton}
         </Button>
