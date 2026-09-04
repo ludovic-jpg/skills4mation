@@ -667,6 +667,8 @@ export type Database = {
           created_at: string
           date_debut: string | null
           date_fin: string | null
+          demande_financement_deposee: boolean
+          demande_financement_mode: string | null
           documents_json: Json
           donnees: Json
           dossier_nom: string | null
@@ -696,6 +698,8 @@ export type Database = {
           created_at?: string
           date_debut?: string | null
           date_fin?: string | null
+          demande_financement_deposee?: boolean
+          demande_financement_mode?: string | null
           documents_json?: Json
           donnees?: Json
           dossier_nom?: string | null
@@ -725,6 +729,8 @@ export type Database = {
           created_at?: string
           date_debut?: string | null
           date_fin?: string | null
+          demande_financement_deposee?: boolean
+          demande_financement_mode?: string | null
           documents_json?: Json
           donnees?: Json
           dossier_nom?: string | null
