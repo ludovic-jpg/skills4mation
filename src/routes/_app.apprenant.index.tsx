@@ -70,7 +70,7 @@ function EspaceApprenant() {
       const { data, error } = await supabase
         .from("dossier_apprenants")
         .select(
-          "id, dossier_id, prenom, nom, email, dossiers(titre_formation, entreprise_nom, date_debut, date_fin, statut_crm)",
+          "id, dossier_id, prenom, nom, email, dossiers(titre_formation, entreprise_nom, date_debut, date_fin, statut_crm, demande_financement_deposee)",
         );
       if (error) throw error;
       return data ?? [];
