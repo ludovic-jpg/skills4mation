@@ -67,7 +67,11 @@ function DossierDetail() {
   const { data: dossier, isLoading } = useQuery({
     queryKey: ["dossier", id],
     queryFn: async () => {
-      const { data, error } = await supabase.from("dossiers").select("*").eq("id", id).maybeSingle();
+      const { data, error } = await supabase
+        .from("dossiers")
+        .select("*")
+        .eq("id", id)
+        .maybeSingle();
       if (error) throw error;
       return data;
     },
@@ -97,7 +101,6 @@ function DossierDetail() {
       return data ?? [];
     },
   });
-
 
   const autresDossiers = useQuery({
     queryKey: ["dossiers-base-financement", user?.id],
@@ -198,10 +201,7 @@ function DossierDetail() {
       message: string;
     }) => {
       if (!dossier || !user) return;
-      const { error } = await supabase
-        .from("dossiers")
-        .update({ statut_crm: cible })
-        .eq("id", id);
+      const { error } = await supabase.from("dossiers").update({ statut_crm: cible }).eq("id", id);
       if (error) throw error;
       await supabase.from("dossier_historique").insert({
         dossier_id: id,
@@ -218,7 +218,6 @@ function DossierDetail() {
     },
     onError: () => toast.error("Action impossible."),
   });
-
 
   const saveDonnees = useMutation({
     mutationFn: async (donnees: DossierDonnees) => {
@@ -249,7 +248,6 @@ function DossierDetail() {
     (p) => p.code === "F3" && (p.statut === "complete" || Boolean(p.fichier_url)),
   );
 
-
   return (
     <AppShell
       items={FORMATEUR_NAV}
@@ -279,7 +277,6 @@ function DossierDetail() {
             <TabsTrigger value="supports">Supports pédagogiques</TabsTrigger>
           </TabsList>
 
-
           <TabsContent value="variables">
             <DossierWizard
               key={id}
@@ -305,267 +302,258 @@ function DossierDetail() {
             <EnvoisPanel dossierId={id} donnees={donnees} />
           </TabsContent>
 
-
-
           <TabsContent value="supports">
             {user ? <SupportsPanel dossierId={id} formateurId={user.id} /> : null}
           </TabsContent>
 
-
-
           <TabsContent value="suivi" className="grid gap-6 lg:grid-cols-[1.3fr_1fr]">
             <div className="grid gap-6">
+              <Card className="rounded-2xl border-border/70 shadow-soft">
+                <CardContent className="p-6">
+                  <div className="flex flex-wrap items-center justify-between gap-3">
+                    <CrmBadge statut={statut} />
+                    <span className="text-xs text-muted-foreground">
+                      Créé le {formatDate(dossier.created_at)}
+                    </span>
+                  </div>
+                  <Progress value={crmProgress(statut)} className="mt-4" />
+                  <p className="mt-3 text-sm text-muted-foreground">
+                    {CRM_STATUTS[statut]?.description}
+                  </p>
+
+                  <dl className="mt-6 grid gap-3 text-sm sm:grid-cols-2">
+                    <Info label="Entreprise" value={dossier.entreprise_nom} />
+                    <Info label="SIRET" value={dossier.entreprise_siret} />
+                    <Info label="Formation" value={dossier.titre_formation} />
+                    <Info label="Début" value={formatDate(dossier.date_debut)} />
+                    <Info label="Fin" value={formatDate(dossier.date_fin)} />
+                    <Info
+                      label="Numéro ADF"
+                      value={donnees.adf || "En attente de validation par Skills4mation"}
+                    />
+                    <Info label="Référence" value={dossier.id} />
+                  </dl>
+
+                  {dossier.commentaire_admin ? (
+                    <p className="mt-5 rounded-xl bg-muted/60 p-4 text-sm">
+                      <span className="font-semibold">Commentaire de l'équipe : </span>
+                      {dossier.commentaire_admin}
+                    </p>
+                  ) : null}
+
+                  <div className="mt-5">
+                    <SignatureOrganismeBadge dossier={dossier} />
+                  </div>
+
+                  <div className="mt-6 flex flex-wrap gap-3">
+                    {dossier.drive_folder_url ? (
+                      <Button asChild variant="teal">
+                        <a href={dossier.drive_folder_url} target="_blank" rel="noreferrer">
+                          <ExternalLink className="size-4" /> Documents générés
+                        </a>
+                      </Button>
+                    ) : null}
+                    {statut === "dossier_valide" ? (
+                      <Button
+                        variant="cta"
+                        disabled={changerStatut.isPending}
+                        onClick={() =>
+                          changerStatut.mutate({
+                            cible: "demande_financement",
+                            commentaire: "Demande de financement initiée par le formateur.",
+                            message: "Demande de financement transmise à l'équipe.",
+                          })
+                        }
+                      >
+                        Demander le financement
+                      </Button>
+                    ) : null}
+                    {statut === "accord_financement" || statut === "finalisation_administrative" ? (
+                      <Button
+                        variant="cta"
+                        disabled={changerStatut.isPending}
+                        onClick={() =>
+                          changerStatut.mutate({
+                            cible: "formation_en_cours",
+                            commentaire: "Démarrage de la formation signalé par le formateur.",
+                            message: "Démarrage de la formation enregistré.",
+                          })
+                        }
+                      >
+                        Signaler le début de la formation
+                      </Button>
+                    ) : null}
+                    {statut === "formation_en_cours" ? (
+                      <Button
+                        variant="cta"
+                        disabled={changerStatut.isPending}
+                        onClick={() => {
+                          if (!emargementsPrets)
+                            toast.warning(
+                              "Les émargements (F3) ne sont pas encore générés : pensez à les compléter.",
+                            );
+                          changerStatut.mutate({
+                            cible: "formation_realisee",
+                            commentaire: "Formation signalée comme réalisée par le formateur.",
+                            message: "Formation signalée comme réalisée.",
+                          });
+                        }}
+                      >
+                        Signaler la formation comme réalisée
+                      </Button>
+                    ) : null}
+                  </div>
+                </CardContent>
+              </Card>
+
+              <ChecklistPaiement dossierId={id} statutCrm={statut} />
+
+              {etape === "B" ? (
+                <Card className="rounded-2xl border-border/70 shadow-soft">
+                  <CardContent className="grid gap-4 p-6">
+                    <h2 className="text-base font-semibold">Étape B — Demande de financement</h2>
+                    <p className="text-sm text-muted-foreground">
+                      Reprenez si besoin les informations de financement d'un autre dossier actif,
+                      puis complétez la convention.
+                    </p>
+                    <div className="flex flex-wrap items-end gap-3">
+                      <div className="grid min-w-64 gap-1.5">
+                        <span className="text-xs text-muted-foreground">
+                          Dossier servant de base
+                        </span>
+                        <Select value={baseFinancement} onValueChange={setBaseFinancement}>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Choisir un dossier actif" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {(autresDossiers.data ?? []).map((d) => (
+                              <SelectItem key={d.id} value={d.id}>
+                                {d.dossier_nom || dossierNom(d)}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </div>
+                      <Button
+                        variant="outline"
+                        disabled={!baseFinancement || reprendreFinancement.isPending}
+                        onClick={() => reprendreFinancement.mutate(baseFinancement)}
+                      >
+                        Reprendre ces informations
+                      </Button>
+                      <Button asChild variant="teal">
+                        <Link to="/espace/financement">Rédiger la convention</Link>
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              ) : null}
+
+              {etape === "C" ? (
+                <Card className="rounded-2xl border-border/70 shadow-soft">
+                  <CardContent className="grid gap-4 p-6">
+                    <h2 className="text-base font-semibold">Étape C — Obtention du financement</h2>
+                    <p className="text-sm text-muted-foreground">
+                      Finalisez la convention et les dernières pièces administratives avant le
+                      démarrage.
+                    </p>
+                    <div className="flex flex-wrap gap-3">
+                      <Button asChild variant="teal">
+                        <Link to="/espace/financement">Espace convention</Link>
+                      </Button>
+                      <Button variant="outline" onClick={() => setOnglet("signatures")}>
+                        Envoi &amp; signatures
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              ) : null}
+
+              {etape === "D" ? (
+                <Card className="rounded-2xl border-border/70 shadow-soft">
+                  <CardContent className="grid gap-4 p-6">
+                    <h2 className="text-base font-semibold">Étape D — Fin de la formation</h2>
+                    <div className="flex flex-wrap gap-3">
+                      <Button variant="outline" onClick={() => setOnglet("documents")}>
+                        Émargements (F3)
+                      </Button>
+                      <Button variant="outline" onClick={() => setOnglet("documents")}>
+                        Évaluation des acquis (EA)
+                      </Button>
+                      <Button variant="outline" onClick={() => setOnglet("signatures")}>
+                        Satisfaction à chaud (F5)
+                      </Button>
+                      <Button asChild variant="outline">
+                        <Link to="/espace/outils">Commentaires</Link>
+                      </Button>
+                    </div>
+                    <div className="grid gap-2 border-t border-border pt-4">
+                      <div className="flex flex-wrap items-center gap-2">
+                        <h3 className="text-sm font-semibold">Résultat de la certification</h3>
+                        <Badge variant="outline">
+                          {CERTIFICATION_LABELS[
+                            (dossier.certification_statut ??
+                              "") as keyof typeof CERTIFICATION_LABELS
+                          ] ?? "Non renseigné"}
+                        </Badge>
+                      </div>
+                      <p className="text-xs text-muted-foreground">
+                        À renseigner après l'évaluation des acquis. La convocation à l'examen de
+                        certification s'envoie manuellement depuis l'onglet « Envoi &amp; signatures
+                        ».
+                      </p>
+                      <div className="flex flex-wrap gap-3 pt-1">
+                        {(["en_cours", "obtenue", "non_obtenue"] as const).map((valeur) => (
+                          <Button
+                            key={valeur}
+                            size="sm"
+                            variant={dossier.certification_statut === valeur ? "cta" : "outline"}
+                            disabled={majCertification.isPending}
+                            onClick={() => majCertification.mutate(valeur)}
+                          >
+                            {CERTIFICATION_LABELS[valeur]}
+                          </Button>
+                        ))}
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              ) : null}
+            </div>
+
             <Card className="rounded-2xl border-border/70 shadow-soft">
               <CardContent className="p-6">
-                <div className="flex flex-wrap items-center justify-between gap-3">
-                  <CrmBadge statut={statut} />
-                  <span className="text-xs text-muted-foreground">
-                    Créé le {formatDate(dossier.created_at)}
-                  </span>
-                </div>
-                <Progress value={crmProgress(statut)} className="mt-4" />
-                <p className="mt-3 text-sm text-muted-foreground">{CRM_STATUTS[statut]?.description}</p>
-
-                <dl className="mt-6 grid gap-3 text-sm sm:grid-cols-2">
-                  <Info label="Entreprise" value={dossier.entreprise_nom} />
-                  <Info label="SIRET" value={dossier.entreprise_siret} />
-                  <Info label="Formation" value={dossier.titre_formation} />
-                  <Info label="Début" value={formatDate(dossier.date_debut)} />
-                  <Info label="Fin" value={formatDate(dossier.date_fin)} />
-                  <Info
-                    label="Numéro ADF"
-                    value={donnees.adf || "En attente de validation par Skills4mation"}
-                  />
-                  <Info label="Référence" value={dossier.id} />
-                </dl>
-
-                {dossier.commentaire_admin ? (
-                  <p className="mt-5 rounded-xl bg-muted/60 p-4 text-sm">
-                    <span className="font-semibold">Commentaire de l'équipe : </span>
-                    {dossier.commentaire_admin}
-                  </p>
-                ) : null}
-
-                <div className="mt-5">
-                  <SignatureOrganismeBadge dossier={dossier} />
-                </div>
-
-                <div className="mt-6 flex flex-wrap gap-3">
-                  {dossier.drive_folder_url ? (
-                    <Button asChild variant="teal">
-                      <a href={dossier.drive_folder_url} target="_blank" rel="noreferrer">
-                        <ExternalLink className="size-4" /> Documents générés
-                      </a>
-                    </Button>
+                <h2 className="text-base font-semibold">Historique des étapes</h2>
+                <ol className="mt-4 space-y-4">
+                  {(historique ?? []).map((h) => (
+                    <li key={h.id} className="border-l-2 border-border pl-4">
+                      <p className="text-sm font-semibold">
+                        {CRM_STATUTS[h.nouveau_statut as CrmStatut]?.label ?? h.nouveau_statut}
+                      </p>
+                      <p className="text-xs text-muted-foreground">{formatDate(h.created_at)}</p>
+                      {h.commentaire ? <p className="mt-1 text-sm">{h.commentaire}</p> : null}
+                    </li>
+                  ))}
+                  {(historique ?? []).length === 0 ? (
+                    <li className="text-sm text-muted-foreground">
+                      Aucun mouvement enregistré : le dossier vient d'être créé.
+                    </li>
                   ) : null}
-                  {statut === "dossier_valide" ? (
-                    <Button
-                      variant="cta"
-                      disabled={changerStatut.isPending}
-                      onClick={() =>
-                        changerStatut.mutate({
-                          cible: "demande_financement",
-                          commentaire: "Demande de financement initiée par le formateur.",
-                          message: "Demande de financement transmise à l'équipe.",
-                        })
-                      }
+                </ol>
+
+                <h3 className="mt-8 text-sm font-semibold">Pipeline complet</h3>
+                <ol className="mt-3 space-y-2 text-xs text-muted-foreground">
+                  {CRM_PIPELINE.map((etape) => (
+                    <li
+                      key={etape}
+                      className={etape === statut ? "font-semibold text-foreground" : undefined}
                     >
-                      Demander le financement
-                    </Button>
-                  ) : null}
-                  {statut === "accord_financement" || statut === "finalisation_administrative" ? (
-                    <Button
-                      variant="cta"
-                      disabled={changerStatut.isPending}
-                      onClick={() =>
-                        changerStatut.mutate({
-                          cible: "formation_en_cours",
-                          commentaire: "Démarrage de la formation signalé par le formateur.",
-                          message: "Démarrage de la formation enregistré.",
-                        })
-                      }
-                    >
-                      Signaler le début de la formation
-                    </Button>
-                  ) : null}
-                  {statut === "formation_en_cours" ? (
-                    <Button
-                      variant="cta"
-                      disabled={changerStatut.isPending}
-                      onClick={() => {
-                        if (!emargementsPrets)
-                          toast.warning(
-                            "Les émargements (F3) ne sont pas encore générés : pensez à les compléter.",
-                          );
-                        changerStatut.mutate({
-                          cible: "formation_realisee",
-                          commentaire: "Formation signalée comme réalisée par le formateur.",
-                          message: "Formation signalée comme réalisée.",
-                        });
-                      }}
-                    >
-                      Signaler la formation comme réalisée
-                    </Button>
-                  ) : null}
-
-                </div>
+                      {CRM_STATUTS[etape].etape}. {CRM_STATUTS[etape].label}
+                    </li>
+                  ))}
+                </ol>
               </CardContent>
             </Card>
-
-            <ChecklistPaiement dossierId={id} statutCrm={statut} />
-
-
-
-            {etape === "B" ? (
-              <Card className="rounded-2xl border-border/70 shadow-soft">
-                <CardContent className="grid gap-4 p-6">
-                  <h2 className="text-base font-semibold">Étape B — Demande de financement</h2>
-                  <p className="text-sm text-muted-foreground">
-                    Reprenez si besoin les informations de financement d'un autre dossier actif,
-                    puis complétez la convention.
-                  </p>
-                  <div className="flex flex-wrap items-end gap-3">
-                    <div className="grid min-w-64 gap-1.5">
-                      <span className="text-xs text-muted-foreground">
-                        Dossier servant de base
-                      </span>
-                      <Select value={baseFinancement} onValueChange={setBaseFinancement}>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Choisir un dossier actif" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {(autresDossiers.data ?? []).map((d) => (
-                            <SelectItem key={d.id} value={d.id}>
-                              {d.dossier_nom || dossierNom(d)}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    </div>
-                    <Button
-                      variant="outline"
-                      disabled={!baseFinancement || reprendreFinancement.isPending}
-                      onClick={() => reprendreFinancement.mutate(baseFinancement)}
-                    >
-                      Reprendre ces informations
-                    </Button>
-                    <Button asChild variant="teal">
-                      <Link to="/espace/financement">Rédiger la convention</Link>
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            ) : null}
-
-            {etape === "C" ? (
-              <Card className="rounded-2xl border-border/70 shadow-soft">
-                <CardContent className="grid gap-4 p-6">
-                  <h2 className="text-base font-semibold">
-                    Étape C — Obtention du financement
-                  </h2>
-                  <p className="text-sm text-muted-foreground">
-                    Finalisez la convention et les dernières pièces administratives avant le
-                    démarrage.
-                  </p>
-                  <div className="flex flex-wrap gap-3">
-                    <Button asChild variant="teal">
-                      <Link to="/espace/financement">Espace convention</Link>
-                    </Button>
-                    <Button variant="outline" onClick={() => setOnglet("signatures")}>
-                      Envoi &amp; signatures
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            ) : null}
-
-            {etape === "D" ? (
-              <Card className="rounded-2xl border-border/70 shadow-soft">
-                <CardContent className="grid gap-4 p-6">
-                  <h2 className="text-base font-semibold">Étape D — Fin de la formation</h2>
-                  <div className="flex flex-wrap gap-3">
-                    <Button variant="outline" onClick={() => setOnglet("documents")}>
-                      Émargements (F3)
-                    </Button>
-                    <Button variant="outline" onClick={() => setOnglet("documents")}>
-                      Évaluation des acquis (EA)
-                    </Button>
-                    <Button variant="outline" onClick={() => setOnglet("signatures")}>
-                      Satisfaction à chaud (F5)
-                    </Button>
-                    <Button asChild variant="outline">
-                      <Link to="/espace/outils">Commentaires</Link>
-                    </Button>
-                  </div>
-                  <div className="grid gap-2 border-t border-border pt-4">
-                    <div className="flex flex-wrap items-center gap-2">
-                      <h3 className="text-sm font-semibold">Résultat de la certification</h3>
-                      <Badge variant="outline">
-                        {CERTIFICATION_LABELS[
-                          (dossier.certification_statut ?? "") as keyof typeof CERTIFICATION_LABELS
-                        ] ?? "Non renseigné"}
-                      </Badge>
-                    </div>
-                    <p className="text-xs text-muted-foreground">
-                      À renseigner après l'évaluation des acquis. La convocation à l'examen de
-                      certification s'envoie manuellement depuis l'onglet « Envoi &amp;
-                      signatures ».
-                    </p>
-                    <div className="flex flex-wrap gap-3 pt-1">
-                      {(["en_cours", "obtenue", "non_obtenue"] as const).map((valeur) => (
-                        <Button
-                          key={valeur}
-                          size="sm"
-                          variant={
-                            dossier.certification_statut === valeur ? "cta" : "outline"
-                          }
-                          disabled={majCertification.isPending}
-                          onClick={() => majCertification.mutate(valeur)}
-                        >
-                          {CERTIFICATION_LABELS[valeur]}
-                        </Button>
-                      ))}
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ) : null}
-
-          </div>
-
-          <Card className="rounded-2xl border-border/70 shadow-soft">
-            <CardContent className="p-6">
-              <h2 className="text-base font-semibold">Historique des étapes</h2>
-              <ol className="mt-4 space-y-4">
-                {(historique ?? []).map((h) => (
-                  <li key={h.id} className="border-l-2 border-border pl-4">
-                    <p className="text-sm font-semibold">
-                      {CRM_STATUTS[h.nouveau_statut as CrmStatut]?.label ?? h.nouveau_statut}
-                    </p>
-                    <p className="text-xs text-muted-foreground">{formatDate(h.created_at)}</p>
-                    {h.commentaire ? <p className="mt-1 text-sm">{h.commentaire}</p> : null}
-                  </li>
-                ))}
-                {(historique ?? []).length === 0 ? (
-                  <li className="text-sm text-muted-foreground">
-                    Aucun mouvement enregistré : le dossier vient d'être créé.
-                  </li>
-                ) : null}
-              </ol>
-
-              <h3 className="mt-8 text-sm font-semibold">Pipeline complet</h3>
-              <ol className="mt-3 space-y-2 text-xs text-muted-foreground">
-                {CRM_PIPELINE.map((etape) => (
-                  <li
-                    key={etape}
-                    className={etape === statut ? "font-semibold text-foreground" : undefined}
-                  >
-                    {CRM_STATUTS[etape].etape}. {CRM_STATUTS[etape].label}
-                  </li>
-                ))}
-              </ol>
-            </CardContent>
-          </Card>
           </TabsContent>
         </Tabs>
       )}
