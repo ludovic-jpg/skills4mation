@@ -5,8 +5,12 @@ import { useMemo, useState } from "react";
 import { FormationCard, type CarteFormation } from "@/components/formations/FormationCard";
 import { Media } from "@/components/site/Media";
 import { PublicLayout } from "@/components/site/PublicLayout";
-import { categoryLabel } from "@/lib/catalogue-historique";
-import { FORMATIONS_STATIQUES } from "@/data/formations-statiques";
+import {
+  categoryLabel,
+  chargerCatalogueHistorique,
+  type CarteHistorique,
+} from "@/lib/catalogue-historique";
+
 import { SPHERES } from "@/data/spheres";
 import { supabase } from "@/integrations/supabase/client";
 import { dureeLabel, tarifLabel, visuelUrl } from "@/lib/formations";
