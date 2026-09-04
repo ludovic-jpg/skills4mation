@@ -18,9 +18,15 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { categoryLabel } from "@/data/catalogue";
-import { FORMATION_DETAILS, formationDetail, type FormationDetail } from "@/data/formation-details";
-import { formationStatique, type FormationStatique } from "@/data/formations-statiques";
+import {
+  categoryLabel,
+  chargerCatalogueHistorique,
+  ficheDepuisLigne,
+  ficheMeta,
+  type CarteHistorique,
+  type FicheFormation,
+} from "@/lib/catalogue-historique";
+
 import { supabase } from "@/integrations/supabase/client";
 import {
   FINANCEMENTS_APPRENANT,
@@ -35,15 +41,11 @@ import {
 const BASE = "https://skills4mation.com";
 
 type Donnees =
-  | { kind: "statique"; statique: FormationStatique; detail: FormationDetail }
+  | { kind: "statique"; fiche: FicheFormation; related: CarteHistorique[] }
   | { kind: "db"; formation: FormationCatalogue };
 
 export const Route = createFileRoute("/formations/$slug")({
   loader: async ({ params }): Promise<Donnees> => {
-    const statique = formationStatique(params.slug);
-    const detail = FORMATION_DETAILS[params.slug];
-    if (statique && detail) return { kind: "statique", statique, detail };
-
     const { data, error } = await supabase
       .from("formations_catalogue")
       .select("*")
@@ -51,8 +53,17 @@ export const Route = createFileRoute("/formations/$slug")({
       .eq("publiee", true)
       .maybeSingle();
     if (error || !data) throw notFound();
-    return { kind: "db", formation: data as FormationCatalogue };
+    const formation = data as FormationCatalogue;
+    if (formation.source === "historique") {
+      const fiche = ficheDepuisLigne(formation);
+      const related = fiche.categorie
+        ? await chargerCatalogueHistorique(fiche.categorie)
+        : [];
+      return { kind: "statique", fiche, related };
+    }
+    return { kind: "db", formation };
   },
+
   head: ({ loaderData, params }) => {
     if (!loaderData) {
       return {
@@ -64,24 +75,22 @@ export const Route = createFileRoute("/formations/$slug")({
     }
     const url = `${BASE}/formations/${params.slug}`;
     const titre =
-      loaderData.kind === "statique"
-        ? loaderData.statique.title
-        : loaderData.formation.titre;
+      loaderData.kind === "statique" ? loaderData.fiche.titre : loaderData.formation.titre;
     const description = (
       loaderData.kind === "statique"
-        ? loaderData.detail.intro || loaderData.detail.objectif
+        ? loaderData.fiche.intro || loaderData.fiche.objectif
         : loaderData.formation.intro ?? `Formation ${titre} avec Skills4mation.`
     ).slice(0, 155);
-    const image =
+    const brut =
       loaderData.kind === "statique"
-        ? `${BASE}${loaderData.statique.img}`
-        : loaderData.formation.visuel_url
-          ? `${BASE}${visuelUrl(loaderData.formation.visuel_url)}`
-          : null;
+        ? loaderData.fiche.image
+        : loaderData.formation.visuel_url;
+    const image = brut ? `${BASE}${visuelUrl(brut)}` : null;
     const certification =
       loaderData.kind === "statique"
-        ? loaderData.detail.certification?.libelle
+        ? loaderData.fiche.certification?.libelle
         : loaderData.formation.certification;
+
     return {
       meta: [
         { title: `${titre} — Formation Skills4mation` },
@@ -144,7 +153,7 @@ function PageFormationRoute() {
   if (data.kind === "statique") {
     return (
       <PublicLayout>
-        <FicheStatique formation={data.statique} detail={data.detail} />
+        <FicheStatique fiche={data.fiche} related={data.related} />
       </PublicLayout>
     );
   }
@@ -155,7 +164,7 @@ function PageFormation() {
   const data = Route.useLoaderData();
   const f = (data as { kind: "db"; formation: FormationCatalogue }).formation;
   const programme = parseProgramme(f.programme);
-  const detail = formationDetail(f.slug);
+  const detail = ficheMeta(f.programme);
   const visuel = visuelUrl(f.visuel_url);
 
   const photo = visuelUrl(f.photo_formateur_url);
@@ -279,7 +288,7 @@ function PageFormation() {
             </Card>
           ) : null}
 
-          {detail ? (
+          {detail.certification ? (
             <Card className="rounded-2xl border-border/70">
               <CardContent className="grid gap-4 p-6 text-sm">
                 <h2 className="inline-flex items-center gap-2 text-lg font-semibold">

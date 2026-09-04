@@ -5,8 +5,12 @@ import { useMemo, useState } from "react";
 import { FormationCard, type CarteFormation } from "@/components/formations/FormationCard";
 import { Media } from "@/components/site/Media";
 import { PublicLayout } from "@/components/site/PublicLayout";
-import { categoryLabel } from "@/data/catalogue";
-import { FORMATIONS_STATIQUES } from "@/data/formations-statiques";
+import {
+  categoryLabel,
+  chargerCatalogueHistorique,
+  type CarteHistorique,
+} from "@/lib/catalogue-historique";
+
 import { SPHERES } from "@/data/spheres";
 import { supabase } from "@/integrations/supabase/client";
 import { dureeLabel, tarifLabel, visuelUrl } from "@/lib/formations";
@@ -36,16 +40,23 @@ export const Route = createFileRoute("/formations/")({
       ? { categorie: search["categorie"] as string }
       : {},
   loader: async () => {
-    const { data } = await supabase
-      .from("formations_catalogue")
-      .select(
-        "id, slug, titre, categorie, duree_heures, duree_jours, duree_texte, tarif_ht, tarif_unite, tarif_details, visuel_url, formateur_nom",
-      )
-      .eq("publiee", true)
-      .eq("source", "formateur")
-      .order("titre", { ascending: true });
-    return { formateurs: (data ?? []) as LigneFormateur[] };
+    const [historique, formateursRes] = await Promise.all([
+      chargerCatalogueHistorique(),
+      supabase
+        .from("formations_catalogue")
+        .select(
+          "id, slug, titre, categorie, duree_heures, duree_jours, duree_texte, tarif_ht, tarif_unite, tarif_details, visuel_url, formateur_nom",
+        )
+        .eq("publiee", true)
+        .eq("source", "formateur")
+        .order("titre", { ascending: true }),
+    ]);
+    return {
+      historique,
+      formateurs: (formateursRes.data ?? []) as LigneFormateur[],
+    };
   },
+
   head: () => ({
     meta: [
       { title: "Catalogue de formations professionnelles — Skills4mation" },
@@ -70,18 +81,18 @@ export const Route = createFileRoute("/formations/")({
 });
 
 function CataloguePublic() {
-  const { formateurs } = Route.useLoaderData();
+  const { historique, formateurs } = Route.useLoaderData();
   const { categorie } = Route.useSearch();
   const navigate = Route.useNavigate();
   const [q, setQ] = useState("");
 
   const toutes = useMemo<CarteFormation[]>(
     () => [
-      ...FORMATIONS_STATIQUES.map((f) => ({
+      ...(historique as CarteHistorique[]).map((f) => ({
         slug: f.slug,
-        titre: f.title,
-        categorie: f.cat as string,
-        image: f.img,
+        titre: f.titre,
+        categorie: f.categorie,
+        image: visuelUrl(f.visuel_url),
       })),
       ...formateurs.map((f) => ({
         slug: f.slug,
@@ -94,8 +105,9 @@ function CataloguePublic() {
             .join(" · ") || null,
       })),
     ],
-    [formateurs],
+    [historique, formateurs],
   );
+
 
   const categories = useMemo(() => {
     const compte = new Map<string, number>();

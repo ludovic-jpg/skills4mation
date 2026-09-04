@@ -2,7 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
 
 import { Media } from "@/components/site/Media";
-import { categoryLabel } from "@/data/catalogue";
+import { categoryLabel } from "@/lib/catalogue-historique";
 
 export type CarteFormation = {
   slug: string;
