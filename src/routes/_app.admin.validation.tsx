@@ -23,7 +23,7 @@ export const Route = createFileRoute("/_app/admin/validation")({
 });
 
 /** Pièces obligatoires avant validation du dossier par la conseillère. */
-const PIECES_OBLIGATOIRES = ["1A", "2", "3A", "F0A", "F0C"] as const;
+const PIECES_OBLIGATOIRES = ["1A", "1C", "2", "F0A"] as const;
 
 type Row = {
   id: string;
