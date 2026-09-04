@@ -41,7 +41,7 @@ const CALENDRIER_SOCLE: Record<string, CrmStatut> = {
   "2": "dossier_valide",
   F0A: "dossier_valide",
   F3: "formation_en_cours",
-  F9: "accord_financement",
+  FSK: "formation_realisee",
   F5: "formation_realisee",
 };
 

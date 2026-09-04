@@ -8,9 +8,9 @@ import { Card, CardContent } from "@/components/ui/card";
 import { supabase } from "@/integrations/supabase/client";
 
 /**
- * Dépôt de la facture réelle du formateur (F9R). La facture pro forma (F9)
- * générée automatiquement sert de modèle : elle ne remplace pas ce dépôt,
- * exigé avant la mise en paiement.
+ * Dépôt de la facture réelle du formateur (F9R). La facture Skills4mation (FSK)
+ * est celle émise par l'organisme à l'entreprise cliente (ou à l'OPCO en cas de
+ * subrogation) : elle ne remplace pas ce dépôt, exigé avant la mise en paiement.
  */
 export function FactureReelleCard({
   dossierId,
@@ -80,8 +80,9 @@ export function FactureReelleCard({
           <Receipt className="size-4 text-primary" /> Ma facture (F9R)
         </h2>
         <p className="mt-1 text-sm text-muted-foreground">
-          La facture pro forma du dossier est un modèle de référence : elle ne vaut pas facture.
-          Déposez ici votre facture réelle, exigée avant la mise en paiement.
+          La facture Skills4mation (FSK) du dossier est celle adressée à l'entreprise cliente (ou à
+          l'OPCO en cas de subrogation). Déposez ici votre propre facture de formateur, exigée avant
+          la mise en paiement.
         </p>
 
         {piece?.fichier_url ? (
