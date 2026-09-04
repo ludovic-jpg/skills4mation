@@ -75,24 +75,22 @@ export const Route = createFileRoute("/formations/$slug")({
     }
     const url = `${BASE}/formations/${params.slug}`;
     const titre =
-      loaderData.kind === "statique"
-        ? loaderData.statique.title
-        : loaderData.formation.titre;
+      loaderData.kind === "statique" ? loaderData.fiche.titre : loaderData.formation.titre;
     const description = (
       loaderData.kind === "statique"
-        ? loaderData.detail.intro || loaderData.detail.objectif
+        ? loaderData.fiche.intro || loaderData.fiche.objectif
         : loaderData.formation.intro ?? `Formation ${titre} avec Skills4mation.`
     ).slice(0, 155);
-    const image =
+    const brut =
       loaderData.kind === "statique"
-        ? `${BASE}${loaderData.statique.img}`
-        : loaderData.formation.visuel_url
-          ? `${BASE}${visuelUrl(loaderData.formation.visuel_url)}`
-          : null;
+        ? loaderData.fiche.image
+        : loaderData.formation.visuel_url;
+    const image = brut ? `${BASE}${visuelUrl(brut)}` : null;
     const certification =
       loaderData.kind === "statique"
-        ? loaderData.detail.certification?.libelle
+        ? loaderData.fiche.certification?.libelle
         : loaderData.formation.certification;
+
     return {
       meta: [
         { title: `${titre} — Formation Skills4mation` },
