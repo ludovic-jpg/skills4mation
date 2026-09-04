@@ -40,9 +40,9 @@ export const Route = createFileRoute("/auth")({
 });
 
 const ATOUTS = [
-  { icon: FolderCheck, texte: "Vos dossiers de formation certifiés Qualiopi en 48 h" },
-  { icon: Signature, texte: "Signature et archivage de vos pièces en ligne" },
-  { icon: ShieldCheck, texte: "Paiement sous 10 jours ouvrés à réception des fonds" },
+  { icon: FolderCheck, texte: "Vos dossiers de formation certifiés Qualiopi en 24 h" },
+  { icon: Signature, texte: "Signature et archivage de vos pièces en ligne, 100 % conforme Qualiopi" },
+  { icon: ShieldCheck, texte: "Paiement sous 8 jours ouvrés à réception des fonds" },
 ];
 
 function AuthPage() {

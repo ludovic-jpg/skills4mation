@@ -48,7 +48,7 @@ import { Card, CardContent } from "@/components/ui/card";
 
 const TITRE = "Portage Qualiopi Formation et Bilan de Compétences | Skills4mation";
 const DESCRIPTION =
-  "Portage Qualiopi pour vos actions de formation et vos bilans de compétences : conventions en 48h, accès aux financements OPCO, autonomie pédagogique totale. 99 € HT/an + 20 % de commission.";
+  "Portage Qualiopi pour vos actions de formation et vos bilans de compétences : conventions en 24h, accès aux financements OPCO, autonomie pédagogique totale. 99 € HT/an + 20 % de commission.";
 
 const FAQ = [
   {
@@ -65,7 +65,7 @@ const FAQ = [
   },
   {
     q: "Combien de temps pour démarrer ?",
-    a: "Votre convention et vos documents sont produits en 48h chrono après validation de votre dossier.",
+    a: "Votre convention et vos documents sont produits en 24h chrono après validation de votre dossier.",
   },
   {
     q: "Quel est le coût du portage Qualiopi ?",
@@ -143,7 +143,7 @@ const ETAPES = [
   {
     icon: FileSignature,
     titre: "Constitution du dossier",
-    texte: "Nous produisons votre convention et vos documents obligatoires en 48h chrono.",
+    texte: "Nous produisons votre convention et vos documents obligatoires en 24h chrono.",
   },
   {
     icon: GraduationCap,
@@ -224,7 +224,7 @@ const SERVICE_AAS = [
     icon: MonitorSmartphone,
     titre: "Portail administratif dédié",
     texte:
-      "Une web app pour constituer l'ensemble de vos dossiers formation en 48h, conformes et certifiés Qualiopi.",
+      "Une web app pour constituer l'ensemble de vos dossiers formation en 24h, conformes et certifiés Qualiopi.",
   },
   {
     icon: LayoutDashboard,
@@ -271,7 +271,7 @@ const AMBASSADEUR = [
 ];
 
 const KPI = [
-  { valeur: "48h", label: "Dossier prêt" },
+  { valeur: "24h", label: "Dossier prêt" },
   { valeur: "10 j", label: "Paiement ouvrés" },
   { valeur: "100 %", label: "Conformité" },
   { valeur: "4,8/5", label: "Satisfaction" },
@@ -291,7 +291,7 @@ function PortageQualiopi() {
             <p className="mt-5 max-w-xl text-lg text-primary-foreground/85">
               Skills4mation porte votre activité de formation sous sa certification Qualiopi : vous
               concevez et animez, nous gérons la conformité, les financements et l'administratif.
-              Conventions prêtes en 48h chrono, commission unique et transparente.
+              Conventions prêtes en 24h chrono, commission unique et transparente.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Button asChild variant="cta" size="lg">
@@ -314,7 +314,7 @@ function PortageQualiopi() {
               </li>
               <li className="flex items-center gap-2">
                 <CalendarClock className="size-4 text-cta" aria-hidden /> Documents et conventions
-                en 48h chrono
+                en 24h chrono
               </li>
             </ul>
           </div>
@@ -417,14 +417,14 @@ function PortageQualiopi() {
       <section id="portail" className="section-shell scroll-mt-24 py-16 lg:py-20">
         <p className="eyebrow">Portage Qualiopi as a Service</p>
         <h2 className="mt-3 max-w-3xl text-3xl font-semibold sm:text-4xl">
-          Un portail administratif pour monter vos dossiers formation en 48h, certifiés Qualiopi
+          Un portail administratif pour monter vos dossiers formation en 24h, certifiés Qualiopi
         </h2>
         <p className="mt-5 max-w-3xl text-muted-foreground">
           Notre web app centralise tout votre portage : profil formateur, pièces administratives et
           pédagogiques, signature électronique, archivage prêt pour l'audit, publication de vos
           parcours de formation, suivi de vos dossiers et de vos KPI de recommandation. Une solution
           sur mesure pour vous faciliter le suivi de vos dossiers formation — et un paiement sous
-          10 jours ouvrés à réception des fonds.
+          8 jours ouvrés à réception des fonds.
         </p>
 
         <div className="mt-10 grid items-center gap-6 lg:grid-cols-2">
@@ -483,11 +483,11 @@ function PortageQualiopi() {
             </ul>
             <div className="mt-8 rounded-2xl border border-border/70 bg-card p-5 shadow-soft">
               <p className="flex items-center gap-2 text-sm font-semibold">
-                <Timer className="size-5 text-secondary" aria-hidden /> Paiement sous 10 jours
+                <Timer className="size-5 text-secondary" aria-hidden /> Paiement sous 8 jours
                 ouvrés
               </p>
               <p className="mt-2 text-sm text-muted-foreground">
-                Votre rémunération est reversée sous 10 jours ouvrés à réception des fonds du
+                Votre rémunération est reversée sous 8 jours ouvrés à réception des fonds du
                 financeur — suivi du règlement visible dans votre espace.
               </p>
             </div>

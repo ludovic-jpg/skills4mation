@@ -292,7 +292,7 @@ function facture(d: DossierDonnees) {
       ${ligne("Total à régler (exonéré de TVA)", e(euros(f.montantHt || d.formateur.totalRecette)))}
     </div>
     <h2>Règlement</h2>
-    ${ligne("Conditions", "Paiement sous 10 jours ouvrés à réception des fonds du financeur")}
+    ${ligne("Conditions", "Paiement sous 8 jours ouvrés à réception des fonds du financeur")}
     ${ligne("IBAN", v(f.iban))}
     <p class="muted" style="margin-top:12px">Exonération de TVA au titre de l'article 261-4-4°a du CGI. Pas d'escompte pour paiement anticipé. Pénalités de retard : taux légal en vigueur.</p>`,
   );

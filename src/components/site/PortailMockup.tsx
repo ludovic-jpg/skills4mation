@@ -81,10 +81,10 @@ const ECRANS: Ecran[] = [
   },
   {
     id: "pieces",
-    label: "Pièces & dossier 48h",
+    label: "Pièces & dossier 24h",
     icon: FolderCheck,
     titre: "Dossier formation — conforme Qualiopi",
-    sousTitre: "Pièces administratives et pédagogiques générées et contrôlées en 48h.",
+    sousTitre: "Pièces administratives et pédagogiques générées et contrôlées en 24h.",
     render: () => (
       <div className="space-y-2">
         <div className="flex items-center gap-2 rounded-lg bg-secondary/10 px-3 py-2 text-xs font-semibold text-secondary">

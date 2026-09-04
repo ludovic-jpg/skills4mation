@@ -97,8 +97,8 @@ function ArticlePage() {
             Envie de former sous notre certification Qualiopi ?
           </h2>
           <p className="mt-2 text-sm text-muted-foreground">
-            Portage Qualiopi pour vos formations et vos bilans de compétences : conventions en 48h,
-            accès aux financements, paiement sous 10 jours ouvrés.
+            Portage Qualiopi pour vos formations et vos bilans de compétences : conventions en 24h,
+            accès aux financements, paiement sous 8 jours ouvrés.
           </p>
           <div className="mt-5 flex flex-wrap gap-3">
             <Button asChild variant="cta">
