@@ -40,16 +40,23 @@ export const Route = createFileRoute("/formations/")({
       ? { categorie: search["categorie"] as string }
       : {},
   loader: async () => {
-    const { data } = await supabase
-      .from("formations_catalogue")
-      .select(
-        "id, slug, titre, categorie, duree_heures, duree_jours, duree_texte, tarif_ht, tarif_unite, tarif_details, visuel_url, formateur_nom",
-      )
-      .eq("publiee", true)
-      .eq("source", "formateur")
-      .order("titre", { ascending: true });
-    return { formateurs: (data ?? []) as LigneFormateur[] };
+    const [historique, formateursRes] = await Promise.all([
+      chargerCatalogueHistorique(),
+      supabase
+        .from("formations_catalogue")
+        .select(
+          "id, slug, titre, categorie, duree_heures, duree_jours, duree_texte, tarif_ht, tarif_unite, tarif_details, visuel_url, formateur_nom",
+        )
+        .eq("publiee", true)
+        .eq("source", "formateur")
+        .order("titre", { ascending: true }),
+    ]);
+    return {
+      historique,
+      formateurs: (formateursRes.data ?? []) as LigneFormateur[],
+    };
   },
+
   head: () => ({
     meta: [
       { title: "Catalogue de formations professionnelles — Skills4mation" },
