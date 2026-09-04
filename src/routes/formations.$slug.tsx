@@ -164,7 +164,7 @@ function PageFormation() {
   const data = Route.useLoaderData();
   const f = (data as { kind: "db"; formation: FormationCatalogue }).formation;
   const programme = parseProgramme(f.programme);
-  const detail = formationDetail(f.slug);
+  const detail = ficheMeta(f.programme);
   const visuel = visuelUrl(f.visuel_url);
 
   const photo = visuelUrl(f.photo_formateur_url);
