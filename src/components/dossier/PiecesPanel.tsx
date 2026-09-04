@@ -180,6 +180,16 @@ export function PiecesPanel({
                       </span>
                     </div>
                     <p className="mt-1 text-sm text-muted-foreground">{piece.description}</p>
+                    {PIECES_ENVOI_TIERS.includes(piece.code) && prerequisManquants.length > 0 ? (
+                      <p className="mt-1 text-xs text-amber-600">
+                        À envoyer de préférence après retour de{" "}
+                        {prerequisManquants
+                          .map((c) => (c === "F0A" ? "Recueil des besoins (F0A)" : "Test de positionnement (TP)"))
+                          .join(" et ")}{" "}
+                        : sans cela, la convention et le programme partent sans connaître le niveau
+                        réel de l'apprenant.
+                      </p>
+                    ) : null}
                   </div>
                   <div className="flex shrink-0 flex-wrap items-center gap-2">
                     {/* Le lien vers la matrice interne n'est jamais exposé au formateur. */}
