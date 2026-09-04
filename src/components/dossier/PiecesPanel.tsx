@@ -172,13 +172,8 @@ export function PiecesPanel({
                     <p className="mt-1 text-sm text-muted-foreground">{piece.description}</p>
                   </div>
                   <div className="flex shrink-0 flex-wrap items-center gap-2">
-                    {piece.matrice ? (
-                      <Button asChild variant="outline" size="sm">
-                        <a href={piece.matrice} target="_blank" rel="noreferrer">
-                          <ExternalLink className="size-4" /> Matrice
-                        </a>
-                      </Button>
-                    ) : null}
+                    {/* Le lien vers la matrice interne n'est jamais exposé au formateur. */}
+
                     {piece.generable ? (
                       <Button
                         variant="teal"
