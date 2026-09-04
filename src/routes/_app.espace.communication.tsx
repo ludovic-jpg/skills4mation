@@ -423,6 +423,7 @@ function Action({
   bouton,
   occupe,
   onClick,
+  avertissement,
 }: {
   icon: typeof Send;
   titre: string;
@@ -430,6 +431,8 @@ function Action({
   bouton: string;
   occupe: boolean;
   onClick: () => void;
+  /** Signal non bloquant affiché au-dessus du bouton d'envoi. */
+  avertissement?: string;
 }) {
   return (
     <Card className="rounded-2xl border-border/70 shadow-soft">
@@ -439,6 +442,7 @@ function Action({
           <h2 className="text-base font-semibold">{titre}</h2>
         </div>
         <p className="text-sm text-muted-foreground">{texte}</p>
+        {avertissement ? <p className="text-xs text-amber-600">{avertissement}</p> : null}
         <Button variant="teal" disabled={occupe} onClick={onClick} className="w-fit">
           <Send className="size-4" /> {bouton}
         </Button>
