@@ -73,8 +73,17 @@ export function DemandeFinancementOpcoEmail({
             </Text>
           )}
           <Text style={{ color: '#12181f', fontSize: '14px', marginTop: '16px' }}>
-            Il vous reste à <strong>déposer la demande de prise en charge sur le portail de votre
-            OPCO</strong> avec ces pièces, puis à nous transmettre l&apos;accord de financement.
+            <strong>Vous n&apos;avez rien à déposer vous-même :</strong> le compte OPCO appartient à
+            l&apos;entreprise cliente. L&apos;apprenant dispose désormais, dans son espace
+            Skills4mation, d&apos;une étape dédiée pour déposer la demande de prise en charge — soit
+            lui-même s&apos;il a accès à l&apos;espace OPCO de son entreprise, soit en la
+            transmettant à son service RH.
+          </Text>
+          <Text style={{ color: '#12181f', fontSize: '14px' }}>
+            Dès qu&apos;il confirme le dépôt, vous recevez une notification et le dossier passe
+            automatiquement au statut « demande de financement ». Votre rôle est de vérifier que
+            les pièces ci-dessus sont bien à jour et de nous transmettre l&apos;accord de
+            financement dès sa réception.
           </Text>
           <Button
             href={lien}
