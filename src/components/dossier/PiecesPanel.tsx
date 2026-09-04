@@ -18,7 +18,11 @@ import { supabase } from "@/integrations/supabase/client";
 import { PIECES, PIECE_SOURCES, PIECE_STATUTS, type PieceStatut } from "@/lib/dossier/pieces";
 import { downloadBlob, exportDossierZip, pieceFileName, renderPieceBlob } from "@/lib/dossier/pdf";
 import type { DossierDonnees } from "@/lib/dossier/types";
-import { pieceVisibleSelonStatut } from "@/lib/dossier/visibilite";
+import {
+  PIECES_ENVOI_TIERS,
+  pieceVisibleSelonStatut,
+  prerequisEnvoiTiersManquants,
+} from "@/lib/dossier/visibilite";
 import type { CrmStatut } from "@/lib/crm";
 
 type PieceRow = {
