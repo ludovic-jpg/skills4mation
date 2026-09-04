@@ -13,7 +13,15 @@ import {
   type DragEndEvent,
   type DragStartEvent,
 } from "@dnd-kit/core";
-import { Building2, ChevronDown, ChevronRight, ExternalLink, Lock, Mail, Upload } from "lucide-react";
+import {
+  Building2,
+  ChevronDown,
+  ChevronRight,
+  ExternalLink,
+  Lock,
+  Mail,
+  Upload,
+} from "lucide-react";
 
 import { CrmBadge } from "@/components/app/CrmBadge";
 import { DocumentsPanel } from "@/components/dossier/DocumentsPanel";
@@ -156,7 +164,8 @@ export function KanbanDossiers({ mode }: { mode: "formateur" | "admin" }) {
 
   const derniereEtape = useMemo(() => {
     const map = new Map<string, string>();
-    for (const h of histoRows ?? []) if (!map.has(h.dossier_id)) map.set(h.dossier_id, h.created_at);
+    for (const h of histoRows ?? [])
+      if (!map.has(h.dossier_id)) map.set(h.dossier_id, h.created_at);
     return map;
   }, [histoRows]);
 
@@ -609,8 +618,6 @@ function DetailDossier({
 
       <ChecklistPaiement dossierId={row.id} statutCrm={row.statut_crm} />
 
-
-
       <Tabs defaultValue="documents">
         <TabsList className="flex h-auto flex-wrap justify-start">
           <TabsTrigger value="documents">
@@ -645,54 +652,56 @@ function DetailDossier({
           )}
         </TabsContent>
 
-        <TabsContent value="depot" className="mt-5">
-          <Card className="rounded-2xl border-border/70 shadow-soft">
-            <CardContent className="grid gap-3 p-6">
-              <div className="flex items-center gap-2">
-                <Upload className="size-4 text-muted-foreground" />
-                <h2 className="text-base font-semibold">Déposer une pièce du dossier</h2>
-              </div>
-              <p className="text-sm text-muted-foreground">
-                Le type est présélectionné selon la colonne courante ; la section correspondante est
-                validée dès que le dépôt réussit.
-              </p>
-              <div className="grid gap-3 sm:grid-cols-2">
-                <div className="grid gap-2">
-                  <Label>Type de pièce</Label>
-                  <Select value={type} onValueChange={(v) => setType(v as DocumentType)}>
-                    <SelectTrigger>
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {Object.entries(DOCUMENT_TYPES).map(([value, label]) => (
-                        <SelectItem key={value} value={value}>
-                          {label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+        {equipe ? (
+          <TabsContent value="depot" className="mt-5">
+            <Card className="rounded-2xl border-border/70 shadow-soft">
+              <CardContent className="grid gap-3 p-6">
+                <div className="flex items-center gap-2">
+                  <Upload className="size-4 text-muted-foreground" />
+                  <h2 className="text-base font-semibold">Déposer une pièce du dossier</h2>
                 </div>
-                <div className="grid gap-2">
-                  <Label>Fichier</Label>
-                  <Input
-                    type="file"
-                    accept=".pdf,.doc,.docx,.xlsx,.png,.jpg,.jpeg"
-                    disabled={uploading}
-                    onChange={(e) => {
-                      const file = e.target.files?.[0];
-                      if (file) onUpload(type, file);
-                    }}
-                  />
-                </div>
-              </div>
-              {!equipe ? (
-                <p className="text-xs text-muted-foreground">
-                  Les décisions de financement restent validées par l&apos;équipe Skills4mation.
+                <p className="text-sm text-muted-foreground">
+                  Le type est présélectionné selon la colonne courante ; la section correspondante
+                  est validée dès que le dépôt réussit.
                 </p>
-              ) : null}
-            </CardContent>
-          </Card>
-        </TabsContent>
+                <div className="grid gap-3 sm:grid-cols-2">
+                  <div className="grid gap-2">
+                    <Label>Type de pièce</Label>
+                    <Select value={type} onValueChange={(v) => setType(v as DocumentType)}>
+                      <SelectTrigger>
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {Object.entries(DOCUMENT_TYPES).map(([value, label]) => (
+                          <SelectItem key={value} value={value}>
+                            {label}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="grid gap-2">
+                    <Label>Fichier</Label>
+                    <Input
+                      type="file"
+                      accept=".pdf,.doc,.docx,.xlsx,.png,.jpg,.jpeg"
+                      disabled={uploading}
+                      onChange={(e) => {
+                        const file = e.target.files?.[0];
+                        if (file) onUpload(type, file);
+                      }}
+                    />
+                  </div>
+                </div>
+                {!equipe ? (
+                  <p className="text-xs text-muted-foreground">
+                    Les décisions de financement restent validées par l&apos;équipe Skills4mation.
+                  </p>
+                ) : null}
+              </CardContent>
+            </Card>
+          </TabsContent>
+        ) : null}
 
         <TabsContent value="envois" className="mt-5">
           <EnvoisPanel dossierId={row.id} donnees={donnees} />
