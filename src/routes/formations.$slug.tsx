@@ -41,15 +41,11 @@ import {
 const BASE = "https://skills4mation.com";
 
 type Donnees =
-  | { kind: "statique"; statique: FormationStatique; detail: FormationDetail }
+  | { kind: "statique"; fiche: FicheFormation; related: CarteHistorique[] }
   | { kind: "db"; formation: FormationCatalogue };
 
 export const Route = createFileRoute("/formations/$slug")({
   loader: async ({ params }): Promise<Donnees> => {
-    const statique = formationStatique(params.slug);
-    const detail = FORMATION_DETAILS[params.slug];
-    if (statique && detail) return { kind: "statique", statique, detail };
-
     const { data, error } = await supabase
       .from("formations_catalogue")
       .select("*")
@@ -57,8 +53,17 @@ export const Route = createFileRoute("/formations/$slug")({
       .eq("publiee", true)
       .maybeSingle();
     if (error || !data) throw notFound();
-    return { kind: "db", formation: data as FormationCatalogue };
+    const formation = data as FormationCatalogue;
+    if (formation.source === "historique") {
+      const fiche = ficheDepuisLigne(formation);
+      const related = fiche.categorie
+        ? await chargerCatalogueHistorique(fiche.categorie)
+        : [];
+      return { kind: "statique", fiche, related };
+    }
+    return { kind: "db", formation };
   },
+
   head: ({ loaderData, params }) => {
     if (!loaderData) {
       return {
