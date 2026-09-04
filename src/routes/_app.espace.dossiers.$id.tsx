@@ -2,16 +2,15 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { toast } from "sonner";
-import { ArrowLeft, ExternalLink, FileText, Upload } from "lucide-react";
+import { ArrowLeft, ExternalLink } from "lucide-react";
 
 import { AppShell } from "@/components/app/AppShell";
 import { CrmBadge } from "@/components/app/CrmBadge";
 import { FORMATEUR_NAV } from "@/components/app/nav";
-import { DocumentsPanel } from "@/components/dossier/DocumentsPanel";
 import { DossierWizard } from "@/components/dossier/DossierWizard";
 import type { FormationCatalogue } from "@/lib/formations";
 import { EnvoisPanel } from "@/components/dossier/EnvoisPanel";
-import { PiecesPanel } from "@/components/dossier/PiecesPanel";
+import { MesDocumentsPanel } from "@/components/dossier/MesDocumentsPanel";
 import { SupportsPanel } from "@/components/dossier/SupportsPanel";
 
 import { SignatureOrganismeBadge } from "@/components/dossier/SignatureOrganismeBadge";
@@ -34,7 +33,8 @@ import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { CRM_PIPELINE, CRM_STATUTS, crmProgress, dossierNom, type CrmStatut } from "@/lib/crm";
 import { mergeDonnees, type DossierDonnees } from "@/lib/dossier/types";
-import { DOCUMENT_TYPES, formatDate, type DocumentType } from "@/lib/statuts";
+import { formatDate } from "@/lib/statuts";
+import { genererSocleDossier } from "@/lib/dossier-socle.functions";
 
 const CERTIFICATION_LABELS = {
   en_cours: "En cours",
@@ -61,10 +61,8 @@ function DossierDetail() {
   });
   const { user } = useAuth();
   const queryClient = useQueryClient();
-  const [type, setType] = useState<DocumentType>("signe");
   const [onglet, setOnglet] = useState("suivi");
   const [baseFinancement, setBaseFinancement] = useState("");
-  const [uploading, setUploading] = useState(false);
 
   const { data: dossier, isLoading } = useQuery({
     queryKey: ["dossier", id],
@@ -100,19 +98,6 @@ function DossierDetail() {
     },
   });
 
-
-  const { data: documents } = useQuery({
-    queryKey: ["dossier-documents", id],
-    queryFn: async () => {
-      const { data, error } = await supabase
-        .from("documents_dossier")
-        .select("*")
-        .eq("dossier_id", id)
-        .order("uploaded_at", { ascending: false });
-      if (error) throw error;
-      return data ?? [];
-    },
-  });
 
   const autresDossiers = useQuery({
     queryKey: ["dossiers-base-financement", user?.id],
@@ -198,32 +183,6 @@ function DossierDetail() {
   });
 
 
-  async function uploadDocument(file: File) {
-    if (!user) return;
-    setUploading(true);
-    const path = `${user.id}/${id}/${type}-${Date.now()}-${file.name}`;
-    const { error } = await supabase.storage.from("documents").upload(path, file, { upsert: true });
-    if (error) {
-      setUploading(false);
-      toast.error("Envoi impossible.");
-      return;
-    }
-    const { error: insertError } = await supabase.from("documents_dossier").insert({
-      dossier_id: id,
-      formateur_id: user.id,
-      type,
-      fichier_url: path,
-      nom_fichier: file.name,
-    });
-    setUploading(false);
-    if (insertError) {
-      toast.error("Le document n'a pas pu être rattaché au dossier.");
-      return;
-    }
-    void queryClient.invalidateQueries({ queryKey: ["dossier-documents", id] });
-    toast.success("Document déposé.");
-  }
-
   const saveDonnees = useMutation({
     mutationFn: async (donnees: DossierDonnees) => {
       const { error } = await supabase
@@ -278,9 +237,8 @@ function DossierDetail() {
           <TabsList>
             <TabsTrigger value="suivi">Suivi</TabsTrigger>
             <TabsTrigger value="variables">Formulaire du dossier</TabsTrigger>
-            <TabsTrigger value="documents">Documents</TabsTrigger>
+            <TabsTrigger value="documents">Mes documents</TabsTrigger>
             <TabsTrigger value="signatures">Envoi &amp; signatures</TabsTrigger>
-            <TabsTrigger value="pieces">Pièces &amp; génération</TabsTrigger>
             <TabsTrigger value="supports">Supports pédagogiques</TabsTrigger>
           </TabsList>
 
@@ -306,14 +264,11 @@ function DossierDetail() {
           </TabsContent>
 
           <TabsContent value="documents">
-            {user ? (
-              <DocumentsPanel
-                dossierId={id}
-                formateurId={user.id}
-                donnees={donnees}
-                statutCrm={statut}
-              />
-            ) : null}
+            <MesDocumentsPanel
+              dossierId={id}
+              statutCrm={statut}
+              signatureOrganismeDate={dossier.signature_organisme_date}
+            />
           </TabsContent>
 
           <TabsContent value="signatures">
@@ -321,17 +276,6 @@ function DossierDetail() {
           </TabsContent>
 
 
-
-          <TabsContent value="pieces">
-            {user ? (
-              <PiecesPanel
-                dossierId={id}
-                formateurId={user.id}
-                donnees={donnees}
-                statutCrm={statut}
-              />
-            ) : null}
-          </TabsContent>
 
           <TabsContent value="supports">
             {user ? <SupportsPanel dossierId={id} formateurId={user.id} /> : null}
@@ -510,10 +454,10 @@ function DossierDetail() {
                 <CardContent className="grid gap-4 p-6">
                   <h2 className="text-base font-semibold">Étape D — Fin de la formation</h2>
                   <div className="flex flex-wrap gap-3">
-                    <Button variant="outline" onClick={() => setOnglet("pieces")}>
+                    <Button variant="outline" onClick={() => setOnglet("documents")}>
                       Émargements (F3)
                     </Button>
-                    <Button variant="outline" onClick={() => setOnglet("pieces")}>
+                    <Button variant="outline" onClick={() => setOnglet("documents")}>
                       Évaluation des acquis (EA)
                     </Button>
                     <Button variant="outline" onClick={() => setOnglet("signatures")}>
@@ -557,58 +501,6 @@ function DossierDetail() {
               </Card>
             ) : null}
 
-            <Card className="rounded-2xl border-border/70 shadow-soft">
-              <CardContent className="p-6">
-                <h2 className="text-base font-semibold">Déposer une pièce</h2>
-                <div className="mt-4 flex flex-wrap items-center gap-3">
-                  <Select value={type} onValueChange={(value) => setType(value as DocumentType)}>
-                    <SelectTrigger className="w-64">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {Object.entries(DOCUMENT_TYPES).map(([value, label]) => (
-                        <SelectItem key={value} value={value}>
-                          {label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  <label>
-                    <input
-                      type="file"
-                      className="sr-only"
-                      onChange={(event) => {
-                        const file = event.target.files?.[0];
-                        if (file) void uploadDocument(file);
-                        event.target.value = "";
-                      }}
-                    />
-                    <span className="inline-flex cursor-pointer items-center gap-2 rounded-lg border border-border px-4 py-2 text-sm font-semibold hover:bg-muted">
-                      <Upload className="size-4" /> {uploading ? "Envoi…" : "Choisir un fichier"}
-                    </span>
-                  </label>
-                </div>
-
-                <ul className="mt-5 divide-y divide-border">
-                  {(documents ?? []).map((doc) => (
-                    <li key={doc.id} className="flex items-center gap-3 py-3 text-sm">
-                      <FileText className="size-4 shrink-0 text-muted-foreground" />
-                      <span className="min-w-0 flex-1 truncate">
-                        {doc.nom_fichier || doc.fichier_url}
-                      </span>
-                      <span className="shrink-0 text-xs text-muted-foreground">
-                        {DOCUMENT_TYPES[doc.type as DocumentType] ?? doc.type}
-                      </span>
-                    </li>
-                  ))}
-                  {(documents ?? []).length === 0 ? (
-                    <li className="py-3 text-sm text-muted-foreground">
-                      Aucune pièce déposée pour l'instant.
-                    </li>
-                  ) : null}
-                </ul>
-              </CardContent>
-            </Card>
           </div>
 
           <Card className="rounded-2xl border-border/70 shadow-soft">
