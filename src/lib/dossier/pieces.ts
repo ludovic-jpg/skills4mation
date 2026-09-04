@@ -159,13 +159,13 @@ export const PIECES: PieceDef[] = [
     statutInitial: "en_attente_tally",
   },
   {
-    code: "F9",
-    label: "Facture formateur (pro forma)",
+    code: "FSK",
+    label: "Facture Skills4mation",
     source: "pdf",
     generable: true,
     mode: "signature",
     description:
-      "Facture pro forma générée automatiquement à partir des montants du dossier : modèle de référence, elle ne vaut pas facture.",
+      "Facture émise par Skills4mation à l'Entreprise (ou à l'OPCO en cas de subrogation), générée à partir des montants du dossier. Elle vaut également attestation de réalisation de la formation.",
     statutInitial: "a_generer",
   },
   {
@@ -224,6 +224,7 @@ export const PIECES_REQUISES_PAIEMENT = [
   "F5",
   "F7",
   "F9R",
+  "FSK",
 ];
 
 export function pieceLabel(code: string) {
@@ -246,4 +247,4 @@ export const PIECES_SOCLE = ["1A", "1C", "2", "F0A", "F3", "F5"] as const;
  * Documents consultables par le formateur dans « Mes documents » : le socle plus la
  * facture pro forma générée automatiquement à partir des montants du dossier.
  */
-export const DOCUMENTS_CONSULTABLES = [...PIECES_SOCLE, "F9"] as const;
+export const DOCUMENTS_CONSULTABLES = [...PIECES_SOCLE, "FSK"] as const;

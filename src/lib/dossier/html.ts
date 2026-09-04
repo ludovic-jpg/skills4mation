@@ -370,11 +370,11 @@ export const DOCUMENTS: DocDef[] = [
     destinataires: (d) => d.apprenants.map((a) => a.email ?? ""),
   },
   {
-    code: "F9",
-    label: "Facture formateur (pro forma)",
-    build: facture,
+    code: "FSK",
+    label: "Facture Skills4mation",
+    build: factureSkills4mation,
     applicable: () => true,
-    destinataires: () => ["contact@skills4mation.com"],
+    destinataires: (d) => [d.entreprise.email].filter(Boolean),
   },
 ];
 
