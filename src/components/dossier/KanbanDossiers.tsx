@@ -17,6 +17,7 @@ import { Building2, ChevronDown, ChevronRight, ExternalLink, Lock, Mail, Upload 
 
 import { CrmBadge } from "@/components/app/CrmBadge";
 import { DocumentsPanel } from "@/components/dossier/DocumentsPanel";
+import { MesDocumentsPanel } from "@/components/dossier/MesDocumentsPanel";
 import { EnvoisPanel } from "@/components/dossier/EnvoisPanel";
 import { FriseEtapes } from "@/components/dossier/FriseEtapes";
 import { PiecesPanel } from "@/components/dossier/PiecesPanel";
@@ -612,24 +613,36 @@ function DetailDossier({
 
       <Tabs defaultValue="documents">
         <TabsList className="flex h-auto flex-wrap justify-start">
-          <TabsTrigger value="documents">Documents numériques (PDF)</TabsTrigger>
-          <TabsTrigger value="depot">Déposer une pièce</TabsTrigger>
+          <TabsTrigger value="documents">
+            {equipe ? "Documents numériques (PDF)" : "Mes documents"}
+          </TabsTrigger>
+          {equipe ? <TabsTrigger value="depot">Déposer une pièce</TabsTrigger> : null}
           <TabsTrigger value="envois">Envois &amp; signatures</TabsTrigger>
         </TabsList>
 
         <TabsContent value="documents" className="mt-5 grid gap-6">
-          <PiecesPanel
-            dossierId={row.id}
-            formateurId={row.formateur_id}
-            donnees={donnees}
-            statutCrm={row.statut_crm}
-          />
-          <DocumentsPanel
-            dossierId={row.id}
-            formateurId={row.formateur_id}
-            donnees={donnees}
-            statutCrm={row.statut_crm}
-          />
+          {equipe ? (
+            <>
+              <PiecesPanel
+                dossierId={row.id}
+                formateurId={row.formateur_id}
+                donnees={donnees}
+                statutCrm={row.statut_crm}
+              />
+              <DocumentsPanel
+                dossierId={row.id}
+                formateurId={row.formateur_id}
+                donnees={donnees}
+                statutCrm={row.statut_crm}
+              />
+            </>
+          ) : (
+            <MesDocumentsPanel
+              dossierId={row.id}
+              statutCrm={row.statut_crm}
+              signatureOrganismeDate={dossier?.signature_organisme_date ?? null}
+            />
+          )}
         </TabsContent>
 
         <TabsContent value="depot" className="mt-5">
