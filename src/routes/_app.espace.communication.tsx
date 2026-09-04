@@ -432,7 +432,7 @@ function Action({
   occupe: boolean;
   onClick: () => void;
   /** Signal non bloquant affiché au-dessus du bouton d'envoi. */
-  avertissement?: string;
+  avertissement?: string | undefined;
 }) {
   return (
     <Card className="rounded-2xl border-border/70 shadow-soft">
