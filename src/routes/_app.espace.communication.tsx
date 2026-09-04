@@ -158,6 +158,29 @@ function CommunicationPage() {
   const statut = ligne?.dossiers?.statut_crm;
   const donnees = useMemo(() => mergeDonnees(ligne?.dossiers?.donnees), [ligne]);
 
+  // Statuts des pièces retournées par l'apprenant, pour signaler un envoi trop précoce.
+  const { data: piecesRetour } = useQuery({
+    queryKey: ["communication-prerequis", dossierId],
+    enabled: Boolean(dossierId),
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("dossier_pieces")
+        .select("code, statut")
+        .eq("dossier_id", dossierId)
+        .in("code", PREREQUIS_ENVOI_TIERS);
+      if (error) throw error;
+      return data ?? [];
+    },
+  });
+
+  const prerequisManquants = useMemo(
+    () =>
+      prerequisEnvoiTiersManquants(
+        Object.fromEntries((piecesRetour ?? []).map((p) => [p.code, p.statut])),
+      ),
+    [piecesRetour],
+  );
+
   const envoiSimple = useMutation({
     mutationFn: async ({ code, html, label }: { code: string; html: string; label: string }) => {
       if (!ligne) throw new Error("Choisissez un apprenant et un dossier.");
