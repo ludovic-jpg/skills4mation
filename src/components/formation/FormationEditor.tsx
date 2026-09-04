@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { SelectAutre } from "@/components/formation/SelectAutre";
-import { CATEGORIES } from "@/data/catalogue";
+import { CATEGORIES } from "@/lib/catalogue-historique";
 import { supabase } from "@/integrations/supabase/client";
 import {
   CERTIFICATION_OPTIONS,

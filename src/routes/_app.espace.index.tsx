@@ -23,7 +23,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { useAuth } from "@/hooks/useAuth";
-import { CATEGORIES } from "@/data/catalogue";
+import { CATEGORIES } from "@/lib/catalogue-historique";
 import { CRM_STATUTS, dossierNom, type CrmStatut } from "@/lib/crm";
 import { visuelUrl } from "@/lib/formations";
 import { formatDate } from "@/lib/statuts";
