@@ -151,6 +151,43 @@ function DossierDetail() {
     onError: () => toast.error("Enregistrement impossible."),
   });
 
+  /**
+   * Soumission à validation : génère le socle documentaire (1A, 1C, 2, F0A, F3, F5),
+   * l'archive dans le dossier, puis passe le dossier en demande de validation.
+   */
+  const soumettre = useMutation({
+    mutationFn: async () => {
+      if (!dossier || !user) return;
+      try {
+        await genererSocleDossier({ data: { dossierId: id } });
+      } catch (err) {
+        console.error("[dossier] Génération du socle documentaire impossible :", err);
+        toast.warning(
+          "Les documents seront régénérés par l'équipe : la préparation automatique a échoué.",
+        );
+      }
+      const { error } = await supabase
+        .from("dossiers")
+        .update({ statut_crm: "demande_validation" })
+        .eq("id", id);
+      if (error) throw error;
+      await supabase.from("dossier_historique").insert({
+        dossier_id: id,
+        ancien_statut: dossier.statut_crm,
+        nouveau_statut: "demande_validation",
+        auteur_id: user.id,
+        commentaire: "Dossier complet soumis à validation par le formateur.",
+      });
+    },
+    onSuccess: () => {
+      toast.success("Dossier transmis à l'équipe Skills4mation : il est désormais verrouillé.");
+      void queryClient.invalidateQueries({ queryKey: ["dossier", id] });
+      void queryClient.invalidateQueries({ queryKey: ["dossier-historique", id] });
+      void queryClient.invalidateQueries({ queryKey: ["dossier-pieces", id] });
+    },
+    onError: () => toast.error("Soumission impossible."),
+  });
+
   const changerStatut = useMutation({
     mutationFn: async ({
       cible,
@@ -251,15 +288,8 @@ function DossierDetail() {
               saving={saveDonnees.isPending}
               onSave={(next) => saveDonnees.mutate(next)}
               verrouille={statut !== "brouillon"}
-              demandeEnCours={changerStatut.isPending}
-              onDemanderValidation={() =>
-                changerStatut.mutate({
-                  cible: "demande_validation",
-                  commentaire: "Dossier complet soumis à validation par le formateur.",
-                  message:
-                    "Dossier transmis à l'équipe Skills4mation : il est désormais verrouillé.",
-                })
-              }
+              demandeEnCours={soumettre.isPending}
+              onDemanderValidation={() => soumettre.mutate()}
             />
           </TabsContent>
 
