@@ -18,9 +18,15 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { categoryLabel } from "@/data/catalogue";
-import { FORMATION_DETAILS, formationDetail, type FormationDetail } from "@/data/formation-details";
-import { formationStatique, type FormationStatique } from "@/data/formations-statiques";
+import {
+  categoryLabel,
+  chargerCatalogueHistorique,
+  ficheDepuisLigne,
+  ficheMeta,
+  type CarteHistorique,
+  type FicheFormation,
+} from "@/lib/catalogue-historique";
+
 import { supabase } from "@/integrations/supabase/client";
 import {
   FINANCEMENTS_APPRENANT,
