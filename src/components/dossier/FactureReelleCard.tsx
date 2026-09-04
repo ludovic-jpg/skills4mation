@@ -80,8 +80,9 @@ export function FactureReelleCard({
           <Receipt className="size-4 text-primary" /> Ma facture (F9R)
         </h2>
         <p className="mt-1 text-sm text-muted-foreground">
-          La facture pro forma du dossier est un modèle de référence : elle ne vaut pas facture.
-          Déposez ici votre facture réelle, exigée avant la mise en paiement.
+          La facture Skills4mation (FSK) du dossier est celle adressée à l'entreprise cliente (ou à
+          l'OPCO en cas de subrogation). Déposez ici votre propre facture de formateur, exigée avant
+          la mise en paiement.
         </p>
 
         {piece?.fichier_url ? (
