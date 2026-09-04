@@ -187,7 +187,7 @@ function Accueil() {
               </span>
               <h3 className="mt-4 text-2xl font-semibold">Je suis formateur</h3>
               <p className="mt-3 text-sm text-muted-foreground">
-                Formez sous notre certification Qualiopi : conventions et documents en 48h, accès
+                Formez sous notre certification Qualiopi : conventions et documents en 24h, accès
                 aux financements professionnels, autonomie pédagogique totale. 99 € HT/an + 20 % de
                 commission.
               </p>

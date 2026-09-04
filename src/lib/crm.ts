@@ -84,7 +84,7 @@ export const CRM_STATUTS: Record<
     etape: 9,
     label: "Paiement formateur",
     tone: "success",
-    description: "Rémunération versée au formateur sous 10 jours ouvrés.",
+    description: "Rémunération versée au formateur sous 8 jours ouvrés.",
   },
   paiement: {
     etape: 9,

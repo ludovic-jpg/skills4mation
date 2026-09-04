@@ -63,7 +63,7 @@ const ETAPES = [
     icon: Banknote,
     titre: "5. Financement et paiement",
     texte:
-      "Selon le mode de financement, la demande OPCO ou le lien CPF vous est transmis par e-mail. Vous êtes payé sous 10 jours ouvrés à réception des fonds du financeur.",
+      "Selon le mode de financement, la demande OPCO ou le lien CPF vous est transmis par e-mail. Vous êtes payé sous 8 jours ouvrés à réception des fonds du financeur.",
   },
   {
     icon: BadgeCheck,

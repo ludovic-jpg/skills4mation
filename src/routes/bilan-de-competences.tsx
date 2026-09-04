@@ -92,13 +92,13 @@ const PORTAGE = [
     titre: "Contractualisation et financement",
     icon: FileLock2,
     texte:
-      "Demandes CPF, OPCO ou entreprise montées depuis le portail administratif, dossiers complets sous 48 h et suivi du financement jusqu'au règlement.",
+      "Demandes CPF, OPCO ou entreprise montées depuis le portail administratif, dossiers complets sous 24 h et suivi du financement jusqu'au règlement.",
   },
   {
-    titre: "Rémunération sous 10 jours ouvrés",
+    titre: "Rémunération sous 8 jours ouvrés",
     icon: CalendarClock,
     texte:
-      "99 € / an + 20 % de commission, sans frais cachés. Paiement du consultant sous 10 jours ouvrés à réception des fonds du financeur.",
+      "99 € / an + 20 % de commission, sans frais cachés. Paiement du consultant sous 8 jours ouvrés à réception des fonds du financeur.",
   },
   {
     titre: "Réseau et recommandation",
