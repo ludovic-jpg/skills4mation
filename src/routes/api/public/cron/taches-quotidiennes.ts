@@ -12,8 +12,15 @@ export const Route = createFileRoute("/api/public/cron/taches-quotidiennes")({
   server: {
     handlers: {
       POST: async ({ request }) => {
-        const refus = await authenticateCronRequest(request);
-        if (refus) return refus;
+        // Deux jetons acceptés : celui de la plateforme (LOVABLE_CRON_SECRET) et
+        // celui utilisé par la planification pg_cron (CRON_TASK_TOKEN).
+        const match = /^Bearer ([^\s,]+)$/.exec(request.headers.get("authorization") ?? "");
+        const token = match?.[1];
+        const attendu = process.env["CRON_TASK_TOKEN"];
+        if (!token || !attendu || token !== attendu) {
+          const refus = await authenticateCronRequest(request);
+          if (refus) return refus;
+        }
         try {
           const { tacheQuotidienne } = await import("@/lib/automatisations.server");
           const resultat = await tacheQuotidienne();
