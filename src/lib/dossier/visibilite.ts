@@ -29,3 +29,35 @@ export function pieceVisibleSelonStatut(code: string, statut?: CrmStatut | null)
   if (statut === "refuse") return false;
   return accordFinancementAtteint(statut);
 }
+
+/**
+ * Calendrier de diffusion du socle documentaire au formateur :
+ * 1A / 1C / 2 / F0A dès le dossier validé, F3 au démarrage de la formation,
+ * F5 une fois la formation réalisée.
+ */
+const CALENDRIER_SOCLE: Record<string, CrmStatut> = {
+  "1A": "dossier_valide",
+  "1C": "dossier_valide",
+  "2": "dossier_valide",
+  F0A: "dossier_valide",
+  F3: "formation_en_cours",
+  F5: "formation_realisee",
+};
+
+/**
+ * `true` quand le document du socle peut être téléchargé par le formateur :
+ * la signature Skills4mation doit être apposée (verrou global) et l'étape du
+ * calendrier de diffusion atteinte.
+ */
+export function documentSocleDiffusable(
+  code: string,
+  statut?: CrmStatut | null,
+  signatureOrganismeDate?: string | null,
+) {
+  if (!signatureOrganismeDate) return false;
+  if (!statut || statut === "refuse") return false;
+  const requis = CALENDRIER_SOCLE[code];
+  if (!requis) return false;
+  const rang = CRM_PIPELINE.indexOf(statut);
+  return rang > -1 && rang >= CRM_PIPELINE.indexOf(requis);
+}
