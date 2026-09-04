@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { declencherAutomatisations } from "@/lib/dossier-automatisations.functions";
 import { toast } from "sonner";
 import { Link } from "@tanstack/react-router";
 import {
@@ -217,6 +218,11 @@ export function KanbanDossiers({ mode }: { mode: "formateur" | "admin" }) {
         commentaire: `Déplacement Kanban vers « ${COLONNE_LABELS[cible] ?? cible} »`,
       });
       if (histError) throw histError;
+      if (cible === "accord_financement") {
+        await declencherAutomatisations({ data: { dossierId: row.id } }).catch((err) =>
+          console.error("[automatisations]", err),
+        );
+      }
       if (cible === "dossier_valide") {
         const res = await envoyerRelanceFinancement({ data: { dossierId: row.id } });
         return { relance: res.envoyes };

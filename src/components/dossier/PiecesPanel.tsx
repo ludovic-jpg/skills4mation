@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
+import { declencherAutomatisations } from "@/lib/dossier-automatisations.functions";
 import { toast } from "sonner";
 import { Archive, FileDown, FileText } from "lucide-react";
 
@@ -69,6 +70,13 @@ export function PiecesPanel({
         { onConflict: "dossier_id,code" },
       );
       if (error) throw error;
+      // L'attestation de réalisation (1B) part automatiquement dès que
+      // l'émargement (F3) est complété.
+      if (input.code === "F3" && input.statut === "complete") {
+        await declencherAutomatisations({ data: { dossierId } }).catch((err) =>
+          console.error("[automatisations]", err),
+        );
+      }
     },
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["dossier-pieces", dossierId] }),
     onError: () => toast.error("Mise à jour de la pièce impossible."),

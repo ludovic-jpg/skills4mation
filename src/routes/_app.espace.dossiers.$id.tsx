@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
+import { declencherAutomatisations } from "@/lib/dossier-automatisations.functions";
 import { toast } from "sonner";
 import { ArrowLeft, ExternalLink } from "lucide-react";
 
@@ -210,6 +211,11 @@ function DossierDetail() {
         auteur_id: user.id,
         commentaire,
       });
+      if (cible === "accord_financement") {
+        await declencherAutomatisations({ data: { dossierId: id } }).catch((err) =>
+          console.error("[automatisations]", err),
+        );
+      }
     },
     onSuccess: (_data, variables) => {
       toast.success(variables.message);
