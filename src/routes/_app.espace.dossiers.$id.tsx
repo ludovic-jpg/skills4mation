@@ -11,7 +11,9 @@ import { FORMATEUR_NAV } from "@/components/app/nav";
 import { DossierWizard } from "@/components/dossier/DossierWizard";
 import type { FormationCatalogue } from "@/lib/formations";
 import { EnvoisPanel } from "@/components/dossier/EnvoisPanel";
+import { FactureReelleCard } from "@/components/dossier/FactureReelleCard";
 import { MesDocumentsPanel } from "@/components/dossier/MesDocumentsPanel";
+import { OrdreMissionCard } from "@/components/dossier/OrdreMissionCard";
 import { SupportsPanel } from "@/components/dossier/SupportsPanel";
 
 import { SignatureOrganismeBadge } from "@/components/dossier/SignatureOrganismeBadge";
@@ -296,12 +298,14 @@ function DossierDetail() {
             />
           </TabsContent>
 
-          <TabsContent value="documents">
+          <TabsContent value="documents" className="grid gap-6">
             <MesDocumentsPanel
               dossierId={id}
               statutCrm={statut}
               signatureOrganismeDate={dossier.signature_organisme_date}
             />
+            <OrdreMissionCard dossierId={id} />
+            <FactureReelleCard dossierId={id} formateurId={dossier.formateur_id} />
           </TabsContent>
 
           <TabsContent value="signatures">
