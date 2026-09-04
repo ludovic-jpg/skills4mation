@@ -254,29 +254,33 @@ function programme(d: DossierDonnees) {
   );
 }
 
-function facture(d: DossierDonnees) {
-
-  const f = d.facture;
+function factureSkills4mation(d: DossierDonnees) {
+  const subrogation = d.tarifs.subrogation === "oui";
+  const redevableNom = subrogation ? d.tarifs.opco || d.entreprise.nom : d.entreprise.nom;
   return shell(
-    "Facture formateur (pro forma)",
-    `${entete(d, `Facture PRO FORMA ${f.numero ? `n° ${f.numero}` : ""}`, `Établie le ${dateFr(f.date)}`)}
-    <div class="note"><strong>PRO FORMA — modèle de référence.</strong> Ce document ne vaut pas facture : il reprend les montants du dossier pour vous aider à établir votre propre facture, à déposer ensuite au dossier (pièce F9R).</div>
+    "Facture Skills4mation",
+    `${entete(d, `Facture n° FSK-${v(d.adf)}`, `Établie le ${dateFr(new Date().toISOString())}`)}
     <div class="grid">
-      <div><strong>Émetteur</strong><br />${v(d.formateur.entreprise)}<br />${v(`${d.formateur.prenom} ${d.formateur.nom}`.trim())}<br />${v(d.formateur.adresse)}<br />SIRET ${v(d.formateur.siret)}<br />NDA ${v(d.formateur.nda)}</div>
-      <div><strong>Destinataire</strong><br />${v(d.organisme)}<br />Dossier ADF ${v(d.adf)}<br />${v(d.entreprise.nom)}</div>
+      <div><strong>Émetteur</strong><br />Skills4mation<br />Organisme de formation certifié Qualiopi</div>
+      <div><strong>Destinataire</strong><br />${v(redevableNom)}<br />${v(d.entreprise.adresse)}<br />SIRET ${v(d.entreprise.siret)}${d.tarifs.opco ? `<br />OPCO : ${v(d.tarifs.opco)}` : ""}</div>
     </div>
     <h2>Prestation</h2>
-    <table><thead><tr><th>Désignation</th><th>Quantité</th><th>Prix unitaire</th><th>Total HT</th></tr></thead><tbody>
-      <tr><td>Animation de la formation « ${v(d.formation.titre)} » du ${v(dateFr(d.formation.dateDebut))} au ${v(dateFr(d.formation.dateFin))}</td><td>${v(d.formation.heuresTotal)} h</td><td>${e(euros(d.formateur.coutHoraire))}</td><td>${e(euros(f.montantHt || d.formateur.totalRecette))}</td></tr>
+    <table><thead><tr><th>Désignation</th><th>Effectif</th><th>Total HT</th></tr></thead><tbody>
+      <tr><td>Formation « ${v(d.formation.titre)} » réalisée du ${v(dateFr(d.formation.dateDebut))} au ${v(dateFr(d.formation.dateFin))}, conformément à la convention ${d.adf ? `n° ${v(d.adf)}` : ""}. Formation intégralement dispensée et émargée.</td><td>${v(String(d.apprenants.length))}</td><td>${e(euros(d.tarifs.prixTotal))}</td></tr>
+      ${d.tarifs.coutCertification ? `<tr><td>Coût de certification</td><td>—</td><td>${e(euros(d.tarifs.coutCertification))}</td></tr>` : ""}
     </tbody></table>
     <div style="margin-top:12px;max-width:320px;margin-left:auto">
-      ${ligne("Total HT", e(euros(f.montantHt || d.formateur.totalRecette)))}
-      ${ligne("Total à régler (exonéré de TVA)", e(euros(f.montantHt || d.formateur.totalRecette)))}
+      ${ligne("Total à régler (exonéré de TVA)", e(euros(d.tarifs.prixTotal)))}
     </div>
     <h2>Règlement</h2>
-    ${ligne("Conditions", "Paiement sous 8 jours ouvrés à réception des fonds du financeur")}
-    ${ligne("IBAN", v(f.iban))}
-    <p class="muted" style="margin-top:12px">Exonération de TVA au titre de l'article 261-4-4°a du CGI. Pas d'escompte pour paiement anticipé. Pénalités de retard : taux légal en vigueur.</p>`,
+    ${ligne(
+      "Redevable",
+      subrogation
+        ? `${v(d.tarifs.opco)} (subrogation de paiement accordée par ${v(d.entreprise.nom)})`
+        : `${v(d.entreprise.nom)} (aucune subrogation : facture à régler par l'entreprise, qui se fait ensuite rembourser par l'OPCO sur présentation de cette facture)`,
+    )}
+    ${ligne("Conditions", "Paiement à réception")}
+    <p class="muted" style="margin-top:12px">Exonération de TVA au titre de l'article 261-4-4°a du CGI. Cette facture atteste également de la réalisation effective de la formation par Skills4mation.</p>`,
   );
 }
 
