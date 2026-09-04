@@ -1,7 +1,7 @@
 export type PieceStatut = "a_generer" | "en_attente_tally" | "rapport_a_classer" | "complete";
 
 /** Source de la pièce : générée par l'app, collectée auprès des apprenants, produite hors app, ou tableur. */
-export type PieceSource = "pdf" | "tally" | "externe" | "tableur";
+export type PieceSource = "pdf" | "externe" | "tableur";
 
 /**
  * Mode de traitement de la réponse de l'apprenant :
@@ -38,7 +38,6 @@ export const PIECE_STATUTS: Record<PieceStatut, { label: string; tone: string }>
 
 export const PIECE_SOURCES: Record<PieceSource, string> = {
   pdf: "Généré par le portail",
-  tally: "Questionnaire à collecter",
   externe: "Pièce externe à déposer",
   tableur: "Tableur (Excel)",
 };
@@ -101,16 +100,6 @@ export const PIECES: PieceDef[] = [
     statutInitial: "a_generer",
   },
   {
-    code: "3B",
-    label: "Certification ICDL",
-    source: "pdf",
-    generable: false,
-    mode: "signature",
-    description:
-      "Fiche d'information et inscription à la certification ICDL du ou des candidats du dossier.",
-    statutInitial: "a_generer",
-  },
-  {
     code: "F0A",
     label: "Recueil des besoins",
     source: "pdf",
@@ -147,19 +136,9 @@ export const PIECES: PieceDef[] = [
     statutInitial: "a_generer",
   },
   {
-    code: "F0B",
-    label: "Évaluation / rapport de compétences",
-    source: "externe",
-    generable: false,
-    mode: "signature",
-    description:
-      "Rapport d'évaluation à déposer dans le dossier de l'apprenant (classement automatique dans le Drive à venir).",
-    statutInitial: "rapport_a_classer",
-  },
-  {
     code: "F5",
     label: "Satisfaction à chaud",
-    source: "tally",
+    source: "pdf",
     generable: false,
     mode: "formulaire",
     description:
@@ -169,19 +148,9 @@ export const PIECES: PieceDef[] = [
     statutInitial: "en_attente_tally",
   },
   {
-    code: "F6",
-    label: "Rapport de compétences ICDL",
-    source: "externe",
-    generable: false,
-    mode: "signature",
-    description:
-      "Rapport de compétences remis à l'issue de l'examen ICDL, à déposer dans le dossier de l'apprenant.",
-    statutInitial: "rapport_a_classer",
-  },
-  {
     code: "F7",
     label: "Satisfaction à froid",
-    source: "tally",
+    source: "pdf",
     generable: false,
     mode: "formulaire",
     description: "Questionnaire de satisfaction à 3 mois, généré par le portail et collecté auprès des apprenants.",
@@ -191,11 +160,22 @@ export const PIECES: PieceDef[] = [
   },
   {
     code: "F9",
-    label: "Facture formateur",
+    label: "Facture formateur (pro forma)",
+    source: "pdf",
+    generable: true,
+    mode: "signature",
+    description:
+      "Facture pro forma générée automatiquement à partir des montants du dossier : modèle de référence, elle ne vaut pas facture.",
+    statutInitial: "a_generer",
+  },
+  {
+    code: "F9R",
+    label: "Facture réelle du formateur",
     source: "externe",
     generable: false,
     mode: "signature",
-    description: "Facture émise par le formateur, à déposer au dossier avant mise en paiement.",
+    description:
+      "Facture réellement émise par le formateur, à déposer au dossier avant mise en paiement.",
     statutInitial: "a_generer",
   },
   {
@@ -239,14 +219,11 @@ export const PIECES_REQUISES_PAIEMENT = [
   "1B",
   "2",
   "3A",
-  "3B",
-  "F0B",
   "F0C",
   "F3",
   "F5",
-  "F6",
   "F7",
-  "F9",
+  "F9R",
 ];
 
 export function pieceLabel(code: string) {
@@ -264,3 +241,9 @@ export function pieceMode(code: string): PieceMode {
  * en lecture seule. Les autres pièces restent gérées par les circuits existants.
  */
 export const PIECES_SOCLE = ["1A", "1C", "2", "F0A", "F3", "F5"] as const;
+
+/**
+ * Documents consultables par le formateur dans « Mes documents » : le socle plus la
+ * facture pro forma générée automatiquement à partir des montants du dossier.
+ */
+export const DOCUMENTS_CONSULTABLES = [...PIECES_SOCLE, "F9"] as const;

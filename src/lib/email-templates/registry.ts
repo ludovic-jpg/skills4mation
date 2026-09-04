@@ -7,6 +7,10 @@ import { template as demandeFinancementCpfTemplate } from './demande-financement
 import { template as relanceDemandeFinancementTemplate } from './relance-demande-financement'
 import { template as documentsFinancementTemplate } from './documents-financement'
 import { template as demandePaiementApprenantTemplate } from './demande-paiement-apprenant'
+import { template as convocationStagiaireTemplate } from './convocation-stagiaire'
+import { template as attestationRealisationTemplate } from './attestation-realisation'
+import { template as ordreDeMissionFormateurTemplate } from './ordre-de-mission-formateur'
+import { template as satisfactionAFroidTemplate } from './satisfaction-a-froid'
 
 
 export interface TemplateEntry {
@@ -34,5 +38,9 @@ export const TEMPLATES: Record<string, TemplateEntry> = {
   'relance-demande-financement': relanceDemandeFinancementTemplate,
   'documents-financement': documentsFinancementTemplate,
   'demande-paiement-apprenant': demandePaiementApprenantTemplate,
+  'convocation-stagiaire': convocationStagiaireTemplate,
+  'attestation-realisation': attestationRealisationTemplate,
+  'ordre-de-mission-formateur': ordreDeMissionFormateurTemplate,
+  'satisfaction-a-froid': satisfactionAFroidTemplate,
 }
 

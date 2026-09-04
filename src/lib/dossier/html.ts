@@ -157,25 +157,6 @@ function attestation(d: DossierDonnees) {
 
 
 
-function icdl(d: DossierDonnees) {
-  return shell(
-    "Fiche d'information certification ICDL",
-    `${entete(d, "Certification ICDL — fiche d'information", "Information préalable au passage de la certification")}
-    <h2>La certification</h2>
-    <p>La certification <strong>ICDL</strong> (International Certification of Digital Literacy) atteste des compétences numériques du candidat. Elle est enregistrée au Répertoire Spécifique et éligible aux financements CPF.</p>
-    ${ligne("Formation préparatoire", v(d.formation.titre))}
-    ${ligne("Durée de préparation", `${v(d.formation.heuresTotal)} heures`)}
-    ${ligne("Modalité d'examen", "Test en ligne surveillé, questions à choix multiples et mises en situation")}
-    ${ligne("Seuil de réussite", "75 % de bonnes réponses par module")}
-    ${ligne("Délai de passage", "À l'issue du parcours, dans un délai maximum de 3 mois")}
-    ${ligne("Résultat", "Rapport de compétences et certificat remis au candidat, classés au dossier de l'apprenant")}
-    ${ligne("Coût de la certification", e(euros(d.tarifs.coutCertification)))}
-    ${ligne("Montant pris en charge par le financeur", e(euros(d.tarifs.montantPrisEnCharge)))}
-    <h2>Candidats inscrits</h2>
-    ${tableApprenants(d, true)}
-    <div class="note">En cas d'échec, une session de rattrapage peut être organisée. Les aménagements pour situation de handicap sont étudiés avec le référent handicap de l'organisme.</div>`,
-  );
-}
 
 
 
@@ -277,8 +258,9 @@ function facture(d: DossierDonnees) {
 
   const f = d.facture;
   return shell(
-    "Facture formateur",
-    `${entete(d, `Facture ${f.numero ? `n° ${f.numero}` : ""}`, `Émise le ${dateFr(f.date)}`)}
+    "Facture formateur (pro forma)",
+    `${entete(d, `Facture PRO FORMA ${f.numero ? `n° ${f.numero}` : ""}`, `Établie le ${dateFr(f.date)}`)}
+    <div class="note"><strong>PRO FORMA — modèle de référence.</strong> Ce document ne vaut pas facture : il reprend les montants du dossier pour vous aider à établir votre propre facture, à déposer ensuite au dossier (pièce F9R).</div>
     <div class="grid">
       <div><strong>Émetteur</strong><br />${v(d.formateur.entreprise)}<br />${v(`${d.formateur.prenom} ${d.formateur.nom}`.trim())}<br />${v(d.formateur.adresse)}<br />SIRET ${v(d.formateur.siret)}<br />NDA ${v(d.formateur.nda)}</div>
       <div><strong>Destinataire</strong><br />${v(d.organisme)}<br />Dossier ADF ${v(d.adf)}<br />${v(d.entreprise.nom)}</div>
@@ -342,13 +324,6 @@ export const DOCUMENTS: DocDef[] = [
     destinataires: (d) => d.apprenants.map((a) => a.email ?? ""),
   },
   {
-    code: "3B",
-    label: "Certification ICDL",
-    build: icdl,
-    applicable: viseCertification,
-    destinataires: (d) => d.apprenants.map((a) => a.email ?? ""),
-  },
-  {
     code: "F0A",
     label: "Recueil des besoins",
     build: recueilBesoinsHtml,
@@ -392,7 +367,7 @@ export const DOCUMENTS: DocDef[] = [
   },
   {
     code: "F9",
-    label: "Facture formateur",
+    label: "Facture formateur (pro forma)",
     build: facture,
     applicable: () => true,
     destinataires: () => ["contact@skills4mation.com"],
