@@ -62,3 +62,17 @@ export function documentSocleDiffusable(
   const rang = CRM_PIPELINE.indexOf(statut);
   return rang > -1 && rang >= CRM_PIPELINE.indexOf(requis);
 }
+
+/** Pièces dont l'envoi à un tiers suppose de connaître le niveau réel de l'apprenant. */
+export const PIECES_ENVOI_TIERS = ["1A", "1C", "2"];
+
+/** Pièces retournées par l'apprenant, préalables souhaitables à cet envoi. */
+export const PREREQUIS_ENVOI_TIERS = ["F0A", "TP"];
+
+/**
+ * Codes manquants (F0A / TP non « complete ») parmi les préalables à l'envoi de
+ * 1A / 1C / 2 à l'entreprise ou à l'apprenant. Signal d'alerte, sans blocage.
+ */
+export function prerequisEnvoiTiersManquants(statutParCode: Record<string, string | undefined>) {
+  return PREREQUIS_ENVOI_TIERS.filter((code) => statutParCode[code] !== "complete");
+}
