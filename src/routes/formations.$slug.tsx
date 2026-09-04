@@ -153,7 +153,7 @@ function PageFormationRoute() {
   if (data.kind === "statique") {
     return (
       <PublicLayout>
-        <FicheStatique formation={data.statique} detail={data.detail} />
+        <FicheStatique fiche={data.fiche} related={data.related} />
       </PublicLayout>
     );
   }
