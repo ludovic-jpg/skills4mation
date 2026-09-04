@@ -272,6 +272,15 @@ function CommunicationPage() {
             bouton="Envoyer les 3 pièces"
             occupe={occupe}
             onClick={() => envoiFinancement.mutate()}
+            avertissement={
+              prerequisManquants.length > 0
+                ? `À envoyer de préférence après retour de ${prerequisManquants
+                    .map((c) =>
+                      c === "F0A" ? "Recueil des besoins (F0A)" : "Test de positionnement (TP)",
+                    )
+                    .join(" et ")} : sans cela, la convention et le programme partent sans connaître le niveau réel de l'apprenant.`
+                : undefined
+            }
           />
 
           <Card className="rounded-2xl border-border/70 shadow-soft">
