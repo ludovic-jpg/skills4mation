@@ -349,7 +349,7 @@ function OdmDoc({ d }: { d: DossierDonnees }) {
         <View style={s.box}>
           <KV k="Coût horaire" v={euros(d.formateur.coutHoraire)} />
           <KV k="Total recette mission" v={euros(d.formateur.totalRecette)} />
-          <KV k="Modalité de règlement" v="Sous 10 jours ouvrés à réception des fonds" />
+          <KV k="Modalité de règlement" v="Sous 8 jours ouvrés à réception des fonds" />
         </View>
 
         <View style={s.sign}>

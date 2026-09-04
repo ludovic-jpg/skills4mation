@@ -424,7 +424,7 @@ function PortageQualiopi() {
           pédagogiques, signature électronique, archivage prêt pour l'audit, publication de vos
           parcours de formation, suivi de vos dossiers et de vos KPI de recommandation. Une solution
           sur mesure pour vous faciliter le suivi de vos dossiers formation — et un paiement sous
-          10 jours ouvrés à réception des fonds.
+          8 jours ouvrés à réception des fonds.
         </p>
 
         <div className="mt-10 grid items-center gap-6 lg:grid-cols-2">
@@ -483,11 +483,11 @@ function PortageQualiopi() {
             </ul>
             <div className="mt-8 rounded-2xl border border-border/70 bg-card p-5 shadow-soft">
               <p className="flex items-center gap-2 text-sm font-semibold">
-                <Timer className="size-5 text-secondary" aria-hidden /> Paiement sous 10 jours
+                <Timer className="size-5 text-secondary" aria-hidden /> Paiement sous 8 jours
                 ouvrés
               </p>
               <p className="mt-2 text-sm text-muted-foreground">
-                Votre rémunération est reversée sous 10 jours ouvrés à réception des fonds du
+                Votre rémunération est reversée sous 8 jours ouvrés à réception des fonds du
                 financeur — suivi du règlement visible dans votre espace.
               </p>
             </div>
