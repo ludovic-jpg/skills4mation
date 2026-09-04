@@ -208,6 +208,13 @@ function FinancementPage() {
                       <SelectItem value="non">Non</SelectItem>
                     </SelectContent>
                   </Select>
+                  {donnees.tarifs.subrogation === "non" ? (
+                    <p className="text-xs text-amber-600">
+                      Sans subrogation, c'est l'entreprise cliente qui devra demander elle-même le
+                      remboursement à l'OPCO, sur la base des pièces transmises à la clôture du
+                      dossier.
+                    </p>
+                  ) : null}
                 </div>
                 <div className="grid gap-1.5">
                   <Label htmlFor="coutCertification">Coût de la certification (€)</Label>

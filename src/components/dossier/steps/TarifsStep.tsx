@@ -110,6 +110,12 @@ export function TarifsStep({ d, set, errors }: StepProps) {
             <SelectItem value="oui">Oui</SelectItem>
           </SelectContent>
         </Select>
+        {d.tarifs.subrogation === "non" ? (
+          <p className="text-xs text-amber-600">
+            Sans subrogation, c'est l'entreprise cliente qui devra demander elle-même le
+            remboursement à l'OPCO, sur la base des pièces transmises à la clôture du dossier.
+          </p>
+        ) : null}
       </div>
       <CertificationSelect
         value={d.tarifs.certificationCode}
