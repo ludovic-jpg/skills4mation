@@ -12,6 +12,7 @@ import {
   GraduationCap,
   Send,
   ShieldCheck,
+  Building2,
 } from "lucide-react";
 
 import { AppShell } from "@/components/app/AppShell";
@@ -27,6 +28,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { archiverReponseApprenant } from "@/lib/dossier-envois.functions";
 import { horodatageFr, sha256Hex } from "@/lib/dossier/signature";
 import { pieceMode } from "@/lib/dossier/pieces";
+import { declarerDemandeFinancementDeposee } from "@/lib/apprenant-financement.functions";
 import { FormulaireEnvoi } from "@/components/apprenant/FormulaireEnvoi";
 
 
@@ -412,5 +414,92 @@ function EspaceApprenant() {
         </TabsContent>
       </Tabs>
     </AppShell>
+  );
+}
+
+/**
+ * Dépôt de la demande de prise en charge sur l'espace OPCO de l'entreprise :
+ * l'apprenant indique qui s'en charge (lui-même ou son service RH), puis confirme
+ * le dépôt. La confirmation fait avancer le dossier et notifie le formateur.
+ */
+function CarteFinancementOpco({
+  dossierId,
+  titre,
+  entreprise,
+  deposee,
+}: {
+  dossierId: string;
+  titre: string;
+  entreprise: string | null;
+  deposee: boolean;
+}) {
+  const { user } = useAuth();
+  const queryClient = useQueryClient();
+  const declarer = useServerFn(declarerDemandeFinancementDeposee);
+  const [mode, setMode] = useState<"apprenant" | "rh">("apprenant");
+
+  const confirmer = useMutation({
+    mutationFn: () => declarer({ data: { dossierId, mode } }),
+    onSuccess: () => {
+      toast.success("Merci : votre formateur est informé du dépôt de la demande.");
+      void queryClient.invalidateQueries({ queryKey: ["apprenant-fiches", user?.id] });
+    },
+    onError: (error: Error) => toast.error(error.message),
+  });
+
+  return (
+    <Card className="rounded-2xl border-border/70 shadow-soft">
+      <CardContent className="grid gap-3 p-6">
+        <div className="flex flex-wrap items-center gap-2">
+          <Building2 className="size-4 text-primary" />
+          <h2 className="text-base font-semibold">Demande de financement — {titre}</h2>
+        </div>
+        <p className="text-sm text-muted-foreground">
+          La demande de prise en charge doit être déposée sur l'espace OPCO
+          {entreprise ? ` de ${entreprise}` : " de votre entreprise"}, à partir des documents
+          disponibles dans cet espace (convention, programme, planning).
+        </p>
+
+        {deposee ? (
+          <p className="flex items-center gap-2 text-sm text-success">
+            <CheckCircle2 className="size-4" /> Demande déposée — votre formateur a été informé.
+          </p>
+        ) : (
+          <div className="grid gap-3">
+            <div className="flex flex-wrap gap-2">
+              <Button
+                size="sm"
+                variant={mode === "apprenant" ? "teal" : "outline"}
+                onClick={() => setMode("apprenant")}
+              >
+                J'ai accès à l'espace OPCO, je dépose moi-même
+              </Button>
+              <Button
+                size="sm"
+                variant={mode === "rh" ? "teal" : "outline"}
+                onClick={() => setMode("rh")}
+              >
+                Je n'ai pas accès, je transmets à mon service RH
+              </Button>
+            </div>
+            <label className="flex items-start gap-3 rounded-xl border border-border/70 bg-muted/40 p-3 text-sm">
+              <Checkbox
+                checked={false}
+                disabled={confirmer.isPending}
+                onCheckedChange={(checked) => {
+                  if (checked === true) confirmer.mutate();
+                }}
+                className="mt-0.5"
+              />
+              <span>
+                Demande déposée : je confirme que la demande de prise en charge a bien été déposée
+                sur l'espace OPCO
+                {mode === "rh" ? " par mon service RH" : " par moi-même"}.
+              </span>
+            </label>
+          </div>
+        )}
+      </CardContent>
+    </Card>
   );
 }
