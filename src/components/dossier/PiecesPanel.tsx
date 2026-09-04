@@ -92,6 +92,13 @@ export function PiecesPanel({
     return PIECES.find((p) => p.code === code)?.statutInitial ?? "a_generer";
   }
 
+  // Signal (non bloquant) : 1A / 1C / 2 ne devraient partir chez un tiers qu'après
+  // retour du recueil des besoins (F0A) et du test de positionnement (TP).
+  const prerequisManquants = prerequisEnvoiTiersManquants({
+    F0A: statutOf("F0A"),
+    TP: statutOf("TP"),
+  });
+
   async function generer(code: string) {
     setBusy(code);
     try {
