@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
+import { declencherAutomatisations } from "@/lib/dossier-automatisations.functions";
 import { toast } from "sonner";
 import { ArrowLeft, ExternalLink } from "lucide-react";
 
@@ -10,7 +11,9 @@ import { FORMATEUR_NAV } from "@/components/app/nav";
 import { DossierWizard } from "@/components/dossier/DossierWizard";
 import type { FormationCatalogue } from "@/lib/formations";
 import { EnvoisPanel } from "@/components/dossier/EnvoisPanel";
+import { FactureReelleCard } from "@/components/dossier/FactureReelleCard";
 import { MesDocumentsPanel } from "@/components/dossier/MesDocumentsPanel";
+import { OrdreMissionCard } from "@/components/dossier/OrdreMissionCard";
 import { SupportsPanel } from "@/components/dossier/SupportsPanel";
 
 import { SignatureOrganismeBadge } from "@/components/dossier/SignatureOrganismeBadge";
@@ -210,6 +213,11 @@ function DossierDetail() {
         auteur_id: user.id,
         commentaire,
       });
+      if (cible === "accord_financement") {
+        await declencherAutomatisations({ data: { dossierId: id } }).catch((err) =>
+          console.error("[automatisations]", err),
+        );
+      }
     },
     onSuccess: (_data, variables) => {
       toast.success(variables.message);
@@ -290,12 +298,14 @@ function DossierDetail() {
             />
           </TabsContent>
 
-          <TabsContent value="documents">
+          <TabsContent value="documents" className="grid gap-6">
             <MesDocumentsPanel
               dossierId={id}
               statutCrm={statut}
               signatureOrganismeDate={dossier.signature_organisme_date}
             />
+            <OrdreMissionCard dossierId={id} />
+            <FactureReelleCard dossierId={id} formateurId={dossier.formateur_id} />
           </TabsContent>
 
           <TabsContent value="signatures">

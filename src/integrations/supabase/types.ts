@@ -1197,7 +1197,6 @@ export type Database = {
           entreprise_adresse: string | null
           expertise: string | null
           id: string
-          lien_tally_f5: string | null
           linkedin_connected_at: string | null
           linkedin_url: string | null
           nda_document_url: string | null
@@ -1226,7 +1225,6 @@ export type Database = {
           entreprise_adresse?: string | null
           expertise?: string | null
           id: string
-          lien_tally_f5?: string | null
           linkedin_connected_at?: string | null
           linkedin_url?: string | null
           nda_document_url?: string | null
@@ -1255,7 +1253,6 @@ export type Database = {
           entreprise_adresse?: string | null
           expertise?: string | null
           id?: string
-          lien_tally_f5?: string | null
           linkedin_connected_at?: string | null
           linkedin_url?: string | null
           nda_document_url?: string | null

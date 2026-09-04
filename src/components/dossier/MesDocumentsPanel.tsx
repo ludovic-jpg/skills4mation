@@ -6,7 +6,7 @@ import { Download, FileText, Lock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { supabase } from "@/integrations/supabase/client";
-import { PIECES, PIECES_SOCLE } from "@/lib/dossier/pieces";
+import { DOCUMENTS_CONSULTABLES, PIECES } from "@/lib/dossier/pieces";
 import { documentSocleDiffusable } from "@/lib/dossier/visibilite";
 import type { CrmStatut } from "@/lib/crm";
 
@@ -45,7 +45,7 @@ export function MesDocumentsPanel({
     },
   });
 
-  const documents = PIECES_SOCLE.map((code) => {
+  const documents = DOCUMENTS_CONSULTABLES.map((code) => {
     const def = PIECES.find((p) => p.code === code);
     const row = rows?.find((r) => r.code === code);
     const diffusable = documentSocleDiffusable(code, statutCrm, signatureOrganismeDate);

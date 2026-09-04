@@ -58,6 +58,7 @@ import { Route as AppEspaceDossiersNewRouteImport } from './routes/_app.espace.d
 import { Route as AppEspaceFormationsIndexRouteImport } from './routes/_app.espace.formations.index'
 import { Route as AppEspaceFormationsIdRouteImport } from './routes/_app.espace.formations.$id'
 import { Route as AppEspaceFormationsNewRouteImport } from './routes/_app.espace.formations.new'
+import { Route as ApiPublicCronTachesQuotidiennesRouteImport } from './routes/api/public/cron/taches-quotidiennes'
 import { Route as ApiPublicFormationImageSplatRouteImport } from './routes/api/public/formation-image.$'
 import { Route as LovableEmailAuthPreviewRouteImport } from './routes/lovable/email/auth/preview'
 import { Route as LovableEmailAuthWebhookRouteImport } from './routes/lovable/email/auth/webhook'
@@ -312,6 +313,12 @@ const AppEspaceFormationsNewRoute = AppEspaceFormationsNewRouteImport.update({
   path: '/espace/formations/new',
   getParentRoute: () => AppRoute,
 } as any)
+const ApiPublicCronTachesQuotidiennesRoute =
+  ApiPublicCronTachesQuotidiennesRouteImport.update({
+    id: '/api/public/cron/taches-quotidiennes',
+    path: '/api/public/cron/taches-quotidiennes',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const ApiPublicFormationImageSplatRoute =
   ApiPublicFormationImageSplatRouteImport.update({
     id: '/api/public/formation-image/$',
@@ -382,6 +389,7 @@ export interface FileRoutesByFullPath {
   '/espace/dossiers/new': typeof AppEspaceDossiersNewRoute
   '/espace/formations/$id': typeof AppEspaceFormationsIdRoute
   '/espace/formations/new': typeof AppEspaceFormationsNewRoute
+  '/api/public/cron/taches-quotidiennes': typeof ApiPublicCronTachesQuotidiennesRoute
   '/api/public/formation-image/$': typeof ApiPublicFormationImageSplatRoute
   '/lovable/email/auth/preview': typeof LovableEmailAuthPreviewRoute
   '/lovable/email/auth/webhook': typeof LovableEmailAuthWebhookRoute
@@ -436,6 +444,7 @@ export interface FileRoutesByTo {
   '/espace/dossiers/new': typeof AppEspaceDossiersNewRoute
   '/espace/formations/$id': typeof AppEspaceFormationsIdRoute
   '/espace/formations/new': typeof AppEspaceFormationsNewRoute
+  '/api/public/cron/taches-quotidiennes': typeof ApiPublicCronTachesQuotidiennesRoute
   '/api/public/formation-image/$': typeof ApiPublicFormationImageSplatRoute
   '/lovable/email/auth/preview': typeof LovableEmailAuthPreviewRoute
   '/lovable/email/auth/webhook': typeof LovableEmailAuthWebhookRoute
@@ -492,6 +501,7 @@ export interface FileRoutesById {
   '/_app/espace/dossiers/new': typeof AppEspaceDossiersNewRoute
   '/_app/espace/formations/$id': typeof AppEspaceFormationsIdRoute
   '/_app/espace/formations/new': typeof AppEspaceFormationsNewRoute
+  '/api/public/cron/taches-quotidiennes': typeof ApiPublicCronTachesQuotidiennesRoute
   '/api/public/formation-image/$': typeof ApiPublicFormationImageSplatRoute
   '/lovable/email/auth/preview': typeof LovableEmailAuthPreviewRoute
   '/lovable/email/auth/webhook': typeof LovableEmailAuthWebhookRoute
@@ -548,6 +558,7 @@ export interface FileRouteTypes {
     | '/espace/dossiers/new'
     | '/espace/formations/$id'
     | '/espace/formations/new'
+    | '/api/public/cron/taches-quotidiennes'
     | '/api/public/formation-image/$'
     | '/lovable/email/auth/preview'
     | '/lovable/email/auth/webhook'
@@ -602,6 +613,7 @@ export interface FileRouteTypes {
     | '/espace/dossiers/new'
     | '/espace/formations/$id'
     | '/espace/formations/new'
+    | '/api/public/cron/taches-quotidiennes'
     | '/api/public/formation-image/$'
     | '/lovable/email/auth/preview'
     | '/lovable/email/auth/webhook'
@@ -657,6 +669,7 @@ export interface FileRouteTypes {
     | '/_app/espace/dossiers/new'
     | '/_app/espace/formations/$id'
     | '/_app/espace/formations/new'
+    | '/api/public/cron/taches-quotidiennes'
     | '/api/public/formation-image/$'
     | '/lovable/email/auth/preview'
     | '/lovable/email/auth/webhook'
@@ -691,6 +704,7 @@ export interface RootRouteChildren {
   Char91DotmcpChar93InvokeToolToolRoute: typeof Char91DotmcpChar93InvokeToolToolRoute
   CatalogueCategorySlugRoute: typeof CatalogueCategorySlugRoute
   CatalogueCategoryIndexRoute: typeof CatalogueCategoryIndexRoute
+  ApiPublicCronTachesQuotidiennesRoute: typeof ApiPublicCronTachesQuotidiennesRoute
   ApiPublicFormationImageSplatRoute: typeof ApiPublicFormationImageSplatRoute
   LovableEmailAuthPreviewRoute: typeof LovableEmailAuthPreviewRoute
   LovableEmailAuthWebhookRoute: typeof LovableEmailAuthWebhookRoute
@@ -1042,6 +1056,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppEspaceFormationsNewRouteImport
       parentRoute: typeof AppRoute
     }
+    '/api/public/cron/taches-quotidiennes': {
+      id: '/api/public/cron/taches-quotidiennes'
+      path: '/api/public/cron/taches-quotidiennes'
+      fullPath: '/api/public/cron/taches-quotidiennes'
+      preLoaderRoute: typeof ApiPublicCronTachesQuotidiennesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/formation-image/$': {
       id: '/api/public/formation-image/$'
       path: '/api/public/formation-image/$'
@@ -1156,6 +1177,7 @@ const rootRouteChildren: RootRouteChildren = {
   Char91DotmcpChar93InvokeToolToolRoute: Char91DotmcpChar93InvokeToolToolRoute,
   CatalogueCategorySlugRoute: CatalogueCategorySlugRoute,
   CatalogueCategoryIndexRoute: CatalogueCategoryIndexRoute,
+  ApiPublicCronTachesQuotidiennesRoute: ApiPublicCronTachesQuotidiennesRoute,
   ApiPublicFormationImageSplatRoute: ApiPublicFormationImageSplatRoute,
   LovableEmailAuthPreviewRoute: LovableEmailAuthPreviewRoute,
   LovableEmailAuthWebhookRoute: LovableEmailAuthWebhookRoute,

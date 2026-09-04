@@ -2,7 +2,7 @@ import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
-import { PIECES_SOCLE } from "@/lib/dossier/pieces";
+import { DOCUMENTS_CONSULTABLES } from "@/lib/dossier/pieces";
 import { mergeDonnees, nomRangement } from "@/lib/dossier/types";
 
 const schema = z.object({ dossierId: z.string().uuid() });
@@ -58,7 +58,7 @@ export const genererSocleDossier = createServerFn({ method: "POST" })
     }
 
     const generes: string[] = [];
-    for (const code of PIECES_SOCLE) {
+    for (const code of DOCUMENTS_CONSULTABLES) {
       const def = DOCUMENTS.find((d) => d.code === code);
       if (!def) continue;
       const nom = `${code}_${base}.pdf`;
@@ -104,5 +104,5 @@ export const genererSocleDossier = createServerFn({ method: "POST" })
         .eq("id", dossier.id);
     }
 
-    return { generes, total: PIECES_SOCLE.length };
+    return { generes, total: DOCUMENTS_CONSULTABLES.length };
   });

@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
+import { declencherAutomatisations } from "@/lib/dossier-automatisations.functions";
 import { toast } from "sonner";
 
 import { AppShell } from "@/components/app/AppShell";
@@ -108,6 +109,11 @@ function AdminDossiers() {
         commentaire: commentaire.trim() || null,
       });
       if (histError) throw histError;
+      if (cible === "accord_financement") {
+        await declencherAutomatisations({ data: { dossierId: row.id } }).catch((err) =>
+          console.error("[automatisations]", err),
+        );
+      }
     },
     onSuccess: () => {
       toast.success("Étape mise à jour.");
