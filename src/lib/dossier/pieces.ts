@@ -245,6 +245,6 @@ export const PIECES_SOCLE = ["1A", "1C", "2", "F0A", "F3", "F5"] as const;
 
 /**
  * Documents consultables par le formateur dans « Mes documents » : le socle plus la
- * facture pro forma générée automatiquement à partir des montants du dossier.
+ * facture Skills4mation (FSK) générée automatiquement à partir des montants du dossier.
  */
 export const DOCUMENTS_CONSULTABLES = [...PIECES_SOCLE, "FSK"] as const;
