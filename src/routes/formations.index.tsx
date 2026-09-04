@@ -81,18 +81,18 @@ export const Route = createFileRoute("/formations/")({
 });
 
 function CataloguePublic() {
-  const { formateurs } = Route.useLoaderData();
+  const { historique, formateurs } = Route.useLoaderData();
   const { categorie } = Route.useSearch();
   const navigate = Route.useNavigate();
   const [q, setQ] = useState("");
 
   const toutes = useMemo<CarteFormation[]>(
     () => [
-      ...FORMATIONS_STATIQUES.map((f) => ({
+      ...(historique as CarteHistorique[]).map((f) => ({
         slug: f.slug,
-        titre: f.title,
-        categorie: f.cat as string,
-        image: f.img,
+        titre: f.titre,
+        categorie: f.categorie,
+        image: visuelUrl(f.visuel_url),
       })),
       ...formateurs.map((f) => ({
         slug: f.slug,
@@ -105,8 +105,9 @@ function CataloguePublic() {
             .join(" · ") || null,
       })),
     ],
-    [formateurs],
+    [historique, formateurs],
   );
+
 
   const categories = useMemo(() => {
     const compte = new Map<string, number>();
