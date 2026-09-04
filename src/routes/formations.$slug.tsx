@@ -288,7 +288,7 @@ function PageFormation() {
             </Card>
           ) : null}
 
-          {detail ? (
+          {detail.certification ? (
             <Card className="rounded-2xl border-border/70">
               <CardContent className="grid gap-4 p-6 text-sm">
                 <h2 className="inline-flex items-center gap-2 text-lg font-semibold">
