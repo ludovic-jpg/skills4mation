@@ -25,6 +25,10 @@ import { envoyerDocumentsFinancement } from "@/lib/dossier-communication.functio
 import { DOCUMENTS } from "@/lib/dossier/html";
 import { mergeDonnees } from "@/lib/dossier/types";
 import { pieceLabel } from "@/lib/dossier/pieces";
+import {
+  PREREQUIS_ENVOI_TIERS,
+  prerequisEnvoiTiersManquants,
+} from "@/lib/dossier/visibilite";
 import { parseQuestions } from "@/lib/outils";
 
 export const Route = createFileRoute("/_app/espace/communication")({
