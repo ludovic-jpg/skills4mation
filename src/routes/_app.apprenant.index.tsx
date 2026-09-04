@@ -176,6 +176,21 @@ function EspaceApprenant() {
 
 
         <TabsContent value="documents" className="grid gap-4">
+          {(fiches ?? [])
+            .filter(
+              (f) =>
+                f.dossiers?.statut_crm === "dossier_valide" ||
+                f.dossiers?.statut_crm === "demande_financement",
+            )
+            .map((f) => (
+              <CarteFinancementOpco
+                key={`opco-${f.dossier_id}`}
+                dossierId={f.dossier_id}
+                titre={f.dossiers?.titre_formation ?? "Votre formation"}
+                entreprise={f.dossiers?.entreprise_nom ?? null}
+                deposee={Boolean(f.dossiers?.demande_financement_deposee)}
+              />
+            ))}
           {aSigner.length === 0 ? (
             <Card className="rounded-2xl">
               <CardContent className="p-6 text-sm text-muted-foreground">
