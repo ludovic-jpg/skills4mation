@@ -416,6 +416,26 @@ export function KanbanDossiers({ mode }: { mode: "formateur" | "admin" }) {
         </Select>
       </div>
 
+      <div className="flex flex-wrap gap-3">
+        {BANDEAUX.filter((b) => b.replieParDefaut).map((b) => (
+          <button
+            key={b.cle}
+            type="button"
+            onClick={() => setReplies((s) => ({ ...s, [b.cle]: !s[b.cle] }))}
+            className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground"
+          >
+            {replies[b.cle] ? (
+              <ChevronRight className="size-4" />
+            ) : (
+              <ChevronDown className="size-4" />
+            )}
+            {replies[b.cle] ? "Afficher" : "Réduire"} l&apos;étape {b.cle} ({b.titre})
+          </button>
+        ))}
+      </div>
+
+
+
 
       {isLoading ? (
         <p className="text-sm text-muted-foreground">Chargement du suivi…</p>
