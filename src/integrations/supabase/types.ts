@@ -1320,12 +1320,49 @@ export type Database = {
         }
         Relationships: []
       }
+      supports_apprenants: {
+        Row: {
+          apprenant_id: string
+          created_at: string
+          id: string
+          support_id: string
+        }
+        Insert: {
+          apprenant_id: string
+          created_at?: string
+          id?: string
+          support_id: string
+        }
+        Update: {
+          apprenant_id?: string
+          created_at?: string
+          id?: string
+          support_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "supports_apprenants_apprenant_id_fkey"
+            columns: ["apprenant_id"]
+            isOneToOne: false
+            referencedRelation: "dossier_apprenants"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "supports_apprenants_support_id_fkey"
+            columns: ["support_id"]
+            isOneToOne: false
+            referencedRelation: "supports_pedagogiques"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       supports_pedagogiques: {
         Row: {
           created_at: string
-          dossier_id: string
+          dossier_id: string | null
           fichier_url: string
           formateur_id: string
+          formation_id: string | null
           id: string
           titre: string
           type: string
@@ -1333,9 +1370,10 @@ export type Database = {
         }
         Insert: {
           created_at?: string
-          dossier_id: string
+          dossier_id?: string | null
           fichier_url: string
           formateur_id: string
+          formation_id?: string | null
           id?: string
           titre: string
           type?: string
@@ -1343,9 +1381,10 @@ export type Database = {
         }
         Update: {
           created_at?: string
-          dossier_id?: string
+          dossier_id?: string | null
           fichier_url?: string
           formateur_id?: string
+          formation_id?: string | null
           id?: string
           titre?: string
           type?: string
@@ -1357,6 +1396,13 @@ export type Database = {
             columns: ["dossier_id"]
             isOneToOne: false
             referencedRelation: "dossiers"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "supports_pedagogiques_formation_id_fkey"
+            columns: ["formation_id"]
+            isOneToOne: false
+            referencedRelation: "formations_catalogue"
             referencedColumns: ["id"]
           },
         ]
