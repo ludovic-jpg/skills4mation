@@ -64,6 +64,8 @@ import { ChecklistPaiement } from "@/components/dossier/ChecklistPaiement";
 import { mergeDonnees } from "@/lib/dossier/types";
 import { pieceVisibleSelonStatut } from "@/lib/dossier/visibilite";
 import { envoyerRelanceFinancement } from "@/lib/dossier-relance-financement.functions";
+import { synchroniserApprenants } from "@/lib/dossier-envois.functions";
+
 import { DOCUMENT_TYPES, type DocumentType } from "@/lib/statuts";
 
 type KanbanRow = {
