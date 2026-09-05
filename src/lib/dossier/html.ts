@@ -1,5 +1,4 @@
 import {
-import { CHARTE } from "../charte";
   aDuPresentiel,
   dateFr,
   estCpf,
