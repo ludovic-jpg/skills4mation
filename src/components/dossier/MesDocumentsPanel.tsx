@@ -8,13 +8,24 @@ import { Card, CardContent } from "@/components/ui/card";
 import { supabase } from "@/integrations/supabase/client";
 import { DOCUMENTS_CONSULTABLES, PIECES } from "@/lib/dossier/pieces";
 import { documentSocleDiffusable } from "@/lib/dossier/visibilite";
-import type { CrmStatut } from "@/lib/crm";
+import { CRM_STATUTS, type CrmStatut } from "@/lib/crm";
 
 type PieceRow = {
   code: string;
   statut: string;
   fichier_url: string | null;
   generated_at: string | null;
+};
+
+/** Étape à partir de laquelle chaque document du socle est diffusé au formateur. */
+const ETAPE_DIFFUSION: Record<string, CrmStatut> = {
+  "1A": "dossier_valide",
+  "1C": "dossier_valide",
+  "2": "dossier_valide",
+  F0A: "dossier_valide",
+  F3: "formation_en_cours",
+  FSK: "formation_realisee",
+  F5: "formation_realisee",
 };
 
 /**
@@ -50,14 +61,20 @@ export function MesDocumentsPanel({
     const row = rows?.find((r) => r.code === code);
     const diffusable = documentSocleDiffusable(code, statutCrm, signatureOrganismeDate);
     const complet = diffusable && Boolean(row?.fichier_url);
+    const requis = ETAPE_DIFFUSION[code];
     return {
       code,
       label: def?.label ?? code,
       description: def?.description ?? "",
       fichier: complet ? (row?.fichier_url ?? null) : null,
       complet,
+      auto: def?.mode === "signature" && def?.generable === true,
+      verrou: !signatureOrganismeDate
+        ? "En attente du visa Skills4mation"
+        : `Disponible à l'étape : ${requis ? CRM_STATUTS[requis].label : "à venir"}`,
     };
   });
+
 
   async function telecharger(chemin: string, code: string) {
     setBusy(code);
@@ -100,7 +117,12 @@ export function MesDocumentsPanel({
                         : "border-accent bg-accent text-accent-foreground"
                     }`}
                   >
-                    {doc.complet ? "Complété" : "En attente de retour"}
+                    {doc.complet
+                      ? "Complété"
+                      : doc.auto
+                        ? "Généré automatiquement"
+                        : "En attente de retour"}
+
                   </span>
                 </div>
                 <p className="mt-1 text-sm text-muted-foreground">{doc.description}</p>
@@ -117,8 +139,9 @@ export function MesDocumentsPanel({
                 </Button>
               ) : (
                 <span className="inline-flex shrink-0 items-center gap-1.5 text-xs text-muted-foreground">
-                  <Lock className="size-3.5" /> Disponible après validation
+                  <Lock className="size-3.5" /> {doc.verrou}
                 </span>
+
               )}
             </li>
           ))}
