@@ -33,7 +33,7 @@ export const FORMATEUR_NAV: NavItem[] = [
 
   { to: "/espace/dossiers", label: "Mes dossiers", icon: Folders },
   { to: "/espace/dossiers/new", label: "Nouveau dossier", icon: FilePlus2 },
-  { to: "/espace/financement", label: "Convention & financement", icon: Banknote },
+  
 
   { to: "/espace/parrainage", label: "Programme ambassadeur", icon: Handshake },
 ];
