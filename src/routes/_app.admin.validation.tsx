@@ -276,7 +276,15 @@ function AdminValidation() {
                     ))}
                   </div>
 
-                  <div className="mt-4 flex justify-end">
+                  <div className="mt-4 flex flex-col items-end gap-2">
+                    {!complet ? (
+                      <p className="text-xs text-amber-600 sm:text-right">
+                        Validation indisponible : {manquants.join(", ")}.{" "}
+                        {manquants.length > 1
+                          ? "Cochez ces points après vérification pour débloquer la signature."
+                          : "Cochez ce point après vérification pour débloquer la signature."}
+                      </p>
+                    ) : null}
                     <Button
                       size="sm"
                       variant="cta"
