@@ -139,8 +139,9 @@ export function MesDocumentsPanel({
                 </Button>
               ) : (
                 <span className="inline-flex shrink-0 items-center gap-1.5 text-xs text-muted-foreground">
-                  <Lock className="size-3.5" /> Disponible après validation
+                  <Lock className="size-3.5" /> {doc.verrou}
                 </span>
+
               )}
             </li>
           ))}
