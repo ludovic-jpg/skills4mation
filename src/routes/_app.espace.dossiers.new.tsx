@@ -1,10 +1,11 @@
 import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { toast } from "sonner";
 
 import { AppShell } from "@/components/app/AppShell";
 import { FORMATEUR_NAV } from "@/components/app/nav";
+import { DossierWizard } from "@/components/dossier/DossierWizard";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
@@ -17,7 +18,7 @@ import {
 } from "@/components/ui/select";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
-import { DONNEES_VIDES } from "@/lib/dossier/types";
+import { DONNEES_VIDES, type DossierDonnees } from "@/lib/dossier/types";
 import { genererNumeroAdf } from "@/lib/commission";
 
 export const Route = createFileRoute("/_app/espace/dossiers/new")({
@@ -35,10 +36,11 @@ type Parcours = {
 function NouveauDossier() {
   const { user, profile, isValidatedFormateur, loading } = useAuth();
   const router = useRouter();
-  const [error, setError] = useState(false);
+  const [saving, setSaving] = useState(false);
   // null = le formateur n'a pas encore choisi ; "" = dossier vierge ; sinon id du parcours.
   const [choix, setChoix] = useState<string | null>(null);
   const [parcoursId, setParcoursId] = useState("");
+  const creation = useRef(false);
 
   const parcours = useQuery({
     queryKey: ["mes-parcours", user?.id],
@@ -55,65 +57,63 @@ function NouveauDossier() {
   });
 
   const liste = parcours.data ?? [];
-  // Sans parcours enregistré, on garde le comportement historique : création immédiate.
+  // Sans parcours enregistré, on ouvre directement le formulaire vierge.
   const decide = choix !== null || (parcours.isSuccess && liste.length === 0);
 
-  useEffect(() => {
-    if (loading || !user || !isValidatedFormateur || !decide) return;
-    let cancelled = false;
-    void (async () => {
-      const choisi = liste.find((p) => p.id === choix) ?? null;
-      const donnees = {
-        ...DONNEES_VIDES,
-        // Numéro d'ADF unique attribué automatiquement dès la création du dossier.
-        adf: genererNumeroAdf(),
-        formateur: {
-          ...DONNEES_VIDES.formateur,
-          prenom: profile?.prenom ?? "",
-          nom: profile?.nom ?? "",
-          email: profile?.email ?? "",
-          telephone: profile?.telephone ?? "",
-          entreprise: profile?.entreprise ?? "",
-          siret: profile?.siret ?? "",
-          adresse: profile?.entreprise_adresse ?? profile?.adresse ?? "",
-          nda: profile?.numero_nda ?? "",
-          ndaRegion: profile?.nda_region ?? "",
-        },
-        formation: {
-          ...DONNEES_VIDES.formation,
-          ...(choisi
-            ? {
-                titre: choisi.titre ?? "",
-                objectifs: choisi.objectifs ?? "",
-                prerequis: choisi.prerequis ?? "",
-                heuresTotal: choisi.duree_heures ? String(choisi.duree_heures) : "",
-              }
-            : {}),
-        },
-      };
-      const { data, error: insertError } = await supabase
-        .from("dossiers")
-        .insert({
-          formateur_id: user.id,
-          statut: "brouillon",
-          statut_crm: "brouillon",
-          donnees,
-        })
-        .select("id")
-        .single();
-      if (cancelled) return;
-      if (insertError || !data) {
-        setError(true);
-        toast.error("Création du dossier impossible.");
-        return;
-      }
-      void router.navigate({ to: "/espace/dossiers/$id", params: { id: data.id } });
-    })();
-    return () => {
-      cancelled = true;
-    };
+  const donneesInitiales = useMemo<DossierDonnees>(() => {
+    const choisi = liste.find((p) => p.id === choix) ?? null;
+    return {
+      ...DONNEES_VIDES,
+      formateur: {
+        ...DONNEES_VIDES.formateur,
+        prenom: profile?.prenom ?? "",
+        nom: profile?.nom ?? "",
+        email: profile?.email ?? "",
+        telephone: profile?.telephone ?? "",
+        entreprise: profile?.entreprise ?? "",
+        siret: profile?.siret ?? "",
+        adresse: profile?.entreprise_adresse ?? profile?.adresse ?? "",
+        nda: profile?.numero_nda ?? "",
+        ndaRegion: profile?.nda_region ?? "",
+      },
+      formation: {
+        ...DONNEES_VIDES.formation,
+        ...(choisi
+          ? {
+              titre: choisi.titre ?? "",
+              objectifs: choisi.objectifs ?? "",
+              prerequis: choisi.prerequis ?? "",
+              heuresTotal: choisi.duree_heures ? String(choisi.duree_heures) : "",
+            }
+          : {}),
+      },
+    } as DossierDonnees;
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [loading, user, isValidatedFormateur, profile, router, decide]);
+  }, [choix, profile, parcours.data]);
+
+  async function creer(donnees: DossierDonnees) {
+    if (!user || creation.current) return;
+    creation.current = true;
+    setSaving(true);
+    const { data, error: insertError } = await supabase
+      .from("dossiers")
+      .insert({
+        formateur_id: user.id,
+        statut: "brouillon",
+        statut_crm: "brouillon",
+        // Numéro d'ADF attribué à la première sauvegarde, jamais avant.
+        donnees: { ...donnees, adf: genererNumeroAdf() },
+      })
+      .select("id")
+      .single();
+    setSaving(false);
+    if (insertError || !data) {
+      creation.current = false;
+      toast.error("Création du dossier impossible.");
+      return;
+    }
+    void router.navigate({ to: "/espace/dossiers/$id", params: { id: data.id } });
+  }
 
   if (!loading && !isValidatedFormateur) {
     return (
@@ -139,18 +139,17 @@ function NouveauDossier() {
       title="Nouveau dossier de formation"
       subtitle="Formulaire intégré : convention, planning, convocations et évaluations générés depuis le portail"
     >
-      <Card className="rounded-2xl border-border/70 shadow-soft">
-        <CardContent className="p-8">
-          {error ? (
-            <p className="text-sm text-destructive">
-              Le dossier n'a pas pu être initialisé. Rechargez la page ou contactez l'équipe
-              Skills4mation.
-            </p>
-          ) : decide ? (
-            <p className="text-sm text-muted-foreground">
-              Initialisation du dossier et ouverture du formulaire…
-            </p>
-          ) : (
+      {decide ? (
+        <DossierWizard
+          value={donneesInitiales}
+          saving={saving}
+          onSave={(donnees) => {
+            void creer(donnees);
+          }}
+        />
+      ) : (
+        <Card className="rounded-2xl border-border/70 shadow-soft">
+          <CardContent className="p-8">
             <div className="grid gap-5">
               <div>
                 <h2 className="text-base font-semibold">Partir d'un parcours existant ?</h2>
@@ -175,11 +174,7 @@ function NouveauDossier() {
                 </Select>
               </div>
               <div className="flex flex-wrap gap-3">
-                <Button
-                  variant="cta"
-                  disabled={!parcoursId}
-                  onClick={() => setChoix(parcoursId)}
-                >
+                <Button variant="cta" disabled={!parcoursId} onClick={() => setChoix(parcoursId)}>
                   Créer depuis ce parcours
                 </Button>
                 <Button variant="outline" onClick={() => setChoix("")}>
@@ -187,9 +182,10 @@ function NouveauDossier() {
                 </Button>
               </div>
             </div>
-          )}
-        </CardContent>
-      </Card>
+          </CardContent>
+        </Card>
+      )}
     </AppShell>
   );
 }
+
