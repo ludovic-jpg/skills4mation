@@ -51,18 +51,20 @@ export const Route = createFileRoute("/_app/espace/dossiers/$id")({
 
 function DossierDetail() {
   const { id } = Route.useParams();
+  const { user } = useAuth();
   const mesFormations = useQuery({
-    queryKey: ["mes-formations-modeles"],
+    queryKey: ["mes-formations-modeles", user?.id],
+    enabled: Boolean(user?.id),
     queryFn: async () => {
       const { data, error } = await supabase
         .from("formations_catalogue")
         .select("*")
+        .eq("formateur_id", user!.id)
         .order("titre");
       if (error) throw error;
       return (data ?? []) as FormationCatalogue[];
     },
   });
-  const { user } = useAuth();
   const queryClient = useQueryClient();
   const [onglet, setOnglet] = useState("suivi");
   const [baseFinancement, setBaseFinancement] = useState("");
