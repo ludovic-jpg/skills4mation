@@ -13,6 +13,8 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { useAuth } from "@/hooks/useAuth";
 import { apposerSignatureOrganisme } from "@/lib/dossier-signature-organisme.functions";
 import { validerEtGenererAdf } from "@/lib/dossier-adf.functions";
+import { synchroniserApprenants } from "@/lib/dossier-envois.functions";
+
 import { supabase } from "@/integrations/supabase/client";
 import { dossierNom, type CrmStatut } from "@/lib/crm";
 import { mergeDonnees } from "@/lib/dossier/types";
