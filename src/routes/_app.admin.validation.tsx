@@ -224,7 +224,10 @@ function AdminValidation() {
           rows.map((row) => {
             const d = delai(row.validation_due_at, row.created_at);
             const items = conformite[row.id] ?? [];
-            const complet = items.every((item) => estCoche(row.id, item.key, item.auto));
+            const manquants = items
+              .filter((item) => !estCoche(row.id, item.key, item.auto))
+              .map((item) => item.label);
+            const complet = manquants.length === 0;
             const profil = (profils ?? []).find((p) => p.id === row.formateur_id);
             return (
               <Card key={row.id} className="rounded-2xl border-border/70 shadow-soft">
