@@ -113,6 +113,8 @@ function AdminValidation() {
 
   const signer = useServerFn(apposerSignatureOrganisme);
   const genererAdf = useServerFn(validerEtGenererAdf);
+  const sync = useServerFn(synchroniserApprenants);
+
 
   const valider = useMutation({
     mutationFn: async (row: Row) => {
