@@ -488,10 +488,13 @@ function CarteFinancementOpco({
             </div>
             <label className="flex items-start gap-3 rounded-xl border border-border/70 bg-muted/40 p-3 text-sm">
               <Checkbox
-                checked={false}
-                disabled={confirmer.isPending}
+                checked={confirme || deposee}
+                disabled={confirmer.isPending || confirme}
                 onCheckedChange={(checked) => {
-                  if (checked === true) confirmer.mutate();
+                  if (checked === true) {
+                    setConfirme(true);
+                    confirmer.mutate();
+                  }
                 }}
                 className="mt-0.5"
               />
