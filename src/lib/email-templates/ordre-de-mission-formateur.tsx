@@ -10,6 +10,7 @@ import {
   Text,
 } from '@react-email/components'
 import type { TemplateEntry } from './registry'
+import { CHARTE } from "../charte";
 
 export interface OrdreDeMissionFormateurProps {
   formateurPrenom?: string
@@ -30,22 +31,22 @@ export function OrdreDeMissionFormateurEmail({
       <Preview>{`Votre ordre de mission est à signer — ${formationTitre}`}</Preview>
       <Body style={{ backgroundColor: '#f4f7fa', fontFamily: 'Helvetica, Arial, sans-serif' }}>
         <Container style={{ backgroundColor: '#ffffff', padding: '32px', maxWidth: '600px' }}>
-          <Heading style={{ color: '#0d2a4a', fontSize: '20px' }}>Ordre de mission à signer</Heading>
-          <Hr style={{ borderColor: '#4f8f2f', borderTopWidth: '3px' }} />
-          <Text style={{ color: '#12181f', fontSize: '14px' }}>Bonjour {formateurPrenom},</Text>
-          <Text style={{ color: '#12181f', fontSize: '14px' }}>
+          <Heading style={{ color: CHARTE.vert, fontSize: '20px' }}>Ordre de mission à signer</Heading>
+          <Hr style={{ borderColor: CHARTE.vertClair, borderTopWidth: '3px' }} />
+          <Text style={{ color: CHARTE.texte, fontSize: '14px' }}>Bonjour {formateurPrenom},</Text>
+          <Text style={{ color: CHARTE.texte, fontSize: '14px' }}>
             Le financement est accordé pour <strong>{formationTitre}</strong>
             {dossierLabel ? ` (${dossierLabel})` : ''}. Votre ordre de mission a été généré : il
             doit être signé en ligne avant le démarrage de la formation.
           </Text>
-          <Text style={{ color: '#12181f', fontSize: '14px' }}>
+          <Text style={{ color: CHARTE.texte, fontSize: '14px' }}>
             La signature se fait depuis la fiche du dossier, avec horodatage et certificat de
             preuve conservés au dossier.
           </Text>
           <Button
             href={lien}
             style={{
-              backgroundColor: '#4f8f2f',
+              backgroundColor: CHARTE.vertClair,
               color: '#ffffff',
               padding: '12px 20px',
               borderRadius: '6px',

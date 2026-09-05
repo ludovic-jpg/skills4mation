@@ -10,6 +10,7 @@ import {
   Text,
 } from '@react-email/components'
 import type { TemplateEntry } from './registry'
+import { CHARTE } from "../charte";
 
 export interface ConvocationStagiaireProps {
   apprenantNom?: string
@@ -36,24 +37,24 @@ export function ConvocationStagiaireEmail({
       <Preview>{`Votre convocation à la formation « ${formationTitre} »`}</Preview>
       <Body style={{ backgroundColor: '#f4f7fa', fontFamily: 'Helvetica, Arial, sans-serif' }}>
         <Container style={{ backgroundColor: '#ffffff', padding: '32px', maxWidth: '600px' }}>
-          <Heading style={{ color: '#0d2a4a', fontSize: '20px' }}>Votre convocation</Heading>
-          <Hr style={{ borderColor: '#4f8f2f', borderTopWidth: '3px' }} />
-          <Text style={{ color: '#12181f', fontSize: '14px' }}>Bonjour {apprenantNom},</Text>
-          <Text style={{ color: '#12181f', fontSize: '14px' }}>
+          <Heading style={{ color: CHARTE.vert, fontSize: '20px' }}>Votre convocation</Heading>
+          <Hr style={{ borderColor: CHARTE.vertClair, borderTopWidth: '3px' }} />
+          <Text style={{ color: CHARTE.texte, fontSize: '14px' }}>Bonjour {apprenantNom},</Text>
+          <Text style={{ color: CHARTE.texte, fontSize: '14px' }}>
             Vous êtes convoqué(e) à la formation <strong>{formationTitre}</strong>
             {dateDebut ? ` du ${dateDebut}` : ''}
             {dateFin ? ` au ${dateFin}` : ''}
             {lieu ? `, ${lieu}` : ''}.
             {formateurNom ? ` Votre formateur : ${formateurNom}.` : ''}
           </Text>
-          <Text style={{ color: '#12181f', fontSize: '14px' }}>
+          <Text style={{ color: CHARTE.texte, fontSize: '14px' }}>
             Votre convocation officielle est jointe au lien ci-dessous. Conservez-la : elle
             fait partie des pièces de votre dossier de formation.
           </Text>
           <Button
             href={lien}
             style={{
-              backgroundColor: '#4f8f2f',
+              backgroundColor: CHARTE.vertClair,
               color: '#ffffff',
               padding: '12px 20px',
               borderRadius: '6px',

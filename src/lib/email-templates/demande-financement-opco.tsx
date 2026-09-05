@@ -11,6 +11,7 @@ import {
   Text,
 } from '@react-email/components'
 import type { TemplateEntry } from './registry'
+import { CHARTE } from "../charte";
 
 export interface DemandeFinancementOpcoProps {
   formateurPrenom?: string
@@ -39,47 +40,47 @@ export function DemandeFinancementOpcoEmail({
       <Preview>{`Demande de financement OPCO à déposer pour ${entrepriseNom}`}</Preview>
       <Body style={{ backgroundColor: '#ffffff', fontFamily: 'Helvetica, Arial, sans-serif' }}>
         <Container style={{ backgroundColor: '#ffffff', padding: '32px', maxWidth: '600px' }}>
-          <Heading style={{ color: '#0d2a4a', fontSize: '20px' }}>
+          <Heading style={{ color: CHARTE.vert, fontSize: '20px' }}>
             Dossier validé — demande de financement OPCO
           </Heading>
-          <Hr style={{ borderColor: '#4f8f2f', borderTopWidth: '3px' }} />
-          <Text style={{ color: '#12181f', fontSize: '14px' }}>Bonjour {formateurPrenom},</Text>
-          <Text style={{ color: '#12181f', fontSize: '14px' }}>
+          <Hr style={{ borderColor: CHARTE.vertClair, borderTopWidth: '3px' }} />
+          <Text style={{ color: CHARTE.texte, fontSize: '14px' }}>Bonjour {formateurPrenom},</Text>
+          <Text style={{ color: CHARTE.texte, fontSize: '14px' }}>
             Le dossier <strong>{dossierLabel || entrepriseNom}</strong> est validé et signé par
             Skills4mation. Entreprise : <strong>{entrepriseNom}</strong>
             {opco ? ` — OPCO : ${opco}` : ''}.
           </Text>
-          <Text style={{ color: '#12181f', fontSize: '14px' }}>
+          <Text style={{ color: CHARTE.texte, fontSize: '14px' }}>
             Montant de la formation : <strong>{montant || 'à préciser'}</strong>
           </Text>
           {coutCertification ? (
-            <Text style={{ color: '#12181f', fontSize: '14px' }}>
+            <Text style={{ color: CHARTE.texte, fontSize: '14px' }}>
               Coût de la certification (ligne distincte) : <strong>{coutCertification}</strong>
             </Text>
           ) : null}
-          <Text style={{ color: '#12181f', fontSize: '14px', marginTop: '16px' }}>
+          <Text style={{ color: CHARTE.texte, fontSize: '14px', marginTop: '16px' }}>
             Pièces déjà générées et archivées :
           </Text>
           {pieces.length ? (
             pieces.map((p) => (
-              <Text key={p.label} style={{ color: '#12181f', fontSize: '13px', margin: '2px 0' }}>
+              <Text key={p.label} style={{ color: CHARTE.texte, fontSize: '13px', margin: '2px 0' }}>
                 • {p.url ? <Link href={p.url}>{p.label}</Link> : p.label}
               </Text>
             ))
           ) : (
-            <Text style={{ color: '#12181f', fontSize: '13px' }}>
+            <Text style={{ color: CHARTE.texte, fontSize: '13px' }}>
               • Convention, planning, convocations et recueil des besoins disponibles dans votre
               espace.
             </Text>
           )}
-          <Text style={{ color: '#12181f', fontSize: '14px', marginTop: '16px' }}>
+          <Text style={{ color: CHARTE.texte, fontSize: '14px', marginTop: '16px' }}>
             <strong>Vous n&apos;avez rien à déposer vous-même :</strong> le compte OPCO appartient à
             l&apos;entreprise cliente. L&apos;apprenant dispose désormais, dans son espace
             Skills4mation, d&apos;une étape dédiée pour déposer la demande de prise en charge — soit
             lui-même s&apos;il a accès à l&apos;espace OPCO de son entreprise, soit en la
             transmettant à son service RH.
           </Text>
-          <Text style={{ color: '#12181f', fontSize: '14px' }}>
+          <Text style={{ color: CHARTE.texte, fontSize: '14px' }}>
             Dès qu&apos;il confirme le dépôt, vous recevez une notification et le dossier passe
             automatiquement au statut « demande de financement ». Votre rôle est de vérifier que
             les pièces ci-dessus sont bien à jour et de nous transmettre l&apos;accord de
@@ -88,7 +89,7 @@ export function DemandeFinancementOpcoEmail({
           <Button
             href={lien}
             style={{
-              backgroundColor: '#4f8f2f',
+              backgroundColor: CHARTE.vertClair,
               color: '#ffffff',
               padding: '12px 20px',
               borderRadius: '6px',

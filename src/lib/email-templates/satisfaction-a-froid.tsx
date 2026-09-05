@@ -10,6 +10,7 @@ import {
   Text,
 } from '@react-email/components'
 import type { TemplateEntry } from './registry'
+import { CHARTE } from "../charte";
 
 export interface SatisfactionAFroidProps {
   apprenantNom?: string
@@ -28,20 +29,20 @@ export function SatisfactionAFroidEmail({
       <Preview>{`3 mois après « ${formationTitre} » : votre retour en 3 minutes`}</Preview>
       <Body style={{ backgroundColor: '#f4f7fa', fontFamily: 'Helvetica, Arial, sans-serif' }}>
         <Container style={{ backgroundColor: '#ffffff', padding: '32px', maxWidth: '600px' }}>
-          <Heading style={{ color: '#0d2a4a', fontSize: '20px' }}>Votre retour à 3 mois</Heading>
-          <Hr style={{ borderColor: '#4f8f2f', borderTopWidth: '3px' }} />
-          <Text style={{ color: '#12181f', fontSize: '14px' }}>Bonjour {apprenantNom},</Text>
-          <Text style={{ color: '#12181f', fontSize: '14px' }}>
+          <Heading style={{ color: CHARTE.vert, fontSize: '20px' }}>Votre retour à 3 mois</Heading>
+          <Hr style={{ borderColor: CHARTE.vertClair, borderTopWidth: '3px' }} />
+          <Text style={{ color: CHARTE.texte, fontSize: '14px' }}>Bonjour {apprenantNom},</Text>
+          <Text style={{ color: CHARTE.texte, fontSize: '14px' }}>
             Vous avez suivi la formation <strong>{formationTitre}</strong> il y a trois mois. Nous
             aimerions savoir ce que vous en avez retiré dans votre activité au quotidien.
           </Text>
-          <Text style={{ color: '#12181f', fontSize: '14px' }}>
+          <Text style={{ color: CHARTE.texte, fontSize: '14px' }}>
             Le questionnaire se remplit en ligne en quelques minutes depuis votre espace.
           </Text>
           <Button
             href={lien}
             style={{
-              backgroundColor: '#4f8f2f',
+              backgroundColor: CHARTE.vertClair,
               color: '#ffffff',
               padding: '12px 20px',
               borderRadius: '6px',

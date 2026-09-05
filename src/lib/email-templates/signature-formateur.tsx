@@ -11,6 +11,7 @@ import {
   Text,
 } from '@react-email/components'
 import type { TemplateEntry } from './registry'
+import { CHARTE } from "../charte";
 
 export interface SignatureFormateurProps {
   formateurPrenom?: string
@@ -41,14 +42,14 @@ export function SignatureFormateurEmail({
       <Preview>{`${apprenantNom} a signé « ${documentLabel} »`}</Preview>
       <Body style={{ backgroundColor: '#f4f7fa', fontFamily: 'Helvetica, Arial, sans-serif' }}>
         <Container style={{ backgroundColor: '#ffffff', padding: '32px', maxWidth: '600px' }}>
-          <Heading style={{ color: '#0d2a4a', fontSize: '20px' }}>
+          <Heading style={{ color: CHARTE.vert, fontSize: '20px' }}>
             Document signé reçu
           </Heading>
-          <Hr style={{ borderColor: '#4f8f2f', borderTopWidth: '3px' }} />
-          <Text style={{ color: '#12181f', fontSize: '14px' }}>
+          <Hr style={{ borderColor: CHARTE.vertClair, borderTopWidth: '3px' }} />
+          <Text style={{ color: CHARTE.texte, fontSize: '14px' }}>
             Bonjour {formateurPrenom},
           </Text>
-          <Text style={{ color: '#12181f', fontSize: '14px' }}>
+          <Text style={{ color: CHARTE.texte, fontSize: '14px' }}>
             {apprenantNom} a signé électroniquement{' '}
             <strong>
               {documentCode ? `${documentCode} — ` : ''}
@@ -59,12 +60,12 @@ export function SignatureFormateurEmail({
           </Text>
           <Section style={{ backgroundColor: '#f4f7fa', padding: '16px' }}>
             {signatureDate ? (
-              <Text style={{ fontSize: '12px', color: '#5b6472', margin: '0 0 6px' }}>
+              <Text style={{ fontSize: '12px', color: CHARTE.gris, margin: '0 0 6px' }}>
                 Signé le {signatureDate}
               </Text>
             ) : null}
             {hash ? (
-              <Text style={{ fontSize: '11px', color: '#5b6472', margin: 0, wordBreak: 'break-all' }}>
+              <Text style={{ fontSize: '11px', color: CHARTE.gris, margin: 0, wordBreak: 'break-all' }}>
                 Empreinte SHA-256 : {hash}
               </Text>
             ) : null}
@@ -72,7 +73,7 @@ export function SignatureFormateurEmail({
           <Button
             href={lien}
             style={{
-              backgroundColor: '#4f8f2f',
+              backgroundColor: CHARTE.vertClair,
               color: '#ffffff',
               padding: '12px 20px',
               borderRadius: '6px',
@@ -84,7 +85,7 @@ export function SignatureFormateurEmail({
             Ouvrir le dossier
           </Button>
           {driveUrl ? (
-            <Text style={{ fontSize: '12px', color: '#5b6472', marginTop: '16px' }}>
+            <Text style={{ fontSize: '12px', color: CHARTE.gris, marginTop: '16px' }}>
               Archive Google Drive : {driveUrl}
             </Text>
           ) : null}

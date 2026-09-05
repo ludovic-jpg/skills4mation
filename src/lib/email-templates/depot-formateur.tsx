@@ -10,6 +10,7 @@ import {
   Text,
 } from '@react-email/components'
 import type { TemplateEntry } from './registry'
+import { CHARTE } from "../charte";
 
 export interface DepotFormateurProps {
   formateurPrenom?: string
@@ -36,10 +37,10 @@ export function DepotFormateurEmail({
       <Preview>{`${apprenantNom} a déposé un fichier pour « ${documentLabel} »`}</Preview>
       <Body style={{ backgroundColor: '#f4f7fa', fontFamily: 'Helvetica, Arial, sans-serif' }}>
         <Container style={{ backgroundColor: '#ffffff', padding: '32px', maxWidth: '600px' }}>
-          <Heading style={{ color: '#0d2a4a', fontSize: '20px' }}>Nouveau dépôt apprenant</Heading>
-          <Hr style={{ borderColor: '#4f8f2f', borderTopWidth: '3px' }} />
-          <Text style={{ color: '#12181f', fontSize: '14px' }}>Bonjour {formateurPrenom},</Text>
-          <Text style={{ color: '#12181f', fontSize: '14px' }}>
+          <Heading style={{ color: CHARTE.vert, fontSize: '20px' }}>Nouveau dépôt apprenant</Heading>
+          <Hr style={{ borderColor: CHARTE.vertClair, borderTopWidth: '3px' }} />
+          <Text style={{ color: CHARTE.texte, fontSize: '14px' }}>Bonjour {formateurPrenom},</Text>
+          <Text style={{ color: CHARTE.texte, fontSize: '14px' }}>
             {apprenantNom} vient de déposer un fichier pour{' '}
             <strong>
               {documentCode ? `${documentCode} — ` : ''}
@@ -51,7 +52,7 @@ export function DepotFormateurEmail({
           <Button
             href={lien}
             style={{
-              backgroundColor: '#4f8f2f',
+              backgroundColor: CHARTE.vertClair,
               color: '#ffffff',
               padding: '12px 20px',
               borderRadius: '6px',

@@ -9,28 +9,29 @@ import {
 import type { ReactElement } from "react";
 
 import { dateFr, euros, FORMAT_LABELS, type DossierDonnees } from "./types";
+import { CHARTE } from "../charte";
 
-const NAVY = "#0d2a4a";
-const GREEN = "#4f8f2f";
+const NAVY = CHARTE.vert;
+const GREEN = CHARTE.vertClair;
 
 const s = StyleSheet.create({
-  page: { paddingTop: 38, paddingBottom: 46, paddingHorizontal: 42, fontSize: 9.5, color: "#12181f" },
+  page: { paddingTop: 38, paddingBottom: 46, paddingHorizontal: 42, fontSize: 9.5, color: CHARTE.texte },
   brand: { fontSize: 14, fontWeight: 700, color: NAVY },
   brandLine: { flexDirection: "row", justifyContent: "space-between", alignItems: "flex-end" },
-  ref: { fontSize: 8, color: "#5b6472" },
+  ref: { fontSize: 8, color: CHARTE.gris },
   rule: { height: 2, backgroundColor: GREEN, marginTop: 6, marginBottom: 16 },
   h1: { fontSize: 13, fontWeight: 700, color: NAVY, marginBottom: 10, textTransform: "uppercase" },
   h2: { fontSize: 10, fontWeight: 700, color: NAVY, marginTop: 14, marginBottom: 5 },
   p: { lineHeight: 1.5, marginBottom: 5 },
   row: { flexDirection: "row", marginBottom: 3 },
-  key: { width: 150, color: "#5b6472" },
+  key: { width: 150, color: CHARTE.gris },
   val: { flex: 1, fontWeight: 700 },
-  box: { borderWidth: 1, borderColor: "#dbe1e8", borderRadius: 4, padding: 10, marginBottom: 8 },
+  box: { borderWidth: 1, borderColor: CHARTE.bordure, borderRadius: 4, padding: 10, marginBottom: 8 },
   th: {
     flexDirection: "row",
-    backgroundColor: "#eef2f6",
+    backgroundColor: CHARTE.fondDoux,
     borderWidth: 1,
-    borderColor: "#dbe1e8",
+    borderColor: CHARTE.bordure,
     paddingVertical: 4,
     paddingHorizontal: 5,
     fontWeight: 700,
@@ -39,7 +40,7 @@ const s = StyleSheet.create({
     flexDirection: "row",
     borderWidth: 1,
     borderTopWidth: 0,
-    borderColor: "#dbe1e8",
+    borderColor: CHARTE.bordure,
     paddingVertical: 5,
     paddingHorizontal: 5,
     minHeight: 20,
@@ -48,7 +49,7 @@ const s = StyleSheet.create({
   signBox: {
     width: "46%",
     borderWidth: 1,
-    borderColor: "#dbe1e8",
+    borderColor: CHARTE.bordure,
     borderRadius: 4,
     padding: 8,
     height: 82,
