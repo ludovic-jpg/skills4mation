@@ -117,7 +117,12 @@ export function MesDocumentsPanel({
                         : "border-accent bg-accent text-accent-foreground"
                     }`}
                   >
-                    {doc.complet ? "Complété" : "En attente de retour"}
+                    {doc.complet
+                      ? "Complété"
+                      : doc.auto
+                        ? "Généré automatiquement"
+                        : "En attente de retour"}
+
                   </span>
                 </div>
                 <p className="mt-1 text-sm text-muted-foreground">{doc.description}</p>
