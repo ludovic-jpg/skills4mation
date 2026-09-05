@@ -78,6 +78,8 @@ type KanbanRow = {
   statut_crm: CrmStatut;
   created_at: string;
   updated_at: string;
+  archived_at: string | null;
+  drive_folder_url: string | null;
 };
 
 type PendingMove = { row: KanbanRow; cible: CrmStatut; type: DocumentType };
@@ -93,6 +95,7 @@ export function KanbanDossiers({ mode }: { mode: "formateur" | "admin" }) {
 
   const [search, setSearch] = useState("");
   const [formateurFiltre, setFormateurFiltre] = useState("tous");
+  const [archiveFiltre, setArchiveFiltre] = useState<"actifs" | "archives">("actifs");
   const [replies, setReplies] = useState<Record<string, boolean>>(
     Object.fromEntries(BANDEAUX.map((b) => [b.cle, Boolean(b.replieParDefaut)])),
   );
@@ -100,6 +103,7 @@ export function KanbanDossiers({ mode }: { mode: "formateur" | "admin" }) {
   const [detailId, setDetailId] = useState<string | null>(null);
   const [pending, setPending] = useState<PendingMove | null>(null);
   const [uploading, setUploading] = useState(false);
+
 
   const cleDossiers = mode === "admin" ? "kanban-dossiers-admin" : "kanban-dossiers-formateur";
 
