@@ -213,11 +213,26 @@ export function KanbanDossiers({ mode }: { mode: "formateur" | "admin" }) {
   const detail = (rows ?? []).find((r) => r.id === detailId) ?? null;
 
   const changerStatut = useMutation({
-    mutationFn: async ({ row, cible }: { row: KanbanRow; cible: CrmStatut }) => {
+    mutationFn: async ({
+      row,
+      cible,
+      commentaire,
+    }: {
+      row: KanbanRow;
+      cible: CrmStatut;
+      commentaire?: string;
+    }) => {
       if (!user) throw new Error("Session expirée.");
+      if (cible === "refuse" && commentaire !== undefined && !commentaire.trim())
+        throw new Error("commentaire");
+      const note = commentaire?.trim() || null;
       const { error } = await supabase
         .from("dossiers")
-        .update({ statut_crm: cible })
+        .update({
+          statut_crm: cible,
+          ...(note ? { commentaire_admin: note } : {}),
+          ...(cible === "paiement_formateur" ? { archived_at: null } : {}),
+        })
         .eq("id", row.id);
       if (error) throw error;
       const { error: histError } = await supabase.from("dossier_historique").insert({
@@ -225,7 +240,7 @@ export function KanbanDossiers({ mode }: { mode: "formateur" | "admin" }) {
         ancien_statut: row.statut_crm,
         nouveau_statut: cible,
         auteur_id: user.id,
-        commentaire: `Déplacement Kanban vers « ${COLONNE_LABELS[cible] ?? cible} »`,
+        commentaire: note ?? `Déplacement Kanban vers « ${COLONNE_LABELS[cible] ?? cible} »`,
       });
       if (histError) throw histError;
       if (cible === "accord_financement") {
@@ -252,7 +267,28 @@ export function KanbanDossiers({ mode }: { mode: "formateur" | "admin" }) {
       void queryClient.invalidateQueries({ queryKey: [cleDossiers] });
       void queryClient.invalidateQueries({ queryKey: ["kanban-historique", mode] });
     },
-    onError: () => toast.error("Déplacement impossible."),
+    onError: (error: Error) =>
+      toast.error(
+        error.message === "commentaire"
+          ? "Un commentaire est obligatoire pour refuser un dossier."
+          : "Déplacement impossible.",
+      ),
+  });
+
+  const archiver = useMutation({
+    mutationFn: async (row: KanbanRow) => {
+      const { error } = await supabase
+        .from("dossiers")
+        .update({ archived_at: row.archived_at ? null : new Date().toISOString() })
+        .eq("id", row.id);
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      toast.success("Archivage mis à jour.");
+      setDetailId(null);
+      void queryClient.invalidateQueries({ queryKey: [cleDossiers] });
+    },
+    onError: () => toast.error("Action impossible."),
   });
 
   const relancer = useMutation({
@@ -263,6 +299,7 @@ export function KanbanDossiers({ mode }: { mode: "formateur" | "admin" }) {
         : toast.error(res.message ?? "Aucun envoi effectué."),
     onError: () => toast.error("Envoi impossible."),
   });
+
 
   function tenterDeplacement(row: KanbanRow, cible: CrmStatut) {
     if (row.statut_crm === cible) return;
