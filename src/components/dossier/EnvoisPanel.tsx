@@ -176,20 +176,14 @@ export function EnvoisPanel({
         <CardContent className="p-6">
           <h2 className="text-base font-semibold">Document à faire signer</h2>
           <p className="mt-1 text-sm text-muted-foreground">
-            Modifiez le document si nécessaire, puis transmettez-le : le PDF est généré, archivé dans
-            Google Drive ([Nom_Apprenant]_[Formation]_[Date]) et publié dans l'espace de l'apprenant.
+            Choisissez le document puis transmettez-le à l'apprenant : il est généré et publié
+            automatiquement dans son espace personnel.
           </p>
 
           <div className="mt-4 grid gap-3 sm:grid-cols-[280px_1fr] sm:items-end">
             <div className="grid gap-2">
               <Label>Document</Label>
-              <Select
-                value={code}
-                onValueChange={(value) => {
-                  setCode(value);
-                  setHtml(null);
-                }}
-              >
+              <Select value={code} onValueChange={(value) => setCode(value)}>
                 <SelectTrigger>
                   <SelectValue />
                 </SelectTrigger>
@@ -209,32 +203,8 @@ export function EnvoisPanel({
                 onClick={() => envoiMutation.mutate()}
               >
                 <Send className="mr-1.5 size-4" />
-                {envoiMutation.isPending ? "Génération et archivage…" : "Générer, archiver et transmettre"}
+                {envoiMutation.isPending ? "Transmission…" : "Transmettre"}
               </Button>
-              {html !== null ? (
-                <Button variant="outline" onClick={() => setHtml(null)}>
-                  Rétablir le modèle
-                </Button>
-              ) : null}
-            </div>
-          </div>
-
-          <div className="mt-4 grid gap-3 lg:grid-cols-2">
-            <div className="grid gap-2">
-              <Label>Contenu du document (modifiable)</Label>
-              <Textarea
-                value={contenu}
-                onChange={(event) => setHtml(event.target.value)}
-                className="h-[420px] font-mono text-xs"
-              />
-            </div>
-            <div className="grid gap-2">
-              <Label>Aperçu</Label>
-              <iframe
-                title="Aperçu du document à signer"
-                srcDoc={contenu}
-                className="h-[420px] w-full rounded-xl border border-border bg-white"
-              />
             </div>
           </div>
         </CardContent>
