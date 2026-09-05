@@ -8,7 +8,6 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
 import {
   Select,
   SelectContent,
@@ -42,13 +41,12 @@ export function EnvoisPanel({
   const docs = useMemo(() => documentsApplicables(donnees), [donnees]);
   const [code, setCode] = useState(docs[0]?.code ?? "3A");
   const [selection, setSelection] = useState<string[]>([]);
-  const [html, setHtml] = useState<string | null>(null);
 
   const sync = useServerFn(synchroniserApprenants);
   const envoyer = useServerFn(envoyerDocumentApprenant);
 
   const doc = docs.find((d) => d.code === code) ?? docs[0];
-  const contenu = html ?? (doc ? doc.build(donnees) : "");
+  const contenu = doc ? doc.build(donnees) : "";
 
   const { data: apprenants } = useQuery({
     queryKey: ["dossier-apprenants", dossierId],
