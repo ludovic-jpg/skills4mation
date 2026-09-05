@@ -11,17 +11,17 @@ import type { ReactElement } from "react";
 import { dateFr, euros, FORMAT_LABELS, type DossierDonnees } from "./types";
 import { CHARTE } from "../charte";
 
-const NAVY = CHARTE.vert;
-const GREEN = CHARTE.vertClair;
+
+
 
 const s = StyleSheet.create({
   page: { paddingTop: 38, paddingBottom: 46, paddingHorizontal: 42, fontSize: 9.5, color: CHARTE.texte },
-  brand: { fontSize: 14, fontWeight: 700, color: NAVY },
+  brand: { fontSize: 14, fontWeight: 700, color: CHARTE.vert },
   brandLine: { flexDirection: "row", justifyContent: "space-between", alignItems: "flex-end" },
   ref: { fontSize: 8, color: CHARTE.gris },
-  rule: { height: 2, backgroundColor: GREEN, marginTop: 6, marginBottom: 16 },
-  h1: { fontSize: 13, fontWeight: 700, color: NAVY, marginBottom: 10, textTransform: "uppercase" },
-  h2: { fontSize: 10, fontWeight: 700, color: NAVY, marginTop: 14, marginBottom: 5 },
+  rule: { height: 2, backgroundColor: CHARTE.vertClair, marginTop: 6, marginBottom: 16 },
+  h1: { fontSize: 13, fontWeight: 700, color: CHARTE.vert, marginBottom: 10, textTransform: "uppercase" },
+  h2: { fontSize: 10, fontWeight: 700, color: CHARTE.vert, marginTop: 14, marginBottom: 5 },
   p: { lineHeight: 1.5, marginBottom: 5 },
   row: { flexDirection: "row", marginBottom: 3 },
   key: { width: 150, color: CHARTE.gris },

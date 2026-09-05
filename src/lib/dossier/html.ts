@@ -1,4 +1,5 @@
 import {
+import { CHARTE } from "../charte";
   aDuPresentiel,
   dateFr,
   estCpf,
@@ -47,26 +48,26 @@ function shell(title: string, body: string, orientation: "portrait" | "landscape
 <style>
   @page { size: A4 ${orientation}; margin: 12mm 14mm; }
   * { box-sizing: border-box; }
-  body { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; color: #0f172a; margin: 0; padding: 24px; background: #f1f5f9; font-size: 12px; line-height: 1.5; }
-  .sheet { background: #fff; max-width: ${orientation === "landscape" ? "1120px" : "820px"}; margin: 0 auto; padding: 32px 36px; box-shadow: 0 8px 24px rgba(15,23,42,.08); }
+  body { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; color: ${CHARTE.texte}; margin: 0; padding: 24px; background: ${CHARTE.fondDoux}; font-size: 12px; line-height: 1.5; }
+  .sheet { background: ${CHARTE.blanc}; max-width: ${orientation === "landscape" ? "1120px" : "820px"}; margin: 0 auto; padding: 32px 36px; box-shadow: 0 8px 24px rgba(15,23,42,.08); }
   h1 { font-size: 19px; margin: 0 0 4px; letter-spacing: -.01em; }
-  h2 { font-size: 13px; text-transform: uppercase; letter-spacing: .06em; margin: 22px 0 8px; padding-bottom: 4px; border-bottom: 1px solid #cbd5e1; color: #1e3a8a; }
-  .head { border-bottom: 2px solid #0f172a; padding-bottom: 12px; margin-bottom: 8px; }
-  .muted { color: #64748b; }
-  .vide { color: #94a3b8; }
+  h2 { font-size: 13px; text-transform: uppercase; letter-spacing: .06em; margin: 22px 0 8px; padding-bottom: 4px; border-bottom: 1px solid ${CHARTE.bordure}; color: ${CHARTE.vert}; }
+  .head { border-bottom: 2px solid ${CHARTE.texte}; padding-bottom: 12px; margin-bottom: 8px; }
+  .muted { color: ${CHARTE.gris}; }
+  .vide { color: ${CHARTE.gris}; }
   .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 24px; }
   .row { display: flex; gap: 8px; }
-  .row .k { min-width: 190px; color: #475569; }
+  .row .k { min-width: 190px; color: ${CHARTE.gris}; }
   table { width: 100%; border-collapse: collapse; margin-top: 8px; }
-  th, td { border: 1px solid #cbd5e1; padding: 6px 8px; text-align: left; vertical-align: top; }
-  th { background: #f8fafc; text-transform: uppercase; font-size: 10px; letter-spacing: .04em; color: #334155; }
+  th, td { border: 1px solid ${CHARTE.bordure}; padding: 6px 8px; text-align: left; vertical-align: top; }
+  th { background: ${CHARTE.fondDoux}; text-transform: uppercase; font-size: 10px; letter-spacing: .04em; color: ${CHARTE.gris}; }
   .sign { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 28px; }
-  .sign div { border: 1px solid #cbd5e1; height: 108px; padding: 8px; }
-  .badge { display: inline-block; border: 1px solid #1e3a8a; color: #1e3a8a; border-radius: 999px; padding: 2px 10px; font-size: 10px; }
-  .note { background: #f8fafc; border-left: 3px solid #1e3a8a; padding: 8px 12px; margin-top: 10px; }
+  .sign div { border: 1px solid ${CHARTE.bordure}; height: 108px; padding: 8px; }
+  .badge { display: inline-block; border: 1px solid ${CHARTE.vert}; color: ${CHARTE.vert}; border-radius: 999px; padding: 2px 10px; font-size: 10px; }
+  .note { background: ${CHARTE.fondDoux}; border-left: 3px solid ${CHARTE.vert}; padding: 8px 12px; margin-top: 10px; }
   tr, .avoid { page-break-inside: avoid; }
   @media print {
-    body { background: #fff; padding: 0; font-size: 10.5px; }
+    body { background: ${CHARTE.blanc}; padding: 0; font-size: 10.5px; }
     .sheet { box-shadow: none; max-width: 100%; padding: 0; }
   }
 </style></head><body><div class="sheet">${body}</div></body></html>`;
