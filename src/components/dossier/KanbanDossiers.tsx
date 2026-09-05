@@ -15,10 +15,12 @@ import {
   type DragStartEvent,
 } from "@dnd-kit/core";
 import {
+  Archive,
   Building2,
   ChevronDown,
   ChevronRight,
   ExternalLink,
+  FolderOpen,
   Lock,
   Mail,
   Upload,
@@ -54,11 +56,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { SupprimerDossierBouton } from "@/components/dossier/SupprimerDossierBouton";
+import { Textarea } from "@/components/ui/textarea";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
-import { CRM_STATUTS, dossierNom, type CrmStatut } from "@/lib/crm";
+import { CRM_PIPELINE, CRM_STATUTS, dossierNom, type CrmStatut } from "@/lib/crm";
 import { PIECES } from "@/lib/dossier/pieces";
 import { ChecklistPaiement } from "@/components/dossier/ChecklistPaiement";
 import { mergeDonnees } from "@/lib/dossier/types";
@@ -518,6 +522,13 @@ export function KanbanDossiers({ mode }: { mode: "formateur" | "admin" }) {
               row={detail}
               equipe={equipe}
               uploading={uploading}
+              onArchiver={() => archiver.mutate(detail)}
+              archivageEnCours={archiver.isPending}
+              onChangerEtape={(cible, commentaire) =>
+                changerStatut.mutate({ row: detail, cible, commentaire })
+              }
+              changementEnCours={changerStatut.isPending}
+              cleInvalidation={cleDossiers}
               onUpload={(type, file) => void deposerDocument(detail, type, file)}
               onRelancer={() => relancer.mutate(detail.id)}
               relanceEnCours={relancer.isPending}
@@ -647,6 +658,11 @@ function DetailDossier({
   onUpload,
   onRelancer,
   relanceEnCours,
+  onArchiver,
+  archivageEnCours,
+  onChangerEtape,
+  changementEnCours,
+  cleInvalidation,
 }: {
   row: KanbanRow;
   equipe: boolean;
@@ -654,6 +670,11 @@ function DetailDossier({
   onUpload: (type: DocumentType, file: File) => void;
   onRelancer: () => void;
   relanceEnCours: boolean;
+  onArchiver: () => void;
+  archivageEnCours: boolean;
+  onChangerEtape: (cible: CrmStatut, commentaire: string) => void;
+  changementEnCours: boolean;
+  cleInvalidation: string;
 }) {
   const { data: dossier } = useQuery({
     queryKey: ["dossier", row.id],
@@ -678,6 +699,9 @@ function DetailDossier({
           ? "qualiopi_final"
           : "signe";
   const [type, setType] = useState<DocumentType>(typeParDefaut);
+  const [etapeOuverte, setEtapeOuverte] = useState(false);
+  const [cible, setCible] = useState<CrmStatut>(row.statut_crm);
+  const [commentaire, setCommentaire] = useState("");
 
   return (
     <div className="grid gap-5">
@@ -699,7 +723,83 @@ function DetailDossier({
           <Mail className="mr-1.5 size-4" />
           {relanceEnCours ? "Envoi…" : "Renvoyer l'e-mail"}
         </Button>
+        {row.drive_folder_url ? (
+          <Button asChild size="sm" variant="outline">
+            <a href={row.drive_folder_url} target="_blank" rel="noreferrer">
+              <FolderOpen className="mr-1.5 size-4" /> Dossier Drive
+            </a>
+          </Button>
+        ) : null}
+        {equipe ? (
+          <>
+            <Button
+              size="sm"
+              variant="outline"
+              onClick={() => {
+                setCible(row.statut_crm);
+                setCommentaire("");
+                setEtapeOuverte((v) => !v);
+              }}
+            >
+              Changer l&apos;étape
+            </Button>
+            <Button
+              size="sm"
+              variant="outline"
+              disabled={archivageEnCours}
+              onClick={onArchiver}
+            >
+              <Archive className="mr-1.5 size-4" />
+              {row.archived_at ? "Désarchiver" : "Archiver"}
+            </Button>
+          </>
+        ) : null}
+        {row.statut_crm === "brouillon" ? (
+          <SupprimerDossierBouton
+            dossierId={row.id}
+            label={row.dossier_nom || dossierNom(row)}
+            invalidateKeys={[cleInvalidation]}
+          />
+        ) : null}
       </div>
+
+      {etapeOuverte ? (
+        <div className="grid gap-3 rounded-xl bg-muted/50 p-4">
+          <Select value={cible} onValueChange={(v) => setCible(v as CrmStatut)}>
+            <SelectTrigger className="max-w-sm">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              {CRM_PIPELINE.map((statut) => (
+                <SelectItem key={statut} value={statut}>
+                  {CRM_STATUTS[statut].etape}. {CRM_STATUTS[statut].label}
+                </SelectItem>
+              ))}
+              <SelectItem value="refuse">Refusé / Annulé</SelectItem>
+            </SelectContent>
+          </Select>
+          <Textarea
+            rows={3}
+            maxLength={1000}
+            placeholder="Commentaire visible du formateur (obligatoire en cas de refus)"
+            value={commentaire}
+            onChange={(e) => setCommentaire(e.target.value)}
+          />
+          <div className="flex gap-2">
+            <Button
+              variant="cta"
+              size="sm"
+              disabled={changementEnCours}
+              onClick={() => onChangerEtape(cible, commentaire)}
+            >
+              Enregistrer l&apos;étape
+            </Button>
+            <Button variant="ghost" size="sm" onClick={() => setEtapeOuverte(false)}>
+              Annuler
+            </Button>
+          </div>
+        </div>
+      ) : null}
 
       <ChecklistPaiement dossierId={row.id} statutCrm={row.statut_crm} />
 
