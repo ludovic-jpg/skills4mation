@@ -224,7 +224,10 @@ function AdminValidation() {
           rows.map((row) => {
             const d = delai(row.validation_due_at, row.created_at);
             const items = conformite[row.id] ?? [];
-            const complet = items.every((item) => estCoche(row.id, item.key, item.auto));
+            const manquants = items
+              .filter((item) => !estCoche(row.id, item.key, item.auto))
+              .map((item) => item.label);
+            const complet = manquants.length === 0;
             const profil = (profils ?? []).find((p) => p.id === row.formateur_id);
             return (
               <Card key={row.id} className="rounded-2xl border-border/70 shadow-soft">
@@ -276,7 +279,15 @@ function AdminValidation() {
                     ))}
                   </div>
 
-                  <div className="mt-4 flex justify-end">
+                  <div className="mt-4 flex flex-col items-end gap-2">
+                    {!complet ? (
+                      <p className="text-xs text-amber-600 sm:text-right">
+                        Validation indisponible : {manquants.join(", ")}.{" "}
+                        {manquants.length > 1
+                          ? "Cochez ces points après vérification pour débloquer la signature."
+                          : "Cochez ce point après vérification pour débloquer la signature."}
+                      </p>
+                    ) : null}
                     <Button
                       size="sm"
                       variant="cta"
