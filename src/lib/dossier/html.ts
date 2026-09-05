@@ -8,6 +8,7 @@ import {
   viseCertification,
   type DossierDonnees,
 } from "./types";
+import { CHARTE } from "../charte";
 import type { CrmStatut } from "@/lib/crm";
 import { pieceVisibleSelonStatut } from "./visibilite";
 import {
