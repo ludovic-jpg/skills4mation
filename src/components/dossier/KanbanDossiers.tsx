@@ -104,19 +104,23 @@ export function KanbanDossiers({ mode }: { mode: "formateur" | "admin" }) {
   const cleDossiers = mode === "admin" ? "kanban-dossiers-admin" : "kanban-dossiers-formateur";
 
   const { data: rows, isLoading } = useQuery({
-    queryKey: [cleDossiers],
+    queryKey: [cleDossiers, archiveFiltre],
     queryFn: async () => {
-      const { data, error } = await supabase
+      let requete = supabase
         .from("dossiers")
         .select(
-          "id, formateur_id, dossier_nom, entreprise_nom, titre_formation, date_debut, statut_crm, created_at, updated_at",
-        )
-        .is("archived_at", null)
-        .order("updated_at", { ascending: false });
+          "id, formateur_id, dossier_nom, entreprise_nom, titre_formation, date_debut, statut_crm, created_at, updated_at, archived_at, drive_folder_url",
+        );
+      requete =
+        archiveFiltre === "archives"
+          ? requete.not("archived_at", "is", null)
+          : requete.is("archived_at", null);
+      const { data, error } = await requete.order("updated_at", { ascending: false });
       if (error) throw error;
       return (data ?? []) as KanbanRow[];
     },
   });
+
 
   const { data: piecesRows } = useQuery({
     queryKey: ["kanban-pieces", mode],
