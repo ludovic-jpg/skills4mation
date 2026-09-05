@@ -100,7 +100,7 @@ function MesFormations() {
                     <div className="flex flex-wrap items-center gap-2">
                       <p className="truncate font-semibold">{f.titre}</p>
                       <Badge variant={f.publiee ? "default" : "secondary"}>
-                        {f.publiee ? "Publiée" : "Brouillon"}
+                        {f.publiee ? "Publiée" : "Enregistrée"}
                       </Badge>
                       {f.publiee && !f.inscriptions_ouvertes ? (
                         <Badge variant="outline">Inscriptions fermées</Badge>

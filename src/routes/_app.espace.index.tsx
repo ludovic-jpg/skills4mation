@@ -411,7 +411,7 @@ function EspaceAccueil() {
                       </div>
                       <p className="mt-2 truncate text-sm font-semibold">{f.titre}</p>
                       <Badge variant={f.publiee ? "default" : "secondary"} className="mt-1">
-                        {f.publiee ? "Publiée" : "Brouillon"}
+                        {f.publiee ? "Publiée" : "Enregistrée"}
                       </Badge>
                     </Link>
                   </li>
