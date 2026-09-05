@@ -61,7 +61,7 @@ function nombreOk(valeur: string | undefined) {
 }
 
 function AdminValidation() {
-  const { isAdmin, isConseillere, isSuperAdmin, loading } = useAuth();
+  const { isAdmin, isConseillere, isSuperAdmin, loading, user, profile } = useAuth();
   const autorise = isConseillere || isSuperAdmin || isAdmin;
   const queryClient = useQueryClient();
   const [coches, setCoches] = useState<Record<string, boolean>>({});
