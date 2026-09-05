@@ -453,8 +453,8 @@ function DossierDetail() {
                       >
                         Reprendre ces informations
                       </Button>
-                      <Button asChild variant="teal">
-                        <Link to="/espace/financement">Rédiger la convention</Link>
+                      <Button variant="teal" onClick={() => setOnglet("variables")}>
+                        Formulaire du dossier
                       </Button>
                     </div>
                   </CardContent>
@@ -470,8 +470,8 @@ function DossierDetail() {
                       démarrage.
                     </p>
                     <div className="flex flex-wrap gap-3">
-                      <Button asChild variant="teal">
-                        <Link to="/espace/financement">Espace convention</Link>
+                      <Button variant="teal" onClick={() => setOnglet("variables")}>
+                        Formulaire du dossier
                       </Button>
                       <Button variant="outline" onClick={() => setOnglet("signatures")}>
                         Envoi &amp; signatures
