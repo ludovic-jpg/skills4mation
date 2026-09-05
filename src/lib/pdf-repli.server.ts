@@ -5,10 +5,11 @@
  */
 import { Document, Page, StyleSheet, Text, renderToBuffer } from "@react-pdf/renderer";
 import { createElement } from "react";
+import { CHARTE } from "./charte";
 
 const s = StyleSheet.create({
-  page: { paddingVertical: 40, paddingHorizontal: 44, fontSize: 10, color: "#12181f" },
-  title: { fontSize: 14, fontWeight: 700, color: "#0d2a4a", marginBottom: 14 },
+  page: { paddingVertical: 40, paddingHorizontal: 44, fontSize: 10, color: CHARTE.texte },
+  title: { fontSize: 14, fontWeight: 700, color: CHARTE.vert, marginBottom: 14 },
   p: { marginBottom: 5, lineHeight: 1.5 },
 });
 

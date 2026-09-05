@@ -11,6 +11,7 @@ import {
   Text,
 } from '@react-email/components'
 import type { TemplateEntry } from './registry'
+import { CHARTE } from "../charte";
 
 export interface DemandeFinancementCpfProps {
   formateurPrenom?: string
@@ -41,31 +42,31 @@ export function DemandeFinancementCpfEmail({
       <Preview>{`Lien CPF à transférer à ${apprenantNom}`}</Preview>
       <Body style={{ backgroundColor: '#ffffff', fontFamily: 'Helvetica, Arial, sans-serif' }}>
         <Container style={{ backgroundColor: '#ffffff', padding: '32px', maxWidth: '600px' }}>
-          <Heading style={{ color: '#0d2a4a', fontSize: '20px' }}>
+          <Heading style={{ color: CHARTE.vert, fontSize: '20px' }}>
             Dossier validé — inscription CPF
           </Heading>
-          <Hr style={{ borderColor: '#4f8f2f', borderTopWidth: '3px' }} />
-          <Text style={{ color: '#12181f', fontSize: '14px' }}>Bonjour {formateurPrenom},</Text>
-          <Text style={{ color: '#12181f', fontSize: '14px' }}>
+          <Hr style={{ borderColor: CHARTE.vertClair, borderTopWidth: '3px' }} />
+          <Text style={{ color: CHARTE.texte, fontSize: '14px' }}>Bonjour {formateurPrenom},</Text>
+          <Text style={{ color: CHARTE.texte, fontSize: '14px' }}>
             Le dossier <strong>{dossierLabel || formationIntitule}</strong> est validé et signé par
             Skills4mation. Le financement se fera par le CPF de {apprenantNom}.
           </Text>
-          <Text style={{ color: '#12181f', fontSize: '14px' }}>
+          <Text style={{ color: CHARTE.texte, fontSize: '14px' }}>
             Formation : <strong>{formationIntitule || 'à préciser'}</strong>
             {dureeHeures ? ` — ${dureeHeures} heures` : ''}
             {prixCpf ? ` — ${prixCpf}` : ''}
           </Text>
           {coutCertification ? (
-            <Text style={{ color: '#12181f', fontSize: '14px' }}>
+            <Text style={{ color: CHARTE.texte, fontSize: '14px' }}>
               Coût de la certification (ligne distincte) : <strong>{coutCertification}</strong>
             </Text>
           ) : null}
-          <Text style={{ color: '#12181f', fontSize: '14px', marginTop: '16px' }}>
+          <Text style={{ color: CHARTE.texte, fontSize: '14px', marginTop: '16px' }}>
             <strong>À transférer à l&apos;apprenant :</strong> il doit s&apos;inscrire depuis son
             compte moncompteformation.gouv.fr via le lien exact de cette durée.
           </Text>
           {lienMonCompteFormation ? (
-            <Text style={{ color: '#12181f', fontSize: '13px', wordBreak: 'break-all' }}>
+            <Text style={{ color: CHARTE.texte, fontSize: '13px', wordBreak: 'break-all' }}>
               <Link href={lienMonCompteFormation}>{lienMonCompteFormation}</Link>
             </Text>
           ) : (
@@ -77,7 +78,7 @@ export function DemandeFinancementCpfEmail({
           <Button
             href={lienMonCompteFormation || lien}
             style={{
-              backgroundColor: '#4f8f2f',
+              backgroundColor: CHARTE.vertClair,
               color: '#ffffff',
               padding: '12px 20px',
               borderRadius: '6px',

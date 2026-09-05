@@ -10,6 +10,7 @@ import {
   Text,
 } from '@react-email/components'
 import type { TemplateEntry } from './registry'
+import { CHARTE } from "../charte";
 
 export interface DemandePaiementApprenantProps {
   apprenantPrenom?: string
@@ -30,18 +31,18 @@ export function DemandePaiementApprenantEmail({
       <Preview>Votre dossier de formation est complet : demande de paiement</Preview>
       <Body style={{ backgroundColor: '#ffffff', fontFamily: 'Helvetica, Arial, sans-serif' }}>
         <Container style={{ backgroundColor: '#ffffff', padding: '32px', maxWidth: '600px' }}>
-          <Heading style={{ color: '#0d2a4a', fontSize: '20px' }}>
+          <Heading style={{ color: CHARTE.vert, fontSize: '20px' }}>
             Dossier complet — demande de paiement
           </Heading>
-          <Hr style={{ borderColor: '#4f8f2f', borderTopWidth: '3px' }} />
-          <Text style={{ color: '#12181f', fontSize: '14px' }}>
+          <Hr style={{ borderColor: CHARTE.vertClair, borderTopWidth: '3px' }} />
+          <Text style={{ color: CHARTE.texte, fontSize: '14px' }}>
             Bonjour {apprenantPrenom || 'et bienvenue'},
           </Text>
-          <Text style={{ color: '#12181f', fontSize: '14px' }}>
+          <Text style={{ color: CHARTE.texte, fontSize: '14px' }}>
             Toutes les pièces Qualiopi de votre dossier{' '}
             <strong>{dossierLabel || formationIntitule}</strong> sont archivées et complètes.
           </Text>
-          <Text style={{ color: '#12181f', fontSize: '14px' }}>
+          <Text style={{ color: CHARTE.texte, fontSize: '14px' }}>
             <strong>Prochaine étape :</strong> déposer votre demande de paiement auprès de votre
             financeur en vous appuyant sur l&apos;ensemble des pièces archivées, accessibles depuis
             votre espace.
@@ -49,7 +50,7 @@ export function DemandePaiementApprenantEmail({
           <Button
             href={lien}
             style={{
-              backgroundColor: '#4f8f2f',
+              backgroundColor: CHARTE.vertClair,
               color: '#ffffff',
               padding: '12px 20px',
               borderRadius: '6px',

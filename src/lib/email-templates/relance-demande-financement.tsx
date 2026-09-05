@@ -10,6 +10,7 @@ import {
   Text,
 } from '@react-email/components'
 import type { TemplateEntry } from './registry'
+import { CHARTE } from "../charte";
 
 export interface RelanceDemandeFinancementProps {
   apprenantPrenom?: string
@@ -34,22 +35,22 @@ export function RelanceDemandeFinancementEmail({
       <Preview>{`Votre dossier de formation est validé : déposez votre demande de financement`}</Preview>
       <Body style={{ backgroundColor: '#ffffff', fontFamily: 'Helvetica, Arial, sans-serif' }}>
         <Container style={{ backgroundColor: '#ffffff', padding: '32px', maxWidth: '600px' }}>
-          <Heading style={{ color: '#0d2a4a', fontSize: '20px' }}>
+          <Heading style={{ color: CHARTE.vert, fontSize: '20px' }}>
             Dossier validé — à vous de jouer
           </Heading>
-          <Hr style={{ borderColor: '#4f8f2f', borderTopWidth: '3px' }} />
-          <Text style={{ color: '#12181f', fontSize: '14px' }}>
+          <Hr style={{ borderColor: CHARTE.vertClair, borderTopWidth: '3px' }} />
+          <Text style={{ color: CHARTE.texte, fontSize: '14px' }}>
             Bonjour {apprenantPrenom || 'et bienvenue'},
           </Text>
-          <Text style={{ color: '#12181f', fontSize: '14px' }}>
+          <Text style={{ color: CHARTE.texte, fontSize: '14px' }}>
             Votre dossier <strong>{dossierLabel || formationIntitule}</strong> vient d&apos;être
             validé par l&apos;équipe Skills4mation.
           </Text>
-          <Text style={{ color: '#12181f', fontSize: '14px' }}>
+          <Text style={{ color: CHARTE.texte, fontSize: '14px' }}>
             Formation : <strong>{formationIntitule || 'à préciser'}</strong>
             {dateDebut ? ` — démarrage prévu le ${dateDebut}` : ''}
           </Text>
-          <Text style={{ color: '#12181f', fontSize: '14px', marginTop: '16px' }}>
+          <Text style={{ color: CHARTE.texte, fontSize: '14px', marginTop: '16px' }}>
             <strong>Prochaine étape :</strong> déposer votre demande de financement auprès de votre
             financeur (OPCO, employeur ou moncompteformation) avec la convention, le planning et le
             programme de formation joints à votre espace.
@@ -57,7 +58,7 @@ export function RelanceDemandeFinancementEmail({
           <Button
             href={lien}
             style={{
-              backgroundColor: '#4f8f2f',
+              backgroundColor: CHARTE.vertClair,
               color: '#ffffff',
               padding: '12px 20px',
               borderRadius: '6px',
@@ -68,7 +69,7 @@ export function RelanceDemandeFinancementEmail({
           >
             Accéder à mes documents
           </Button>
-          <Text style={{ color: '#5b6672', fontSize: '13px', marginTop: '24px' }}>
+          <Text style={{ color: CHARTE.gris, fontSize: '13px', marginTop: '24px' }}>
             Une question ? Répondez simplement à cet e-mail
             {formateurNom ? `, votre formateur ${formateurNom} vous accompagne` : ''}.
           </Text>

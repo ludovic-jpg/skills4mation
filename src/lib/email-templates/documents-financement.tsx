@@ -10,6 +10,7 @@ import {
   Text,
 } from '@react-email/components'
 import type { TemplateEntry } from './registry'
+import { CHARTE } from "../charte";
 
 export interface DocumentsFinancementProps {
   apprenantPrenom?: string
@@ -32,27 +33,27 @@ export function DocumentsFinancementEmail({
       <Preview>Vos documents pour la demande de financement sont disponibles</Preview>
       <Body style={{ backgroundColor: '#ffffff', fontFamily: 'Helvetica, Arial, sans-serif' }}>
         <Container style={{ backgroundColor: '#ffffff', padding: '32px', maxWidth: '600px' }}>
-          <Heading style={{ color: '#0d2a4a', fontSize: '20px' }}>
+          <Heading style={{ color: CHARTE.vert, fontSize: '20px' }}>
             Vos documents de financement
           </Heading>
-          <Hr style={{ borderColor: '#4f8f2f', borderTopWidth: '3px' }} />
-          <Text style={{ color: '#12181f', fontSize: '14px' }}>
+          <Hr style={{ borderColor: CHARTE.vertClair, borderTopWidth: '3px' }} />
+          <Text style={{ color: CHARTE.texte, fontSize: '14px' }}>
             Bonjour {apprenantPrenom || 'et bienvenue'},
           </Text>
-          <Text style={{ color: '#12181f', fontSize: '14px' }}>
+          <Text style={{ color: CHARTE.texte, fontSize: '14px' }}>
             Les pièces nécessaires à votre demande de financement pour le dossier{' '}
             <strong>{dossierLabel || formationIntitule}</strong> sont désormais disponibles dans
             votre espace apprenant :
           </Text>
-          <Text style={{ color: '#12181f', fontSize: '14px', fontWeight: 700 }}>{pieces}</Text>
-          <Text style={{ color: '#12181f', fontSize: '14px' }}>
+          <Text style={{ color: CHARTE.texte, fontSize: '14px', fontWeight: 700 }}>{pieces}</Text>
+          <Text style={{ color: CHARTE.texte, fontSize: '14px' }}>
             Transmettez-les à votre financeur (OPCO, employeur ou moncompteformation) pour lancer la
             prise en charge.
           </Text>
           <Button
             href={lien}
             style={{
-              backgroundColor: '#4f8f2f',
+              backgroundColor: CHARTE.vertClair,
               color: '#ffffff',
               padding: '12px 20px',
               borderRadius: '6px',
