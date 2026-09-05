@@ -3,6 +3,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { AppShell } from "@/components/app/AppShell";
 import { FORMATEUR_NAV } from "@/components/app/nav";
 import { OutilBuilder } from "@/components/outils/OutilBuilder";
+import { SupportsCoursPanel } from "@/components/outils/SupportsCoursPanel";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export const Route = createFileRoute("/_app/espace/outils")({
@@ -32,12 +33,13 @@ function OutilsPage() {
     <AppShell
       items={FORMATEUR_NAV}
       title="Mes outils pédagogiques"
-      subtitle="Tests de positionnement et évaluations des acquis"
+      subtitle="Tests de positionnement, évaluations des acquis et supports de cours"
     >
       <Tabs defaultValue="positionnement">
         <TabsList className="flex h-auto flex-wrap justify-start">
           <TabsTrigger value="positionnement">Test de positionnement</TabsTrigger>
           <TabsTrigger value="acquis">Évaluation des acquis</TabsTrigger>
+          <TabsTrigger value="supports">Supports de cours</TabsTrigger>
         </TabsList>
 
         <TabsContent value="positionnement" className="mt-6">
@@ -55,6 +57,9 @@ function OutilsPage() {
             titreDefaut="Évaluation des acquis"
             aide="Les acquis évalués reprennent les objectifs du parcours et, si vous en associez un, ceux déjà couverts par votre test de positionnement."
           />
+        </TabsContent>
+        <TabsContent value="supports" className="mt-6">
+          <SupportsCoursPanel />
         </TabsContent>
       </Tabs>
     </AppShell>
