@@ -17,16 +17,48 @@ function headers() {
 }
 
 async function driveFetch(path: string, init?: RequestInit) {
-  const res = await fetch(`${GATEWAY}${path}`, {
-    ...init,
-    headers: { ...headers(), ...(init?.headers ?? {}) },
-  });
+  if (!path.startsWith("/") || /[\u0000-\u001F\u007F]/.test(path)) {
+    throw new Error("Connecteur Google Drive : chemin de requête invalide.");
+  }
+
+  let url: URL;
+  try {
+    url = new URL(`${GATEWAY}${path}`);
+  } catch (error) {
+    console.error("[drive] URL de connecteur invalide", { path, error });
+    throw new Error("Connecteur Google Drive indisponible : URL de requête invalide.");
+  }
+
+  let res: Response;
+  try {
+    res = await fetch(url, {
+      ...init,
+      headers: { ...headers(), ...(init?.headers ?? {}) },
+    });
+  } catch (error) {
+    console.error(`[drive] ${init?.method ?? "GET"} ${path} -> erreur réseau`, error);
+    throw new Error(
+      "Connexion à Google Drive impossible. Vérifiez la connexion Google Drive puis réessayez.",
+    );
+  }
   if (!res.ok) {
     const body = await res.text();
     console.error(`[drive] ${init?.method ?? "GET"} ${path} -> ${res.status}: ${body}`);
-    throw new Error(`Google Drive a refusé la requête [${res.status}]: ${body}`);
+    throw new Error(
+      `Google Drive a refusé la requête [${res.status}]. Vérifiez la connexion Google Drive puis réessayez.`,
+    );
   }
   return res;
+}
+
+function requireDriveId(value: unknown, contexte: string): string {
+  if (typeof value !== "string" || !value.trim() || !/^[A-Za-z0-9_-]+$/.test(value)) {
+    console.error(`[drive] identifiant absent ou invalide (${contexte})`);
+    throw new Error(
+      "Google Drive a renvoyé une réponse invalide. Vérifiez la connexion Google Drive puis réessayez.",
+    );
+  }
+  return value;
 }
 
 function escapeQuery(value: string) {
@@ -55,8 +87,8 @@ export async function ensureFolder(name: string, parentId?: string | null): Prom
       ...(parentId ? { parents: [parentId] } : {}),
     }),
   });
-  const doc = (await created.json()) as { id: string };
-  return doc.id;
+  const doc = (await created.json()) as { id?: unknown };
+  return requireDriveId(doc.id, `création du dossier « ${name} »`);
 }
 
 function multipartBody(metadata: unknown, contentType: string, content: Uint8Array) {
@@ -94,7 +126,11 @@ async function uploadRaw(
       body,
     },
   );
-  return (await res.json()) as { id: string; webViewLink?: string };
+  const uploaded = (await res.json()) as { id?: unknown; webViewLink?: unknown };
+  return {
+    id: requireDriveId(uploaded.id, "téléversement du fichier"),
+    webViewLink: typeof uploaded.webViewLink === "string" ? uploaded.webViewLink : undefined,
+  };
 }
 
 /** Convertit un document HTML en PDF via Google Docs, puis renvoie les octets. */
@@ -117,7 +153,11 @@ export async function uploadToFolder(
   content: Uint8Array,
   parentId: string,
 ) {
-  return uploadRaw({ name, parents: [parentId] }, contentType, content);
+  return uploadRaw(
+    { name, parents: [requireDriveId(parentId, "dossier de destination")] },
+    contentType,
+    content,
+  );
 }
 
 /**
@@ -132,5 +172,5 @@ export async function ensureDossierTree(dossierLabel: string, apprenantLabel?: s
 }
 
 export function folderUrl(id: string) {
-  return `https://drive.google.com/drive/folders/${id}`;
+  return `https://drive.google.com/drive/folders/${requireDriveId(id, "lien du dossier")}`;
 }
