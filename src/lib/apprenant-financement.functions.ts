@@ -68,13 +68,14 @@ export const declarerDemandeFinancementDeposee = createServerFn({ method: "POST"
       });
     }
 
-
-    await supabaseAdmin.from("notifications").insert({
-      user_id: dossier.formateur_id,
-      titre: "Demande de financement déposée",
-      message: `La demande de prise en charge du dossier « ${dossier.titre_formation ?? dossier.entreprise_nom ?? "formation"} » a été déposée sur l'espace OPCO ${parQui}.`,
-      lien: `/espace/dossiers/${dossier.id}`,
-    });
+    if (!dejaDeposee) {
+      await supabaseAdmin.from("notifications").insert({
+        user_id: dossier.formateur_id,
+        titre: "Demande de financement déposée",
+        message: `La demande de prise en charge du dossier « ${dossier.titre_formation ?? dossier.entreprise_nom ?? "formation"} » a été déposée sur l'espace OPCO ${parQui}.`,
+        lien: `/espace/dossiers/${dossier.id}`,
+      });
+    }
 
     return { ok: true as const, statutCrm: passeEnDemande ? "demande_financement" : dossier.statut_crm };
   });
