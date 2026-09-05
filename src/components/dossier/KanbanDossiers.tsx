@@ -361,6 +361,21 @@ export function KanbanDossiers({ mode }: { mode: "formateur" | "admin" }) {
 
   return (
     <div className="grid gap-6">
+      {mode === "admin" ? (
+        <div className="grid gap-3 sm:grid-cols-4 xl:grid-cols-8">
+          {CRM_PIPELINE.map((statut) => (
+            <Card key={statut} className="rounded-xl border-border/70">
+              <CardContent className="p-4">
+                <p className="text-2xl font-semibold">
+                  {(rows ?? []).filter((r) => r.statut_crm === statut).length}
+                </p>
+                <p className="mt-1 text-xs text-muted-foreground">{CRM_STATUTS[statut].label}</p>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      ) : null}
+
       <div className="flex flex-wrap gap-3">
         <Input
           placeholder="Rechercher une entreprise, une formation…"
@@ -383,7 +398,20 @@ export function KanbanDossiers({ mode }: { mode: "formateur" | "admin" }) {
             </SelectContent>
           </Select>
         ) : null}
+        <Select
+          value={archiveFiltre}
+          onValueChange={(v) => setArchiveFiltre(v as "actifs" | "archives")}
+        >
+          <SelectTrigger className="w-52">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="actifs">Dossiers actifs</SelectItem>
+            <SelectItem value="archives">Archives</SelectItem>
+          </SelectContent>
+        </Select>
       </div>
+
 
       {isLoading ? (
         <p className="text-sm text-muted-foreground">Chargement du suivi…</p>
