@@ -35,12 +35,15 @@ export const declarerDemandeFinancementDeposee = createServerFn({ method: "POST"
 
     const { data: dossier, error } = await supabaseAdmin
       .from("dossiers")
-      .select("id, formateur_id, statut_crm, titre_formation, entreprise_nom")
+      .select(
+        "id, formateur_id, statut_crm, titre_formation, entreprise_nom, demande_financement_deposee",
+      )
       .eq("id", data.dossierId)
       .maybeSingle();
     if (error || !dossier) throw new Error("Dossier introuvable.");
 
-    const passeEnDemande = dossier.statut_crm === "dossier_valide";
+    const dejaDeposee = Boolean(dossier.demande_financement_deposee);
+    const passeEnDemande = !dejaDeposee && dossier.statut_crm === "dossier_valide";
 
     const { error: updateError } = await supabaseAdmin
       .from("dossiers")
@@ -64,6 +67,7 @@ export const declarerDemandeFinancementDeposee = createServerFn({ method: "POST"
         commentaire: `Demande de prise en charge déposée sur l'espace OPCO ${parQui}.`,
       });
     }
+
 
     await supabaseAdmin.from("notifications").insert({
       user_id: dossier.formateur_id,
