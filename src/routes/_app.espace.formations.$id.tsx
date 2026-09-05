@@ -62,13 +62,41 @@ function FormationDetail() {
 
   const save = useMutation({
     mutationFn: async (patch: Partial<FormationCatalogue>) => {
-      const { error } = await supabase.from("formations_catalogue").update(patch).eq("id", id);
+      const { data, error } = await supabase
+        .from("formations_catalogue")
+        .update(patch)
+        .eq("id", id)
+        .select("*")
+        .maybeSingle();
       if (error) throw error;
+
+      // Parcours miroir : alimente les sélecteurs de "Mes outils pédagogiques".
+      const f = (data as FormationCatalogue | null) ?? null;
+      if (f?.formateur_id) {
+        const objectifs =
+          Array.isArray(f.objectifs) && f.objectifs.length > 0
+            ? f.objectifs.join("\n")
+            : (f.objectif ?? null);
+        const { error: mirrorError } = await supabase.from("parcours_formation").upsert(
+          {
+            formation_catalogue_id: f.id,
+            formateur_id: f.formateur_id,
+            titre: f.titre,
+            objectifs,
+            prerequis: f.prerequis ?? null,
+            duree_heures: f.duree_heures == null ? null : Math.round(Number(f.duree_heures)),
+            modules: (f.programme ?? []) as never,
+          },
+          { onConflict: "formation_catalogue_id" },
+        );
+        if (mirrorError) console.error("[parcours-miroir]", mirrorError);
+      }
     },
     onSuccess: async () => {
       toast.success("Formation enregistrée.");
       await qc.invalidateQueries({ queryKey: ["formation", id] });
       await qc.invalidateQueries({ queryKey: ["mes-formations"] });
+      await qc.invalidateQueries({ queryKey: ["mes-parcours"] });
     },
     onError: () => toast.error("Enregistrement impossible."),
   });
