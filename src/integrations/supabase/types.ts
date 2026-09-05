@@ -1153,6 +1153,7 @@ export type Database = {
           document_source_url: string | null
           duree_heures: number | null
           formateur_id: string
+          formation_catalogue_id: string | null
           genere_par_ia: boolean
           id: string
           modules: Json
@@ -1167,6 +1168,7 @@ export type Database = {
           document_source_url?: string | null
           duree_heures?: number | null
           formateur_id: string
+          formation_catalogue_id?: string | null
           genere_par_ia?: boolean
           id?: string
           modules?: Json
@@ -1181,6 +1183,7 @@ export type Database = {
           document_source_url?: string | null
           duree_heures?: number | null
           formateur_id?: string
+          formation_catalogue_id?: string | null
           genere_par_ia?: boolean
           id?: string
           modules?: Json
@@ -1189,7 +1192,15 @@ export type Database = {
           prerequis?: string | null
           titre?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "parcours_formation_formation_catalogue_id_fkey"
+            columns: ["formation_catalogue_id"]
+            isOneToOne: false
+            referencedRelation: "formations_catalogue"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       profiles: {
         Row: {
