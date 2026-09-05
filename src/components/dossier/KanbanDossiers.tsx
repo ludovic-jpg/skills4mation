@@ -15,10 +15,12 @@ import {
   type DragStartEvent,
 } from "@dnd-kit/core";
 import {
+  Archive,
   Building2,
   ChevronDown,
   ChevronRight,
   ExternalLink,
+  FolderOpen,
   Lock,
   Mail,
   Upload,
@@ -54,11 +56,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { SupprimerDossierBouton } from "@/components/dossier/SupprimerDossierBouton";
+import { Textarea } from "@/components/ui/textarea";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
-import { CRM_STATUTS, dossierNom, type CrmStatut } from "@/lib/crm";
+import { CRM_PIPELINE, CRM_STATUTS, dossierNom, type CrmStatut } from "@/lib/crm";
 import { PIECES } from "@/lib/dossier/pieces";
 import { ChecklistPaiement } from "@/components/dossier/ChecklistPaiement";
 import { mergeDonnees } from "@/lib/dossier/types";
@@ -78,6 +82,8 @@ type KanbanRow = {
   statut_crm: CrmStatut;
   created_at: string;
   updated_at: string;
+  archived_at: string | null;
+  drive_folder_url: string | null;
 };
 
 type PendingMove = { row: KanbanRow; cible: CrmStatut; type: DocumentType };
@@ -93,6 +99,7 @@ export function KanbanDossiers({ mode }: { mode: "formateur" | "admin" }) {
 
   const [search, setSearch] = useState("");
   const [formateurFiltre, setFormateurFiltre] = useState("tous");
+  const [archiveFiltre, setArchiveFiltre] = useState<"actifs" | "archives">("actifs");
   const [replies, setReplies] = useState<Record<string, boolean>>(
     Object.fromEntries(BANDEAUX.map((b) => [b.cle, Boolean(b.replieParDefaut)])),
   );
@@ -101,22 +108,27 @@ export function KanbanDossiers({ mode }: { mode: "formateur" | "admin" }) {
   const [pending, setPending] = useState<PendingMove | null>(null);
   const [uploading, setUploading] = useState(false);
 
+
   const cleDossiers = mode === "admin" ? "kanban-dossiers-admin" : "kanban-dossiers-formateur";
 
   const { data: rows, isLoading } = useQuery({
-    queryKey: [cleDossiers],
+    queryKey: [cleDossiers, archiveFiltre],
     queryFn: async () => {
-      const { data, error } = await supabase
+      let requete = supabase
         .from("dossiers")
         .select(
-          "id, formateur_id, dossier_nom, entreprise_nom, titre_formation, date_debut, statut_crm, created_at, updated_at",
-        )
-        .is("archived_at", null)
-        .order("updated_at", { ascending: false });
+          "id, formateur_id, dossier_nom, entreprise_nom, titre_formation, date_debut, statut_crm, created_at, updated_at, archived_at, drive_folder_url",
+        );
+      requete =
+        archiveFiltre === "archives"
+          ? requete.not("archived_at", "is", null)
+          : requete.is("archived_at", null);
+      const { data, error } = await requete.order("updated_at", { ascending: false });
       if (error) throw error;
       return (data ?? []) as KanbanRow[];
     },
   });
+
 
   const { data: piecesRows } = useQuery({
     queryKey: ["kanban-pieces", mode],
@@ -205,11 +217,26 @@ export function KanbanDossiers({ mode }: { mode: "formateur" | "admin" }) {
   const detail = (rows ?? []).find((r) => r.id === detailId) ?? null;
 
   const changerStatut = useMutation({
-    mutationFn: async ({ row, cible }: { row: KanbanRow; cible: CrmStatut }) => {
+    mutationFn: async ({
+      row,
+      cible,
+      commentaire,
+    }: {
+      row: KanbanRow;
+      cible: CrmStatut;
+      commentaire?: string;
+    }) => {
       if (!user) throw new Error("Session expirée.");
+      if (cible === "refuse" && commentaire !== undefined && !commentaire.trim())
+        throw new Error("commentaire");
+      const note = commentaire?.trim() || null;
       const { error } = await supabase
         .from("dossiers")
-        .update({ statut_crm: cible })
+        .update({
+          statut_crm: cible,
+          ...(note ? { commentaire_admin: note } : {}),
+          ...(cible === "paiement_formateur" ? { archived_at: null } : {}),
+        })
         .eq("id", row.id);
       if (error) throw error;
       const { error: histError } = await supabase.from("dossier_historique").insert({
@@ -217,7 +244,7 @@ export function KanbanDossiers({ mode }: { mode: "formateur" | "admin" }) {
         ancien_statut: row.statut_crm,
         nouveau_statut: cible,
         auteur_id: user.id,
-        commentaire: `Déplacement Kanban vers « ${COLONNE_LABELS[cible] ?? cible} »`,
+        commentaire: note ?? `Déplacement Kanban vers « ${COLONNE_LABELS[cible] ?? cible} »`,
       });
       if (histError) throw histError;
       if (cible === "accord_financement") {
@@ -244,7 +271,28 @@ export function KanbanDossiers({ mode }: { mode: "formateur" | "admin" }) {
       void queryClient.invalidateQueries({ queryKey: [cleDossiers] });
       void queryClient.invalidateQueries({ queryKey: ["kanban-historique", mode] });
     },
-    onError: () => toast.error("Déplacement impossible."),
+    onError: (error: Error) =>
+      toast.error(
+        error.message === "commentaire"
+          ? "Un commentaire est obligatoire pour refuser un dossier."
+          : "Déplacement impossible.",
+      ),
+  });
+
+  const archiver = useMutation({
+    mutationFn: async (row: KanbanRow) => {
+      const { error } = await supabase
+        .from("dossiers")
+        .update({ archived_at: row.archived_at ? null : new Date().toISOString() })
+        .eq("id", row.id);
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      toast.success("Archivage mis à jour.");
+      setDetailId(null);
+      void queryClient.invalidateQueries({ queryKey: [cleDossiers] });
+    },
+    onError: () => toast.error("Action impossible."),
   });
 
   const relancer = useMutation({
@@ -255,6 +303,7 @@ export function KanbanDossiers({ mode }: { mode: "formateur" | "admin" }) {
         : toast.error(res.message ?? "Aucun envoi effectué."),
     onError: () => toast.error("Envoi impossible."),
   });
+
 
   function tenterDeplacement(row: KanbanRow, cible: CrmStatut) {
     if (row.statut_crm === cible) return;
@@ -316,6 +365,21 @@ export function KanbanDossiers({ mode }: { mode: "formateur" | "admin" }) {
 
   return (
     <div className="grid gap-6">
+      {mode === "admin" ? (
+        <div className="grid gap-3 sm:grid-cols-4 xl:grid-cols-8">
+          {CRM_PIPELINE.map((statut) => (
+            <Card key={statut} className="rounded-xl border-border/70">
+              <CardContent className="p-4">
+                <p className="text-2xl font-semibold">
+                  {(rows ?? []).filter((r) => r.statut_crm === statut).length}
+                </p>
+                <p className="mt-1 text-xs text-muted-foreground">{CRM_STATUTS[statut].label}</p>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      ) : null}
+
       <div className="flex flex-wrap gap-3">
         <Input
           placeholder="Rechercher une entreprise, une formation…"
@@ -338,7 +402,20 @@ export function KanbanDossiers({ mode }: { mode: "formateur" | "admin" }) {
             </SelectContent>
           </Select>
         ) : null}
+        <Select
+          value={archiveFiltre}
+          onValueChange={(v) => setArchiveFiltre(v as "actifs" | "archives")}
+        >
+          <SelectTrigger className="w-52">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="actifs">Dossiers actifs</SelectItem>
+            <SelectItem value="archives">Archives</SelectItem>
+          </SelectContent>
+        </Select>
       </div>
+
 
       {isLoading ? (
         <p className="text-sm text-muted-foreground">Chargement du suivi…</p>
@@ -445,6 +522,13 @@ export function KanbanDossiers({ mode }: { mode: "formateur" | "admin" }) {
               row={detail}
               equipe={equipe}
               uploading={uploading}
+              onArchiver={() => archiver.mutate(detail)}
+              archivageEnCours={archiver.isPending}
+              onChangerEtape={(cible, commentaire) =>
+                changerStatut.mutate({ row: detail, cible, commentaire })
+              }
+              changementEnCours={changerStatut.isPending}
+              cleInvalidation={cleDossiers}
               onUpload={(type, file) => void deposerDocument(detail, type, file)}
               onRelancer={() => relancer.mutate(detail.id)}
               relanceEnCours={relancer.isPending}
@@ -574,6 +658,11 @@ function DetailDossier({
   onUpload,
   onRelancer,
   relanceEnCours,
+  onArchiver,
+  archivageEnCours,
+  onChangerEtape,
+  changementEnCours,
+  cleInvalidation,
 }: {
   row: KanbanRow;
   equipe: boolean;
@@ -581,6 +670,11 @@ function DetailDossier({
   onUpload: (type: DocumentType, file: File) => void;
   onRelancer: () => void;
   relanceEnCours: boolean;
+  onArchiver: () => void;
+  archivageEnCours: boolean;
+  onChangerEtape: (cible: CrmStatut, commentaire: string) => void;
+  changementEnCours: boolean;
+  cleInvalidation: string;
 }) {
   const { data: dossier } = useQuery({
     queryKey: ["dossier", row.id],
@@ -605,6 +699,9 @@ function DetailDossier({
           ? "qualiopi_final"
           : "signe";
   const [type, setType] = useState<DocumentType>(typeParDefaut);
+  const [etapeOuverte, setEtapeOuverte] = useState(false);
+  const [cible, setCible] = useState<CrmStatut>(row.statut_crm);
+  const [commentaire, setCommentaire] = useState("");
 
   return (
     <div className="grid gap-5">
@@ -626,7 +723,83 @@ function DetailDossier({
           <Mail className="mr-1.5 size-4" />
           {relanceEnCours ? "Envoi…" : "Renvoyer l'e-mail"}
         </Button>
+        {row.drive_folder_url ? (
+          <Button asChild size="sm" variant="outline">
+            <a href={row.drive_folder_url} target="_blank" rel="noreferrer">
+              <FolderOpen className="mr-1.5 size-4" /> Dossier Drive
+            </a>
+          </Button>
+        ) : null}
+        {equipe ? (
+          <>
+            <Button
+              size="sm"
+              variant="outline"
+              onClick={() => {
+                setCible(row.statut_crm);
+                setCommentaire("");
+                setEtapeOuverte((v) => !v);
+              }}
+            >
+              Changer l&apos;étape
+            </Button>
+            <Button
+              size="sm"
+              variant="outline"
+              disabled={archivageEnCours}
+              onClick={onArchiver}
+            >
+              <Archive className="mr-1.5 size-4" />
+              {row.archived_at ? "Désarchiver" : "Archiver"}
+            </Button>
+          </>
+        ) : null}
+        {row.statut_crm === "brouillon" ? (
+          <SupprimerDossierBouton
+            dossierId={row.id}
+            label={row.dossier_nom || dossierNom(row)}
+            invalidateKeys={[cleInvalidation]}
+          />
+        ) : null}
       </div>
+
+      {etapeOuverte ? (
+        <div className="grid gap-3 rounded-xl bg-muted/50 p-4">
+          <Select value={cible} onValueChange={(v) => setCible(v as CrmStatut)}>
+            <SelectTrigger className="max-w-sm">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              {CRM_PIPELINE.map((statut) => (
+                <SelectItem key={statut} value={statut}>
+                  {CRM_STATUTS[statut].etape}. {CRM_STATUTS[statut].label}
+                </SelectItem>
+              ))}
+              <SelectItem value="refuse">Refusé / Annulé</SelectItem>
+            </SelectContent>
+          </Select>
+          <Textarea
+            rows={3}
+            maxLength={1000}
+            placeholder="Commentaire visible du formateur (obligatoire en cas de refus)"
+            value={commentaire}
+            onChange={(e) => setCommentaire(e.target.value)}
+          />
+          <div className="flex gap-2">
+            <Button
+              variant="cta"
+              size="sm"
+              disabled={changementEnCours}
+              onClick={() => onChangerEtape(cible, commentaire)}
+            >
+              Enregistrer l&apos;étape
+            </Button>
+            <Button variant="ghost" size="sm" onClick={() => setEtapeOuverte(false)}>
+              Annuler
+            </Button>
+          </div>
+        </div>
+      ) : null}
 
       <ChecklistPaiement dossierId={row.id} statutCrm={row.statut_crm} />
 
