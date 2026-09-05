@@ -64,6 +64,8 @@ import { ChecklistPaiement } from "@/components/dossier/ChecklistPaiement";
 import { mergeDonnees } from "@/lib/dossier/types";
 import { pieceVisibleSelonStatut } from "@/lib/dossier/visibilite";
 import { envoyerRelanceFinancement } from "@/lib/dossier-relance-financement.functions";
+import { synchroniserApprenants } from "@/lib/dossier-envois.functions";
+
 import { DOCUMENT_TYPES, type DocumentType } from "@/lib/statuts";
 
 type KanbanRow = {
@@ -224,9 +226,13 @@ export function KanbanDossiers({ mode }: { mode: "formateur" | "admin" }) {
         );
       }
       if (cible === "dossier_valide") {
+        await synchroniserApprenants({ data: { dossierId: row.id } }).catch((err) =>
+          console.error("[sync-apprenants]", err),
+        );
         const res = await envoyerRelanceFinancement({ data: { dossierId: row.id } });
         return { relance: res.envoyes };
       }
+
       return { relance: 0 };
     },
     onSuccess: (res) => {
