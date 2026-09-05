@@ -425,50 +425,41 @@ export function KanbanDossiers({ mode }: { mode: "formateur" | "admin" }) {
           onDragStart={(e: DragStartEvent) => setDragId(String(e.active.id))}
           onDragEnd={onDragEnd}
         >
-          {BANDEAUX.map((bandeau) => {
-            const replie = replies[bandeau.cle];
-            const total = dossiers.filter((d) => bandeau.statuts.includes(d.statut_crm)).length;
-            return (
-              <section key={bandeau.cle} className="grid gap-3">
-                <button
-                  type="button"
-                  onClick={() => setReplies((s) => ({ ...s, [bandeau.cle]: !s[bandeau.cle] }))}
-                  className="flex items-center gap-2 text-left"
-                >
-                  {replie ? (
-                    <ChevronRight className="size-4 text-muted-foreground" />
-                  ) : (
-                    <ChevronDown className="size-4 text-muted-foreground" />
-                  )}
-                  <span className="text-xs font-bold uppercase tracking-wide text-muted-foreground">
-                    Étape {bandeau.cle}
-                  </span>
-                  <span className="text-sm font-semibold">{bandeau.titre}</span>
-                  <span className="text-xs text-muted-foreground">({total})</span>
-                </button>
-
-                {replie ? null : (
-                  <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
+          <div className="flex items-start gap-6 overflow-x-auto pb-3">
+            {BANDEAUX.filter((b) => !replies[b.cle]).map((bandeau) => {
+              const total = dossiers.filter((d) => bandeau.statuts.includes(d.statut_crm)).length;
+              return (
+                <section key={bandeau.cle} className="shrink-0">
+                  <div className="mb-2 flex items-baseline gap-2 whitespace-nowrap">
+                    <span className="text-xs font-bold uppercase tracking-wide text-muted-foreground">
+                      Étape {bandeau.cle}
+                    </span>
+                    <span className="text-sm font-semibold">{bandeau.titre}</span>
+                    <span className="text-xs text-muted-foreground">({total})</span>
+                  </div>
+                  <div className="flex items-start gap-3">
                     {bandeau.statuts.map((statut) => (
-                      <Colonne
-                        key={statut}
-                        statut={statut}
-                        verrouille={!equipe && !STATUTS_FORMATEUR.includes(statut)}
-                        dossiers={dossiers.filter((d) => d.statut_crm === statut)}
-                        piecesTotal={
-                          PIECES.filter((p) => pieceVisibleSelonStatut(p.code, statut)).length
-                        }
-                        compteurPieces={compteurPieces}
-                        derniereEtape={derniereEtape}
-                        nomFormateur={mode === "admin" ? nomFormateur : undefined}
-                        onOpen={setDetailId}
-                      />
+                      <div key={statut} className="w-72 shrink-0">
+                        <Colonne
+                          statut={statut}
+                          verrouille={!equipe && !STATUTS_FORMATEUR.includes(statut)}
+                          dossiers={dossiers.filter((d) => d.statut_crm === statut)}
+                          piecesTotal={
+                            PIECES.filter((p) => pieceVisibleSelonStatut(p.code, statut)).length
+                          }
+                          compteurPieces={compteurPieces}
+                          derniereEtape={derniereEtape}
+                          nomFormateur={mode === "admin" ? nomFormateur : undefined}
+                          onOpen={setDetailId}
+                        />
+                      </div>
                     ))}
                   </div>
-                )}
-              </section>
-            );
-          })}
+                </section>
+              );
+            })}
+          </div>
+
 
           <DragOverlay>
             {dragRow ? (
