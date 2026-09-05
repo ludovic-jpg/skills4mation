@@ -437,6 +437,7 @@ function CarteFinancementOpco({
   const queryClient = useQueryClient();
   const declarer = useServerFn(declarerDemandeFinancementDeposee);
   const [mode, setMode] = useState<"apprenant" | "rh">("apprenant");
+  const [confirme, setConfirme] = useState(false);
 
   const confirmer = useMutation({
     mutationFn: () => declarer({ data: { dossierId, mode } }),
@@ -444,7 +445,10 @@ function CarteFinancementOpco({
       toast.success("Merci : votre formateur est informé du dépôt de la demande.");
       void queryClient.invalidateQueries({ queryKey: ["apprenant-fiches", user?.id] });
     },
-    onError: (error: Error) => toast.error(error.message),
+    onError: (error: Error) => {
+      setConfirme(false);
+      toast.error(error.message);
+    },
   });
 
   return (
