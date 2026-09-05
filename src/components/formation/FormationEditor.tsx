@@ -163,7 +163,7 @@ export function FormationEditor({ value, saving, onSave }: Props) {
   const [uploading, setUploading] = useState<string | null>(null);
 
   const [syncRef, setSyncRef] = useState(value);
-  if (value !== syncRef) {
+  if (value.id !== syncRef.id) {
     setSyncRef(value);
     setF(value);
     setModules(sixModules(parseProgramme(value.programme)));
