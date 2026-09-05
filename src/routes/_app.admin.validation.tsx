@@ -135,6 +135,10 @@ function AdminValidation() {
           signature_organisme_user_id: user?.id ?? null,
         })
         .eq("id", row.id);
+      await sync({ data: { dossierId: row.id } }).catch((err) =>
+        console.error("[sync-apprenants]", err),
+      );
+
       return { ...result, adf: adf?.adf };
     },
 
