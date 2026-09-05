@@ -119,8 +119,21 @@ function AdminValidation() {
       // Le numéro ADF est attribué par le back-office avant l'apposition de la signature.
       const adf = await genererAdf({ data: { dossierId: row.id } });
       const result = await signer({ data: { dossierId: row.id } });
+      // Le visa Skills4mation est renseigné dans la même mise à jour que le statut :
+      // c'est lui qui débloque les documents du socle côté formateur.
+      const nomAdmin = [profile?.prenom, profile?.nom].filter(Boolean).join(" ").trim();
+      await supabase
+        .from("dossiers")
+        .update({
+          statut_crm: "dossier_valide",
+          signature_organisme_date: new Date().toISOString(),
+          signature_organisme_par: nomAdmin || (profile?.email ?? "Équipe Skills4mation"),
+          signature_organisme_user_id: user?.id ?? null,
+        })
+        .eq("id", row.id);
       return { ...result, adf: adf?.adf };
     },
+
     onSuccess: (result) => {
       toast.success(
         result?.adf
