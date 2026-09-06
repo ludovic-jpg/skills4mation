@@ -3,6 +3,7 @@ import {
   Banknote,
   ClipboardList,
   BarChart3,
+  Smile,
   BookOpen,
   FilePlus2,
   FileSpreadsheet,
@@ -58,6 +59,7 @@ const ADMIN_BASE: NavItem[] = [
   { to: "/admin/bpf", label: "Bilan Pédagogique (BPF)", icon: FileSpreadsheet },
   { to: "/admin/demandes", label: "Toutes les demandes", icon: Inbox },
   { to: "/admin/reclamations", label: "Réclamations & aléas", icon: MessageSquareWarning },
+  { to: "/admin/satisfaction", label: "Satisfaction agrégée", icon: Smile },
   { to: "/admin/handicap", label: "Référent handicap", icon: HeartHandshake },
   { to: "/admin", label: "Candidatures", icon: Users },
 ];

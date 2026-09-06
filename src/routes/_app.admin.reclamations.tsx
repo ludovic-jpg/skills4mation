@@ -80,6 +80,23 @@ function AdminReclamations() {
     });
   }, [data, du, au]);
 
+  /** Délai moyen de traitement : preuve d'amélioration continue (Qualiopi), pas
+   * seulement une liste de réclamations traitées sans mesure de réactivité. */
+  const stats = useMemo(() => {
+    const enAttente = lignes.filter((r) => r.statut !== "traitee").length;
+    const traitees = lignes.filter((r) => r.statut === "traitee" && r.repondu_le);
+    const delaiMoyenJours = traitees.length
+      ? traitees.reduce(
+          (somme, r) =>
+            somme + (new Date(r.repondu_le!).getTime() - new Date(r.created_at).getTime()),
+          0,
+        ) /
+        traitees.length /
+        86_400_000
+      : null;
+    return { total: lignes.length, enAttente, delaiMoyenJours };
+  }, [lignes]);
+
   const auteur =
     [profile?.prenom, profile?.nom].filter(Boolean).join(" ").trim() || user?.email || "Équipe";
 
@@ -154,7 +171,38 @@ function AdminReclamations() {
       title="Réclamations & aléas"
       subtitle="Suivi des réclamations, difficultés, aléas et appréciations signalés"
     >
-      <Card className="rounded-2xl border-border/70 shadow-soft">
+      <div className="grid gap-4 sm:grid-cols-3">
+        <Card>
+          <CardContent className="pt-6">
+            <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+              Sur la période
+            </p>
+            <p className="mt-1 text-2xl font-bold">{stats.total}</p>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardContent className="pt-6">
+            <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+              En attente de traitement
+            </p>
+            <p className="mt-1 text-2xl font-bold">{stats.enAttente}</p>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardContent className="pt-6">
+            <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+              Délai moyen de traitement
+            </p>
+            <p className="mt-1 text-2xl font-bold">
+              {stats.delaiMoyenJours === null
+                ? "—"
+                : `${stats.delaiMoyenJours.toFixed(1)} j`}
+            </p>
+          </CardContent>
+        </Card>
+      </div>
+
+      <Card className="mt-4 rounded-2xl border-border/70 shadow-soft">
         <CardContent className="flex flex-wrap items-end gap-4 p-6">
           <div>
             <Label htmlFor="du">Du</Label>
