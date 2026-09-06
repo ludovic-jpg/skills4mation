@@ -7,7 +7,14 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { supabase } from "@/integrations/supabase/client";
 import { demanderPaiement } from "@/lib/dossier-communication.functions";
-import { PIECES_REQUISES_PAIEMENT, pieceLabel } from "@/lib/dossier/pieces";
+import {
+  FAMILLE_PAIEMENT_LABEL,
+  PIECES_BLOQUANTES_PAIEMENT,
+  PIECES_REQUISES_PAIEMENT,
+  familleDePaiement,
+  pieceLabel,
+  type FamillePaiement,
+} from "@/lib/dossier/pieces";
 import type { CrmStatut } from "@/lib/crm";
 
 /**
@@ -39,7 +46,14 @@ export function ChecklistPaiement({
   const completes = new Set(
     (pieces ?? []).filter((p) => p.statut === "complete").map((p) => p.code),
   );
-  const manquantes = PIECES_REQUISES_PAIEMENT.filter((code) => !completes.has(code));
+  // F7 (satisfaction à froid, disponible seulement 3 mois après la formation) est suivie
+  // mais ne bloque plus le paiement — voir PIECES_BLOQUANTES_PAIEMENT.
+  const manquantes = PIECES_BLOQUANTES_PAIEMENT.filter((code) => !completes.has(code));
+  const familles: FamillePaiement[] = ["portail", "apprenant", "formateur"];
+  const parFamille = familles.map((famille) => ({
+    famille,
+    codes: PIECES_REQUISES_PAIEMENT.filter((code) => familleDePaiement(code) === famille),
+  }));
   const dejaDemande = ["demande_paiement", "paiement_organisme", "paiement_formateur"].includes(
     statutCrm,
   );
@@ -60,28 +74,45 @@ export function ChecklistPaiement({
           <h2 className="text-base font-semibold">Checklist de complétude — paiement</h2>
           <p className="text-sm text-muted-foreground">
             {manquantes.length === 0
-              ? "Toutes les pièces exigées sont archivées."
-              : `${manquantes.length} pièce(s) manquante(s) sur ${PIECES_REQUISES_PAIEMENT.length}.`}
+              ? "Toutes les pièces bloquantes sont archivées."
+              : `${manquantes.length} pièce(s) manquante(s) sur ${PIECES_BLOQUANTES_PAIEMENT.length} bloquante(s).`}
           </p>
         </div>
 
-        <ul className="grid gap-1.5 text-sm sm:grid-cols-2">
-          {PIECES_REQUISES_PAIEMENT.map((code) => {
-            const ok = completes.has(code);
-            return (
-              <li key={code} className="flex items-center gap-2">
-                {ok ? (
-                  <BadgeCheck className="size-4 text-success" />
-                ) : (
-                  <CircleDashed className="size-4 text-muted-foreground" />
-                )}
-                <span className={ok ? "" : "text-muted-foreground"}>
-                  {code} — {pieceLabel(code)}
-                </span>
-              </li>
-            );
-          })}
-        </ul>
+        <div className="grid gap-4">
+          {parFamille.map(({ famille, codes }) =>
+            codes.length === 0 ? null : (
+              <div key={famille}>
+                <h3 className="mb-1.5 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                  {FAMILLE_PAIEMENT_LABEL[famille]}
+                </h3>
+                <ul className="grid gap-1.5 text-sm sm:grid-cols-2">
+                  {codes.map((code) => {
+                    const ok = completes.has(code);
+                    const bloquante = (PIECES_BLOQUANTES_PAIEMENT as readonly string[]).includes(
+                      code,
+                    );
+                    return (
+                      <li key={code} className="flex items-center gap-2">
+                        {ok ? (
+                          <BadgeCheck className="size-4 text-success" />
+                        ) : (
+                          <CircleDashed className="size-4 text-muted-foreground" />
+                        )}
+                        <span className={ok ? "" : "text-muted-foreground"}>
+                          {code} — {pieceLabel(code)}
+                        </span>
+                        {!ok && !bloquante ? (
+                          <span className="text-xs text-muted-foreground">(non bloquant)</span>
+                        ) : null}
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+            ),
+          )}
+        </div>
 
         <div>
           <Button

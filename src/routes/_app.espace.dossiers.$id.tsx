@@ -18,6 +18,7 @@ import { SupportsPanel } from "@/components/dossier/SupportsPanel";
 
 import { SignatureOrganismeBadge } from "@/components/dossier/SignatureOrganismeBadge";
 import { ChecklistPaiement } from "@/components/dossier/ChecklistPaiement";
+import { ClotureFinancementCard } from "@/components/dossier/ClotureFinancementCard";
 
 import { FriseEtapes, etapeDeStatut } from "@/components/dossier/FriseEtapes";
 import { Badge } from "@/components/ui/badge";
@@ -419,6 +420,8 @@ function DossierDetail() {
               </Card>
 
               <ChecklistPaiement dossierId={id} statutCrm={statut} />
+
+              <ClotureFinancementCard dossierId={id} />
 
               {etape === "B" ? (
                 <Card className="rounded-2xl border-border/70 shadow-soft">

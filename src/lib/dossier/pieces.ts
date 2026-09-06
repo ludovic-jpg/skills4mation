@@ -227,6 +227,42 @@ export const PIECES_REQUISES_PAIEMENT = [
   "FSK",
 ];
 
+/**
+ * F7 (satisfaction à froid) n'est normalement disponible que 3 mois après la
+ * formation : l'exiger avant de pouvoir demander le paiement bloquait des dossiers
+ * par ailleurs complets et conformes pendant tout ce délai. Elle reste suivie dans
+ * la checklist (voir PIECE_FAMILLE_PAIEMENT) mais ne conditionne plus le bouton.
+ */
+export const PIECES_BLOQUANTES_PAIEMENT = PIECES_REQUISES_PAIEMENT.filter(
+  (code) => code !== "F7",
+);
+
+/** Regroupement de la checklist de paiement par nature de pièce plutôt que par code technique. */
+export type FamillePaiement = "portail" | "apprenant" | "formateur";
+
+export const FAMILLE_PAIEMENT_LABEL: Record<FamillePaiement, string> = {
+  portail: "Produites par le portail",
+  apprenant: "Attendues de l'apprenant",
+  formateur: "Déposées par vous",
+};
+
+const FAMILLE_PAR_CODE: Record<string, FamillePaiement> = {
+  "1A": "portail",
+  "1B": "portail",
+  "2": "portail",
+  "3A": "portail",
+  F0C: "portail",
+  F3: "portail",
+  FSK: "portail",
+  F5: "apprenant",
+  F7: "apprenant",
+  F9R: "formateur",
+};
+
+export function familleDePaiement(code: string): FamillePaiement {
+  return FAMILLE_PAR_CODE[code] ?? "portail";
+}
+
 export function pieceLabel(code: string) {
   return PIECES.find((p) => p.code === code)?.label ?? code;
 }
