@@ -3,11 +3,10 @@ import { z } from "zod";
 
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 import { mergeDonnees, nomRangement } from "@/lib/dossier/types";
+import { assertConseillerFormation } from "@/lib/roles-guard";
 
 const schema = z.object({ dossierId: z.string().uuid() });
 
-/** Rôles autorisés à apposer la signature d'organisme. */
-const ROLES_EQUIPE = ["conseillere", "super_admin", "admin"] as const;
 
 /**
  * Appose la signature Skills4mation sur la convention (pièce 1A) d'un dossier :
@@ -20,14 +19,7 @@ export const apposerSignatureOrganisme = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((data: unknown) => schema.parse(data))
   .handler(async ({ data, context }) => {
-    const { data: roles, error: rolesError } = await context.supabase
-      .from("user_roles")
-      .select("role")
-      .eq("user_id", context.userId)
-      .in("role", [...ROLES_EQUIPE]);
-    if (rolesError) throw new Error("Vérification des droits impossible.");
-    if (!roles || roles.length === 0)
-      throw new Error("Accès réservé aux conseillères formation et super admins.");
+    await assertConseillerFormation(context.supabase, context.userId);
 
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
 

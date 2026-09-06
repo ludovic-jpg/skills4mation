@@ -51,14 +51,12 @@ export function AppShell({
   actions?: ReactNode;
   children: ReactNode;
 }) {
-  const { profile, isAdmin, isSuperAdmin, isConseillere, signOut } = useAuth();
+  const { profile, isConseiller, signOut } = useAuth();
   const router = useRouter();
   const photo = usePhotoProfil(profile?.photo_url);
-  const roleBadge = isSuperAdmin
-    ? { label: "Super admin", tone: "bg-cta text-cta-foreground" }
-    : isConseillere
-      ? { label: "Conseillère formation", tone: "bg-secondary text-secondary-foreground" }
-      : { label: "Formateur partenaire", tone: "bg-muted text-muted-foreground" };
+  const roleBadge = isConseiller
+    ? { label: "Conseiller formation", tone: "bg-cta text-cta-foreground" }
+    : { label: "Formateur partenaire", tone: "bg-muted text-muted-foreground" };
   const [open, setOpen] = useState(false);
   const initiales = `${profile?.prenom?.[0] ?? ""}${profile?.nom?.[0] ?? ""}`.toUpperCase() || "S4";
 
@@ -105,7 +103,7 @@ export function AppShell({
             {profile ? `${profile.prenom} ${profile.nom}`.trim() || profile.email : "…"}
           </p>
           <p className="text-xs text-sidebar-foreground/70">
-            {isAdmin ? "Équipe Skills4mation" : "Formateur partenaire"}
+            {isConseiller ? "Équipe Skills4mation" : "Formateur partenaire"}
           </p>
         </div>
       </div>

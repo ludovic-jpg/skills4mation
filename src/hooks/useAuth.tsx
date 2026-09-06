@@ -34,7 +34,7 @@ export type Profile = {
 
 };
 
-export type AppRole = "super_admin" | "conseillere" | "admin" | "formateur" | "apprenant";
+export type AppRole = "conseiller_formation" | "formateur" | "apprenant";
 
 type AuthState = {
   session: Session | null;
@@ -43,9 +43,8 @@ type AuthState = {
   role: AppRole | null;
   roles: AppRole[];
   loading: boolean;
-  isAdmin: boolean;
-  isSuperAdmin: boolean;
-  isConseillere: boolean;
+  /** Rôle unique de l'équipe Skills4mation : accès complet au back-office. */
+  isConseiller: boolean;
   isValidatedFormateur: boolean;
   refresh: () => Promise<void>;
   signOut: () => Promise<void>;
@@ -74,7 +73,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setProfile((prof as Profile) ?? null);
     const list = ((roleRows ?? []).map((r) => r.role) as AppRole[]) ?? [];
     setRoles(list);
-    const priorite: AppRole[] = ["super_admin", "admin", "conseillere", "formateur", "apprenant"];
+    const priorite: AppRole[] = ["conseiller_formation", "formateur", "apprenant"];
     setRole(priorite.find((r) => list.includes(r)) ?? null);
   }
 
@@ -114,8 +113,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const value = useMemo<AuthState>(() => {
-    const isSuperAdmin = roles.includes("super_admin") || roles.includes("admin");
-    const isConseillere = roles.includes("conseillere");
+    const isConseiller = roles.includes("conseiller_formation");
     return {
       session,
       user: session?.user ?? null,
@@ -123,9 +121,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       role,
       roles,
       loading,
-      isAdmin: isSuperAdmin || isConseillere,
-      isSuperAdmin,
-      isConseillere,
+      isConseiller,
       isValidatedFormateur: role === "formateur" && profile?.statut_candidature === "valide",
       refresh: async () => {
         await load(session?.user?.id);

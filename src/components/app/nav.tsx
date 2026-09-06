@@ -58,22 +58,14 @@ const ADMIN_BASE: NavItem[] = [
   { to: "/admin", label: "Candidatures", icon: Users },
 ];
 
+/** Navigation complète de l'équipe : le conseiller formation a tous les droits. */
 export const ADMIN_NAV: NavItem[] = [
-  ...ADMIN_BASE,
-  { to: "/espace", label: "Espace formateur", icon: Folders },
-];
-
-export const SUPER_ADMIN_NAV: NavItem[] = [
   ...ADMIN_BASE,
   { to: "/admin/certifications", label: "Certifications", icon: Award },
   { to: "/admin/comptes", label: "Comptes & rôles", icon: ShieldCheck },
   { to: "/espace", label: "Espace formateur", icon: Folders },
 ];
 
-
-export function adminNav({ isSuperAdmin, isConseillere }: { isSuperAdmin: boolean; isConseillere: boolean }): NavItem[] {
-  if (isSuperAdmin) return SUPER_ADMIN_NAV;
-  // La conseillère de formation n'a pas accès au pilotage financier complet.
-  if (isConseillere) return ADMIN_NAV.filter((item) => item.to !== "/admin/pilotage");
+export function adminNav(): NavItem[] {
   return ADMIN_NAV;
 }

@@ -2,6 +2,7 @@ import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
+import { assertConseillerFormation } from "@/lib/roles-guard";
 import { TARIFS_CPF, type LigneTarifCpf } from "@/data/tarifs-cpf";
 
 const ligneSchema = z.object({
@@ -14,7 +15,7 @@ const ligneSchema = z.object({
 
 const schema = z.object({ lignes: z.array(ligneSchema).optional() }).default({});
 
-const ROLES_ADMIN = ["super_admin", "admin"] as const;
+
 
 /**
  * Importe (ou met à jour) le barème CPF dans `tarifs_cpf`.
@@ -24,13 +25,7 @@ export const importerTarifsCpf = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((data: unknown) => schema.parse(data ?? {}))
   .handler(async ({ data, context }) => {
-    const { data: roles, error: rolesError } = await context.supabase
-      .from("user_roles")
-      .select("role")
-      .eq("user_id", context.userId)
-      .in("role", [...ROLES_ADMIN]);
-    if (rolesError) throw new Error("Vérification des droits impossible.");
-    if (!roles?.length) throw new Error("Accès réservé aux super admins.");
+    await assertConseillerFormation(context.supabase, context.userId);
 
     const lignes: LigneTarifCpf[] = data.lignes ?? TARIFS_CPF;
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");

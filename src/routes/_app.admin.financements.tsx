@@ -76,8 +76,8 @@ function StatutBadge({ statut }: { statut: string }) {
 }
 
 function AdminFinancements() {
-  const { isSuperAdmin, isConseillere, isAdmin } = useAuth();
-  const equipe = isSuperAdmin || isConseillere || isAdmin;
+  const { isConseiller } = useAuth();
+  const equipe = isConseiller;
   const [search, setSearch] = useState("");
   const [mode, setMode] = useState<"tous" | "opco" | "cpf" | "fonds_propres">("tous");
 
@@ -106,7 +106,7 @@ function AdminFinancements() {
 
   if (!equipe) {
     return (
-      <AppShell items={adminNav({ isSuperAdmin, isConseillere })} title="Demandes de financement">
+      <AppShell items={adminNav()} title="Demandes de financement">
         <Card className="rounded-2xl border-destructive/30">
           <CardContent className="p-8 text-sm text-muted-foreground">
             Accès réservé à l'équipe Skills4mation.
@@ -145,7 +145,7 @@ function AdminFinancements() {
 
   return (
     <AppShell
-      items={adminNav({ isSuperAdmin, isConseillere })}
+      items={adminNav()}
       title="Demandes de financement"
       subtitle="Suivi par formateur des demandes OPCO et CPF/CNF transmises après validation du dossier : statut et date d'envoi"
     >

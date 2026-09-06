@@ -21,8 +21,8 @@ const NAV = [
 
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
-  const { session, isAdmin } = useAuth();
-  const espaceTo = session ? (isAdmin ? "/admin" : "/espace") : "/auth";
+  const { session, isConseiller } = useAuth();
+  const espaceTo = session ? (isConseiller ? "/admin" : "/espace") : "/auth";
 
   return (
     <header className="sticky top-0 z-50 border-b border-border/70 bg-background/90 backdrop-blur">
