@@ -65,7 +65,7 @@ function nombreOk(valeur: string | undefined) {
 }
 
 function AdminValidation() {
-  const { isConseiller, loading, user, profile } = useAuth();
+  const { isConseiller, loading } = useAuth();
   const autorise = isConseiller;
   const queryClient = useQueryClient();
   const [coches, setCoches] = useState<Record<string, boolean>>({});
@@ -144,19 +144,12 @@ function AdminValidation() {
     mutationFn: async (row: Row) => {
       // Le numéro ADF est attribué par le back-office avant l'apposition de la signature.
       const adf = await genererAdf({ data: { dossierId: row.id } });
+      // apposerSignatureOrganisme est la seule source de vérité pour statut_crm et pour
+      // les champs signature_organisme_* : elle calcule l'empreinte SHA-256, génère le
+      // certificat archivé et enregistre exactement l'horodatage et le signataire qui ont
+      // servi à ce certificat. Une écriture séparée ici recalculerait sa propre date/nom
+      // et les désynchroniserait du certificat déjà posé — ne pas la reproduire.
       const result = await signer({ data: { dossierId: row.id } });
-      // Le visa Skills4mation est renseigné dans la même mise à jour que le statut :
-      // c'est lui qui débloque les documents du socle côté formateur.
-      const nomAdmin = [profile?.prenom, profile?.nom].filter(Boolean).join(" ").trim();
-      await supabase
-        .from("dossiers")
-        .update({
-          statut_crm: "dossier_valide",
-          signature_organisme_date: new Date().toISOString(),
-          signature_organisme_par: nomAdmin || (profile?.email ?? "Équipe Skills4mation"),
-          signature_organisme_user_id: user?.id ?? null,
-        })
-        .eq("id", row.id);
       await sync({ data: { dossierId: row.id } }).catch((err) =>
         console.error("[sync-apprenants]", err),
       );
@@ -174,6 +167,11 @@ function AdminValidation() {
       if (financement?.message) {
         if (financement.envoye) toast.success(financement.message);
         else toast.warning(financement.message);
+      }
+      if (result?.renduDegrade) {
+        toast.warning(
+          "Le connecteur Google Drive était indisponible : la convention signée et son certificat ont été générés en rendu dégradé (texte brut, sans mise en forme). Vérifiez le document archivé et régénérez-le dès que Drive est rétabli.",
+        );
       }
       void queryClient.invalidateQueries({ queryKey: ["admin-validation"] });
       void queryClient.invalidateQueries({ queryKey: ["admin-dossiers"] });

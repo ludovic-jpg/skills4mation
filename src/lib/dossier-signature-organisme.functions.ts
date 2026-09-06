@@ -59,7 +59,13 @@ export const apposerSignatureOrganisme = createServerFn({ method: "POST" })
     const { conventionHtml } = await import("@/lib/dossier/render");
     const { htmlToPdfAvecRepli } = await import("@/lib/pdf-repli.server");
     const conventionNom = `1A_${base}.pdf`;
-    const conventionPdf = await htmlToPdfAvecRepli(conventionHtml(donnees), conventionNom);
+    let renduDegrade = false;
+    const marquerDegrade = () => {
+      renduDegrade = true;
+    };
+    const conventionPdf = await htmlToPdfAvecRepli(conventionHtml(donnees), conventionNom, {
+      onDegrade: marquerDegrade,
+    });
 
     const { sha256Hex, certificatSignatureHtml, certificatFileName } = await import(
       "@/lib/dossier/signature"
@@ -79,7 +85,9 @@ export const apposerSignatureOrganisme = createServerFn({ method: "POST" })
       fichierNom: conventionNom,
       dossierLabel,
     });
-    const certificatPdf = await htmlToPdfAvecRepli(certificatHtml, certificatNom);
+    const certificatPdf = await htmlToPdfAvecRepli(certificatHtml, certificatNom, {
+      onDegrade: marquerDegrade,
+    });
 
     // Archivage Google Drive à côté des autres pièces du dossier.
     let driveUrl: string | null = null;
@@ -126,6 +134,7 @@ export const apposerSignatureOrganisme = createServerFn({ method: "POST" })
         signature_organisme_hash: hash,
         signature_organisme_certificat_url: certificatPath,
         signature_organisme_certificat_drive_url: driveUrl,
+        signature_organisme_rendu_degrade: renduDegrade,
         ...(dossier.drive_folder_id || !dossierFolderId
           ? {}
           : { drive_folder_id: dossierFolderId }),
@@ -315,5 +324,13 @@ export const apposerSignatureOrganisme = createServerFn({ method: "POST" })
     });
     if (suiviError) console.error("[financement] journalisation impossible", suiviError);
 
-    return { hash, signatureDate, certificatNom, certificatPath, driveUrl, financement };
+    return {
+      hash,
+      signatureDate,
+      certificatNom,
+      certificatPath,
+      driveUrl,
+      financement,
+      renduDegrade,
+    };
   });

@@ -50,9 +50,16 @@ export async function pdfNatifDepuisHtml(html: string, titre: string): Promise<U
 
 /**
  * Convertit un HTML en PDF : deux tentatives via Google Drive, puis repli natif.
- * L'échec du connecteur est journalisé explicitement pour alerte admin.
+ * L'échec du connecteur est journalisé explicitement pour alerte admin, et le
+ * callback optionnel `onDegrade` permet à l'appelant de propager l'information
+ * jusqu'à l'interface (au lieu de la laisser uniquement dans les logs serveur) —
+ * paramètre additif : les appels existants à deux arguments ne changent pas.
  */
-export async function htmlToPdfAvecRepli(html: string, fileName: string): Promise<Uint8Array> {
+export async function htmlToPdfAvecRepli(
+  html: string,
+  fileName: string,
+  options?: { onDegrade?: () => void },
+): Promise<Uint8Array> {
   const { htmlToPdf } = await import("@/lib/drive.server");
   for (let tentative = 1; tentative <= 2; tentative += 1) {
     try {
@@ -67,5 +74,6 @@ export async function htmlToPdfAvecRepli(html: string, fileName: string): Promis
   console.error(
     `[pdf] ALERTE ADMIN — repli PDF natif utilisé pour ${fileName} : le connecteur Google Drive est indisponible.`,
   );
+  options?.onDegrade?.();
   return pdfNatifDepuisHtml(html, fileName.replace(/\.pdf$/i, ""));
 }

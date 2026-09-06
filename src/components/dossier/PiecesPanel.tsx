@@ -30,6 +30,7 @@ type PieceRow = {
   code: string;
   statut: PieceStatut;
   remarque: string | null;
+  rendu_degrade: boolean;
 };
 
 export function PiecesPanel({
@@ -54,7 +55,7 @@ export function PiecesPanel({
     queryFn: async () => {
       const { data, error } = await supabase
         .from("dossier_pieces")
-        .select("id, code, statut, remarque")
+        .select("id, code, statut, remarque, rendu_degrade")
         .eq("dossier_id", dossierId);
       if (error) throw error;
       return (data ?? []) as PieceRow[];
@@ -178,8 +179,20 @@ export function PiecesPanel({
                       <span className="text-xs text-muted-foreground">
                         {PIECE_SOURCES[piece.source]}
                       </span>
+                      {row?.rendu_degrade ? (
+                        <span className="rounded-full border border-amber-300 bg-amber-50 px-2 py-0.5 text-xs font-medium text-amber-700">
+                          Rendu dégradé — à régénérer
+                        </span>
+                      ) : null}
                     </div>
                     <p className="mt-1 text-sm text-muted-foreground">{piece.description}</p>
+                    {row?.rendu_degrade ? (
+                      <p className="mt-1 text-xs text-amber-600">
+                        Ce document a été généré en secours (texte brut, sans mise en forme) car
+                        Google Drive était indisponible au moment de la génération. Régénérez-le
+                        dès que possible avant de le transmettre.
+                      </p>
+                    ) : null}
                     {PIECES_ENVOI_TIERS.includes(piece.code) && prerequisManquants.length > 0 ? (
                       <p className="mt-1 text-xs text-amber-600">
                         À envoyer de préférence après retour de{" "}

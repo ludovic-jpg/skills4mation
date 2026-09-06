@@ -63,7 +63,12 @@ export const genererSocleDossier = createServerFn({ method: "POST" })
       if (!def) continue;
       const nom = `${code}_${base}.pdf`;
       try {
-        const pdf = await htmlToPdfAvecRepli(def.build(donnees), nom);
+        let rendu_degrade = false;
+        const pdf = await htmlToPdfAvecRepli(def.build(donnees), nom, {
+          onDegrade: () => {
+            rendu_degrade = true;
+          },
+        });
         const chemin = `${dossier.formateur_id}/${dossier.id}/socle/${nom}`;
         const { error: uploadError } = await supabaseAdmin.storage
           .from("documents")
@@ -78,6 +83,7 @@ export const genererSocleDossier = createServerFn({ method: "POST" })
             fichier_url: chemin,
             generated_at: new Date().toISOString(),
             statut: EN_ATTENTE_APPRENANT.has(code) ? "en_attente_tally" : "complete",
+            rendu_degrade,
           },
           { onConflict: "dossier_id,code" },
         );
