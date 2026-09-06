@@ -155,6 +155,16 @@ function AdminCandidatures() {
                       {c.prenom} {c.nom}
                     </h2>
                     <StatutBadge kind="candidature" statut={c.statut} />
+                    {c.assigne_nom ? (
+                      <span className="inline-flex items-center gap-1.5 rounded-full border border-secondary/30 bg-secondary/10 px-3 py-1 text-xs font-semibold text-secondary">
+                        <UserPlus className="size-3.5" aria-hidden /> {c.assigne_nom}
+                      </span>
+                    ) : null}
+                    {c.archived_at ? (
+                      <span className="rounded-full bg-muted px-3 py-1 text-xs text-muted-foreground">
+                        Archivée
+                      </span>
+                    ) : null}
                     <span className="text-xs text-muted-foreground">
                       {formatDate(c.created_at)}
                     </span>
@@ -196,18 +206,75 @@ function AdminCandidatures() {
                   <Button
                     variant="teal"
                     disabled={update.isPending || c.statut === "valide"}
-                    onClick={() => update.mutate({ id: c.id, statut: "valide" })}
+                    onClick={() => update.mutate({ id: c.id, patch: { statut: "valide" } })}
                   >
                     Valider seulement
                   </Button>
                   <Button
                     variant="outline"
                     disabled={update.isPending || c.statut === "refuse"}
-                    onClick={() => update.mutate({ id: c.id, statut: "refuse" })}
+                    onClick={() => update.mutate({ id: c.id, patch: { statut: "refuse" } })}
                   >
                     Refuser
                   </Button>
+                  <Button
+                    variant="ghost"
+                    disabled={update.isPending}
+                    onClick={() =>
+                      update.mutate({
+                        id: c.id,
+                        patch: { archived_at: c.archived_at ? null : new Date().toISOString() },
+                      })
+                    }
+                  >
+                    {c.archived_at ? (
+                      <>
+                        <ArchiveRestore className="mr-1.5 size-4" /> Désarchiver
+                      </>
+                    ) : (
+                      <>
+                        <Archive className="mr-1.5 size-4" /> Archiver
+                      </>
+                    )}
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    onClick={() => {
+                      setOpenId(openId === c.id ? null : c.id);
+                      setCollaborateur(c.assigne_nom ?? "");
+                    }}
+                  >
+                    <UserPlus className="mr-1.5 size-4" /> Collaborateur
+                  </Button>
                 </div>
+
+                {openId === c.id ? (
+                  <div className="lg:col-span-2 grid gap-3 rounded-2xl border border-border/70 bg-muted/40 p-4 sm:grid-cols-[1fr_auto] sm:items-end">
+                    <div>
+                      <Label htmlFor={`collab-${c.id}`}>Collaborateur en charge</Label>
+                      <Input
+                        id={`collab-${c.id}`}
+                        value={collaborateur}
+                        onChange={(event) => setCollaborateur(event.target.value)}
+                        placeholder="Nom du collaborateur"
+                        className="mt-2"
+                      />
+                    </div>
+                    <Button
+                      variant="cta"
+                      disabled={update.isPending || collaborateur.trim().length === 0}
+                      onClick={() => {
+                        update.mutate({
+                          id: c.id,
+                          patch: { assigne_nom: collaborateur.trim() },
+                        });
+                        setOpenId(null);
+                      }}
+                    >
+                      Affecter
+                    </Button>
+                  </div>
+                ) : null}
 
               </CardContent>
             </Card>
