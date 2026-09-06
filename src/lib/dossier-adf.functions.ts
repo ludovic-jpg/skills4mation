@@ -2,6 +2,7 @@ import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
+import { assertConseillerFormation } from "@/lib/roles-guard";
 
 const schema = z.object({ dossierId: z.string().uuid() });
 
@@ -14,13 +15,7 @@ export const validerEtGenererAdf = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((data: unknown) => schema.parse(data))
   .handler(async ({ data, context }) => {
-    const { data: roles, error: rolesError } = await context.supabase
-      .from("user_roles")
-      .select("role")
-      .eq("user_id", context.userId)
-      .eq("role", "admin");
-    if (rolesError) throw new Error("Vérification des droits impossible.");
-    if (!roles || roles.length === 0) throw new Error("Accès réservé aux administrateurs.");
+    await assertConseillerFormation(context.supabase, context.userId);
 
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
 

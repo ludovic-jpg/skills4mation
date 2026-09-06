@@ -45,8 +45,8 @@ const ETATS = [
 ] as const;
 
 function AdminFormations() {
-  const { isAdmin, isConseillere, isSuperAdmin, loading } = useAuth();
-  const autorise = isAdmin || isConseillere || isSuperAdmin;
+  const { isConseiller, loading } = useAuth();
+  const autorise = isConseiller;
   const queryClient = useQueryClient();
   const [onglet, setOnglet] = useState<string>("en_attente");
   const [motifs, setMotifs] = useState<Record<string, string>>({});
@@ -97,7 +97,7 @@ function AdminFormations() {
     onError: () => toast.error("La décision n'a pas pu être enregistrée."),
   });
 
-  const items = adminNav({ isSuperAdmin, isConseillere });
+  const items = adminNav();
 
   if (!loading && !autorise) {
     return (

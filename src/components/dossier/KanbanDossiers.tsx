@@ -93,9 +93,9 @@ function joursDepuis(iso: string) {
 }
 
 export function KanbanDossiers({ mode }: { mode: "formateur" | "admin" }) {
-  const { user, isAdmin, isConseillere, isSuperAdmin } = useAuth();
+  const { user, isConseiller } = useAuth();
   const queryClient = useQueryClient();
-  const equipe = Boolean(isAdmin || isConseillere || isSuperAdmin);
+  const equipe = Boolean(isConseiller);
 
   const [search, setSearch] = useState("");
   const [formateurFiltre, setFormateurFiltre] = useState("tous");

@@ -16,7 +16,7 @@ import {
 
 import equipe from "@/assets/people-equipe.jpg";
 import { AppShell } from "@/components/app/AppShell";
-import { adminNav, SUPER_ADMIN_NAV } from "@/components/app/nav";
+import { adminNav, ADMIN_NAV } from "@/components/app/nav";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import {
@@ -126,10 +126,10 @@ function IndicateurLigne({
 }
 
 function Pilotage() {
-  const { isSuperAdmin, isConseillere, loading } = useAuth();
+  const { isConseiller, loading } = useAuth();
   const dossiers = useQuery({
     queryKey: ["pilotage-dossiers"],
-    enabled: isSuperAdmin,
+    enabled: isConseiller,
     queryFn: async () => {
       const { data, error } = await supabase
         .from("dossiers")
@@ -143,7 +143,7 @@ function Pilotage() {
 
   const candidatures = useQuery({
     queryKey: ["pilotage-candidatures"],
-    enabled: isSuperAdmin,
+    enabled: isConseiller,
     queryFn: async () => {
       const { data, error } = await supabase
         .from("candidatures")
@@ -156,7 +156,7 @@ function Pilotage() {
   /** Indicateurs Qualiopi : traçabilité des pièces et signatures, sous-traitance formateurs. */
   const qualiopi = useQuery({
     queryKey: ["pilotage-qualiopi"],
-    enabled: isSuperAdmin,
+    enabled: isConseiller,
     queryFn: async () => {
       const [pieces, envois, profils] = await Promise.all([
         supabase.from("dossier_pieces").select("dossier_id, statut"),
@@ -281,13 +281,13 @@ function Pilotage() {
 
   const pct = (n: number, total: number) => (total ? `${Math.round((n / total) * 100)} %` : "—");
 
-  if (!loading && !isSuperAdmin) {
+  if (!loading && !isConseiller) {
     return (
-      <AppShell items={adminNav({ isSuperAdmin, isConseillere })} title="Pilotage">
+      <AppShell items={adminNav()} title="Pilotage">
         <Card className="rounded-2xl border-destructive/30">
           <CardContent className="p-8 text-sm text-muted-foreground">
-            Le pilotage financier et les indicateurs Qualiopi sont réservés aux super admins
-            Skills4mation.
+            Le pilotage financier et les indicateurs Qualiopi sont réservés aux conseillers
+            formation Skills4mation.
           </CardContent>
         </Card>
       </AppShell>
@@ -296,7 +296,7 @@ function Pilotage() {
 
   return (
     <AppShell
-      items={SUPER_ADMIN_NAV}
+      items={ADMIN_NAV}
       title="Pilotage"
       subtitle="Chiffre d'affaires porté, commission Skills4mation, dossiers validés, traçabilité Qualiopi et sous-traitance"
     >

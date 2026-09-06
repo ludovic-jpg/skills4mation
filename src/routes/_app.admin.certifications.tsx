@@ -21,13 +21,13 @@ export const Route = createFileRoute("/_app/admin/certifications")({
 type Brouillon = Partial<Certification>;
 
 function AdminCertifications() {
-  const { isSuperAdmin, isConseillere, loading } = useAuth();
+  const { isConseiller, loading } = useAuth();
   const queryClient = useQueryClient();
   const [edits, setEdits] = useState<Record<string, Brouillon>>({});
 
   const { data = [], isLoading } = useQuery({
     queryKey: ["admin-certifications"],
-    enabled: isSuperAdmin,
+    enabled: isConseiller,
     queryFn: async () => {
       const { data, error } = await supabase
         .from("certifications")
@@ -70,12 +70,12 @@ function AdminCertifications() {
       ),
   });
 
-  if (!loading && !isSuperAdmin) {
+  if (!loading && !isConseiller) {
     return (
-      <AppShell items={adminNav({ isSuperAdmin, isConseillere })} title="Certifications">
+      <AppShell items={adminNav()} title="Certifications">
         <Card>
           <CardContent className="p-6 text-sm text-muted-foreground">
-            Cet écran est réservé à l&apos;équipe Skills4mation (rôle super admin).
+            Cet écran est réservé à l&apos;équipe Skills4mation (rôle conseiller formation).
           </CardContent>
         </Card>
       </AppShell>
@@ -84,7 +84,7 @@ function AdminCertifications() {
 
   return (
     <AppShell
-      items={adminNav({ isSuperAdmin, isConseillere })}
+      items={adminNav()}
       title="Certifications éligibles"
       subtitle="ICDL et Lilliate : codes RS, prix formateur et éligibilité CPF."
     >

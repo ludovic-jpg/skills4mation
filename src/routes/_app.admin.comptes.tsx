@@ -4,7 +4,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 
 import { AppShell } from "@/components/app/AppShell";
-import { SUPER_ADMIN_NAV } from "@/components/app/nav";
+import { ADMIN_NAV } from "@/components/app/nav";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -23,14 +23,11 @@ export const Route = createFileRoute("/_app/admin/comptes")({
 });
 
 const ROLES_GERABLES: { value: AppRole; label: string }[] = [
-  { value: "conseillere", label: "Conseillère formation" },
-  { value: "super_admin", label: "Super admin" },
+  { value: "conseiller_formation", label: "Conseiller formation" },
 ];
 
 const LABELS: Record<string, string> = {
-  super_admin: "Super admin",
-  admin: "Super admin (héritée)",
-  conseillere: "Conseillère formation",
+  conseiller_formation: "Conseiller formation",
   formateur: "Formateur",
   apprenant: "Apprenant",
 };
@@ -38,14 +35,14 @@ const LABELS: Record<string, string> = {
 type Profil = { id: string; prenom: string; nom: string; email: string };
 
 function AdminComptes() {
-  const { isSuperAdmin, loading, user } = useAuth();
+  const { isConseiller, loading, user } = useAuth();
   const queryClient = useQueryClient();
   const [search, setSearch] = useState("");
   const [choix, setChoix] = useState<Record<string, AppRole>>({});
 
   const { data, isLoading } = useQuery({
     queryKey: ["admin-comptes"],
-    enabled: isSuperAdmin,
+    enabled: isConseiller,
     queryFn: async () => {
       const [{ data: profils, error: e1 }, { data: roles, error: e2 }] = await Promise.all([
         supabase.from("profiles").select("id, prenom, nom, email").order("nom"),
@@ -88,12 +85,12 @@ function AdminComptes() {
     onError: () => toast.error("Retrait impossible."),
   });
 
-  if (!loading && !isSuperAdmin) {
+  if (!loading && !isConseiller) {
     return (
-      <AppShell items={SUPER_ADMIN_NAV} title="Comptes & rôles">
+      <AppShell items={ADMIN_NAV} title="Comptes & rôles">
         <Card className="rounded-2xl border-destructive/30">
           <CardContent className="p-8 text-sm text-muted-foreground">
-            Accès réservé aux super admins Skills4mation.
+            Accès réservé aux conseillers formation Skills4mation.
           </CardContent>
         </Card>
       </AppShell>
@@ -107,9 +104,9 @@ function AdminComptes() {
 
   return (
     <AppShell
-      items={SUPER_ADMIN_NAV}
+      items={ADMIN_NAV}
       title="Comptes & rôles"
-      subtitle="Attribuer les rôles Conseillère formation et Super admin"
+      subtitle="Attribuer le rôle Conseiller formation"
     >
       <Input
         placeholder="Rechercher un compte…"
@@ -149,7 +146,7 @@ function AdminComptes() {
                             className="inline-flex items-center gap-2 rounded-full border border-border px-3 py-1 text-xs font-semibold"
                           >
                             {LABELS[r.role] ?? r.role}
-                            {r.role === "conseillere" || r.role === "super_admin" ? (
+                            {r.role === "conseiller_formation" ? (
                               <button
                                 type="button"
                                 disabled={soiMeme || retirer.isPending}
@@ -169,7 +166,7 @@ function AdminComptes() {
 
                   <div className="flex flex-wrap items-center gap-2">
                     <Select
-                      value={choix[p.id] ?? "conseillere"}
+                      value={choix[p.id] ?? "conseiller_formation"}
                       onValueChange={(value) =>
                         setChoix((prev) => ({ ...prev, [p.id]: value as AppRole }))
                       }
@@ -192,7 +189,7 @@ function AdminComptes() {
                       onClick={() =>
                         attribuer.mutate({
                           userId: p.id,
-                          role: choix[p.id] ?? "conseillere",
+                          role: choix[p.id] ?? "conseiller_formation",
                         })
                       }
                     >

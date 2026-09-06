@@ -51,7 +51,7 @@ function csvCell(value: unknown) {
 }
 
 function AdminReclamations() {
-  const { isAdmin, isConseillere, isSuperAdmin, profile, user } = useAuth();
+  const { isConseiller, profile, user } = useAuth();
   const queryClient = useQueryClient();
   const [du, setDu] = useState("");
   const [au, setAu] = useState("");
@@ -59,7 +59,7 @@ function AdminReclamations() {
 
   const { data, isLoading } = useQuery({
     queryKey: ["admin-reclamations"],
-    enabled: isAdmin,
+    enabled: isConseiller,
     queryFn: async () => {
       const { data, error } = await supabase
         .from("reclamations")
@@ -138,7 +138,7 @@ function AdminReclamations() {
     URL.revokeObjectURL(url);
   }
 
-  if (!isAdmin) {
+  if (!isConseiller) {
     return (
       <AppShell items={[]} title="Réclamations" subtitle="Accès réservé">
         <p className="text-sm text-muted-foreground">
@@ -150,7 +150,7 @@ function AdminReclamations() {
 
   return (
     <AppShell
-      items={adminNav({ isSuperAdmin, isConseillere })}
+      items={adminNav()}
       title="Réclamations & aléas"
       subtitle="Suivi des réclamations, difficultés, aléas et appréciations signalés"
     >

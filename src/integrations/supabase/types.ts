@@ -1488,12 +1488,7 @@ export type Database = {
       next_adf_numero: { Args: never; Returns: string }
     }
     Enums: {
-      app_role:
-        | "formateur"
-        | "admin"
-        | "apprenant"
-        | "conseillere"
-        | "super_admin"
+      app_role: "conseiller_formation" | "formateur" | "apprenant"
       budget_statut: "en_attente" | "en_cours_etude" | "validee" | "refusee"
       candidature_statut: "en_attente" | "valide" | "refuse" | "en_cours"
       crm_statut:
@@ -1659,13 +1654,7 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
-      app_role: [
-        "formateur",
-        "admin",
-        "apprenant",
-        "conseillere",
-        "super_admin",
-      ],
+      app_role: ["conseiller_formation", "formateur", "apprenant"],
       budget_statut: ["en_attente", "en_cours_etude", "validee", "refusee"],
       candidature_statut: ["en_attente", "valide", "refuse", "en_cours"],
       crm_statut: [

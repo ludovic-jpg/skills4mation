@@ -11,11 +11,11 @@ export const Route = createFileRoute("/_app/admin/dossiers")({
 });
 
 function AdminDossiers() {
-  const { isAdmin, isConseillere, isSuperAdmin, loading } = useAuth();
+  const { isConseiller, loading } = useAuth();
 
-  if (!loading && !isAdmin) {
+  if (!loading && !isConseiller) {
     return (
-      <AppShell items={adminNav({ isSuperAdmin, isConseillere })} title="CRM dossiers">
+      <AppShell items={adminNav()} title="CRM dossiers">
         <Card className="rounded-2xl border-destructive/30">
           <CardContent className="p-8 text-sm text-muted-foreground">
             Accès réservé à l'équipe Skills4mation.
@@ -27,7 +27,7 @@ function AdminDossiers() {
 
   return (
     <AppShell
-      items={adminNav({ isSuperAdmin, isConseillere })}
+      items={adminNav()}
       title="CRM suivi de dossier"
       subtitle="Pipeline en 7 étapes, de la demande de validation au paiement du formateur"
     >
