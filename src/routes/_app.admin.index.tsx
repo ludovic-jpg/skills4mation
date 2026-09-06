@@ -1,7 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
-import { FileText, KeyRound } from "lucide-react";
+import { useState } from "react";
+import { Archive, ArchiveRestore, FileText, KeyRound, UserPlus } from "lucide-react";
 import { toast } from "sonner";
 
 import { AppShell } from "@/components/app/AppShell";
@@ -13,26 +14,19 @@ import { useAuth } from "@/hooks/useAuth";
 import { formatDate, type CandidatureStatut } from "@/lib/statuts";
 import { validerCandidatureEtDonnerAcces } from "@/lib/admin-candidatures.functions";
 import { supabase } from "@/integrations/supabase/client";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  useCandidatures,
+  useCandidatureMutation,
+  type Candidature,
+} from "@/lib/candidatures";
 
 
 export const Route = createFileRoute("/_app/admin/")({
   component: AdminCandidatures,
 });
 
-type Candidature = {
-  id: string;
-  prenom: string;
-  nom: string;
-  email: string;
-  telephone: string | null;
-  expertise: string | null;
-  message: string | null;
-  statut: CandidatureStatut;
-  created_at: string;
-  cv_url: string | null;
-  parcours_formation_url: string | null;
-  deroule_pedagogique_url: string | null;
-};
 
 const PIECES: { key: keyof Candidature; label: string }[] = [
   { key: "cv_url", label: "CV" },
@@ -76,30 +70,13 @@ function AdminCandidatures() {
   const { isConseiller, loading } = useAuth();
   const queryClient = useQueryClient();
 
-  const { data, isLoading } = useQuery({
-    queryKey: ["candidatures"],
-    enabled: isConseiller,
-    queryFn: async () => {
-      const { data, error } = await supabase
-        .from("candidatures")
-        .select("*")
-        .order("created_at", { ascending: false });
-      if (error) throw error;
-      return (data ?? []) as Candidature[];
-    },
-  });
+  const [filtre, setFiltre] = useState<"actifs" | "archives">("actifs");
+  const [openId, setOpenId] = useState<string | null>(null);
+  const [collaborateur, setCollaborateur] = useState("");
 
-  const update = useMutation({
-    mutationFn: async ({ id, statut }: { id: string; statut: CandidatureStatut }) => {
-      const { error } = await supabase.from("candidatures").update({ statut }).eq("id", id);
-      if (error) throw error;
-    },
-    onSuccess: () => {
-      toast.success("Candidature mise à jour.");
-      void queryClient.invalidateQueries({ queryKey: ["candidatures"] });
-    },
-    onError: () => toast.error("Mise à jour impossible."),
-  });
+  const { data, isLoading } = useCandidatures(isConseiller);
+
+  const update = useCandidatureMutation();
 
   const donnerAcces = useServerFn(validerCandidatureEtDonnerAcces);
   const acces = useMutation({
@@ -135,7 +112,9 @@ function AdminCandidatures() {
     );
   }
 
-  const candidatures = data ?? [];
+  const candidatures = (data ?? []).filter((c) =>
+    filtre === "archives" ? Boolean(c.archived_at) : !c.archived_at,
+  );
 
   return (
     <AppShell
