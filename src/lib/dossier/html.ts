@@ -188,42 +188,88 @@ function convocationExamen(d: DossierDonnees) {
     .join('<div style="page-break-before:always"></div>');
 }
 
-function satisfaction(d: DossierDonnees, chaud: boolean) {
-  const questions = chaud
-    ? [
-        "Les objectifs de la formation ont été clairement présentés",
-        "Le contenu correspond à mes attentes et à mon niveau",
-        "L'animation et la pédagogie du formateur",
-        "Les supports et les moyens mis à disposition",
-        "L'organisation matérielle (horaires, lieu, connexion)",
-        "Je pourrai appliquer ces acquis dans mon activité",
-      ]
-    : [
-        "J'ai mis en pratique les acquis de la formation",
-        "La formation a produit des effets mesurables sur mon activité",
-        "Les compétences acquises sont toujours mobilisées",
-        "L'accompagnement post-formation a été suffisant",
-        "Je recommanderais cette formation",
-      ];
+/**
+ * Tableau de notation 1 à 5, aligné sur les gabarits F5/F7 certifiés (matrices
+ * de référence Skills4mation) : mêmes intitulés de critères, même échelle, pour
+ * que le document généré par l'application ne diverge jamais de celui audité.
+ */
+function tableauNotes(criteres: string[]) {
+  return `<table><thead><tr><th>Critère</th><th style="width:36px">1</th><th style="width:36px">2</th><th style="width:36px">3</th><th style="width:36px">4</th><th style="width:36px">5</th></tr></thead><tbody>
+  ${criteres.map((c) => `<tr><td>${e(c)}</td><td></td><td></td><td></td><td></td><td></td></tr>`).join("")}
+  </tbody></table>`;
+}
+
+/** F5 — Grille d'évaluation « à chaud » : critères et échelle identiques à la matrice de référence. */
+function satisfactionChaud(d: DossierDonnees) {
+  const criteres = [
+    "Contenu de la formation",
+    "Réponse à vos attentes",
+    "L'adaptation du programme aux besoins réels du stagiaire",
+    "Programme du stage",
+    "L'application pratique possible des éléments de la formation dans votre environnement professionnel",
+    "Pédagogie du formateur",
+    "Compétences du formateur",
+    "Qualité des supports pédagogiques",
+    "Environnement de travail (salle, matériel disponible)",
+  ];
   return shell(
-    chaud ? "Questionnaire de satisfaction à chaud" : "Questionnaire de satisfaction à froid",
-    `${entete(
-      d,
-      chaud ? "Satisfaction à chaud" : "Satisfaction à froid (3 mois)",
-      chaud ? "À compléter en fin de session" : "À compléter 3 mois après la formation",
-    )}
+    "Questionnaire de satisfaction à chaud",
+    `${entete(d, "Satisfaction à chaud", "À compléter en fin de session")}
     <div class="grid">
-      <div>${ligne("Formation", v(d.formation.titre))}${ligne("Formateur", v(`${d.formateur.prenom} ${d.formateur.nom}`.trim()))}</div>
-      <div>${ligne("Période", `${v(dateFr(d.formation.dateDebut))} au ${v(dateFr(d.formation.dateFin))}`)}${ligne("Entreprise", v(d.entreprise.nom))}</div>
+      <div>${ligne("Formation", v(d.formation.titre))}${ligne("Nombre d'heures", v(d.formation.heuresTotal))}</div>
+      <div>${ligne("Période", `${v(dateFr(d.formation.dateDebut))} au ${v(dateFr(d.formation.dateFin))}`)}${ligne("Formateur", v(`${d.formateur.prenom} ${d.formateur.nom}`.trim()))}</div>
     </div>
-    ${ligne("Apprenant", d.apprenants.length === 1 ? v(d.apprenants[0]!.nom) : `<span class="vide">…………………………………………</span>`)}
-    <h2>Évaluation (1 = insatisfait, 4 = très satisfait)</h2>
-    <table><thead><tr><th>Critère</th><th style="width:44px">1</th><th style="width:44px">2</th><th style="width:44px">3</th><th style="width:44px">4</th></tr></thead><tbody>
-    ${questions.map((q) => `<tr><td>${e(q)}</td><td></td><td></td><td></td><td></td></tr>`).join("")}
-    </tbody></table>
-    <h2>Commentaires libres</h2>
-    <table><tbody><tr><td style="height:70px">Points forts :</td></tr><tr><td style="height:70px">Axes d'amélioration :</td></tr></tbody></table>
-    <p style="margin-top:14px">Date : ……………………………… Signature de l'apprenant : ………………………………</p>`,
+    ${ligne("Stagiaire", d.apprenants.length === 1 ? v(d.apprenants[0]!.nom) : `<span class="vide">…………………………………………</span>`)}
+    <h2>Évaluation (note de 1 à 5)</h2>
+    ${tableauNotes(criteres)}
+    <div class="note" style="margin-top:10px"><strong>Appréciation globale :</strong> …………………………………………</div>
+    <h2>Suggestions et remarques</h2>
+    <table><tbody><tr><td style="height:70px"></td></tr></tbody></table>
+    <p style="margin-top:14px">Date : ……………………………… Signature du stagiaire : ………………………………</p>`,
+  );
+}
+
+/** F7 — Questionnaire de satisfaction « à froid » (3 mois) : trois blocs et échelle 1-5 identiques à la matrice de référence. */
+function satisfactionFroid(d: DossierDonnees) {
+  const legende = "1 = Pas du tout · 2 = Un peu · 3 = Moyennement · 4 = Beaucoup · 5 = Enormément";
+  const acquis = [
+    "Je mets en pratique régulièrement à mon poste de travail les connaissances acquises au cours de la formation",
+    "Le suivi par le(s) formateur(s) dans la mise en pratique, a été facilitant",
+    "La mise en œuvre de ces acquis a été aisée",
+    "Je ressens le besoin d'une formation complémentaire (ex. évolution de poste / promotion, évaluation positive, meilleure intégration, reconnaissance, rétribution…)",
+    "Avec le recul de la pratique, cette formation était adaptée à votre besoin",
+  ];
+  const surLaFormation = [
+    "Avec le recul, la formation a-t-elle répondu à vos attentes initiales ?",
+    "Avec le recul, pensez-vous avoir atteint les objectifs pédagogiques prévus lors de la formation ?",
+    "Avec le recul, estimez-vous que la formation était en adéquation avec le métier ou les réalités du secteur ?",
+    "Avec le recul, recommanderiez-vous ce stage à une personne exerçant le même métier que vous ?",
+  ];
+  const surLeFormateur = [
+    "Pédagogie du formateur",
+    "Compétences du formateur",
+    "Qualité des supports pédagogiques",
+    "Environnement de travail (salle, matériel disponible)",
+  ];
+  return shell(
+    "Questionnaire de satisfaction à froid",
+    `${entete(d, "Satisfaction à froid (3 mois)", "À compléter 3 mois après la formation")}
+    <div class="grid">
+      <div>${ligne("Formation", v(d.formation.titre))}${ligne("Date de fin de formation", v(dateFr(d.formation.dateFin)))}</div>
+      <div>${ligne("Formateur", v(`${d.formateur.prenom} ${d.formateur.nom}`.trim()))}${ligne("Date d'évaluation", `<span class="vide">………………………</span>`)}</div>
+    </div>
+    ${ligne("Stagiaire", d.apprenants.length === 1 ? v(d.apprenants[0]!.nom) : `<span class="vide">…………………………………………</span>`)}
+    <h2>Utilisation des acquis de la formation</h2>
+    <p class="muted" style="font-size:10px;margin:0 0 6px">${legende}</p>
+    ${tableauNotes(acquis)}
+    <div class="note" style="margin-top:10px"><strong>Avec le recul, votre appréciation de qualité globale de la formation :</strong> …………… / 10</div>
+    <h2>Votre satisfaction sur la formation</h2>
+    <p class="muted" style="font-size:10px;margin:0 0 6px">${legende}</p>
+    ${tableauNotes(surLaFormation)}
+    <h2>Votre satisfaction sur le formateur</h2>
+    <p class="muted" style="font-size:10px;margin:0 0 6px">${legende}</p>
+    ${tableauNotes(surLeFormateur)}
+    <p style="margin-top:14px">Date : ……………………………… Signature du stagiaire : ………………………………</p>`,
   );
 }
 
@@ -352,14 +398,14 @@ export const DOCUMENTS: DocDef[] = [
   {
     code: "F5",
     label: "Satisfaction à chaud",
-    build: (d) => satisfaction(d, true),
+    build: satisfactionChaud,
     applicable: () => true,
     destinataires: (d) => d.apprenants.map((a) => a.email ?? ""),
   },
   {
     code: "F7",
     label: "Satisfaction à froid",
-    build: (d) => satisfaction(d, false),
+    build: satisfactionFroid,
     applicable: () => true,
     destinataires: (d) => d.apprenants.map((a) => a.email ?? ""),
   },
