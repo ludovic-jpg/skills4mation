@@ -75,7 +75,7 @@ function AdminCertifications() {
       <AppShell items={adminNav()} title="Certifications">
         <Card>
           <CardContent className="p-6 text-sm text-muted-foreground">
-            Cet écran est réservé à l&apos;équipe Skills4mation (rôle super admin).
+            Cet écran est réservé à l&apos;équipe Skills4mation (rôle conseiller formation).
           </CardContent>
         </Card>
       </AppShell>

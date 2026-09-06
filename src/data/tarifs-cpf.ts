@@ -3,7 +3,7 @@
  *
  * Les prix et les URL moncompteformation.gouv.fr sont propres à chaque durée :
  * complète `prix` et `url` ci-dessous (ou passe les lignes directement à
- * `importerTarifsCpf`) puis relance l'import depuis l'espace super admin.
+ * `importerTarifsCpf`) puis relance l'import depuis l'espace conseiller formation.
  */
 export type LigneTarifCpf = {
   categorie: string;

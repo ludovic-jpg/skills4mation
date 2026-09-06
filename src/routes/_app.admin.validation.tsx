@@ -206,7 +206,7 @@ function AdminValidation() {
       <AppShell items={adminNav()} title="File de validation">
         <Card className="rounded-2xl border-destructive/30">
           <CardContent className="p-8 text-sm text-muted-foreground">
-            Accès réservé aux conseillères formation et super admins.
+            Accès réservé aux conseillers formation.
           </CardContent>
         </Card>
       </AppShell>
