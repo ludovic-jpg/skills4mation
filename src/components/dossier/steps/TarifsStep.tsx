@@ -65,6 +65,16 @@ export function TarifsStep({ d, set, errors }: StepProps) {
           placeholder="Rechercher un OPCO…"
         />
       ) : null}
+      {d.tarifs.modeFinancement === "opco" &&
+      d.formation.dateDebut &&
+      d.formation.dateDebut >= "2026-10-01" ? (
+        <p className="text-xs text-amber-600 sm:col-span-2">
+          Formation démarrant à partir du 1er octobre 2026 : la subrogation de paiement (facture
+          adressée directement à l'OPCO) est très restreinte à compter de cette date (réforme TVA).
+          La facture ira très probablement à l'entreprise cliente, qui se fera ensuite rembourser
+          par l'OPCO — prévenez le client dès maintenant pour éviter toute mauvaise surprise.
+        </p>
+      ) : null}
       <Field
         label="Montant pris en charge (€ HT)"
         value={d.tarifs.montantPrisEnCharge}
