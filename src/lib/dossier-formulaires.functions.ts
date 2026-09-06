@@ -125,7 +125,9 @@ export const repondreFormulaire = createServerFn({ method: "POST" })
     // Qualiopi (indicateur 26) : une demande d'aménagement handicap ne doit pas
     // reposer sur le seul formateur, qui n'est pas le référent handicap et peut
     // laisser passer la notification générique ci-dessus. On alerte en plus,
-    // explicitement, toute l'équipe conseiller formation (qui porte ce rôle).
+    // explicitement, toute l'équipe conseiller formation (qui porte ce rôle),
+    // et on trace la demande dans un registre dédié : la notification seule ne
+    // prouve pas qu'une demande a été suivie d'effet, le registre si.
     if (envoi.code === "F0A" && (data.reponses.amenagement ?? "").startsWith("Oui")) {
       const { data: conseillers } = await supabaseAdmin
         .from("user_roles")
@@ -142,6 +144,11 @@ export const repondreFormulaire = createServerFn({ method: "POST" })
           })),
         );
       }
+      await supabaseAdmin.from("demandes_amenagement_handicap").insert({
+        envoi_id: envoi.id,
+        dossier_id: envoi.dossier_id,
+        apprenant_label: apprenantLabel,
+      });
     }
 
     return { fileName, driveUrl: uploaded.webViewLink ?? folderUrl(targetFolderId) };

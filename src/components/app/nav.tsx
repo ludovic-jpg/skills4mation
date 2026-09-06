@@ -7,6 +7,7 @@ import {
   FilePlus2,
   FileSpreadsheet,
   GraduationCap,
+  HeartHandshake,
   FolderKanban,
   Folders,
   Handshake,
@@ -57,6 +58,7 @@ const ADMIN_BASE: NavItem[] = [
   { to: "/admin/bpf", label: "Bilan Pédagogique (BPF)", icon: FileSpreadsheet },
   { to: "/admin/demandes", label: "Toutes les demandes", icon: Inbox },
   { to: "/admin/reclamations", label: "Réclamations & aléas", icon: MessageSquareWarning },
+  { to: "/admin/handicap", label: "Référent handicap", icon: HeartHandshake },
   { to: "/admin", label: "Candidatures", icon: Users },
 ];
 
