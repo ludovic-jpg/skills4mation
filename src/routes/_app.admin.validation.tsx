@@ -10,6 +10,8 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Textarea } from "@/components/ui/textarea";
+import { refuserDossier } from "@/lib/dossier-refus.functions";
 import { useAuth } from "@/hooks/useAuth";
 import { apposerSignatureOrganisme } from "@/lib/dossier-signature-organisme.functions";
 import { validerEtGenererAdf } from "@/lib/dossier-adf.functions";
@@ -67,6 +69,8 @@ function AdminValidation() {
   const autorise = isConseiller;
   const queryClient = useQueryClient();
   const [coches, setCoches] = useState<Record<string, boolean>>({});
+  /** Motif de refus en cours de saisie, par dossier (undefined = zone fermée). */
+  const [refus, setRefus] = useState<Record<string, string | undefined>>({});
 
   const { data, isLoading } = useQuery({
     queryKey: ["admin-validation"],
@@ -116,6 +120,24 @@ function AdminValidation() {
   const signer = useServerFn(apposerSignatureOrganisme);
   const genererAdf = useServerFn(validerEtGenererAdf);
   const sync = useServerFn(synchroniserApprenants);
+  const refuserFn = useServerFn(refuserDossier);
+
+  const refuser = useMutation({
+    mutationFn: async ({ row, motif }: { row: Row; motif: string }) =>
+      refuserFn({ data: { dossierId: row.id, motif } }),
+    onSuccess: (result) => {
+      toast.success(
+        result?.emailEnvoye
+          ? "Dossier refusé : le motif a été envoyé au formateur par e-mail."
+          : "Dossier refusé : le motif est enregistré dans l'historique du dossier.",
+      );
+      setRefus({});
+      void queryClient.invalidateQueries({ queryKey: ["admin-validation"] });
+      void queryClient.invalidateQueries({ queryKey: ["admin-dossiers"] });
+    },
+    onError: (error: unknown) =>
+      toast.error(error instanceof Error ? error.message : "Refus impossible pour le moment."),
+  });
 
 
   const valider = useMutation({
@@ -290,22 +312,81 @@ function AdminValidation() {
                   <div className="mt-4 flex flex-col items-end gap-2">
                     {!complet ? (
                       <p className="text-xs text-amber-600 sm:text-right">
-                        Validation indisponible : {manquants.join(", ")}.{" "}
-                        {manquants.length > 1
-                          ? "Cochez ces points après vérification pour débloquer la signature."
-                          : "Cochez ce point après vérification pour débloquer la signature."}
+                        Points à vérifier avant validation : {manquants.join(", ")}.
                       </p>
                     ) : null}
-                    <Button
-                      size="sm"
-                      variant="cta"
-                      disabled={!complet || valider.isPending}
-                      onClick={() => valider.mutate(row)}
-                    >
-                      {valider.isPending
-                        ? "Signature en cours…"
-                        : "Valider et apposer la signature Skills4mation"}
-                    </Button>
+                    <div className="flex flex-wrap items-center justify-end gap-2">
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        onClick={() =>
+                          setRefus((prev) => ({
+                            ...prev,
+                            [row.id]: prev[row.id] === undefined ? "" : undefined,
+                          }))
+                        }
+                      >
+                        Refuser
+                      </Button>
+                      <Button
+                        size="sm"
+                        variant="cta"
+                        disabled={valider.isPending}
+                        onClick={() => valider.mutate(row)}
+                      >
+                        {valider.isPending
+                          ? "Signature en cours…"
+                          : "Valider et apposer la signature Skills4mation"}
+                      </Button>
+                    </div>
+
+                    {refus[row.id] !== undefined ? (
+                      <div className="mt-2 w-full rounded-xl border border-destructive/30 bg-destructive/5 p-4">
+                        <label
+                          className="text-sm font-semibold text-foreground"
+                          htmlFor={`motif-${row.id}`}
+                        >
+                          Motif du refus (obligatoire)
+                        </label>
+                        <Textarea
+                          id={`motif-${row.id}`}
+                          rows={3}
+                          className="mt-2 bg-background"
+                          placeholder="Expliquez au formateur ce qui bloque la validation de son dossier…"
+                          value={refus[row.id] ?? ""}
+                          onChange={(event) =>
+                            setRefus((prev) => ({ ...prev, [row.id]: event.target.value }))
+                          }
+                        />
+                        <p className="mt-2 text-xs text-muted-foreground">
+                          Le motif est enregistré dans l&apos;historique du dossier et envoyé par
+                          e-mail au formateur.
+                        </p>
+                        <div className="mt-3 flex justify-end gap-2">
+                          <Button
+                            size="sm"
+                            variant="ghost"
+                            onClick={() =>
+                              setRefus((prev) => ({ ...prev, [row.id]: undefined }))
+                            }
+                          >
+                            Annuler
+                          </Button>
+                          <Button
+                            size="sm"
+                            variant="destructive"
+                            disabled={
+                              (refus[row.id] ?? "").trim().length < 10 || refuser.isPending
+                            }
+                            onClick={() =>
+                              refuser.mutate({ row, motif: (refus[row.id] ?? "").trim() })
+                            }
+                          >
+                            {refuser.isPending ? "Refus en cours…" : "Confirmer le refus"}
+                          </Button>
+                        </div>
+                      </div>
+                    ) : null}
                   </div>
                 </CardContent>
               </Card>
