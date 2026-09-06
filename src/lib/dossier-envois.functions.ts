@@ -288,7 +288,18 @@ export const synchroniserApprenants = createServerFn({ method: "POST" })
       .eq("id", data.dossierId)
       .maybeSingle();
     if (error || !dossier) throw new Error("Dossier introuvable.");
-    if (dossier.formateur_id !== context.userId) throw new Error("Dossier non autorisé.");
+
+    const estProprietaire = dossier.formateur_id === context.userId;
+    let estEquipe = false;
+    if (!estProprietaire) {
+      const { data: roles } = await context.supabase
+        .from("user_roles")
+        .select("role")
+        .eq("user_id", context.userId)
+        .eq("role", "conseiller_formation");
+      estEquipe = (roles ?? []).length > 0;
+    }
+    if (!estProprietaire && !estEquipe) throw new Error("Dossier non autorisé.");
 
     const donnees = mergeDonnees(dossier.donnees);
     const rows = donnees.apprenants
@@ -297,7 +308,7 @@ export const synchroniserApprenants = createServerFn({ method: "POST" })
         const parts = a.nom.trim().split(/\s+/);
         return {
           dossier_id: dossier.id,
-          formateur_id: context.userId,
+          formateur_id: dossier.formateur_id,
           email: (a.email ?? "").trim().toLowerCase(),
           prenom: parts.length > 1 ? parts.slice(0, -1).join(" ") : parts[0] ?? "",
           nom: parts.length > 1 ? (parts.at(-1) ?? "") : "",
@@ -306,9 +317,13 @@ export const synchroniserApprenants = createServerFn({ method: "POST" })
       });
     if (rows.length === 0) return { count: 0 };
 
-    const { error: upsertError } = await context.supabase
+    const client = estProprietaire
+      ? context.supabase
+      : (await import("@/integrations/supabase/client.server")).supabaseAdmin;
+    const { error: upsertError } = await client
       .from("dossier_apprenants")
       .upsert(rows, { onConflict: "dossier_id,email" });
     if (upsertError) throw new Error("Synchronisation des apprenants impossible.");
+
     return { count: rows.length };
   });
