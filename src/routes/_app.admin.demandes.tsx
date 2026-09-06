@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { toast } from "sonner";
-import { UserPlus } from "lucide-react";
+import { Archive, ArchiveRestore, UserPlus } from "lucide-react";
 
 import { AppShell } from "@/components/app/AppShell";
 import { adminNav } from "@/components/app/nav";
@@ -15,6 +15,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { BUDGET_STATUTS, formatDate, type BudgetStatut } from "@/lib/statuts";
+import { useCandidatures, useCandidatureMutation, DEMANDES_KEYS } from "@/lib/candidatures";
 
 export const Route = createFileRoute("/_app/admin/demandes")({
   component: AdminDemandes,
@@ -37,6 +38,7 @@ type Ligne = {
   details: { label: string; valeur: string }[];
   statut: string;
   assigne_nom: string | null;
+  archived_at: string | null;
 };
 
 function texte(value: unknown) {
@@ -58,6 +60,7 @@ function normalise(source: Source, row: Record<string, unknown>): Ligne {
       ],
       statut: String(row["statut"]),
       assigne_nom: (row["assigne_nom"] as string | null) ?? null,
+      archived_at: (row["archived_at"] as string | null) ?? null,
     };
   }
   if (source === "demandes_budget") {
@@ -73,6 +76,7 @@ function normalise(source: Source, row: Record<string, unknown>): Ligne {
       ],
       statut: String(row["statut"]),
       assigne_nom: (row["assigne_nom"] as string | null) ?? null,
+      archived_at: (row["archived_at"] as string | null) ?? null,
     };
   }
   if (source === "demandes_contact") {
@@ -90,6 +94,7 @@ function normalise(source: Source, row: Record<string, unknown>): Ligne {
       ],
       statut: String(row["statut"]),
       assigne_nom: (row["assigne_nom"] as string | null) ?? null,
+      archived_at: (row["archived_at"] as string | null) ?? null,
     };
   }
   return {
@@ -108,6 +113,7 @@ function normalise(source: Source, row: Record<string, unknown>): Ligne {
     ],
     statut: String(row["statut"]),
     assigne_nom: (row["assigne_nom"] as string | null) ?? null,
+    archived_at: (row["archived_at"] as string | null) ?? null,
   };
 }
 
@@ -121,10 +127,11 @@ function AdminDemandes() {
   const [openId, setOpenId] = useState<string | null>(null);
   const [collaborateur, setCollaborateur] = useState("");
   const [note, setNote] = useState("");
+  const [filtreArchive, setFiltreArchive] = useState<"actifs" | "archives">("actifs");
 
-  const { data, isLoading } = useQuery({
+  const { data, isLoading: chargementAutres } = useQuery({
     queryKey: ["admin-demandes", source],
-    enabled: isConseiller,
+    enabled: isConseiller && source !== "candidatures",
     queryFn: async () => {
       const { data, error } = await supabase
         .from(source)
@@ -134,6 +141,9 @@ function AdminDemandes() {
       return ((data ?? []) as Record<string, unknown>[]).map((row) => normalise(source, row));
     },
   });
+
+  const candidatures = useCandidatures(isConseiller && source === "candidatures");
+  const majCandidature = useCandidatureMutation();
 
   const { data: collaborateurs } = useQuery({
     queryKey: ["collaborateurs"],
@@ -159,7 +169,7 @@ function AdminDemandes() {
     },
     onSuccess: () => {
       toast.success("Demande mise à jour.");
-      void queryClient.invalidateQueries({ queryKey: ["admin-demandes", source] });
+      for (const key of DEMANDES_KEYS) void queryClient.invalidateQueries({ queryKey: key });
       setOpenId(null);
       setCollaborateur("");
       setNote("");
@@ -182,7 +192,12 @@ function AdminDemandes() {
     );
   }
 
-  const lignes = data ?? [];
+  const lignes =
+    source === "candidatures"
+      ? (candidatures.data ?? [])
+          .filter((c) => (filtreArchive === "archives" ? Boolean(c.archived_at) : !c.archived_at))
+          .map((c) => normalise("candidatures", c as unknown as Record<string, unknown>))
+      : (data ?? []);
   const statutOptions: readonly string[] =
     source === "candidatures" ? CANDIDATURE_OPTIONS : BUDGET_OPTIONS;
 
@@ -209,8 +224,23 @@ function AdminDemandes() {
         ))}
       </div>
 
+      {source === "candidatures" ? (
+        <div className="mt-4 flex flex-wrap gap-2">
+          {(["actifs", "archives"] as const).map((f) => (
+            <Button
+              key={f}
+              size="sm"
+              variant={filtreArchive === f ? "teal" : "outline"}
+              onClick={() => setFiltreArchive(f)}
+            >
+              {f === "actifs" ? "Actives" : "Archivées"}
+            </Button>
+          ))}
+        </div>
+      ) : null}
+
       <div className="mt-6 grid gap-4">
-        {isLoading ? (
+        {(source === "candidatures" ? candidatures.isLoading : chargementAutres) ? (
           <p className="text-sm text-muted-foreground">Chargement…</p>
         ) : lignes.length === 0 ? (
           <Card className="rounded-2xl border-dashed">
@@ -264,7 +294,11 @@ function AdminDemandes() {
                       size="sm"
                       variant={ligne.statut === option ? "teal" : "outline"}
                       disabled={update.isPending || ligne.statut === option}
-                      onClick={() => update.mutate({ id: ligne.id, patch: { statut: option } })}
+                      onClick={() =>
+                        source === "candidatures"
+                          ? majCandidature.mutate({ id: ligne.id, patch: { statut: option } })
+                          : update.mutate({ id: ligne.id, patch: { statut: option } })
+                      }
                     >
                       {source === "candidatures"
                         ? option === "en_attente"
@@ -288,6 +322,31 @@ function AdminDemandes() {
                   >
                     <UserPlus className="mr-1.5 size-4" /> Nommer un collaborateur
                   </Button>
+                  {source === "candidatures" ? (
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      disabled={majCandidature.isPending}
+                      onClick={() =>
+                        majCandidature.mutate({
+                          id: ligne.id,
+                          patch: {
+                            archived_at: ligne.archived_at ? null : new Date().toISOString(),
+                          },
+                        })
+                      }
+                    >
+                      {ligne.archived_at ? (
+                        <>
+                          <ArchiveRestore className="mr-1.5 size-4" /> Désarchiver
+                        </>
+                      ) : (
+                        <>
+                          <Archive className="mr-1.5 size-4" /> Archiver
+                        </>
+                      )}
+                    </Button>
+                  ) : null}
                 </div>
 
                 {openId === ligne.id ? (
@@ -327,7 +386,7 @@ function AdminDemandes() {
                         variant="cta"
                         disabled={update.isPending || collaborateur.trim().length === 0}
                         onClick={() =>
-                          update.mutate({
+                          (source === "candidatures" ? majCandidature : update).mutate({
                             id: ligne.id,
                             patch:
                               source === "candidatures"
