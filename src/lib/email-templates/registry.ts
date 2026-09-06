@@ -11,6 +11,7 @@ import { template as convocationStagiaireTemplate } from './convocation-stagiair
 import { template as attestationRealisationTemplate } from './attestation-realisation'
 import { template as ordreDeMissionFormateurTemplate } from './ordre-de-mission-formateur'
 import { template as satisfactionAFroidTemplate } from './satisfaction-a-froid'
+import { template as dossierRefuseTemplate } from './dossier-refuse'
 
 
 export interface TemplateEntry {
@@ -42,5 +43,6 @@ export const TEMPLATES: Record<string, TemplateEntry> = {
   'attestation-realisation': attestationRealisationTemplate,
   'ordre-de-mission-formateur': ordreDeMissionFormateurTemplate,
   'satisfaction-a-froid': satisfactionAFroidTemplate,
+  'dossier-refuse': dossierRefuseTemplate,
 }
 

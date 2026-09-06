@@ -48,7 +48,7 @@ export function DossierRefuseEmail({
             style={{
               color: CHARTE.texte,
               fontSize: '14px',
-              backgroundColor: '#fdf6ec',
+              backgroundColor: CHARTE.fondDoux,
               padding: '16px',
               borderRadius: '8px',
             }}
@@ -78,7 +78,7 @@ export function DossierRefuseEmail({
             Ouvrir mon dossier
           </Button>
           <Hr style={{ borderColor: CHARTE.vertClair, marginTop: '24px' }} />
-          <Text style={{ color: CHARTE.texteDoux ?? CHARTE.texte, fontSize: '12px' }}>
+          <Text style={{ color: CHARTE.gris, fontSize: '12px' }}>
             Skills4mation — portage Qualiopi. Cet e-mail est envoyé automatiquement à la suite d&apos;une
             décision de l&apos;équipe.
           </Text>
@@ -91,7 +91,7 @@ export function DossierRefuseEmail({
 export const template: TemplateEntry = {
   component: DossierRefuseEmail,
   subject: (data) =>
-    `Dossier refusé — ${String(data?.dossierLabel || data?.formationIntitule || 'votre dossier de formation')}`,
+    `Dossier refusé — ${String(data?.['dossierLabel'] || data?.['formationIntitule'] || 'votre dossier de formation')}`,
   displayName: 'Dossier refusé (motif)',
   previewData: {
     formateurPrenom: 'Camille',
