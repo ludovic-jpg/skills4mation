@@ -122,8 +122,22 @@ function AdminCandidatures() {
       title="Candidatures formateurs"
       subtitle="Étudier, valider ou refuser les demandes d'adhésion au réseau"
     >
+      <div className="mb-6 flex flex-wrap gap-2">
+        {(["actifs", "archives"] as const).map((f) => (
+          <Button
+            key={f}
+            size="sm"
+            variant={filtre === f ? "teal" : "outline"}
+            onClick={() => setFiltre(f)}
+          >
+            {f === "actifs" ? "Actives" : "Archivées"}
+          </Button>
+        ))}
+      </div>
+
       {isLoading ? (
         <p className="text-sm text-muted-foreground">Chargement…</p>
+
       ) : candidatures.length === 0 ? (
         <Card className="rounded-2xl border-dashed">
           <CardContent className="p-10 text-center text-sm text-muted-foreground">
