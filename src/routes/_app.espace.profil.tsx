@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { toast } from "sonner";
 
@@ -94,6 +94,22 @@ function Profil() {
     toast.success("Profil mis à jour.", { id: "profil-save" });
   }
 
+  async function acquitterExigencesQualite() {
+    if (!user) return;
+    setSaving("exigences");
+    const { error } = await supabase
+      .from("profiles")
+      .update({ exigences_qualite_lu_le: new Date().toISOString() })
+      .eq("id", user.id);
+    setSaving(null);
+    if (error) {
+      toast.error("Enregistrement impossible.");
+      return;
+    }
+    await refresh();
+    toast.success("Lecture des exigences qualité enregistrée.");
+  }
+
   /** Déclenche l'enregistrement de toutes les sections du profil d'un seul geste. */
   function enregistrerTout() {
     document
@@ -107,6 +123,7 @@ function Profil() {
   if (!profile?.entreprise || !profile?.siret) manquant.push("votre entreprise (raison sociale et SIRET)");
   if (!profile?.cv_url) manquant.push("votre CV");
   if (!profile?.deroule_pedagogique_url) manquant.push("votre déroulé pédagogique");
+  if (!profile?.exigences_qualite_lu_le) manquant.push("la lecture des exigences qualité");
 
   const statut = profile?.statut_candidature ?? "en_attente";
   const soumise = statut === "en_cours" || statut === "valide";
@@ -346,6 +363,35 @@ function Profil() {
                 onFile={(file) => void upload("deroule", file)}
               />
             </div>
+          </CardContent>
+        </Card>
+
+        <Card className="rounded-2xl border-border/70 shadow-soft">
+          <CardContent className="p-6">
+            <h2 className="text-base font-semibold">Exigences qualité</h2>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Avant de porter votre première formation, prenez connaissance du{" "}
+              <Link to="/code-deontologique" className="font-semibold underline">
+                code déontologique et des exigences qualité Skills4mation
+              </Link>
+              .
+            </p>
+            {profile?.exigences_qualite_lu_le ? (
+              <p className="mt-3 text-sm text-primary">
+                Lu et accepté le{" "}
+                {new Date(profile.exigences_qualite_lu_le).toLocaleDateString("fr-FR")}.
+              </p>
+            ) : (
+              <Button
+                type="button"
+                variant="outline"
+                className="mt-3"
+                disabled={saving === "exigences"}
+                onClick={() => void acquitterExigencesQualite()}
+              >
+                {saving === "exigences" ? "Enregistrement…" : "J'ai lu et j'accepte"}
+              </Button>
+            )}
           </CardContent>
         </Card>
 
