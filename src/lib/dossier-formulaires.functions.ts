@@ -122,5 +122,27 @@ export const repondreFormulaire = createServerFn({ method: "POST" })
       lien: `/espace/dossiers/${envoi.dossier_id}`,
     });
 
+    // Qualiopi (indicateur 26) : une demande d'aménagement handicap ne doit pas
+    // reposer sur le seul formateur, qui n'est pas le référent handicap et peut
+    // laisser passer la notification générique ci-dessus. On alerte en plus,
+    // explicitement, toute l'équipe conseiller formation (qui porte ce rôle).
+    if (envoi.code === "F0A" && (data.reponses.amenagement ?? "").startsWith("Oui")) {
+      const { data: conseillers } = await supabaseAdmin
+        .from("user_roles")
+        .select("user_id")
+        .eq("role", "conseiller_formation");
+      const equipeIds = Array.from(new Set((conseillers ?? []).map((r) => r.user_id)));
+      if (equipeIds.length > 0) {
+        await supabaseAdmin.from("notifications").insert(
+          equipeIds.map((uid) => ({
+            user_id: uid,
+            titre: "⚠ Référent handicap : demande d'aménagement",
+            message: `${apprenantLabel} (${dossierLabel}) a demandé à être contacté(e) pour un aménagement lié à une situation de handicap, via le recueil des besoins. Contact à assurer sans délai.`,
+            lien: `/espace/dossiers/${envoi.dossier_id}`,
+          })),
+        );
+      }
+    }
+
     return { fileName, driveUrl: uploaded.webViewLink ?? folderUrl(targetFolderId) };
   });
