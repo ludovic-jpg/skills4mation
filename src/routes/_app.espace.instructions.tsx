@@ -1,16 +1,19 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useQuery } from "@tanstack/react-query";
 import {
   BadgeCheck,
   Banknote,
   FileSignature,
   FolderPlus,
   GraduationCap,
+  Radar,
   UserCog,
 } from "lucide-react";
 
 import { AppShell } from "@/components/app/AppShell";
 import { FORMATEUR_NAV } from "@/components/app/nav";
 import { Card, CardContent } from "@/components/ui/card";
+import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/_app/espace/instructions")({
   component: Instructions,
@@ -73,7 +76,23 @@ const ETAPES = [
   },
 ];
 
+const dateFr = (iso: string | null) => (iso ? new Date(iso).toLocaleDateString("fr-FR") : "—");
+
 function Instructions() {
+  const { data: veille } = useQuery({
+    queryKey: ["veille-diffusee"],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("veille_reglementaire")
+        .select("id, theme, resume, diffuse_le")
+        .eq("diffuse", true)
+        .order("diffuse_le", { ascending: false })
+        .limit(5);
+      if (error) throw error;
+      return data ?? [];
+    },
+  });
+
   return (
     <AppShell
       items={FORMATEUR_NAV}
@@ -113,6 +132,27 @@ function Instructions() {
           </p>
         </CardContent>
       </Card>
+
+      {veille && veille.length > 0 ? (
+        <Card className="mt-6 rounded-2xl border-border/70 shadow-soft">
+          <CardContent className="p-6">
+            <h2 className="flex items-center gap-2 text-sm font-semibold">
+              <Radar className="size-4 text-secondary" /> Veille réglementaire, métier et handicap
+            </h2>
+            <ul className="mt-3 space-y-3 text-sm">
+              {veille.map((v) => (
+                <li key={v.id} className="border-b border-border/50 pb-3 last:border-0 last:pb-0">
+                  <p className="font-medium">{v.theme}</p>
+                  <p className="mt-1 text-muted-foreground">{v.resume}</p>
+                  <p className="mt-1 text-xs text-muted-foreground">
+                    Diffusée le {dateFr(v.diffuse_le)}
+                  </p>
+                </li>
+              ))}
+            </ul>
+          </CardContent>
+        </Card>
+      ) : null}
     </AppShell>
   );
 }

@@ -17,7 +17,7 @@ import {
   LifeBuoy,
   MessageSquareWarning,
   MessagesSquare,
-
+  Radar,
 
   ShieldCheck,
   UserCog,
@@ -61,6 +61,7 @@ const ADMIN_BASE: NavItem[] = [
   { to: "/admin/reclamations", label: "Réclamations & aléas", icon: MessageSquareWarning },
   { to: "/admin/satisfaction", label: "Satisfaction agrégée", icon: Smile },
   { to: "/admin/handicap", label: "Référent handicap", icon: HeartHandshake },
+  { to: "/admin/veille", label: "Veille réglementaire", icon: Radar },
   { to: "/admin", label: "Candidatures", icon: Users },
 ];
 
