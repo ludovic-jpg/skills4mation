@@ -98,14 +98,6 @@
         </div>
 
         <div class="flex flex-wrap items-center gap-3">
-            <button id="toggleDataBtn" onclick="toggleDataMode()" class="px-3.5 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold rounded-lg transition-colors flex items-center gap-2 border border-slate-300">
-                <svg class="w-4 h-4 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
-                </svg>
-                <span id="toggleBtnText">Afficher Données Démo</span>
-            </button>
-
             <button onclick="window.print()" class="px-4 py-1.5 bg-blue-900 hover:bg-blue-800 text-white text-xs font-semibold rounded-lg shadow-sm hover:shadow transition-all flex items-center gap-2">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path>
@@ -220,8 +212,47 @@
                                 <th class="border border-slate-300 p-1.5 text-left w-1/2">Poste Occupé</th>
                             </tr>
                         </thead>
-                        <tbody id="traineesTableBody">
-                            <!-- Filled dynamically by JavaScript -->
+                        <tbody>
+                            <tr class="bg-white">
+                                <td class="border border-slate-300 p-1.5 text-center font-bold text-slate-500">1</td>
+                                <td class="border border-slate-300 p-1.5 font-medium" data-var="stagiaire1">{{stagiaire1}}</td>
+                                <td class="border border-slate-300 p-1.5 text-slate-600" data-var="stagiaireposte1">{{stagiaireposte1}}</td>
+                            </tr>
+                            <tr class="bg-slate-50">
+                                <td class="border border-slate-300 p-1.5 text-center font-bold text-slate-500">2</td>
+                                <td class="border border-slate-300 p-1.5 font-medium" data-var="stagiaire2">{{stagiaire2}}</td>
+                                <td class="border border-slate-300 p-1.5 text-slate-600" data-var="stagiaireposte2">{{stagiaireposte2}}</td>
+                            </tr>
+                            <tr class="bg-white">
+                                <td class="border border-slate-300 p-1.5 text-center font-bold text-slate-500">3</td>
+                                <td class="border border-slate-300 p-1.5 font-medium" data-var="stagiaire3">{{stagiaire3}}</td>
+                                <td class="border border-slate-300 p-1.5 text-slate-600" data-var="stagiaireposte3">{{stagiaireposte3}}</td>
+                            </tr>
+                            <tr class="bg-slate-50">
+                                <td class="border border-slate-300 p-1.5 text-center font-bold text-slate-500">4</td>
+                                <td class="border border-slate-300 p-1.5 font-medium" data-var="stagiaire4">{{stagiaire4}}</td>
+                                <td class="border border-slate-300 p-1.5 text-slate-600" data-var="stagiaireposte4">{{stagiaireposte4}}</td>
+                            </tr>
+                            <tr class="bg-white">
+                                <td class="border border-slate-300 p-1.5 text-center font-bold text-slate-500">5</td>
+                                <td class="border border-slate-300 p-1.5 font-medium" data-var="stagiaire5">{{stagiaire5}}</td>
+                                <td class="border border-slate-300 p-1.5 text-slate-600" data-var="stagiaireposte5">{{stagiaireposte5}}</td>
+                            </tr>
+                            <tr class="bg-slate-50">
+                                <td class="border border-slate-300 p-1.5 text-center font-bold text-slate-500">6</td>
+                                <td class="border border-slate-300 p-1.5 font-medium" data-var="stagiaire6">{{stagiaire6}}</td>
+                                <td class="border border-slate-300 p-1.5 text-slate-600" data-var="stagiaireposte6">{{stagiaireposte6}}</td>
+                            </tr>
+                            <tr class="bg-white">
+                                <td class="border border-slate-300 p-1.5 text-center font-bold text-slate-500">7</td>
+                                <td class="border border-slate-300 p-1.5 font-medium" data-var="stagiaire7">{{stagiaire7}}</td>
+                                <td class="border border-slate-300 p-1.5 text-slate-600" data-var="stagiaireposte7">{{stagiaireposte7}}</td>
+                            </tr>
+                            <tr class="bg-slate-50">
+                                <td class="border border-slate-300 p-1.5 text-center font-bold text-slate-500">8</td>
+                                <td class="border border-slate-300 p-1.5 font-medium" data-var="stagiaire8">{{stagiaire8}}</td>
+                                <td class="border border-slate-300 p-1.5 text-slate-600" data-var="stagiaireposte8">{{stagiaireposte8}}</td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -439,112 +470,5 @@
 
     </div>
 
-    <script>
-        // Sample dataset for demonstration
-        const sampleData = {
-            "nbadf": "2026-0492",
-            "EntrepriseFormateur": "EXCELLENCE PEDAGOGIQUE SAS",
-            "AdresseFormateur": "45 Avenue de la République, 67000 Strasbourg",
-            "siretFormateur": "892 123 456 00018",
-            "NDAFormateur": "44 67 09988 67",
-            "NDAregion": "Grand Est",
-            "Titreformation": "Conception & Animation de Formations Professionnelles (Qualiopi)",
-            "datedebut": "15/09/2026",
-            "datefin": "19/09/2026",
-            "heuretotal": "35",
-            "heurepresentiel": "35",
-            "objectifspédagogique": "• Concevoir un déroulé pédagogique structuré et adapté aux objectifs métier.\n• Animer des séquences de formation selon la méthode active.\n• Évaluer les acquis des apprenants et respecter les critères de qualité Qualiopi.",
-            "adresseformation": "Centre de Formation Back To Business - 95 D Rue Principale, 68118 Hirtzbach",
-            "Entrepriseclient": "NOVATECH SOLUTIONS",
-            "nomrepresentant": "Martin DUPUIS",
-            "TEL": "03 88 12 34 56",
-            "couthoraire": "65.00",
-            "totalrecette": "2 275.00",
-            "dateMissionouverte": "01/09/2026",
-            "nomformateur": "Jean-Pierre VALENTIN",
-            "stagaire1": "Alexandre BENOIT",
-            "stagiaireposte1": "Responsable RH",
-            "stagaire2": "Camille DUBOIS",
-            "stagiaireposte2": "Chef de Projet",
-            "stagiaire3": "Julien MOREL",
-            "stagiaireposte3": "Formateur Interne",
-            "stagiaire4": "Élodie BLANCHARD",
-            "stagiaireposte4": "Consultante Métier",
-            "stagiaire5": "Marc LEMAIRE",
-            "stagiaireposte5": "Directeur Technique",
-            "stagiaire6": "Nathalie ROUX",
-            "stagiaireposte6": "Chargée de Mission",
-            "stagiaire7": "Pierre GÉRARD",
-            "stagiaireposte7": "Ingénieur Pédagogique",
-            "stagiaire8": "Sarah KHALIFI",
-            "stagiaireposte8": "Manageuse d'Équipe"
-        };
-
-        let isDemoMode = false;
-
-        function renderTrainees() {
-            const tbody = document.getElementById('traineesTableBody');
-            tbody.innerHTML = '';
-
-            for (let i = 1; i <= 8; i++) {
-                const tr = document.createElement('tr');
-                tr.className = i % 2 === 0 ? 'bg-slate-50' : 'bg-white';
-
-                const varTrainee = `stagaire${i === 3 ? 'giaire3' : (i >= 4 ? `giaire${i}` : i)}`;
-                // handle doc syntax variations (stagaire1, stagaire2, stagiaire3...stagiaire8)
-                const traineeKey = i <= 2 ? `stagaire${i}` : `stagiaire${i}`;
-                const positionKey = `stagiaireposte${i}`;
-
-                const nameText = isDemoMode ? sampleData[traineeKey] : `{{${traineeKey}}}`;
-                const postText = isDemoMode ? sampleData[positionKey] : `{{${positionKey}}}`;
-
-                tr.innerHTML = `
-                    <td class="border border-slate-300 p-1.5 text-center font-bold text-slate-500">${i}</td>
-                    <td class="border border-slate-300 p-1.5 font-medium var-highlight" data-var="${traineeKey}">${nameText}</td>
-                    <td class="border border-slate-300 p-1.5 text-slate-600 var-highlight" data-var="${positionKey}">${postText}</td>
-                `;
-                tbody.appendChild(tr);
-            }
-        }
-
-        function updateGeneralVars() {
-            const elements = document.querySelectorAll('[data-var]');
-            elements.forEach(el => {
-                const varName = el.getAttribute('data-var');
-                // Skip trainees handled by table script directly
-                if (varName.startsWith('stagaire') || varName.startsWith('stagiaire')) return;
-
-                if (isDemoMode && sampleData[varName] !== undefined) {
-                    el.textContent = sampleData[varName];
-                } else if (!isDemoMode) {
-                    el.textContent = `{{${varName}}}`;
-                }
-            });
-        }
-
-        function toggleDataMode() {
-            isDemoMode = !isDemoMode;
-            const body = document.body;
-            const btnText = document.getElementById('toggleBtnText');
-
-            if (isDemoMode) {
-                body.classList.remove('tag-mode');
-                body.classList.add('demo-mode');
-                btnText.textContent = "Afficher Balises ({{...}})";
-            } else {
-                body.classList.remove('demo-mode');
-                body.classList.add('tag-mode');
-                btnText.textContent = "Afficher Données Démo";
-            }
-
-            updateGeneralVars();
-            renderTrainees();
-        }
-
-        // Initialize table on page load
-        window.onload = function() {
-            renderTrainees();
-        };
-    </script>
 </body>
 </html>

@@ -254,7 +254,7 @@ export function varsEmargement(d: DossierDonnees): Vars {
 
 /** F0C — Contrat de sous-traitance / ordre de mission formateur. */
 export function varsContrat(d: DossierDonnees): Vars {
-  return {
+  const vars: Vars = {
     nbadf: d.adf,
     Titreformation: d.formation.titre,
     "objectifspédagogique": d.formation.objectifs,
@@ -277,6 +277,11 @@ export function varsContrat(d: DossierDonnees): Vars {
     totalrecette: euros(d.formateur.totalRecette),
     dateMissionouverte: dateFr(d.formateur.dateMissionOuverte),
   };
+  for (let i = 1; i <= 8; i += 1) {
+    vars[`stagiaire${i}`] = nomComplet(d.apprenants[i - 1]);
+    vars[`stagiaireposte${i}`] = d.apprenants[i - 1]?.poste ?? "";
+  }
+  return vars;
 }
 
 /** F0A — Recueil des besoins pré-formation (un par apprenant). */

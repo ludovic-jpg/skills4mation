@@ -102,14 +102,6 @@
         </div>
 
         <div class="flex flex-wrap items-center gap-3">
-            <button id="toggleDataBtn" onclick="toggleDataMode()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-sm font-medium rounded-lg transition-colors flex items-center gap-2 border border-slate-300">
-                <svg class="w-4 h-4 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
-                </svg>
-                <span id="toggleBtnText">Afficher Données Démo</span>
-            </button>
-
             <button onclick="window.print()" class="px-5 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium rounded-lg shadow-sm hover:shadow transition-all flex items-center gap-2">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path>
@@ -184,9 +176,1314 @@
             </h2>
         </div>
 
-        <!-- Dynamic Learner Cards Grid (2 Learners per Landscape Page) -->
+        <!-- Tableaux d'émargement individuels : 8 stagiaires, jusqu'à 20 séances chacun.
+             Contenu 100% statique (aucun script requis) pour rester compatible avec la
+             conversion PDF (Google Drive ou repli natif), qui n'exécute pas de JavaScript. -->
         <div id="learnersContainer" class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <!-- Rendered by JavaScript or Template Loop -->
+            <div class="border border-slate-300 rounded-md bg-white overflow-hidden shadow-sm avoid-break">
+                <div class="bg-slate-100 border-b border-slate-300 px-3 py-2 flex justify-between items-center">
+                    <span class="text-xs font-bold text-slate-800">
+                        Stagiaire : <span class="text-indigo-900">{{Prenom_et_Nom_de_l_apprenant_1}}</span>
+                    </span>
+                    <span class="text-[10px] text-slate-400 font-mono">N° 1/8</span>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left table-custom border-collapse">
+                        <thead>
+                            <tr>
+                                <th class="w-2/12 p-1 text-center text-[10px]">Date</th>
+                                <th class="w-2/12 p-1 text-center text-[10px]">Début</th>
+                                <th class="w-2/12 p-1 text-center text-[10px]">Fin</th>
+                                <th class="w-3/12 p-1 text-center text-[10px]">Sig. Stagiaire</th>
+                                <th class="w-3/12 p-1 text-center text-[10px]">Sig. Formateur</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_1ere_Session}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_1ere_Session}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_1ere_Session}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_2eme_Session}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_2eme_Session}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_2eme_Session}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_3eme_Session}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_3eme_Session}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_3eme_Session}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_4eme_Session}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_4eme_Session}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_4eme_Session}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_5}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_5}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_5}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_6}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_6}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_6}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_7}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_7}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_7}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_8}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_8}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_8}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_9}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_9}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_9}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_10}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_10}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_10}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_11}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_11}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_11}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_12}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_12}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_12}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_13}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_13}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_13}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_14}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_14}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_14}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_15}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_15}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_15}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_16}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_16}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_16}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_17}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_17}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_17}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_18}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_18}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_18}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_19}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_19}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_19}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_20}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_20}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_20}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="border border-slate-300 rounded-md bg-white overflow-hidden shadow-sm avoid-break">
+                <div class="bg-slate-100 border-b border-slate-300 px-3 py-2 flex justify-between items-center">
+                    <span class="text-xs font-bold text-slate-800">
+                        Stagiaire : <span class="text-indigo-900">{{Prenom_et_Nom_de_l_apprenant_2}}</span>
+                    </span>
+                    <span class="text-[10px] text-slate-400 font-mono">N° 2/8</span>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left table-custom border-collapse">
+                        <thead>
+                            <tr>
+                                <th class="w-2/12 p-1 text-center text-[10px]">Date</th>
+                                <th class="w-2/12 p-1 text-center text-[10px]">Début</th>
+                                <th class="w-2/12 p-1 text-center text-[10px]">Fin</th>
+                                <th class="w-3/12 p-1 text-center text-[10px]">Sig. Stagiaire</th>
+                                <th class="w-3/12 p-1 text-center text-[10px]">Sig. Formateur</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_1ere_Session}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_1ere_Session}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_1ere_Session}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_2eme_Session}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_2eme_Session}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_2eme_Session}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_3eme_Session}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_3eme_Session}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_3eme_Session}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_4eme_Session}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_4eme_Session}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_4eme_Session}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_5}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_5}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_5}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_6}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_6}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_6}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_7}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_7}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_7}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_8}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_8}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_8}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_9}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_9}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_9}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_10}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_10}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_10}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_11}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_11}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_11}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_12}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_12}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_12}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_13}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_13}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_13}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_14}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_14}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_14}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_15}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_15}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_15}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_16}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_16}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_16}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_17}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_17}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_17}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_18}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_18}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_18}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_19}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_19}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_19}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_20}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_20}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_20}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="border border-slate-300 rounded-md bg-white overflow-hidden shadow-sm avoid-break mt-6 page-break">
+                <div class="bg-slate-100 border-b border-slate-300 px-3 py-2 flex justify-between items-center">
+                    <span class="text-xs font-bold text-slate-800">
+                        Stagiaire : <span class="text-indigo-900">{{Prenom_et_Nom_de_l_apprenant_3}}</span>
+                    </span>
+                    <span class="text-[10px] text-slate-400 font-mono">N° 3/8</span>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left table-custom border-collapse">
+                        <thead>
+                            <tr>
+                                <th class="w-2/12 p-1 text-center text-[10px]">Date</th>
+                                <th class="w-2/12 p-1 text-center text-[10px]">Début</th>
+                                <th class="w-2/12 p-1 text-center text-[10px]">Fin</th>
+                                <th class="w-3/12 p-1 text-center text-[10px]">Sig. Stagiaire</th>
+                                <th class="w-3/12 p-1 text-center text-[10px]">Sig. Formateur</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_1ere_Session}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_1ere_Session}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_1ere_Session}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_2eme_Session}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_2eme_Session}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_2eme_Session}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_3eme_Session}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_3eme_Session}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_3eme_Session}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_4eme_Session}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_4eme_Session}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_4eme_Session}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_5}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_5}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_5}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_6}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_6}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_6}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_7}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_7}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_7}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_8}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_8}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_8}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_9}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_9}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_9}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_10}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_10}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_10}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_11}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_11}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_11}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_12}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_12}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_12}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_13}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_13}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_13}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_14}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_14}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_14}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_15}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_15}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_15}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_16}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_16}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_16}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_17}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_17}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_17}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_18}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_18}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_18}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_19}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_19}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_19}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_20}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_20}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_20}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="border border-slate-300 rounded-md bg-white overflow-hidden shadow-sm avoid-break">
+                <div class="bg-slate-100 border-b border-slate-300 px-3 py-2 flex justify-between items-center">
+                    <span class="text-xs font-bold text-slate-800">
+                        Stagiaire : <span class="text-indigo-900">{{Prenom_et_Nom_de_l_apprenant_4}}</span>
+                    </span>
+                    <span class="text-[10px] text-slate-400 font-mono">N° 4/8</span>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left table-custom border-collapse">
+                        <thead>
+                            <tr>
+                                <th class="w-2/12 p-1 text-center text-[10px]">Date</th>
+                                <th class="w-2/12 p-1 text-center text-[10px]">Début</th>
+                                <th class="w-2/12 p-1 text-center text-[10px]">Fin</th>
+                                <th class="w-3/12 p-1 text-center text-[10px]">Sig. Stagiaire</th>
+                                <th class="w-3/12 p-1 text-center text-[10px]">Sig. Formateur</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_1ere_Session}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_1ere_Session}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_1ere_Session}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_2eme_Session}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_2eme_Session}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_2eme_Session}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_3eme_Session}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_3eme_Session}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_3eme_Session}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_4eme_Session}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_4eme_Session}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_4eme_Session}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_5}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_5}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_5}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_6}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_6}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_6}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_7}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_7}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_7}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_8}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_8}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_8}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_9}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_9}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_9}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_10}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_10}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_10}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_11}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_11}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_11}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_12}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_12}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_12}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_13}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_13}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_13}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_14}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_14}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_14}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_15}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_15}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_15}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_16}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_16}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_16}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_17}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_17}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_17}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_18}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_18}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_18}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_19}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_19}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_19}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_20}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_20}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_20}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="border border-slate-300 rounded-md bg-white overflow-hidden shadow-sm avoid-break mt-6 page-break">
+                <div class="bg-slate-100 border-b border-slate-300 px-3 py-2 flex justify-between items-center">
+                    <span class="text-xs font-bold text-slate-800">
+                        Stagiaire : <span class="text-indigo-900">{{Prenom_et_Nom_de_l_apprenant_5}}</span>
+                    </span>
+                    <span class="text-[10px] text-slate-400 font-mono">N° 5/8</span>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left table-custom border-collapse">
+                        <thead>
+                            <tr>
+                                <th class="w-2/12 p-1 text-center text-[10px]">Date</th>
+                                <th class="w-2/12 p-1 text-center text-[10px]">Début</th>
+                                <th class="w-2/12 p-1 text-center text-[10px]">Fin</th>
+                                <th class="w-3/12 p-1 text-center text-[10px]">Sig. Stagiaire</th>
+                                <th class="w-3/12 p-1 text-center text-[10px]">Sig. Formateur</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_1ere_Session}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_1ere_Session}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_1ere_Session}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_2eme_Session}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_2eme_Session}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_2eme_Session}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_3eme_Session}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_3eme_Session}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_3eme_Session}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_4eme_Session}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_4eme_Session}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_4eme_Session}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_5}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_5}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_5}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_6}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_6}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_6}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_7}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_7}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_7}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_8}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_8}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_8}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_9}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_9}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_9}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_10}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_10}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_10}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_11}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_11}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_11}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_12}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_12}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_12}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_13}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_13}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_13}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_14}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_14}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_14}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_15}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_15}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_15}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_16}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_16}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_16}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_17}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_17}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_17}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_18}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_18}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_18}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_19}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_19}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_19}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_20}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_20}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_20}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="border border-slate-300 rounded-md bg-white overflow-hidden shadow-sm avoid-break">
+                <div class="bg-slate-100 border-b border-slate-300 px-3 py-2 flex justify-between items-center">
+                    <span class="text-xs font-bold text-slate-800">
+                        Stagiaire : <span class="text-indigo-900">{{Prenom_et_Nom_de_l_apprenant_6}}</span>
+                    </span>
+                    <span class="text-[10px] text-slate-400 font-mono">N° 6/8</span>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left table-custom border-collapse">
+                        <thead>
+                            <tr>
+                                <th class="w-2/12 p-1 text-center text-[10px]">Date</th>
+                                <th class="w-2/12 p-1 text-center text-[10px]">Début</th>
+                                <th class="w-2/12 p-1 text-center text-[10px]">Fin</th>
+                                <th class="w-3/12 p-1 text-center text-[10px]">Sig. Stagiaire</th>
+                                <th class="w-3/12 p-1 text-center text-[10px]">Sig. Formateur</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_1ere_Session}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_1ere_Session}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_1ere_Session}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_2eme_Session}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_2eme_Session}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_2eme_Session}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_3eme_Session}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_3eme_Session}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_3eme_Session}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_4eme_Session}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_4eme_Session}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_4eme_Session}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_5}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_5}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_5}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_6}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_6}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_6}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_7}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_7}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_7}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_8}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_8}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_8}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_9}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_9}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_9}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_10}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_10}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_10}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_11}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_11}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_11}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_12}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_12}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_12}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_13}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_13}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_13}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_14}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_14}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_14}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_15}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_15}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_15}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_16}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_16}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_16}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_17}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_17}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_17}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_18}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_18}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_18}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_19}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_19}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_19}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_20}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_20}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_20}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="border border-slate-300 rounded-md bg-white overflow-hidden shadow-sm avoid-break mt-6 page-break">
+                <div class="bg-slate-100 border-b border-slate-300 px-3 py-2 flex justify-between items-center">
+                    <span class="text-xs font-bold text-slate-800">
+                        Stagiaire : <span class="text-indigo-900">{{Prenom_et_Nom_de_l_apprenant_7}}</span>
+                    </span>
+                    <span class="text-[10px] text-slate-400 font-mono">N° 7/8</span>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left table-custom border-collapse">
+                        <thead>
+                            <tr>
+                                <th class="w-2/12 p-1 text-center text-[10px]">Date</th>
+                                <th class="w-2/12 p-1 text-center text-[10px]">Début</th>
+                                <th class="w-2/12 p-1 text-center text-[10px]">Fin</th>
+                                <th class="w-3/12 p-1 text-center text-[10px]">Sig. Stagiaire</th>
+                                <th class="w-3/12 p-1 text-center text-[10px]">Sig. Formateur</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_1ere_Session}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_1ere_Session}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_1ere_Session}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_2eme_Session}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_2eme_Session}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_2eme_Session}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_3eme_Session}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_3eme_Session}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_3eme_Session}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_4eme_Session}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_4eme_Session}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_4eme_Session}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_5}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_5}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_5}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_6}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_6}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_6}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_7}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_7}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_7}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_8}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_8}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_8}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_9}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_9}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_9}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_10}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_10}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_10}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_11}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_11}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_11}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_12}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_12}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_12}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_13}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_13}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_13}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_14}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_14}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_14}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_15}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_15}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_15}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_16}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_16}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_16}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_17}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_17}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_17}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_18}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_18}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_18}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_19}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_19}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_19}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_20}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_20}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_20}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="border border-slate-300 rounded-md bg-white overflow-hidden shadow-sm avoid-break">
+                <div class="bg-slate-100 border-b border-slate-300 px-3 py-2 flex justify-between items-center">
+                    <span class="text-xs font-bold text-slate-800">
+                        Stagiaire : <span class="text-indigo-900">{{Prenom_et_Nom_de_l_apprenant_8}}</span>
+                    </span>
+                    <span class="text-[10px] text-slate-400 font-mono">N° 8/8</span>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left table-custom border-collapse">
+                        <thead>
+                            <tr>
+                                <th class="w-2/12 p-1 text-center text-[10px]">Date</th>
+                                <th class="w-2/12 p-1 text-center text-[10px]">Début</th>
+                                <th class="w-2/12 p-1 text-center text-[10px]">Fin</th>
+                                <th class="w-3/12 p-1 text-center text-[10px]">Sig. Stagiaire</th>
+                                <th class="w-3/12 p-1 text-center text-[10px]">Sig. Formateur</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_1ere_Session}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_1ere_Session}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_1ere_Session}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_2eme_Session}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_2eme_Session}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_2eme_Session}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_3eme_Session}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_3eme_Session}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_3eme_Session}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_4eme_Session}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_4eme_Session}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_4eme_Session}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_5}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_5}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_5}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_6}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_6}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_6}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_7}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_7}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_7}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_8}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_8}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_8}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_9}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_9}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_9}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_10}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_10}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_10}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_11}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_11}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_11}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_12}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_12}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_12}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_13}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_13}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_13}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_14}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_14}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_14}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_15}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_15}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_15}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_16}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_16}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_16}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_17}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_17}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_17}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_18}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_18}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_18}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_19}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_19}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_19}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Date_Session_20}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_debut_Session_20}}</td>
+                                    <td class="p-1 text-center font-mono text-[10px] text-slate-700">{{Heure_fin_Session_20}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
 
         <!-- Signature du Formateur Block -->
@@ -229,154 +1526,5 @@
         </footer>
     </div>
 
-    <script>
-        // Sample demo data dictionary
-        const sampleData = {
-            "Titre_de_la_Formation": "Gestion de Projet Agile & Scrum Master",
-            "Objectif_Pedagogique_de_la_Formation": "Maîtriser les méthodologies agiles, piloter un sprint et réussir la certification.",
-            "Duree_totale_en_heures": "35",
-            "Date_de_demarrage": "01/10/2026",
-            "Date_de_fin": "05/10/2026",
-            "L_entreprise_dans_laquelle_a_lieu_la_formation": "Tech Innovate SAS",
-            "adresse_de_l_entreprise_dans_laquelle_a_lieu_la_formation": "12 Avenue des Champs-Élysées, 75008 Paris",
-            "Nom_de_l_entreprise": "Acme Corporation",
-            "SIRET_de_l_entreprise": "123 456 789 00012",
-            "Nom_Formateur": "Jean DUPONT",
-            "Date_Formateur": "05/10/2026"
-        };
-
-        // 8 Learners list
-        const learners = [
-            "{{Prenom_et_Nom_de_l_apprenant_1}}",
-            "{{Prenom_et_Nom_de_l_apprenant_2}}",
-            "{{Prenom_et_Nom_de_l_apprenant_3}}",
-            "{{Prenom_et_Nom_de_l_apprenant_4}}",
-            "{{Prenom_et_Nom_de_l_apprenant_5}}",
-            "{{Prenom_et_Nom_de_l_apprenant_6}}",
-            "{{Prenom_et_Nom_de_l_apprenant_7}}",
-            "{{Prenom_et_Nom_de_l_apprenant_8}}"
-        ];
-
-        const sampleLearners = [
-            "Sophie MARTIN",
-            "Thomas BERNARD",
-            "Julie PETIT",
-            "Antoine DUBOIS",
-            "Claire MOREAU",
-            "Lucas ROUSSEAU",
-            "Emma LAURENT",
-            "Hugo GIRARD"
-        ];
-
-        // Generate 20 sessions definition
-        function generateSessions(isDemo) {
-            const sessions = [];
-            for (let i = 1; i <= 20; i++) {
-                let sessionNum;
-                if (i === 1) sessionNum = "1ere_Session";
-                else if (i === 2) sessionNum = "2eme_Session";
-                else if (i === 3) sessionNum = "3eme_Session";
-                else if (i === 4) sessionNum = "4eme_Session";
-                else sessionNum = `Session_${i}`;
-
-                if (isDemo) {
-                    const day = Math.ceil(i / 2);
-                    const isMorning = i % 2 !== 0;
-                    sessions.push({
-                        date: `0${day}/10/2026`,
-                        heureDebut: isMorning ? "09:00" : "13:30",
-                        heureFin: isMorning ? "12:30" : "17:00"
-                    });
-                } else {
-                    sessions.push({
-                        date: `{{Date_${sessionNum}}}`,
-                        heureDebut: `{{Heure_debut_${sessionNum.toLowerCase()}}}`,
-                        heureFin: `{{Heure_fin_${sessionNum.toLowerCase()}}}`
-                    });
-                }
-            }
-            return sessions;
-        }
-
-        let isDemoMode = false;
-
-        function renderLearners() {
-            const container = document.getElementById('learnersContainer');
-            container.innerHTML = '';
-
-            const activeLearners = isDemoMode ? sampleLearners : learners;
-            const sessions = generateSessions(isDemoMode);
-
-            activeLearners.forEach((learnerName, idx) => {
-                const card = document.createElement('div');
-                card.className = `border border-slate-300 rounded-md bg-white overflow-hidden shadow-sm avoid-break ${idx > 0 && idx % 2 === 0 ? 'mt-6 page-break' : ''}`;
-
-                let rowsHtml = '';
-                sessions.forEach((s) => {
-                    rowsHtml += `
-                        <tr class="h-6">
-                            <td class="p-1 text-center font-mono text-[10px] text-slate-700">${s.date}</td>
-                            <td class="p-1 text-center font-mono text-[10px] text-slate-700">${s.heureDebut}</td>
-                            <td class="p-1 text-center font-mono text-[10px] text-slate-700">${s.heureFin}</td>
-                            <td class="p-1"></td>
-                            <td class="p-1"></td>
-                        </tr>
-                    `;
-                });
-
-                card.innerHTML = `
-                    <div class="bg-slate-100 border-b border-slate-300 px-3 py-2 flex justify-between items-center">
-                        <span class="text-xs font-bold text-slate-800">
-                            Stagiaire : <span class="text-indigo-900">${learnerName}</span>
-                        </span>
-                        <span class="text-[10px] text-slate-400 font-mono">N° ${idx + 1}/8</span>
-                    </div>
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-left table-custom border-collapse">
-                            <thead>
-                                <tr>
-                                    <th class="w-2/12 p-1 text-center text-[10px]">Date</th>
-                                    <th class="w-2/12 p-1 text-center text-[10px]">Début</th>
-                                    <th class="w-2/12 p-1 text-center text-[10px]">Fin</th>
-                                    <th class="w-3/12 p-1 text-center text-[10px]">Sig. Stagiaire</th>
-                                    <th class="w-3/12 p-1 text-center text-[10px]">Sig. Formateur</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                ${rowsHtml}
-                            </tbody>
-                        </table>
-                    </div>
-                `;
-                container.appendChild(card);
-            });
-        }
-
-        function updateGeneralInfo() {
-            const elements = document.querySelectorAll('[data-var]');
-            elements.forEach(el => {
-                const varName = el.getAttribute('data-var');
-                if (isDemoMode && sampleData[varName]) {
-                    el.textContent = sampleData[varName];
-                } else if (!isDemoMode) {
-                    el.textContent = `{{${varName}}}`;
-                }
-            });
-        }
-
-        function toggleDataMode() {
-            isDemoMode = !isDemoMode;
-            const btnText = document.getElementById('toggleBtnText');
-            btnText.textContent = isDemoMode ? "Afficher Balises ({{...}})" : "Afficher Données Démo";
-            
-            updateGeneralInfo();
-            renderLearners();
-        }
-
-        // Initialize on load
-        window.onload = function() {
-            renderLearners();
-        };
-    </script>
 </body>
 </html>
