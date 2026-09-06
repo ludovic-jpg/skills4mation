@@ -53,6 +53,7 @@ export type Database = {
       candidatures: {
         Row: {
           adresse: string | null
+          archived_at: string | null
           assigne_a: string | null
           assigne_nom: string | null
           commentaire_admin: string | null
@@ -77,6 +78,7 @@ export type Database = {
         }
         Insert: {
           adresse?: string | null
+          archived_at?: string | null
           assigne_a?: string | null
           assigne_nom?: string | null
           commentaire_admin?: string | null
@@ -101,6 +103,7 @@ export type Database = {
         }
         Update: {
           adresse?: string | null
+          archived_at?: string | null
           assigne_a?: string | null
           assigne_nom?: string | null
           commentaire_admin?: string | null

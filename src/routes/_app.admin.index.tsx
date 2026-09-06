@@ -1,7 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
-import { FileText, KeyRound } from "lucide-react";
+import { useState } from "react";
+import { Archive, ArchiveRestore, FileText, KeyRound, UserPlus } from "lucide-react";
 import { toast } from "sonner";
 
 import { AppShell } from "@/components/app/AppShell";
@@ -13,26 +14,19 @@ import { useAuth } from "@/hooks/useAuth";
 import { formatDate, type CandidatureStatut } from "@/lib/statuts";
 import { validerCandidatureEtDonnerAcces } from "@/lib/admin-candidatures.functions";
 import { supabase } from "@/integrations/supabase/client";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  useCandidatures,
+  useCandidatureMutation,
+  type Candidature,
+} from "@/lib/candidatures";
 
 
 export const Route = createFileRoute("/_app/admin/")({
   component: AdminCandidatures,
 });
 
-type Candidature = {
-  id: string;
-  prenom: string;
-  nom: string;
-  email: string;
-  telephone: string | null;
-  expertise: string | null;
-  message: string | null;
-  statut: CandidatureStatut;
-  created_at: string;
-  cv_url: string | null;
-  parcours_formation_url: string | null;
-  deroule_pedagogique_url: string | null;
-};
 
 const PIECES: { key: keyof Candidature; label: string }[] = [
   { key: "cv_url", label: "CV" },
@@ -76,30 +70,13 @@ function AdminCandidatures() {
   const { isConseiller, loading } = useAuth();
   const queryClient = useQueryClient();
 
-  const { data, isLoading } = useQuery({
-    queryKey: ["candidatures"],
-    enabled: isConseiller,
-    queryFn: async () => {
-      const { data, error } = await supabase
-        .from("candidatures")
-        .select("*")
-        .order("created_at", { ascending: false });
-      if (error) throw error;
-      return (data ?? []) as Candidature[];
-    },
-  });
+  const [filtre, setFiltre] = useState<"actifs" | "archives">("actifs");
+  const [openId, setOpenId] = useState<string | null>(null);
+  const [collaborateur, setCollaborateur] = useState("");
 
-  const update = useMutation({
-    mutationFn: async ({ id, statut }: { id: string; statut: CandidatureStatut }) => {
-      const { error } = await supabase.from("candidatures").update({ statut }).eq("id", id);
-      if (error) throw error;
-    },
-    onSuccess: () => {
-      toast.success("Candidature mise à jour.");
-      void queryClient.invalidateQueries({ queryKey: ["candidatures"] });
-    },
-    onError: () => toast.error("Mise à jour impossible."),
-  });
+  const { data, isLoading } = useCandidatures(isConseiller);
+
+  const update = useCandidatureMutation();
 
   const donnerAcces = useServerFn(validerCandidatureEtDonnerAcces);
   const acces = useMutation({
@@ -135,7 +112,9 @@ function AdminCandidatures() {
     );
   }
 
-  const candidatures = data ?? [];
+  const candidatures = (data ?? []).filter((c) =>
+    filtre === "archives" ? Boolean(c.archived_at) : !c.archived_at,
+  );
 
   return (
     <AppShell
@@ -143,8 +122,22 @@ function AdminCandidatures() {
       title="Candidatures formateurs"
       subtitle="Étudier, valider ou refuser les demandes d'adhésion au réseau"
     >
+      <div className="mb-6 flex flex-wrap gap-2">
+        {(["actifs", "archives"] as const).map((f) => (
+          <Button
+            key={f}
+            size="sm"
+            variant={filtre === f ? "teal" : "outline"}
+            onClick={() => setFiltre(f)}
+          >
+            {f === "actifs" ? "Actives" : "Archivées"}
+          </Button>
+        ))}
+      </div>
+
       {isLoading ? (
         <p className="text-sm text-muted-foreground">Chargement…</p>
+
       ) : candidatures.length === 0 ? (
         <Card className="rounded-2xl border-dashed">
           <CardContent className="p-10 text-center text-sm text-muted-foreground">
@@ -162,6 +155,16 @@ function AdminCandidatures() {
                       {c.prenom} {c.nom}
                     </h2>
                     <StatutBadge kind="candidature" statut={c.statut} />
+                    {c.assigne_nom ? (
+                      <span className="inline-flex items-center gap-1.5 rounded-full border border-secondary/30 bg-secondary/10 px-3 py-1 text-xs font-semibold text-secondary">
+                        <UserPlus className="size-3.5" aria-hidden /> {c.assigne_nom}
+                      </span>
+                    ) : null}
+                    {c.archived_at ? (
+                      <span className="rounded-full bg-muted px-3 py-1 text-xs text-muted-foreground">
+                        Archivée
+                      </span>
+                    ) : null}
                     <span className="text-xs text-muted-foreground">
                       {formatDate(c.created_at)}
                     </span>
@@ -203,18 +206,75 @@ function AdminCandidatures() {
                   <Button
                     variant="teal"
                     disabled={update.isPending || c.statut === "valide"}
-                    onClick={() => update.mutate({ id: c.id, statut: "valide" })}
+                    onClick={() => update.mutate({ id: c.id, patch: { statut: "valide" } })}
                   >
                     Valider seulement
                   </Button>
                   <Button
                     variant="outline"
                     disabled={update.isPending || c.statut === "refuse"}
-                    onClick={() => update.mutate({ id: c.id, statut: "refuse" })}
+                    onClick={() => update.mutate({ id: c.id, patch: { statut: "refuse" } })}
                   >
                     Refuser
                   </Button>
+                  <Button
+                    variant="ghost"
+                    disabled={update.isPending}
+                    onClick={() =>
+                      update.mutate({
+                        id: c.id,
+                        patch: { archived_at: c.archived_at ? null : new Date().toISOString() },
+                      })
+                    }
+                  >
+                    {c.archived_at ? (
+                      <>
+                        <ArchiveRestore className="mr-1.5 size-4" /> Désarchiver
+                      </>
+                    ) : (
+                      <>
+                        <Archive className="mr-1.5 size-4" /> Archiver
+                      </>
+                    )}
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    onClick={() => {
+                      setOpenId(openId === c.id ? null : c.id);
+                      setCollaborateur(c.assigne_nom ?? "");
+                    }}
+                  >
+                    <UserPlus className="mr-1.5 size-4" /> Collaborateur
+                  </Button>
                 </div>
+
+                {openId === c.id ? (
+                  <div className="lg:col-span-2 grid gap-3 rounded-2xl border border-border/70 bg-muted/40 p-4 sm:grid-cols-[1fr_auto] sm:items-end">
+                    <div>
+                      <Label htmlFor={`collab-${c.id}`}>Collaborateur en charge</Label>
+                      <Input
+                        id={`collab-${c.id}`}
+                        value={collaborateur}
+                        onChange={(event) => setCollaborateur(event.target.value)}
+                        placeholder="Nom du collaborateur"
+                        className="mt-2"
+                      />
+                    </div>
+                    <Button
+                      variant="cta"
+                      disabled={update.isPending || collaborateur.trim().length === 0}
+                      onClick={() => {
+                        update.mutate({
+                          id: c.id,
+                          patch: { assigne_nom: collaborateur.trim() },
+                        });
+                        setOpenId(null);
+                      }}
+                    >
+                      Affecter
+                    </Button>
+                  </div>
+                ) : null}
 
               </CardContent>
             </Card>
