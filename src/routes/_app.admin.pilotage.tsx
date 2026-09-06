@@ -142,12 +142,12 @@ function Pilotage() {
   });
 
   const candidatures = useQuery({
-    queryKey: ["pilotage-candidatures"],
+    queryKey: ["candidatures"],
     enabled: isConseiller,
     queryFn: async () => {
       const { data, error } = await supabase
         .from("candidatures")
-        .select("id, profile_id, statut, created_at");
+        .select("id, profile_id, statut, created_at, archived_at");
       if (error) throw error;
       return data ?? [];
     },

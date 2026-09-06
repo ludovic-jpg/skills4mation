@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
+import { useCandidaturesRealtime } from "@/lib/candidatures";
 
 export type NavItem = { to: string; label: string; icon: ComponentType<{ className?: string }> };
 
@@ -52,6 +53,7 @@ export function AppShell({
   children: ReactNode;
 }) {
   const { profile, isConseiller, signOut } = useAuth();
+  useCandidaturesRealtime(isConseiller);
   const router = useRouter();
   const photo = usePhotoProfil(profile?.photo_url);
   const roleBadge = isConseiller
