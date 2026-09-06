@@ -286,8 +286,8 @@ function Pilotage() {
       <AppShell items={adminNav()} title="Pilotage">
         <Card className="rounded-2xl border-destructive/30">
           <CardContent className="p-8 text-sm text-muted-foreground">
-            Le pilotage financier et les indicateurs Qualiopi sont réservés aux super admins
-            Skills4mation.
+            Le pilotage financier et les indicateurs Qualiopi sont réservés aux conseillers
+            formation Skills4mation.
           </CardContent>
         </Card>
       </AppShell>
