@@ -52,20 +52,35 @@ export const envoyerRelanceFinancement = createServerFn({ method: "POST" })
     let supprimes = 0;
 
     for (const apprenant of cibles) {
-      const result = await sendTemplateEmail("relance-demande-financement", apprenant.email, {
-        templateData: {
-          apprenantPrenom: apprenant.prenom,
-          dossierLabel,
-          formationIntitule: dossier.titre_formation ?? "",
-          dateDebut: dossier.date_debut
-            ? new Date(dossier.date_debut).toLocaleDateString("fr-FR")
-            : "",
-          formateurNom: `${formateur?.prenom ?? ""} ${formateur?.nom ?? ""}`.trim(),
-        },
-        idempotencyKey: `${CODE_RELANCE_FINANCEMENT}-${dossier.id}-${apprenant.id}-${new Date().toISOString().slice(0, 13)}`,
-      });
+      let envoye = false;
+      try {
+        const result = await sendTemplateEmail("relance-demande-financement", apprenant.email, {
+          templateData: {
+            apprenantPrenom: apprenant.prenom,
+            dossierLabel,
+            formationIntitule: dossier.titre_formation ?? "",
+            dateDebut: dossier.date_debut
+              ? new Date(dossier.date_debut).toLocaleDateString("fr-FR")
+              : "",
+            formateurNom: `${formateur?.prenom ?? ""} ${formateur?.nom ?? ""}`.trim(),
+          },
+          idempotencyKey: `${CODE_RELANCE_FINANCEMENT}-${dossier.id}-${apprenant.id}-${new Date().toISOString().slice(0, 13)}`,
+        });
+        envoye = result.sent;
+      } catch (error) {
+        // Un échec du service d'e-mail ne doit pas interrompre la boucle.
+        console.error("[relance] échec d'envoi", apprenant.email, error);
+        if (error instanceof Error) {
+          console.error("[relance] détail", {
+            name: error.name,
+            message: error.message,
+            code: (error as { code?: string }).code,
+            status: (error as { status?: number }).status,
+          });
+        }
+      }
 
-      if (result.sent) envoyes += 1;
+      if (envoye) envoyes += 1;
       else supprimes += 1;
 
       await supabaseAdmin.from("document_envois").insert({
@@ -74,7 +89,7 @@ export const envoyerRelanceFinancement = createServerFn({ method: "POST" })
         formateur_id: dossier.formateur_id,
         code: CODE_RELANCE_FINANCEMENT,
         label: "Relance : déposer la demande de financement",
-        statut: result.sent ? "envoye" : "non_delivre",
+        statut: envoye ? "envoye" : "non_delivre",
         sent_at: new Date().toISOString(),
       });
     }
