@@ -74,7 +74,7 @@ const CHAPITRES: Chapitre[] = [
     titre: "L'analyse des besoins et l'offre de formation",
     icon: Users,
     intro:
-      "Lors de l'analyse des besoins du client et de l'offre de formation, l'Institution SKILLS4MATION s'engage à :",
+      "Lors de l'analyse des besoins du client et de l'offre de formation, Skills4mation s'engage à :",
     articles: [
       {
         num: "Article 3",
@@ -96,7 +96,7 @@ const CHAPITRES: Chapitre[] = [
           "décrivant les exigences, conditions et modalités de l'action de formation, ainsi que les clauses relatives à la résiliation, l'annulation et le report des prestations ;",
           "notifiant les modalités de l'action de formation : les objectifs et le programme de l'action, les moyens pédagogiques, techniques et d'encadrement mis en œuvre, les prérequis et le nombre de personnes à former, les moyens permettant de suivre l'exécution de l'action et d'en apprécier les résultats (les évaluations) ;",
           "précisant les clauses relatives à la résiliation, l'annulation et le report des prestations (réf. : Conditions Générales de Vente) ;",
-          "informant le client du règlement intérieur qui s'applique à l'action de formation de l'Institution SKILLS4MATION ;",
+          "informant le client du règlement intérieur qui s'applique à l'action de formation de Skills4mation ;",
           "établissant le juste rapport qualité prix de sa prestation ;",
           "fournissant au client les documents permettant un financement de la formation professionnelle continue.",
         ],
@@ -108,7 +108,7 @@ const CHAPITRES: Chapitre[] = [
     titre: "La réalisation de l'action de formation",
     icon: Sparkles,
     intro:
-      "Lors de la mise en œuvre de l'action de formation, l'Institution SKILLS4MATION et les formateurs mandatés s'engagent à :",
+      "Lors de la mise en œuvre de l'action de formation, Skills4mation et les formateurs mandatés s'engagent à :",
     articles: [
       {
         num: "Article 5",
@@ -149,7 +149,7 @@ const CHAPITRES: Chapitre[] = [
           "prenant en compte les enjeux des organisations concernées par la formation ;",
           "se gardant de tout propos désobligeant envers un confrère auprès des stagiaires ;",
           "étant neutre par rapport aux jeux d'influence chez le commanditaire et en n'exprimant aucun jugement ou critique sur le commanditaire auprès des stagiaires aux sessions de formation ;",
-          "observant les règles d'une concurrence loyale à l'égard de l'Institution SKILLS4MATION, de ses confrères et concurrents.",
+          "observant les règles d'une concurrence loyale à l'égard de Skills4mation, de ses confrères et concurrents.",
         ],
       },
     ],
@@ -159,14 +159,14 @@ const CHAPITRES: Chapitre[] = [
     titre: "La sécurité physique des personnes et la sécurité des données",
     icon: ShieldCheck,
     intro:
-      "Lors de toutes relations avec les clients, stagiaires et formateurs, l'Institution SKILLS4MATION et les formateurs mandatés s'engagent à :",
+      "Lors de toutes relations avec les clients, stagiaires et formateurs, Skills4mation et les formateurs mandatés s'engagent à :",
     articles: [
       {
         num: "Article 9",
         chapeau: "Respecter la confidentialité des données, en :",
         points: [
           "s'assurant de la confidentialité de toute information ou donnée à caractère privé ou professionnel relative au client, aux employés ou fournisseurs du client ainsi qu'au savoir-faire, auxquels il aurait eu accès expressément ou accidentellement dans le cadre de sa mission de formation ;",
-          "n'exploitant pas à titre personnel les informations confidentielles, en ne divulguant aucune information sans l'autorisation préalable du client, du stagiaire ou de l'Institution SKILLS4MATION. De ce fait, les résultats des évaluations individuelles des stagiaires ne peuvent être transmis à l'employeur sans l'accord de la personne concernée. Seuls les résultats reflétant les moyennes des évaluations peuvent être transmis à l'employeur.",
+          "n'exploitant pas à titre personnel les informations confidentielles, en ne divulguant aucune information sans l'autorisation préalable du client, du stagiaire ou de Skills4mation. De ce fait, les résultats des évaluations individuelles des stagiaires ne peuvent être transmis à l'employeur sans l'accord de la personne concernée. Seuls les résultats reflétant les moyennes des évaluations peuvent être transmis à l'employeur.",
         ],
       },
       {
@@ -182,7 +182,7 @@ const CHAPITRES: Chapitre[] = [
         chapeau: "Respecter la sécurité physique des personnes, en :",
         points: [
           "respectant les consignes en matière de sécurité physique ou informatique mises en place sur le site du stagiaire / client, afin de garantir sa propre sécurité ainsi que celle des employés, du matériel, des installations et de tous les supports physiques ou électroniques ;",
-          "informant immédiatement la direction de l'Institution SKILLS4MATION de tout incident pouvant avoir un impact sur la sécurité des stagiaires.",
+          "informant immédiatement la direction de Skills4mation de tout incident pouvant avoir un impact sur la sécurité des stagiaires.",
         ],
       },
     ],
@@ -368,9 +368,9 @@ function CodeDeontologique() {
   return (
     <PublicLayout>
       <PageHero
-        eyebrow="Notre mission : propulser votre carrière vers les sommets"
+        eyebrow="Qualité & déontologie"
         title="Code déontologique"
-        description="Les 13 articles qui engagent SKILLS4MATION et l'ensemble des formateurs mandatés, de l'analyse du besoin à l'archivage du dossier de formation."
+        description="Les 13 articles qui engagent Skills4mation et l'ensemble des formateurs mandatés, de l'analyse du besoin à l'archivage du dossier de formation."
       />
 
       <section className="section-shell py-12">

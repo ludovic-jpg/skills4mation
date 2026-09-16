@@ -96,13 +96,13 @@ function MentionsLegales() {
             Le site skills4mation.com est une œuvre protégée par les lois françaises sur la propriété
             intellectuelle. Toute reproduction, représentation, modification, publication ou
             adaptation des éléments du site (textes, supports pédagogiques, images, logos, identité
-            visuelle) est interdite, sauf autorisation préalable écrite de la société SKILLS4MATION.
+            visuelle) est interdite, sauf autorisation préalable écrite de la société Skills4mation.
           </p>
         </Bloc>
 
         <Bloc numero="6" titre="Limitations de responsabilité">
           <p className="leading-relaxed">
-            SKILLS4MATION ne pourra être tenue responsable des dommages directs ou indirects liés à
+            Skills4mation ne pourra être tenue responsable des dommages directs ou indirects liés à
             l'utilisation du site. L'utilisateur s'engage à accéder au site avec un matériel récent et
             un navigateur à jour, exempt de virus.
           </p>

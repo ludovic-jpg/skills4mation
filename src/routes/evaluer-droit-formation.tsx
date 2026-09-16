@@ -14,7 +14,7 @@ export const Route = createFileRoute("/evaluer-droit-formation")({
       {
         name: "description",
         content:
-          "Évaluez vos droits à la formation avec SKILLS4MATION : accompagnement personnalisé, accès simplifié aux financements (OPCO, Transitions Pro, AIF), catalogue de formations éligibles et gestion administrative optimisée.",
+          "Évaluez vos droits à la formation avec Skills4mation : accompagnement personnalisé, accès simplifié aux financements (OPCO, Transitions Pro, AIF), catalogue de formations éligibles et gestion administrative optimisée.",
       },
       { property: "og:title", content: "Évaluer mes droits formation — Skills4mation" },
       {
@@ -75,14 +75,14 @@ function EvaluerDroitFormation() {
     <PublicLayout>
       <PageHero
         eyebrow="Apprenants"
-        title="Évaluer mes droits formation — votre parcours, nos solutions !"
-        description="Chez SKILLS4MATION, nous mettons un point d'honneur à défendre vos intérêts et à vous accompagner dans l'accès aux formations financées. Vous disposez de droits à la formation, encore faut-il savoir comment les mobiliser !"
+        title="Évaluer mes droits formation — votre parcours, nos solutions"
+        description="Chez Skills4mation, nous mettons un point d'honneur à défendre vos intérêts et à vous accompagner dans l'accès aux formations financées. Vous disposez de droits à la formation : encore faut-il savoir comment les mobiliser."
       />
 
       <section className="section-shell grid items-center gap-10 py-14 lg:grid-cols-[1.1fr_0.9fr]">
         <div>
           <h2 className="text-2xl font-semibold sm:text-3xl">
-            Pourquoi évaluer vos droits avec SKILLS4MATION ?
+            Pourquoi évaluer vos droits avec Skills4mation ?
           </h2>
           <div className="mt-8 grid gap-4 sm:grid-cols-2">
             {ATOUTS.map((atout) => (

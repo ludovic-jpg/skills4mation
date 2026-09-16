@@ -10,7 +10,7 @@ export type Sphere = {
 export const SPHERES: Sphere[] = [
   {
     slug: "bureautique",
-    name: "Bureautique",
+    name: "Bureautique & digital",
     cat: "bureautique",
     intro:
       "Outils bureautiques, création graphique, réseaux sociaux, intelligence artificielle : nos formations digitales vous donnent les réflexes concrets attendus aujourd'hui dans tous les métiers. Des ateliers pratiques, animés par des professionnels du numérique, pour gagner en autonomie et en efficacité au quotidien.",
@@ -24,7 +24,7 @@ export const SPHERES: Sphere[] = [
   },
   {
     slug: "creation-dentreprise",
-    name: "Business",
+    name: "Business & création d'entreprise",
     cat: "creation-dentreprise",
     intro:
       "Lancer, structurer et piloter une activité demande des repères solides : modèle économique, gestion, indicateurs, développement commercial. Nos formations Business vous accompagnent de l'idée au pilotage, avec des outils directement applicables à votre projet.",
@@ -38,7 +38,7 @@ export const SPHERES: Sphere[] = [
   },
   {
     slug: "metier-specifique",
-    name: "Métiers spécifiques",
+    name: "Métier spécifique",
     cat: "metier-specifique",
     intro:
       "Certains savoir-faire s'apprennent auprès de praticiens. Photographie, production musicale, couture, œnologie, création d'activité en esthétique : ces formations métiers transmettent des gestes et des méthodes éprouvés, dans un cadre réellement pratique.",

@@ -69,7 +69,11 @@ function BlogIndex() {
                 <CardContent className="p-6">
                   <p className="flex items-center gap-2 text-xs text-muted-foreground">
                     <CalendarDays className="size-3.5" />
-                    16 octobre 2025
+                    {new Date(post.date).toLocaleDateString("fr-FR", {
+                      day: "numeric",
+                      month: "long",
+                      year: "numeric",
+                    })}
                   </p>
                   <h2 className="mt-3 text-lg font-semibold leading-snug">{post.title}</h2>
                   <p className="mt-3 text-sm text-muted-foreground">{post.excerpt}</p>

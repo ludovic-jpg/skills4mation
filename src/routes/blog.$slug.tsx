@@ -80,7 +80,12 @@ function ArticlePage() {
 
         <h1 className="mt-6 text-3xl font-semibold leading-tight sm:text-4xl">{post.title}</h1>
         <p className="mt-3 flex items-center gap-2 text-sm text-muted-foreground">
-          <CalendarDays className="size-4" /> 16 octobre 2025
+          <CalendarDays className="size-4" />
+          {new Date(post.date).toLocaleDateString("fr-FR", {
+            day: "numeric",
+            month: "long",
+            year: "numeric",
+          })}
         </p>
         <img
           src={post.cover}

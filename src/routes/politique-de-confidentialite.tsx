@@ -11,13 +11,13 @@ export const Route = createFileRoute("/politique-de-confidentialite")({
       {
         name: "description",
         content:
-          "RGPD : responsable du traitement, données collectées, finalités, droits des utilisateurs, conservation, sécurité, transferts et politique de cookies de SKILLS4MATION (SAS, RCS Mulhouse 925 376 725).",
+          "RGPD : responsable du traitement, données collectées, finalités, droits des utilisateurs, conservation, sécurité, transferts et politique de cookies de Skills4mation (SAS, RCS Mulhouse 925 376 725).",
       },
       { property: "og:title", content: "Politique de confidentialité et cookies — Skills4mation" },
       {
         property: "og:description",
         content:
-          "Comment SKILLS4MATION collecte, utilise et protège vos données personnelles, et quels cookies sont déposés sur le site.",
+          "Comment Skills4mation collecte, utilise et protège vos données personnelles, et quels cookies sont déposés sur le site.",
       },
       { property: "og:type", content: "article" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -114,7 +114,7 @@ function PolitiqueConfidentialite() {
       <PageHero
         eyebrow="RGPD & cookies"
         title="Politique de confidentialité"
-        description="En conformité avec le Règlement Général sur la Protection des Données (RGPD) et la loi Informatique et Libertés, cette politique détaille la manière dont la société SKILLS4MATION collecte, utilise et protège les données personnelles des utilisateurs."
+        description="En conformité avec le Règlement Général sur la Protection des Données (RGPD) et la loi Informatique et Libertés, cette politique détaille la manière dont la société Skills4mation collecte, utilise et protège les données personnelles des utilisateurs."
       />
 
       <section className="section-shell py-12">
@@ -173,7 +173,7 @@ function PolitiqueConfidentialite() {
         </Bloc>
 
         <Bloc id="donnees" numero="2." titre="Données collectées">
-          <p>SKILLS4MATION collecte les données personnelles suivantes :</p>
+          <p>Skills4mation collecte les données personnelles suivantes :</p>
           <ul className="list-disc space-y-1 pl-5">
             <li>
               <strong className="text-foreground">
@@ -198,9 +198,9 @@ function PolitiqueConfidentialite() {
           <ul className="list-disc space-y-1 pl-5">
             <li>Permettre l'accès et l'utilisation du site.</li>
             <li>Améliorer l'expérience utilisateur et le contenu du site.</li>
-            <li>Gérer les commandes et le suivi client.</li>
-            <li>Réaliser des analyses statistiques.</li>
-            <li>Envoyer des campagnes de communication (newsletter, SMS, etc.).</li>
+            <li>Gérer les demandes de formation, d'inscription et le suivi des projets pédagogiques.</li>
+            <li>Réaliser des analyses statistiques d'audience.</li>
+            <li>Envoyer des communications relatives à votre projet de formation (email, SMS).</li>
             <li>
               Instruire les candidatures de formateurs, les demandes de budget et les demandes
               d'évaluation des droits à la formation.
@@ -244,14 +244,14 @@ function PolitiqueConfidentialite() {
             Certaines données peuvent être conservées plus longtemps si la loi l'exige.
           </p>
           <p>
-            <strong className="text-foreground">Sécurité.</strong> SKILLS4MATION met en œuvre des
+            <strong className="text-foreground">Sécurité.</strong> Skills4mation met en œuvre des
             mesures techniques et organisationnelles pour protéger vos données personnelles contre
             tout accès non autorisé, altération ou destruction.
           </p>
           <p>
             <strong className="text-foreground">Transfert.</strong> Aucune donnée personnelle n'est
             transférée hors de l'Union européenne. En cas de recours à des sous-traitants,
-            SKILLS4MATION s'assure qu'ils respectent les exigences du RGPD.
+            Skills4mation s'assure qu'ils respectent les exigences du RGPD.
           </p>
           <p>
             <strong className="text-foreground">Violation de données.</strong> En cas de violation de

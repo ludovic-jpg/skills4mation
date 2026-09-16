@@ -272,7 +272,7 @@ const AMBASSADEUR = [
 
 const KPI = [
   { valeur: "24h", label: "Dossier prêt" },
-  { valeur: "10 j", label: "Paiement ouvrés" },
+  { valeur: "8 j", label: "Paiement ouvrés" },
   { valeur: "100 %", label: "Conformité" },
   { valeur: "4,8/5", label: "Satisfaction" },
 ];

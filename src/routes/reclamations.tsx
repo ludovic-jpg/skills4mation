@@ -27,6 +27,7 @@ export const Route = createFileRoute("/reclamations")({
         content: "Formulaire de signalement pour bénéficiaires, financeurs et formateurs.",
       },
       { property: "og:type", content: "website" },
+      { property: "og:url", content: "https://skills4mation.com/reclamations" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [{ rel: "canonical", href: "https://skills4mation.com/reclamations" }],
@@ -92,7 +93,7 @@ function Reclamations() {
       <PageHero
         eyebrow="Qualité"
         title="Réclamation, difficulté ou aléa"
-        description="Formatrix traite toute réclamation, difficulté ou aléa signalé par un bénéficiaire, un financeur ou un formateur. Chaque signalement est enregistré, horodaté, instruit par notre équipe qualité et reçoit une réponse écrite."
+        description="Skills4mation traite toute réclamation, difficulté ou aléa signalé par un bénéficiaire, un financeur ou un formateur. Chaque signalement est enregistré, horodaté, instruit par notre équipe qualité et reçoit une réponse écrite."
       />
 
       <section className="section-shell py-14">
