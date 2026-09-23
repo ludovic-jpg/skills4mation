@@ -22,6 +22,7 @@ import homeHero from "@/assets/home-hero.jpg";
 import peopleEquipe from "@/assets/people-equipe.jpg";
 import { QualiopiBadge } from "@/components/Brand";
 import { DiagnosticExpress } from "@/components/site/DiagnosticExpress";
+import { PortageFormateurSheet } from "@/components/site/PortageFormateurSheet";
 import { PublicLayout } from "@/components/site/PublicLayout";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -188,15 +189,15 @@ function Accueil() {
               <h3 className="mt-4 text-2xl font-semibold">Je suis formateur</h3>
               <p className="mt-3 text-sm text-muted-foreground">
                 Formez sous notre certification Qualiopi : conventions et documents en 24h, accès
-                aux financements professionnels, autonomie pédagogique totale. 99 € HT/an + 20 % de
-                commission.
+                aux financements professionnels, autonomie pédagogique totale. Accès à une
+                plateforme de suivi et de coordination de vos dossiers formations.
               </p>
               <div className="mt-7">
-                <Button asChild variant="teal" size="lg">
-                  <Link to="/portage-qualiopi">
+                <PortageFormateurSheet titre="Rejoindre Skills4mation — portage Qualiopi">
+                  <Button variant="teal" size="lg">
                     Espace formateur — portage Qualiopi <ArrowRight className="size-4" />
-                  </Link>
-                </Button>
+                  </Button>
+                </PortageFormateurSheet>
               </div>
             </CardContent>
           </Card>

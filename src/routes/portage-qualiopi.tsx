@@ -48,7 +48,7 @@ import { Card, CardContent } from "@/components/ui/card";
 
 const TITRE = "Portage Qualiopi Formation et Bilan de Compétences | Skills4mation";
 const DESCRIPTION =
-  "Portage Qualiopi pour vos actions de formation et vos bilans de compétences : conventions en 24h, accès aux financements OPCO, autonomie pédagogique totale. 99 € HT/an + 20 % de commission.";
+  "Portage Qualiopi pour vos actions de formation et vos bilans de compétences : conventions en 24h, accès aux financements OPCO, autonomie pédagogique totale. 25 % de commission, sans frais cachés.";
 
 const FAQ = [
   {
@@ -69,7 +69,7 @@ const FAQ = [
   },
   {
     q: "Quel est le coût du portage Qualiopi ?",
-    a: "Un abonnement de 99 € HT/an et une commission de 20 % sur le chiffre d'affaires HT généré via le portage. Aucun autre frais.",
+    a: "Une commission de 25 % sur le chiffre d'affaires HT généré via le portage. Aucun autre frais.",
   },
   {
     q: "Qui reste responsable de la qualité pédagogique ?",
@@ -565,7 +565,7 @@ function PortageQualiopi() {
               <BadgeEuro className="size-8 text-cta" aria-hidden />
               <p className="mt-5 text-4xl font-semibold text-primary-foreground">99 € HT / an</p>
               <p className="mt-2 text-primary-foreground/85">
-                d'abonnement plateforme + <strong>20 %</strong> de commission sur le chiffre
+                d'abonnement plateforme + <strong>25 %</strong> de commission sur le chiffre
                 d'affaires HT généré via le portage.
               </p>
               <p className="mt-4 text-sm text-primary-foreground/75">
@@ -576,9 +576,9 @@ function PortageQualiopi() {
                 <p className="mt-2 text-primary-foreground/85">
                   Vous facturez une formation à 3 000 € HT.
                   <br />
-                  Commission Skills4mation (20 %) : 600 €
+                  Commission Skills4mation (25 %) : 750 €
                   <br />
-                  Montant qui vous est reversé : 2 400 € HT
+                  Montant qui vous est reversé : 2 250 € HT
                 </p>
               </div>
             </CardContent>
