@@ -98,7 +98,7 @@ const PORTAGE = [
     titre: "Rémunération sous 8 jours ouvrés",
     icon: CalendarClock,
     texte:
-      "99 € / an + 20 % de commission, sans frais cachés. Paiement du consultant sous 8 jours ouvrés à réception des fonds du financeur.",
+      "25 % de commission, sans frais cachés. Paiement du consultant sous 8 jours ouvrés à réception des fonds du financeur.",
   },
   {
     titre: "Réseau et recommandation",

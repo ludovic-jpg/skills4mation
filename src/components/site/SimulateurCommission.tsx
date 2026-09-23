@@ -4,7 +4,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
-const COMMISSION = 0.2;
+const COMMISSION = 0.25;
 const ABONNEMENT = 99;
 
 const euro = (value: number) =>
@@ -48,7 +48,7 @@ export function SimulateurCommission() {
             <dd className="mt-1 text-2xl font-semibold">{euro(base)}</dd>
           </div>
           <div className="rounded-2xl bg-muted/70 p-4">
-            <dt className="text-xs text-muted-foreground">Commission Skills4mation (20 %)</dt>
+            <dt className="text-xs text-muted-foreground">Commission Skills4mation (25 %)</dt>
             <dd className="mt-1 text-2xl font-semibold">{euro(commission)}</dd>
           </div>
           <div className="rounded-2xl bg-gradient-teal p-4 text-primary-foreground">

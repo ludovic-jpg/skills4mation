@@ -33,15 +33,19 @@ import { Route as FormationsSlugRouteImport } from './routes/formations.$slug'
 import { Route as DotlovableOauthConsentRouteImport } from './routes/[.]lovable.oauth.consent'
 import { Route as Char91DotmcpChar93InvokeToolToolRouteImport } from './routes/[.mcp]/invoke-tool/$tool'
 import { Route as AppAdminIndexRouteImport } from './routes/_app.admin.index'
+import { Route as AppAdminBpfRouteImport } from './routes/_app.admin.bpf'
 import { Route as AppAdminCertificationsRouteImport } from './routes/_app.admin.certifications'
 import { Route as AppAdminComptesRouteImport } from './routes/_app.admin.comptes'
 import { Route as AppAdminDemandesRouteImport } from './routes/_app.admin.demandes'
 import { Route as AppAdminDossiersRouteImport } from './routes/_app.admin.dossiers'
 import { Route as AppAdminFinancementsRouteImport } from './routes/_app.admin.financements'
 import { Route as AppAdminFormationsRouteImport } from './routes/_app.admin.formations'
+import { Route as AppAdminHandicapRouteImport } from './routes/_app.admin.handicap'
 import { Route as AppAdminPilotageRouteImport } from './routes/_app.admin.pilotage'
 import { Route as AppAdminReclamationsRouteImport } from './routes/_app.admin.reclamations'
+import { Route as AppAdminSatisfactionRouteImport } from './routes/_app.admin.satisfaction'
 import { Route as AppAdminValidationRouteImport } from './routes/_app.admin.validation'
+import { Route as AppAdminVeilleRouteImport } from './routes/_app.admin.veille'
 import { Route as AppApprenantIndexRouteImport } from './routes/_app.apprenant.index'
 import { Route as AppEspaceIndexRouteImport } from './routes/_app.espace.index'
 import { Route as AppEspaceCommunicationRouteImport } from './routes/_app.espace.communication'
@@ -186,6 +190,11 @@ const AppAdminIndexRoute = AppAdminIndexRouteImport.update({
   path: '/admin/',
   getParentRoute: () => AppRoute,
 } as any)
+const AppAdminBpfRoute = AppAdminBpfRouteImport.update({
+  id: '/admin/bpf',
+  path: '/admin/bpf',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppAdminCertificationsRoute = AppAdminCertificationsRouteImport.update({
   id: '/admin/certifications',
   path: '/admin/certifications',
@@ -216,6 +225,11 @@ const AppAdminFormationsRoute = AppAdminFormationsRouteImport.update({
   path: '/admin/formations',
   getParentRoute: () => AppRoute,
 } as any)
+const AppAdminHandicapRoute = AppAdminHandicapRouteImport.update({
+  id: '/admin/handicap',
+  path: '/admin/handicap',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppAdminPilotageRoute = AppAdminPilotageRouteImport.update({
   id: '/admin/pilotage',
   path: '/admin/pilotage',
@@ -226,9 +240,19 @@ const AppAdminReclamationsRoute = AppAdminReclamationsRouteImport.update({
   path: '/admin/reclamations',
   getParentRoute: () => AppRoute,
 } as any)
+const AppAdminSatisfactionRoute = AppAdminSatisfactionRouteImport.update({
+  id: '/admin/satisfaction',
+  path: '/admin/satisfaction',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppAdminValidationRoute = AppAdminValidationRouteImport.update({
   id: '/admin/validation',
   path: '/admin/validation',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAdminVeilleRoute = AppAdminVeilleRouteImport.update({
+  id: '/admin/veille',
+  path: '/admin/veille',
   getParentRoute: () => AppRoute,
 } as any)
 const AppApprenantIndexRoute = AppApprenantIndexRouteImport.update({
@@ -359,15 +383,19 @@ export interface FileRoutesByFullPath {
   '/formations/': typeof FormationsIndexRoute
   '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
+  '/admin/bpf': typeof AppAdminBpfRoute
   '/admin/certifications': typeof AppAdminCertificationsRoute
   '/admin/comptes': typeof AppAdminComptesRoute
   '/admin/demandes': typeof AppAdminDemandesRoute
   '/admin/dossiers': typeof AppAdminDossiersRoute
   '/admin/financements': typeof AppAdminFinancementsRoute
   '/admin/formations': typeof AppAdminFormationsRoute
+  '/admin/handicap': typeof AppAdminHandicapRoute
   '/admin/pilotage': typeof AppAdminPilotageRoute
   '/admin/reclamations': typeof AppAdminReclamationsRoute
+  '/admin/satisfaction': typeof AppAdminSatisfactionRoute
   '/admin/validation': typeof AppAdminValidationRoute
+  '/admin/veille': typeof AppAdminVeilleRoute
   '/espace/communication': typeof AppEspaceCommunicationRoute
   '/espace/instructions': typeof AppEspaceInstructionsRoute
   '/espace/outils': typeof AppEspaceOutilsRoute
@@ -413,15 +441,19 @@ export interface FileRoutesByTo {
   '/formations': typeof FormationsIndexRoute
   '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
+  '/admin/bpf': typeof AppAdminBpfRoute
   '/admin/certifications': typeof AppAdminCertificationsRoute
   '/admin/comptes': typeof AppAdminComptesRoute
   '/admin/demandes': typeof AppAdminDemandesRoute
   '/admin/dossiers': typeof AppAdminDossiersRoute
   '/admin/financements': typeof AppAdminFinancementsRoute
   '/admin/formations': typeof AppAdminFormationsRoute
+  '/admin/handicap': typeof AppAdminHandicapRoute
   '/admin/pilotage': typeof AppAdminPilotageRoute
   '/admin/reclamations': typeof AppAdminReclamationsRoute
+  '/admin/satisfaction': typeof AppAdminSatisfactionRoute
   '/admin/validation': typeof AppAdminValidationRoute
+  '/admin/veille': typeof AppAdminVeilleRoute
   '/espace/communication': typeof AppEspaceCommunicationRoute
   '/espace/instructions': typeof AppEspaceInstructionsRoute
   '/espace/outils': typeof AppEspaceOutilsRoute
@@ -469,15 +501,19 @@ export interface FileRoutesById {
   '/formations/': typeof FormationsIndexRoute
   '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
+  '/_app/admin/bpf': typeof AppAdminBpfRoute
   '/_app/admin/certifications': typeof AppAdminCertificationsRoute
   '/_app/admin/comptes': typeof AppAdminComptesRoute
   '/_app/admin/demandes': typeof AppAdminDemandesRoute
   '/_app/admin/dossiers': typeof AppAdminDossiersRoute
   '/_app/admin/financements': typeof AppAdminFinancementsRoute
   '/_app/admin/formations': typeof AppAdminFormationsRoute
+  '/_app/admin/handicap': typeof AppAdminHandicapRoute
   '/_app/admin/pilotage': typeof AppAdminPilotageRoute
   '/_app/admin/reclamations': typeof AppAdminReclamationsRoute
+  '/_app/admin/satisfaction': typeof AppAdminSatisfactionRoute
   '/_app/admin/validation': typeof AppAdminValidationRoute
+  '/_app/admin/veille': typeof AppAdminVeilleRoute
   '/_app/espace/communication': typeof AppEspaceCommunicationRoute
   '/_app/espace/instructions': typeof AppEspaceInstructionsRoute
   '/_app/espace/outils': typeof AppEspaceOutilsRoute
@@ -525,15 +561,19 @@ export interface FileRouteTypes {
     | '/formations/'
     | '/.lovable/oauth/consent'
     | '/.mcp/invoke-tool/$tool'
+    | '/admin/bpf'
     | '/admin/certifications'
     | '/admin/comptes'
     | '/admin/demandes'
     | '/admin/dossiers'
     | '/admin/financements'
     | '/admin/formations'
+    | '/admin/handicap'
     | '/admin/pilotage'
     | '/admin/reclamations'
+    | '/admin/satisfaction'
     | '/admin/validation'
+    | '/admin/veille'
     | '/espace/communication'
     | '/espace/instructions'
     | '/espace/outils'
@@ -579,15 +619,19 @@ export interface FileRouteTypes {
     | '/formations'
     | '/.lovable/oauth/consent'
     | '/.mcp/invoke-tool/$tool'
+    | '/admin/bpf'
     | '/admin/certifications'
     | '/admin/comptes'
     | '/admin/demandes'
     | '/admin/dossiers'
     | '/admin/financements'
     | '/admin/formations'
+    | '/admin/handicap'
     | '/admin/pilotage'
     | '/admin/reclamations'
+    | '/admin/satisfaction'
     | '/admin/validation'
+    | '/admin/veille'
     | '/espace/communication'
     | '/espace/instructions'
     | '/espace/outils'
@@ -634,15 +678,19 @@ export interface FileRouteTypes {
     | '/formations/'
     | '/.lovable/oauth/consent'
     | '/.mcp/invoke-tool/$tool'
+    | '/_app/admin/bpf'
     | '/_app/admin/certifications'
     | '/_app/admin/comptes'
     | '/_app/admin/demandes'
     | '/_app/admin/dossiers'
     | '/_app/admin/financements'
     | '/_app/admin/formations'
+    | '/_app/admin/handicap'
     | '/_app/admin/pilotage'
     | '/_app/admin/reclamations'
+    | '/_app/admin/satisfaction'
     | '/_app/admin/validation'
+    | '/_app/admin/veille'
     | '/_app/espace/communication'
     | '/_app/espace/instructions'
     | '/_app/espace/outils'
@@ -869,6 +917,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppAdminIndexRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/admin/bpf': {
+      id: '/_app/admin/bpf'
+      path: '/admin/bpf'
+      fullPath: '/admin/bpf'
+      preLoaderRoute: typeof AppAdminBpfRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/_app/admin/certifications': {
       id: '/_app/admin/certifications'
       path: '/admin/certifications'
@@ -911,6 +966,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppAdminFormationsRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/admin/handicap': {
+      id: '/_app/admin/handicap'
+      path: '/admin/handicap'
+      fullPath: '/admin/handicap'
+      preLoaderRoute: typeof AppAdminHandicapRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/_app/admin/pilotage': {
       id: '/_app/admin/pilotage'
       path: '/admin/pilotage'
@@ -925,11 +987,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppAdminReclamationsRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/admin/satisfaction': {
+      id: '/_app/admin/satisfaction'
+      path: '/admin/satisfaction'
+      fullPath: '/admin/satisfaction'
+      preLoaderRoute: typeof AppAdminSatisfactionRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/_app/admin/validation': {
       id: '/_app/admin/validation'
       path: '/admin/validation'
       fullPath: '/admin/validation'
       preLoaderRoute: typeof AppAdminValidationRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/admin/veille': {
+      id: '/_app/admin/veille'
+      path: '/admin/veille'
+      fullPath: '/admin/veille'
+      preLoaderRoute: typeof AppAdminVeilleRouteImport
       parentRoute: typeof AppRoute
     }
     '/_app/apprenant/': {
@@ -1076,15 +1152,19 @@ declare module '@tanstack/react-router' {
 }
 
 interface AppRouteChildren {
+  AppAdminBpfRoute: typeof AppAdminBpfRoute
   AppAdminCertificationsRoute: typeof AppAdminCertificationsRoute
   AppAdminComptesRoute: typeof AppAdminComptesRoute
   AppAdminDemandesRoute: typeof AppAdminDemandesRoute
   AppAdminDossiersRoute: typeof AppAdminDossiersRoute
   AppAdminFinancementsRoute: typeof AppAdminFinancementsRoute
   AppAdminFormationsRoute: typeof AppAdminFormationsRoute
+  AppAdminHandicapRoute: typeof AppAdminHandicapRoute
   AppAdminPilotageRoute: typeof AppAdminPilotageRoute
   AppAdminReclamationsRoute: typeof AppAdminReclamationsRoute
+  AppAdminSatisfactionRoute: typeof AppAdminSatisfactionRoute
   AppAdminValidationRoute: typeof AppAdminValidationRoute
+  AppAdminVeilleRoute: typeof AppAdminVeilleRoute
   AppEspaceCommunicationRoute: typeof AppEspaceCommunicationRoute
   AppEspaceInstructionsRoute: typeof AppEspaceInstructionsRoute
   AppEspaceOutilsRoute: typeof AppEspaceOutilsRoute
@@ -1102,15 +1182,19 @@ interface AppRouteChildren {
 }
 
 const AppRouteChildren: AppRouteChildren = {
+  AppAdminBpfRoute: AppAdminBpfRoute,
   AppAdminCertificationsRoute: AppAdminCertificationsRoute,
   AppAdminComptesRoute: AppAdminComptesRoute,
   AppAdminDemandesRoute: AppAdminDemandesRoute,
   AppAdminDossiersRoute: AppAdminDossiersRoute,
   AppAdminFinancementsRoute: AppAdminFinancementsRoute,
   AppAdminFormationsRoute: AppAdminFormationsRoute,
+  AppAdminHandicapRoute: AppAdminHandicapRoute,
   AppAdminPilotageRoute: AppAdminPilotageRoute,
   AppAdminReclamationsRoute: AppAdminReclamationsRoute,
+  AppAdminSatisfactionRoute: AppAdminSatisfactionRoute,
   AppAdminValidationRoute: AppAdminValidationRoute,
+  AppAdminVeilleRoute: AppAdminVeilleRoute,
   AppEspaceCommunicationRoute: AppEspaceCommunicationRoute,
   AppEspaceInstructionsRoute: AppEspaceInstructionsRoute,
   AppEspaceOutilsRoute: AppEspaceOutilsRoute,
