@@ -21,6 +21,7 @@ import { Route as MentionsLegalesRouteImport } from './routes/mentions-legales'
 import { Route as PoleFormateurRouteImport } from './routes/pole-formateur'
 import { Route as PolitiqueDeConfidentialiteRouteImport } from './routes/politique-de-confidentialite'
 import { Route as PortageQualiopiRouteImport } from './routes/portage-qualiopi'
+import { Route as QuiSommesNousRouteImport } from './routes/qui-sommes-nous'
 import { Route as ReclamationsRouteImport } from './routes/reclamations'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as Char91DotmcpChar93ListToolsRouteImport } from './routes/[.mcp]/list-tools'
@@ -125,6 +126,11 @@ const PolitiqueDeConfidentialiteRoute =
 const PortageQualiopiRoute = PortageQualiopiRouteImport.update({
   id: '/portage-qualiopi',
   path: '/portage-qualiopi',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const QuiSommesNousRoute = QuiSommesNousRouteImport.update({
+  id: '/qui-sommes-nous',
+  path: '/qui-sommes-nous',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ReclamationsRoute = ReclamationsRouteImport.update({
@@ -372,6 +378,7 @@ export interface FileRoutesByFullPath {
   '/pole-formateur': typeof PoleFormateurRoute
   '/politique-de-confidentialite': typeof PolitiqueDeConfidentialiteRoute
   '/portage-qualiopi': typeof PortageQualiopiRoute
+  '/qui-sommes-nous': typeof QuiSommesNousRoute
   '/reclamations': typeof ReclamationsRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
@@ -430,6 +437,7 @@ export interface FileRoutesByTo {
   '/pole-formateur': typeof PoleFormateurRoute
   '/politique-de-confidentialite': typeof PolitiqueDeConfidentialiteRoute
   '/portage-qualiopi': typeof PortageQualiopiRoute
+  '/qui-sommes-nous': typeof QuiSommesNousRoute
   '/reclamations': typeof ReclamationsRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
@@ -490,6 +498,7 @@ export interface FileRoutesById {
   '/pole-formateur': typeof PoleFormateurRoute
   '/politique-de-confidentialite': typeof PolitiqueDeConfidentialiteRoute
   '/portage-qualiopi': typeof PortageQualiopiRoute
+  '/qui-sommes-nous': typeof QuiSommesNousRoute
   '/reclamations': typeof ReclamationsRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
@@ -550,6 +559,7 @@ export interface FileRouteTypes {
     | '/pole-formateur'
     | '/politique-de-confidentialite'
     | '/portage-qualiopi'
+    | '/qui-sommes-nous'
     | '/reclamations'
     | '/sitemap.xml'
     | '/.mcp/list-tools'
@@ -608,6 +618,7 @@ export interface FileRouteTypes {
     | '/pole-formateur'
     | '/politique-de-confidentialite'
     | '/portage-qualiopi'
+    | '/qui-sommes-nous'
     | '/reclamations'
     | '/sitemap.xml'
     | '/.mcp/list-tools'
@@ -667,6 +678,7 @@ export interface FileRouteTypes {
     | '/pole-formateur'
     | '/politique-de-confidentialite'
     | '/portage-qualiopi'
+    | '/qui-sommes-nous'
     | '/reclamations'
     | '/sitemap.xml'
     | '/.mcp/list-tools'
@@ -727,6 +739,7 @@ export interface RootRouteChildren {
   PoleFormateurRoute: typeof PoleFormateurRoute
   PolitiqueDeConfidentialiteRoute: typeof PolitiqueDeConfidentialiteRoute
   PortageQualiopiRoute: typeof PortageQualiopiRoute
+  QuiSommesNousRoute: typeof QuiSommesNousRoute
   ReclamationsRoute: typeof ReclamationsRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   Char91DotmcpChar93ListToolsRoute: typeof Char91DotmcpChar93ListToolsRoute
@@ -831,6 +844,13 @@ declare module '@tanstack/react-router' {
       path: '/portage-qualiopi'
       fullPath: '/portage-qualiopi'
       preLoaderRoute: typeof PortageQualiopiRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/qui-sommes-nous': {
+      id: '/qui-sommes-nous'
+      path: '/qui-sommes-nous'
+      fullPath: '/qui-sommes-nous'
+      preLoaderRoute: typeof QuiSommesNousRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/reclamations': {
@@ -1226,6 +1246,7 @@ const rootRouteChildren: RootRouteChildren = {
   PoleFormateurRoute: PoleFormateurRoute,
   PolitiqueDeConfidentialiteRoute: PolitiqueDeConfidentialiteRoute,
   PortageQualiopiRoute: PortageQualiopiRoute,
+  QuiSommesNousRoute: QuiSommesNousRoute,
   ReclamationsRoute: ReclamationsRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   Char91DotmcpChar93ListToolsRoute: Char91DotmcpChar93ListToolsRoute,

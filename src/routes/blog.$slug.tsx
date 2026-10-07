@@ -21,6 +21,7 @@ export const Route = createFileRoute("/blog/$slug")({
     }
     const { post } = loaderData;
     const url = `${BASE}/blog/${params.slug}`;
+    const image = post.cover.startsWith("/") ? `${BASE}${post.cover}` : post.cover;
     return {
       meta: [
         { title: `${post.title} | Blog Skills4mation` },
@@ -29,9 +30,9 @@ export const Route = createFileRoute("/blog/$slug")({
         { property: "og:description", content: post.excerpt },
         { property: "og:type", content: "article" },
         { property: "og:url", content: url },
-        { property: "og:image", content: post.cover },
+        { property: "og:image", content: image },
         { name: "twitter:card", content: "summary_large_image" },
-        { name: "twitter:image", content: post.cover },
+        { name: "twitter:image", content: image },
       ],
       links: [{ rel: "canonical", href: url }],
       scripts: [
@@ -42,7 +43,7 @@ export const Route = createFileRoute("/blog/$slug")({
             "@type": "BlogPosting",
             headline: post.title,
             description: post.excerpt,
-            image: post.cover,
+            image,
             datePublished: post.date,
             mainEntityOfPage: url,
             publisher: { "@type": "Organization", name: "Skills4mation" },

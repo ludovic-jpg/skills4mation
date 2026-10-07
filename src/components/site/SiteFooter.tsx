@@ -71,6 +71,9 @@ export function SiteFooter() {
               <Link to="/blog">Blog pédagogique</Link>
             </li>
             <li>
+              <Link to="/qui-sommes-nous">Qui sommes-nous</Link>
+            </li>
+            <li>
               <Link to="/contact">Contact</Link>
             </li>
             <li>
