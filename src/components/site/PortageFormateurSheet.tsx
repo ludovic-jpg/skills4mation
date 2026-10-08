@@ -26,15 +26,6 @@ const STATUTS = [
   "En création d'activité",
 ];
 
-const EXPERIENCES = ["Moins de 2 ans", "2 à 5 ans", "5 à 10 ans", "Plus de 10 ans"];
-
-const VOLUMES = [
-  "Moins de 10 000 € HT",
-  "10 000 à 30 000 € HT",
-  "30 000 à 80 000 € HT",
-  "Plus de 80 000 € HT",
-];
-
 const QUALIOPI = [
   "Je ne suis pas certifié(e) Qualiopi",
   "Certification en cours",
@@ -61,15 +52,14 @@ const VIDE: Donnees = {
   telephone: "",
   statut: STATUTS[0] ?? "",
   expertise: "",
-  experience: EXPERIENCES[1] ?? "",
-  volume: VOLUMES[1] ?? "",
+  experience: "",
+  volume: "",
   qualiopi: QUALIOPI[0] ?? "",
   message: "",
 };
 
 const ETAPES = [
   { titre: "Votre activité", sous: "Où en êtes-vous aujourd'hui ?" },
-  { titre: "Votre expertise", sous: "Ce que vous animez et pour quel volume." },
   { titre: "Vos coordonnées", sous: "Pour vous répondre sous 48 h ouvrées." },
 ];
 
@@ -110,9 +100,6 @@ export function PortageFormateurSheet({
 
     const message = [
       `Statut : ${data.statut}`,
-      `Domaines d'expertise : ${data.expertise}`,
-      `Expérience : ${data.experience}`,
-      `Volume annuel envisagé : ${data.volume}`,
       `Situation Qualiopi : ${data.qualiopi}`,
       data.message,
     ]
@@ -127,7 +114,7 @@ export function PortageFormateurSheet({
       profil: "Formateur — portage Qualiopi",
       formation_souhaitee: data.expertise || null,
       objectif: "Rejoindre le portage Qualiopi Skills4mation",
-      budget_estime: data.volume,
+      budget_estime: data.volume || null,
       message,
     });
 
@@ -214,34 +201,6 @@ export function PortageFormateurSheet({
                 ) : null}
 
                 {etape === 1 ? (
-                  <>
-                    <div>
-                      <Label htmlFor="expertise">Vos domaines d'expertise</Label>
-                      <Textarea
-                        id="expertise"
-                        rows={3}
-                        className="mt-2"
-                        placeholder="Ex. management, bureautique, langues, bilan de compétences…"
-                        value={data.expertise}
-                        onChange={(e) => set("expertise")(e.target.value)}
-                      />
-                    </div>
-                    <Choix
-                      label="Votre expérience de formateur"
-                      options={EXPERIENCES}
-                      value={data.experience}
-                      onChange={set("experience")}
-                    />
-                    <Choix
-                      label="Volume de chiffre d'affaires annuel envisagé"
-                      options={VOLUMES}
-                      value={data.volume}
-                      onChange={set("volume")}
-                    />
-                  </>
-                ) : null}
-
-                {etape === 2 ? (
                   <>
                     <div className="grid gap-5 sm:grid-cols-2">
                       <Champ
