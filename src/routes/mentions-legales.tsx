@@ -30,7 +30,7 @@ const IDENTITE = [
   { label: "Dénomination sociale", value: "SKILLS4MATION" },
   { label: "Forme juridique", value: "SAS, société par actions simplifiée" },
   { label: "Capital social", value: "1 000,00 € (fixe)" },
-  { label: "Siège social", value: "13 C rue des Romains, 68170 Rixheim, France" },
+  { label: "Siège social", value: "91 Grand'Rue Pierre Braun, 68170 Rixheim, France" },
   { label: "SIREN", value: "925 376 725" },
   { label: "SIRET (siège)", value: "925 376 725 00022" },
   { label: "N° TVA intracommunautaire", value: "FR81 925 376 725" },

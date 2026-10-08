@@ -563,13 +563,13 @@ function PortageQualiopi() {
           <Card className="rounded-3xl border-none bg-gradient-hero text-primary-foreground shadow-elevated">
             <CardContent className="p-8">
               <BadgeEuro className="size-8 text-cta" aria-hidden />
-              <p className="mt-5 text-4xl font-semibold text-primary-foreground">99 € HT / an</p>
+              <p className="mt-5 text-4xl font-semibold text-primary-foreground">25 % de commission</p>
               <p className="mt-2 text-primary-foreground/85">
-                d'abonnement plateforme + <strong>25 %</strong> de commission sur le chiffre
-                d'affaires HT généré via le portage.
+                sur le chiffre d'affaires HT généré via le portage. <strong>Plateforme gratuite,
+                sans abonnement.</strong>
               </p>
               <p className="mt-4 text-sm text-primary-foreground/75">
-                Pas de frais cachés, pas d'engagement au-delà de l'abonnement annuel.
+                Pas de frais cachés, pas d'engagement : vous ne payez que lorsque vous facturez.
               </p>
               <div className="mt-7 rounded-2xl bg-primary-foreground/10 p-5 text-sm">
                 <p className="font-semibold text-primary-foreground">Exemple de calcul</p>

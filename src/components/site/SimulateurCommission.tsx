@@ -5,7 +5,6 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
 const COMMISSION = 0.25;
-const ABONNEMENT = 99;
 
 const euro = (value: number) =>
   new Intl.NumberFormat("fr-FR", {
@@ -58,7 +57,7 @@ export function SimulateurCommission() {
         </dl>
 
         <p className="mt-4 text-xs text-muted-foreground">
-          Abonnement plateforme de {euro(ABONNEMENT)} HT/an facturé séparément. Aucun frais caché.
+          Plateforme gratuite, sans abonnement. Aucun frais caché.
         </p>
       </CardContent>
     </Card>

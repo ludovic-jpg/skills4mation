@@ -21,7 +21,6 @@ import formatriceTablette from "@/assets/formatrice-tablette.jpg";
 import homeHero from "@/assets/home-hero.jpg";
 import peopleEquipe from "@/assets/people-equipe.jpg";
 import { QualiopiBadge } from "@/components/Brand";
-import { DiagnosticExpress } from "@/components/site/DiagnosticExpress";
 import { PortageFormateurSheet } from "@/components/site/PortageFormateurSheet";
 import { PublicLayout } from "@/components/site/PublicLayout";
 import { Button } from "@/components/ui/button";
@@ -242,7 +241,7 @@ function Accueil() {
             ))}
           </div>
 
-          <div className="mt-10 grid gap-5 lg:grid-cols-2">
+          <div className="mt-10">
             <Card className="rounded-3xl border-none bg-gradient-hero text-primary-foreground shadow-elevated">
               <CardContent className="flex h-full flex-col p-6 sm:p-8">
                 <span className="inline-flex w-fit rounded-xl bg-primary-foreground/10 p-3">
@@ -262,8 +261,6 @@ function Accueil() {
                 </div>
               </CardContent>
             </Card>
-
-            <DiagnosticExpress />
           </div>
         </div>
       </section>
