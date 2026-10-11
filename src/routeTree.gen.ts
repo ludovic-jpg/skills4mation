@@ -17,6 +17,7 @@ import { Route as CodeDeontologiqueRouteImport } from './routes/code-deontologiq
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as EvaluerDroitFormationRouteImport } from './routes/evaluer-droit-formation'
 import { Route as McpRouteImport } from './routes/mcp'
+import { Route as MediathequeRouteImport } from './routes/mediatheque'
 import { Route as MentionsLegalesRouteImport } from './routes/mentions-legales'
 import { Route as PoleFormateurRouteImport } from './routes/pole-formateur'
 import { Route as PolitiqueDeConfidentialiteRouteImport } from './routes/politique-de-confidentialite'
@@ -105,6 +106,11 @@ const EvaluerDroitFormationRoute = EvaluerDroitFormationRouteImport.update({
 const McpRoute = McpRouteImport.update({
   id: '/mcp',
   path: '/mcp',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MediathequeRoute = MediathequeRouteImport.update({
+  id: '/mediatheque',
+  path: '/mediatheque',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MentionsLegalesRoute = MentionsLegalesRouteImport.update({
@@ -374,6 +380,7 @@ export interface FileRoutesByFullPath {
   '/contact': typeof ContactRoute
   '/evaluer-droit-formation': typeof EvaluerDroitFormationRoute
   '/mcp': typeof McpRoute
+  '/mediatheque': typeof MediathequeRoute
   '/mentions-legales': typeof MentionsLegalesRoute
   '/pole-formateur': typeof PoleFormateurRoute
   '/politique-de-confidentialite': typeof PolitiqueDeConfidentialiteRoute
@@ -433,6 +440,7 @@ export interface FileRoutesByTo {
   '/contact': typeof ContactRoute
   '/evaluer-droit-formation': typeof EvaluerDroitFormationRoute
   '/mcp': typeof McpRoute
+  '/mediatheque': typeof MediathequeRoute
   '/mentions-legales': typeof MentionsLegalesRoute
   '/pole-formateur': typeof PoleFormateurRoute
   '/politique-de-confidentialite': typeof PolitiqueDeConfidentialiteRoute
@@ -494,6 +502,7 @@ export interface FileRoutesById {
   '/contact': typeof ContactRoute
   '/evaluer-droit-formation': typeof EvaluerDroitFormationRoute
   '/mcp': typeof McpRoute
+  '/mediatheque': typeof MediathequeRoute
   '/mentions-legales': typeof MentionsLegalesRoute
   '/pole-formateur': typeof PoleFormateurRoute
   '/politique-de-confidentialite': typeof PolitiqueDeConfidentialiteRoute
@@ -555,6 +564,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/evaluer-droit-formation'
     | '/mcp'
+    | '/mediatheque'
     | '/mentions-legales'
     | '/pole-formateur'
     | '/politique-de-confidentialite'
@@ -614,6 +624,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/evaluer-droit-formation'
     | '/mcp'
+    | '/mediatheque'
     | '/mentions-legales'
     | '/pole-formateur'
     | '/politique-de-confidentialite'
@@ -674,6 +685,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/evaluer-droit-formation'
     | '/mcp'
+    | '/mediatheque'
     | '/mentions-legales'
     | '/pole-formateur'
     | '/politique-de-confidentialite'
@@ -735,6 +747,7 @@ export interface RootRouteChildren {
   ContactRoute: typeof ContactRoute
   EvaluerDroitFormationRoute: typeof EvaluerDroitFormationRoute
   McpRoute: typeof McpRoute
+  MediathequeRoute: typeof MediathequeRoute
   MentionsLegalesRoute: typeof MentionsLegalesRoute
   PoleFormateurRoute: typeof PoleFormateurRoute
   PolitiqueDeConfidentialiteRoute: typeof PolitiqueDeConfidentialiteRoute
@@ -816,6 +829,13 @@ declare module '@tanstack/react-router' {
       path: '/mcp'
       fullPath: '/mcp'
       preLoaderRoute: typeof McpRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/mediatheque': {
+      id: '/mediatheque'
+      path: '/mediatheque'
+      fullPath: '/mediatheque'
+      preLoaderRoute: typeof MediathequeRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/mentions-legales': {
@@ -1242,6 +1262,7 @@ const rootRouteChildren: RootRouteChildren = {
   ContactRoute: ContactRoute,
   EvaluerDroitFormationRoute: EvaluerDroitFormationRoute,
   McpRoute: McpRoute,
+  MediathequeRoute: MediathequeRoute,
   MentionsLegalesRoute: MentionsLegalesRoute,
   PoleFormateurRoute: PoleFormateurRoute,
   PolitiqueDeConfidentialiteRoute: PolitiqueDeConfidentialiteRoute,

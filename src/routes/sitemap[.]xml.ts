@@ -35,6 +35,7 @@ export const Route = createFileRoute("/sitemap.xml")({
           { path: "/pole-formateur", changefreq: "monthly", priority: "0.8" },
           { path: "/contact", changefreq: "monthly", priority: "0.7" },
           { path: "/qui-sommes-nous", changefreq: "yearly", priority: "0.5" },
+          { path: "/mediatheque", changefreq: "monthly", priority: "0.6" },
           { path: "/blog", changefreq: "weekly", priority: "0.8" },
           ...blogPosts.map((p) => ({
             path: `/blog/${p.slug}`,
