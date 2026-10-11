@@ -28,14 +28,14 @@ import {
   X,
 } from "lucide-react";
 
-import entreeApprenant from "@/assets/entree-apprenant.jpg";
-import entreeFormateur from "@/assets/entree-formateur.jpg";
-import formateurWebapp from "@/assets/formateur-webapp.jpg";
-import formatriceTablette from "@/assets/formatrice-tablette.jpg";
-import heroFormation from "@/assets/hero-formation.jpg";
-import homeHero from "@/assets/home-hero.jpg";
-import peopleEquipe from "@/assets/people-equipe.jpg";
-import portageHero from "@/assets/portage-hero.jpg";
+import etape1 from "@/assets/candidature/etape-1.jpg";
+import etape2 from "@/assets/candidature/etape-2.jpg";
+import etape3 from "@/assets/candidature/etape-3.jpg";
+import etape4 from "@/assets/candidature/etape-4.jpg";
+import etape5 from "@/assets/candidature/etape-5.jpg";
+import etape6 from "@/assets/candidature/etape-6.jpg";
+import etape7 from "@/assets/candidature/etape-7.jpg";
+import etape8 from "@/assets/candidature/etape-8.jpg";
 import { Logo } from "@/components/Brand";
 import { ChampTexte, ChoixCartes, MessageErreur, ZoneDepot } from "@/components/candidature/Champs";
 import { SiretAutocomplete, toastChampsRemplis } from "@/components/app/SiretAutocomplete";
@@ -108,56 +108,56 @@ export const Route = createFileRoute("/candidature")({
 
 const SCENES: { image: string; alt: string; message: string; question: string; aide: string }[] = [
   {
-    image: formatriceTablette,
+    image: etape1,
     alt: "Formatrice souriante, tablette en main, au milieu de ses stagiaires",
     message: "Cinq minutes pour vous présenter, et nous portons le reste.",
     question: "Faisons connaissance",
     aide: "Ces coordonnées permettent à notre équipe de vous recontacter.",
   },
   {
-    image: entreeFormateur,
-    alt: "Formateur animant une séance devant un tableau, face à un groupe attentif",
+    image: etape2,
+    alt: "Formateur animant une séance devant un paperboard, face à un groupe attentif",
     message: "Votre expertise est le point de départ de chaque formation que nous porterons.",
     question: "Dans quels domaines formez-vous ?",
     aide: "Sélectionnez tous ceux qui vous correspondent.",
   },
   {
-    image: homeHero,
+    image: etape3,
     alt: "Groupe de stagiaires en salle de formation lumineuse",
     message: "Débutant ou chevronné : le portage s'adapte à votre rythme.",
     question: "Votre expérience de formateur",
     aide: "Pour orienter les bons projets vers vous.",
   },
   {
-    image: heroFormation,
-    alt: "Formatrice échangeant avec des participants autour d'une table de réunion",
+    image: etape4,
+    alt: "Formatrice animant une séance hybride avec des participants en salle et en visioconférence sur un grand écran",
     message: "En salle, à distance ou les deux : vous gardez votre façon de transmettre.",
     question: "Comment aimez-vous former ?",
     aide: "Vos modalités et votre zone d'intervention.",
   },
   {
-    image: formateurWebapp,
+    image: etape5,
     alt: "Formateur indépendant souriant devant son ordinateur portable",
     message: "Pas encore de structure ? Nous vous aidons à choisir la bonne.",
     question: "Votre structure",
     aide: "Le SIRET remplit automatiquement votre fiche depuis l'annuaire officiel.",
   },
   {
-    image: portageHero,
+    image: etape6,
     alt: "Formatrice relisant ses documents pédagogiques à son bureau",
     message: "Trois documents suffisent pour que notre équipe pédagogique étudie votre profil.",
     question: "Vos trois pièces",
     aide: "PDF, Word ou PowerPoint, 10 Mo maximum chacune. Transmises de façon confidentielle.",
   },
   {
-    image: peopleEquipe,
-    alt: "Équipe de formateurs souriants réunis autour d'un ordinateur",
+    image: etape7,
+    alt: "Équipe de formateurs souriants réunis autour d'une table",
     message: "Un réseau exigeant, au service d'apprenants qui comptent sur nous.",
     question: "Nos engagements communs",
     aide: "La qualité Qualiopi repose sur chacun des formateurs du réseau.",
   },
   {
-    image: entreeApprenant,
+    image: etape8,
     alt: "Formatrice se connectant à son espace en ligne depuis son ordinateur",
     message: "Votre espace formateur vous attend : dossiers, pièces et signatures en ligne.",
     question: "Créez votre accès",
