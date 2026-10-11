@@ -31,7 +31,7 @@ export function SiteHeader() {
       <div className="section-shell flex h-18 items-center justify-between gap-3 py-3">
         <Logo />
 
-        <nav className="hidden items-center gap-0.5 xl:flex">
+        <nav className="hidden items-center gap-0.5 2xl:flex">
           {NAV.map((item) => (
             <Link
               key={item.label}
@@ -60,7 +60,7 @@ export function SiteHeader() {
 
           <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger asChild>
-              <Button variant="ghost" size="icon" className="xl:hidden" aria-label="Menu">
+              <Button variant="ghost" size="icon" className="2xl:hidden" aria-label="Menu">
                 <Menu />
               </Button>
             </SheetTrigger>

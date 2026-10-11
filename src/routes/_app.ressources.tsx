@@ -71,7 +71,7 @@ function MesRessources() {
     try { await queryClient.cancelQueries(); queryClient.clear(); await signOut(); await navigate({ to: '/auth', replace: true }); }
     catch { setError('La déconnexion n’a pas abouti. Réessayez.'); setSortie(false); }
   }
-  const metadataName: unknown = compte.user_metadata['full_name'] ?? compte.user_metadata['name'];
+  const metadataName: unknown = compte.user_metadata?.['full_name'] ?? compte.user_metadata?.['name'];
   const nom = profile ? `${profile.prenom} ${profile.nom}`.trim() : typeof metadataName === 'string' ? metadataName : 'Votre compte';
   return <div className="livre-blanc-theme min-h-screen bg-background">
     <header className="border-b border-border"><div className="section-shell flex flex-wrap items-center justify-between gap-4 py-5"><Link to="/livre-blanc" className="font-display text-xl font-semibold text-primary">Skills4mation</Link><Button variant="outline" onClick={deconnecter} disabled={sortie}><LogOut aria-hidden />{sortie ? 'Déconnexion…' : 'Déconnexion'}</Button></div></header>
