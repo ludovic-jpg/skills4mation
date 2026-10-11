@@ -27,20 +27,6 @@ Réponds UNIQUEMENT avec un objet JSON valide, sans texte autour, de la forme :
 - modules : découpage pédagogique, chaque module avec son titre et une liste de points clés.
 N'invente pas d'information absente du document : laisse la chaîne vide si elle n'y figure pas.`;
 
-/** Extrait le texte brut d'un .docx (zip OOXML) sans dépendance serveur supplémentaire. */
-async function texteDocx(bytes: Uint8Array): Promise<string> {
-  const JSZip = (await import("jszip")).default;
-  const zip = await JSZip.loadAsync(bytes);
-  const xml = await zip.file("word/document.xml")?.async("string");
-  if (!xml) throw new Error("Document Word illisible.");
-  return xml
-    .replace(/<\/w:p>/g, "\n")
-    .replace(/<[^>]+>/g, " ")
-    .replace(/[ \t]+/g, " ")
-    .trim()
-    .slice(0, 60000);
-}
-
 /**
  * Analyse un support de formation déposé par le formateur et propose un parcours
  * structuré (titre, objectifs, prérequis, durée, modules) via l'IA Lovable.
@@ -73,6 +59,7 @@ export const analyserFormationPourParcours = createServerFn({ method: "POST" })
         },
       ];
     } else {
+      const { texteDocx } = await import("@/lib/documents-ia.server");
       const texte = await texteDocx(bytes);
       contenu = [{ type: "text", text: `${CONSIGNE}\n\nSupport de formation :\n${texte}` }];
     }
@@ -118,6 +105,7 @@ export const analyserFormationPourParcours = createServerFn({ method: "POST" })
       .parse(parse);
     return {
       ...sortie,
-      dureeHeures: sortie.dureeHeures && sortie.dureeHeures > 0 ? Math.round(sortie.dureeHeures) : null,
+      dureeHeures:
+        sortie.dureeHeures && sortie.dureeHeures > 0 ? Math.round(sortie.dureeHeures) : null,
     };
   });
