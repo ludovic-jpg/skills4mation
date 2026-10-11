@@ -1,6 +1,6 @@
 # Livre blanc
-- [ ] Page publique et contenu tiré du PDF (30 pages).
-- [ ] Bucket privé et nouvelles tables isolées.
-- [ ] Mes ressources, téléchargements et consentement facultatif.
-- [ ] Liens, encarts et référencement demandés.
-- [ ] Vérifications d’accès et d’affichage, sans publication.
+- [x] Page publique et contenu tiré du PDF (30 pages, résumé de 356 mots).
+- [x] Bucket privé et nouvelles tables isolées.
+- [x] Mes ressources, téléchargements et consentement facultatif.
+- [x] Liens, encarts et référencement demandés.
+- [x] Vérifications d’accès et d’affichage, sans publication.
