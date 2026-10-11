@@ -64,7 +64,6 @@ export type Database = {
           email: string
           expertise: string | null
           id: string
-          jeton_hash: string | null
           message: string | null
           nom: string
           numero_nda: string | null
@@ -72,7 +71,6 @@ export type Database = {
           parcours_formation_url: string | null
           prenom: string
           profile_id: string | null
-          questionnaire: Json | null
           siret: string | null
           statut: Database["public"]["Enums"]["candidature_statut"]
           telephone: string | null
@@ -91,7 +89,6 @@ export type Database = {
           email: string
           expertise?: string | null
           id?: string
-          jeton_hash?: string | null
           message?: string | null
           nom: string
           numero_nda?: string | null
@@ -99,7 +96,6 @@ export type Database = {
           parcours_formation_url?: string | null
           prenom: string
           profile_id?: string | null
-          questionnaire?: Json | null
           siret?: string | null
           statut?: Database["public"]["Enums"]["candidature_statut"]
           telephone?: string | null
@@ -118,7 +114,6 @@ export type Database = {
           email?: string
           expertise?: string | null
           id?: string
-          jeton_hash?: string | null
           message?: string | null
           nom?: string
           numero_nda?: string | null
@@ -126,7 +121,6 @@ export type Database = {
           parcours_formation_url?: string | null
           prenom?: string
           profile_id?: string | null
-          questionnaire?: Json | null
           siret?: string | null
           statut?: Database["public"]["Enums"]["candidature_statut"]
           telephone?: string | null
@@ -1394,7 +1388,6 @@ export type Database = {
           parcours_formation_url: string | null
           photo_url: string | null
           prenom: string
-          questionnaire: Json | null
           recueil_besoins_questions_perso: Json
           secteur_activite: string | null
           siret: string | null
@@ -1424,7 +1417,6 @@ export type Database = {
           parcours_formation_url?: string | null
           photo_url?: string | null
           prenom?: string
-          questionnaire?: Json | null
           recueil_besoins_questions_perso?: Json
           secteur_activite?: string | null
           siret?: string | null
@@ -1454,7 +1446,6 @@ export type Database = {
           parcours_formation_url?: string | null
           photo_url?: string | null
           prenom?: string
-          questionnaire?: Json | null
           recueil_besoins_questions_perso?: Json
           secteur_activite?: string | null
           siret?: string | null
