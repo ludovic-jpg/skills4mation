@@ -98,7 +98,6 @@ export function ChoixCartes({
     <fieldset
       className="grid gap-3"
       aria-describedby={error ? idErreur : undefined}
-      aria-invalid={Boolean(error) || undefined}
       data-champ={name}
     >
       <legend className={legendeVisible ? "mb-3 text-sm font-medium" : "sr-only"}>
@@ -143,6 +142,7 @@ export function ChoixCartes({
                   } else onChange([o.id]);
                 }}
                 className="sr-only"
+                aria-invalid={Boolean(error) || undefined}
               />
               {Icon ? (
                 <span

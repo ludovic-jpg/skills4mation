@@ -64,6 +64,7 @@ export type Database = {
           email: string
           expertise: string | null
           id: string
+          jeton_hash: string | null
           message: string | null
           nom: string
           numero_nda: string | null
@@ -90,6 +91,7 @@ export type Database = {
           email: string
           expertise?: string | null
           id?: string
+          jeton_hash?: string | null
           message?: string | null
           nom: string
           numero_nda?: string | null
@@ -116,6 +118,7 @@ export type Database = {
           email?: string
           expertise?: string | null
           id?: string
+          jeton_hash?: string | null
           message?: string | null
           nom?: string
           numero_nda?: string | null

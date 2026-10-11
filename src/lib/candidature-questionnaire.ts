@@ -471,7 +471,8 @@ export function complementProfil(
     nda_region: q?.nda_region ?? null,
     linkedin_url: q?.linkedin_url ?? null,
     secteur_activite: q && q.domaines.length ? libellesDomaines(q).join(", ").slice(0, 200) : null,
-    questionnaire: candidature["questionnaire"] ?? null,
+    // Toujours la version normalisée (jamais la valeur brute insérée anonymement).
+    questionnaire: q,
   };
   const patch: Record<string, unknown> = {};
   for (const [cle, valeur] of Object.entries(sources)) {
@@ -487,6 +488,67 @@ export function complementProfil(
 // ——— Sauvegarde locale ————————————————————————————————————————————————
 
 export const CLE_BROUILLON = "s4m-candidature-brouillon-v1";
+
+// ——— Jeton de réclamation —————————————————————————————————————————————
+// Au dépôt (anonyme), le navigateur tire un secret aléatoire ; seul son empreinte SHA-256 est
+// stockée dans `candidatures.jeton_hash`. Le secret voyage dans les URL de retour (lien de
+// confirmation, OAuth) et reste en localStorage : seul celui qui a déposé la candidature peut
+// en recopier les données et les pièces dans son profil.
+
+export const CLE_JETON = "s4m-candidature-jeton-v1";
+export const PARAM_JETON = "jeton";
+
+const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
+export function jetonValide(v: unknown): v is string {
+  return typeof v === "string" && UUID.test(v);
+}
+
+/** Empreinte SHA-256 (hex minuscule) du jeton — Web Crypto : navigateur, Bun et Workers. */
+export async function hacherJeton(jeton: string): Promise<string> {
+  const octets = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(jeton));
+  return [...new Uint8Array(octets)].map((o) => o.toString(16).padStart(2, "0")).join("");
+}
+
+/** Comparaison à temps constant de deux chaînes (empreintes hex de même longueur). */
+export function egalesTempsConstant(a: string, b: string): boolean {
+  if (a.length !== b.length) return false;
+  let diff = 0;
+  for (let i = 0; i < a.length; i++) diff |= a.charCodeAt(i) ^ b.charCodeAt(i);
+  return diff === 0;
+}
+
+export type DecisionRattachement = "complet" | "simple" | "rien";
+
+/**
+ * - « complet » : le jeton fourni correspond à l'empreinte → profile_id + copie des données ;
+ * - « simple » : candidature sans empreinte (ancienne, ou colonne absente) → profile_id seul ;
+ * - « rien » : empreinte présente mais jeton absent ou faux → aucune modification.
+ */
+export function decisionRattachement(
+  jetonHash: unknown,
+  hashFourni: string | null,
+): DecisionRattachement {
+  if (typeof jetonHash !== "string" || !jetonHash) return "simple";
+  if (!hashFourni) return "rien";
+  return egalesTempsConstant(jetonHash.toLowerCase(), hashFourni.toLowerCase())
+    ? "complet"
+    : "rien";
+}
+
+/** Choisit la candidature visée : celle dont l'empreinte correspond, sinon la plus récente. */
+export function choisirCandidature<T extends { jeton_hash?: unknown }>(
+  candidatures: T[],
+  hashFourni: string | null,
+): T | null {
+  if (hashFourni) {
+    const exacte = candidatures.find(
+      (c) => typeof c.jeton_hash === "string" && egalesTempsConstant(c.jeton_hash, hashFourni),
+    );
+    if (exacte) return exacte;
+  }
+  return candidatures[0] ?? null;
+}
 
 export type Brouillon = { etape: number; reponses: Reponses; enregistreLe: string };
 

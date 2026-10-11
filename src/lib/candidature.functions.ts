@@ -1,7 +1,14 @@
 import { createServerFn } from "@tanstack/react-start";
+import { z } from "zod";
 
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
-import { complementProfil, motifEmailExact } from "@/lib/candidature-questionnaire";
+import {
+  choisirCandidature,
+  complementProfil,
+  decisionRattachement,
+  hacherJeton,
+  motifEmailExact,
+} from "@/lib/candidature-questionnaire";
 
 const LIBELLES: Record<string, string> = {
   telephone: "téléphone",
@@ -25,41 +32,60 @@ const PIECES_STOCKAGE: Record<string, string> = {
   deroule_pedagogique_url: "deroule",
 };
 
-export type ResultatRattachement = { rattachee: boolean; champs: string[] };
+export type ResultatRattachement = {
+  /** aucune : pas de candidature libre pour cet e-mail vérifié ; rien : jeton absent ou faux. */
+  statut: "complet" | "simple" | "rien" | "aucune";
+  champs: string[];
+};
+
+const entreeSchema = z.object({ jeton: z.string().uuid().optional() });
 
 /**
- * Rattache au compte connecté la candidature déposée via /candidature (insert anonyme),
- * puis complète les champs VIDES de son profil. Sécurité :
- *  - l'e-mail utilisé est celui du compte, et seulement s'il est vérifié (confirmation e-mail
- *    ou fournisseur OAuth) : impossible de « capter » la candidature de quelqu'un d'autre ;
- *  - seule la candidature la plus récente non rattachée (profile_id IS NULL) est concernée ;
- *  - rien n'est renvoyé au client hormis la liste des champs complétés.
+ * Rattache au compte connecté la candidature déposée via /candidature (insert anonyme).
+ * Sécurité :
+ *  - l'e-mail utilisé est celui du compte, lu côté serveur, et seulement s'il est vérifié ;
+ *  - les données et pièces ne sont recopiées dans le profil QUE si le navigateur présente le
+ *    jeton de réclamation dont l'empreinte SHA-256 a été enregistrée au dépôt : une candidature
+ *    déposée par un tiers au nom de cet e-mail ne peut rien injecter dans le profil, et un
+ *    compte créé par un tiers avec l'e-mail du candidat ne récupère ni données ni pièces ;
+ *  - candidature ancienne (sans empreinte, ou colonne pas encore créée) : seul profile_id est
+ *    posé, aucune copie (comportement dégradé) ;
+ *  - rien n'est renvoyé au client hormis le statut et la liste des champs complétés.
  * Idempotente : un second appel ne trouve plus de candidature libre.
  */
 export const rattacherCandidature = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .handler(async ({ context }): Promise<ResultatRattachement> => {
+  .inputValidator((data: unknown) => entreeSchema.parse(data ?? {}))
+  .handler(async ({ data, context }): Promise<ResultatRattachement> => {
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const aucune: ResultatRattachement = { statut: "aucune", champs: [] };
 
-    // Fiche du compte lue côté serveur (source de vérité), à partir de l'identifiant du jeton
-    // déjà vérifié par le middleware — jamais d'une valeur envoyée par le navigateur.
+    // Fiche du compte lue côté serveur (source de vérité), à partir de l'identifiant déjà
+    // vérifié par le middleware — jamais d'une valeur envoyée par le navigateur.
     const { data: auth, error: authError } = await supabaseAdmin.auth.admin.getUserById(
       context.userId,
     );
     const user = auth?.user;
-    if (authError || !user) return { rattachee: false, champs: [] };
+    if (authError || !user) return aucune;
     const email = user.email?.trim().toLowerCase();
-    if (!email || !user.email_confirmed_at) return { rattachee: false, champs: [] };
+    if (!email || !user.email_confirmed_at) return aucune;
 
-    const { data: candidature } = await supabaseAdmin
+    const { data: libres } = await supabaseAdmin
       .from("candidatures")
       .select("*")
       .ilike("email", motifEmailExact(email))
       .is("profile_id", null)
       .order("created_at", { ascending: false })
-      .limit(1)
-      .maybeSingle();
-    if (!candidature) return { rattachee: false, champs: [] };
+      .limit(10);
+    const hashFourni = data.jeton ? await hacherJeton(data.jeton) : null;
+    const candidature = choisirCandidature(
+      (libres ?? []) as unknown as { id: string; jeton_hash?: unknown; [cle: string]: unknown }[],
+      hashFourni,
+    );
+    if (!candidature) return aucune;
+
+    const decision = decisionRattachement(candidature["jeton_hash"], hashFourni);
+    if (decision === "rien") return { statut: "rien", champs: [] };
 
     // Rattachement conditionnel (course entre deux onglets : un seul gagne).
     const { data: liee } = await supabaseAdmin
@@ -69,38 +95,38 @@ export const rattacherCandidature = createServerFn({ method: "POST" })
       .is("profile_id", null)
       .select("id")
       .maybeSingle();
-    if (!liee) return { rattachee: false, champs: [] };
+    if (!liee) return aucune;
+    if (decision === "simple") return { statut: "simple", champs: [] };
 
     const { data: profil } = await supabaseAdmin
       .from("profiles")
       .select("*")
       .eq("id", user.id)
       .maybeSingle();
-    if (!profil) return { rattachee: true, champs: [] };
+    if (!profil) return { statut: "complet", champs: [] };
 
-    const patch = complementProfil(
-      profil as unknown as Record<string, unknown>,
-      candidature as unknown as Record<string, unknown>,
-    );
+    const patch = complementProfil(profil as unknown as Record<string, unknown>, candidature);
 
-    // Pièces déposées sans compte (dossier « public/ ») : copie dans le dossier du formateur
-    // pour qu'il puisse les consulter depuis son profil (policy « own folder »).
+    // Pièces déposées sans compte (dossier « public/ », chemins filtrés par complementProfil) :
+    // copie sous un nom unique dans le dossier du formateur (policy « own folder »).
+    // Échec de copie : la pièce n'est pas reportée au profil.
     for (const [colonne, nom] of Object.entries(PIECES_STOCKAGE)) {
       const source = patch[colonne];
-      if (typeof source !== "string" || !source.startsWith("public/")) continue;
+      if (typeof source !== "string") continue;
       const ext =
         source
           .split(".")
           .pop()
           ?.toLowerCase()
-          .replace(/[^a-z0-9]/g, "") || "pdf";
-      const cible = `${user.id}/${nom}.${ext}`;
+          .replace(/[^a-z0-9]/g, "")
+          .slice(0, 5) || "pdf";
+      const cible = `${user.id}/${nom}-cand-${candidature.id}.${ext}`;
       const { error } = await supabaseAdmin.storage.from("candidatures").copy(source, cible);
-      // En cas d'échec (fichier déjà présent…), le chemin d'origine reste lisible par l'équipe.
-      if (!error) patch[colonne] = cible;
+      if (error) delete patch[colonne];
+      else patch[colonne] = cible;
     }
 
-    if (Object.keys(patch).length === 0) return { rattachee: true, champs: [] };
+    if (Object.keys(patch).length === 0) return { statut: "complet", champs: [] };
 
     let { error } = await supabaseAdmin
       .from("profiles")
@@ -108,17 +134,15 @@ export const rattacherCandidature = createServerFn({ method: "POST" })
       .eq("id", user.id);
     if (error?.code === "42703" && "questionnaire" in patch) {
       // Colonne `questionnaire` pas encore créée : on enregistre le reste.
-      const { questionnaire: _ignore, ...reste } = patch;
-      void _ignore;
+      delete patch["questionnaire"];
       ({ error } = await supabaseAdmin
         .from("profiles")
-        .update(reste as never)
+        .update(patch as never)
         .eq("id", user.id));
-      delete patch["questionnaire"];
     }
     if (error) {
       console.error("[candidature] complément du profil impossible", error.message);
-      return { rattachee: true, champs: [] };
+      return { statut: "complet", champs: [] };
     }
-    return { rattachee: true, champs: Object.keys(patch).map((c) => LIBELLES[c] ?? c) };
+    return { statut: "complet", champs: Object.keys(patch).map((c) => LIBELLES[c] ?? c) };
   });

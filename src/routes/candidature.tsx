@@ -49,6 +49,9 @@ import { lovable } from "@/integrations/lovable/index";
 import { supabase } from "@/integrations/supabase/client";
 import {
   CLE_BROUILLON,
+  CLE_JETON,
+  PARAM_JETON,
+  hacherJeton,
   DOMAINES,
   ETAPES,
   EXPERIENCES,
@@ -76,6 +79,7 @@ import {
 } from "@/lib/candidature-questionnaire";
 import type { EntrepriseTrouvee } from "@/lib/entreprises";
 import { REGIONS_FR } from "@/lib/referentiels";
+import { rattacherCandidature } from "@/lib/candidature.functions";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/candidature")({
@@ -192,6 +196,16 @@ type Phase =
   | { type: "verifier"; email: string }
   | { type: "existant"; email: string };
 
+function nouvelId(): string {
+  if (typeof crypto.randomUUID === "function") return crypto.randomUUID();
+  // Repli (navigateurs anciens) : format UUID v4 à partir de getRandomValues.
+  const o = crypto.getRandomValues(new Uint8Array(16));
+  o[6] = (o[6]! & 0x0f) | 0x40;
+  o[8] = (o[8]! & 0x3f) | 0x80;
+  const h = [...o].map((x) => x.toString(16).padStart(2, "0")).join("");
+  return `${h.slice(0, 8)}-${h.slice(8, 12)}-${h.slice(12, 16)}-${h.slice(16, 20)}-${h.slice(20)}`;
+}
+
 function lireStockage(): Brouillon | null {
   try {
     return lireBrouillon(window.localStorage.getItem(CLE_BROUILLON));
@@ -210,7 +224,7 @@ function ecrireStockage(valeur: string | null) {
 
 function CandidaturePage() {
   const router = useRouter();
-  const { session } = useAuth();
+  const { session, refresh } = useAuth();
   const [etape, setEtape] = useState(0);
   const [r, setR] = useState<Reponses>(REPONSES_VIDES);
   const [fichiers, setFichiers] = useState<Partial<Record<PieceName, File>>>({});
@@ -225,7 +239,13 @@ function CandidaturePage() {
   const titreRef = useRef<HTMLHeadingElement>(null);
   const premierRendu = useRef(true);
   /** E-mail pour lequel la candidature a déjà été enregistrée (évite les doublons en cas de nouvel essai). */
-  const envoyeePour = useRef<string | null>(null);
+  const envoyeePour = useRef<{ email: string; jeton: string } | null>(null);
+  /** Pièces déjà déposées (même dossier et mêmes chemins si l'on renvoie après un échec partiel). */
+  const depots = useRef<{
+    prefix: string;
+    pieces: Partial<Record<PieceName, { file: File; chemin: string }>>;
+  }>({ prefix: nouvelId(), pieces: {} });
+  const verrou = useRef(false);
 
   // Reprise d'un questionnaire interrompu.
   useEffect(() => {
@@ -315,53 +335,77 @@ function CandidaturePage() {
 
   // ——— Envoi —————————————————————————————————————————————————————
 
-  async function envoyerPiece(prefix: string, nom: PieceName, f: File) {
+  /** E-mail effectivement utilisé : celui du compte si l'on est déjà connecté. */
+  const emailCompte = session?.user?.email?.trim().toLowerCase() ?? null;
+  const emailEnvoi = () => emailCompte ?? r.email.trim().toLowerCase();
+
+  /** Retourne le chemin d'une pièce, en réutilisant un envoi déjà réussi du même fichier. */
+  async function envoyerPiece(nom: PieceName, f: File) {
+    const deja = depots.current.pieces[nom];
+    if (deja && deja.file === f) return deja.chemin;
     const sur = f.name.replace(/[^\w.-]+/g, "_").slice(-80);
-    const chemin = `public/${prefix}/${nom}-${sur}`;
+    const chemin = `public/${depots.current.prefix}/${nom}-${sur}`;
     const { error } = await supabase.storage
       .from("candidatures")
-      .upload(chemin, f, { contentType: f.type || "application/octet-stream" });
-    if (error) throw error;
+      .upload(chemin, f, { contentType: f.type || "application/octet-stream", upsert: false });
+    // 409 : déjà déposé lors d'un essai précédent interrompu → on garde le chemin.
+    if (error && !/exist|duplicate/i.test(error.message)) throw error;
+    depots.current.pieces[nom] = { file: f, chemin };
     return chemin;
   }
 
-  /** Enregistre la candidature (pièces + ligne) une seule fois par adresse e-mail. */
-  async function enregistrerCandidature(): Promise<boolean> {
-    const email = r.email.trim().toLowerCase();
-    if (envoyeePour.current === email) return true;
+  /**
+   * Enregistre la candidature (pièces + ligne) une seule fois par adresse e-mail, avec
+   * l'empreinte du jeton de réclamation. Le secret reste dans ce navigateur et dans les URL
+   * de retour : c'est lui qui autorise la recopie des données dans le profil.
+   */
+  async function enregistrerCandidature(): Promise<string | null> {
+    const email = emailEnvoi();
+    if (envoyeePour.current?.email === email) return envoyeePour.current.jeton;
     setPhase({ type: "envoi", libelle: "Envoi de vos pièces…" });
-    const prefix =
-      typeof crypto !== "undefined" && "randomUUID" in crypto
-        ? crypto.randomUUID()
-        : `${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
     let urls;
     try {
       urls = {
-        cv_url: await envoyerPiece(prefix, "cv", fichiers.cv!),
-        parcours_formation_url: await envoyerPiece(prefix, "parcours", fichiers.parcours!),
-        deroule_pedagogique_url: await envoyerPiece(prefix, "deroule", fichiers.deroule!),
+        cv_url: await envoyerPiece("cv", fichiers.cv!),
+        parcours_formation_url: await envoyerPiece("parcours", fichiers.parcours!),
+        deroule_pedagogique_url: await envoyerPiece("deroule", fichiers.deroule!),
       };
     } catch {
       setPhase({ type: "saisie" });
       toast.error("L'envoi de vos pièces a échoué. Vérifiez votre connexion et réessayez.");
-      return false;
+      return null;
     }
     setPhase({ type: "envoi", libelle: "Enregistrement de votre candidature…" });
-    const ligne = versCandidature(r, urls);
-    let { error } = await supabase.from("candidatures").insert(ligne);
-    if (error?.code === "42703") {
-      // Colonne `questionnaire` pas encore déployée : on enregistre l'essentiel.
-      const { questionnaire: _q, ...sansQuestionnaire } = ligne;
-      ({ error } = await supabase.from("candidatures").insert(sansQuestionnaire));
+    const jeton = nouvelId();
+    const ligne: Record<string, unknown> = {
+      ...versCandidature({ ...r, email }, urls),
+      jeton_hash: await hacherJeton(jeton),
+    };
+    let { error } = await supabase.from("candidatures").insert(ligne as never);
+    // Colonnes pas encore déployées (42703) : on retire la colonne manquante et on réessaie.
+    // Sans `jeton_hash`, le rattachement sera « simple » (aucune recopie dans le profil).
+    for (let essai = 0; essai < 2 && error?.code === "42703"; essai++) {
+      const manquante = ["questionnaire", "jeton_hash"].find((c) => error?.message.includes(c));
+      if (manquante) delete ligne[manquante];
+      else {
+        delete ligne["questionnaire"];
+        delete ligne["jeton_hash"];
+      }
+      ({ error } = await supabase.from("candidatures").insert(ligne as never));
     }
     if (error) {
       setPhase({ type: "saisie" });
       toast.error("Votre candidature n'a pas pu être enregistrée. Merci de réessayer.");
-      return false;
+      return null;
     }
-    envoyeePour.current = email;
+    envoyeePour.current = { email, jeton };
     ecrireStockage(null);
-    return true;
+    try {
+      window.localStorage.setItem(CLE_JETON, jeton);
+    } catch {
+      /* le jeton voyage aussi dans l'URL de retour */
+    }
+    return jeton;
   }
 
   function verifierAvantEnvoi(): boolean {
@@ -375,71 +419,117 @@ function CandidaturePage() {
     return false;
   }
 
+  const retourEspace = (jeton: string) =>
+    `${window.location.origin}/espace?${PARAM_JETON}=${encodeURIComponent(jeton)}`;
+
+  /** Verrou synchrone contre la double soumission (double clic, Entrée + clic). */
+  async function avecVerrou(action: () => Promise<void>) {
+    if (verrou.current) return;
+    verrou.current = true;
+    try {
+      await action();
+    } finally {
+      verrou.current = false;
+    }
+  }
+
   async function creerAvecMotDePasse(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (phase.type === "envoi") return;
-    if (!verifierAvantEnvoi()) return;
-    if (!motDePasseValide(mdp)) {
-      setErreurs({ mdp: "Choisissez un mot de passe qui respecte les trois règles." });
-      document.getElementById("q-mdp")?.focus();
-      return;
-    }
-    if (!(await enregistrerCandidature())) return;
-
-    setPhase({ type: "envoi", libelle: "Création de votre accès…" });
-    const email = r.email.trim().toLowerCase();
-    const { data, error } = await supabase.auth.signUp({
-      email,
-      password: mdp,
-      options: {
-        data: { prenom: r.prenom.trim(), nom: r.nom.trim() },
-        emailRedirectTo: `${window.location.origin}/espace`,
-      },
-    });
-    const dejaInscrit =
-      (error &&
-        (error.code === "user_already_exists" ||
-          /already (registered|exists)/i.test(error.message))) ||
-      (!error && data.user && (data.user.identities?.length ?? 0) === 0);
-    if (dejaInscrit) {
-      setPhase({ type: "existant", email });
-      return;
-    }
-    if (error) {
-      setPhase({ type: "saisie" });
-      const faible = error.code === "weak_password" || /password/i.test(error.message);
-      if (faible) {
-        setErreurs({ mdp: "Ce mot de passe est trop facile à deviner : choisissez-en un autre." });
+    await avecVerrou(async () => {
+      if (!verifierAvantEnvoi()) return;
+      if (emailCompte) {
+        await envoyerConnecte();
+        return;
       }
-      toast.error(
-        faible
-          ? "Mot de passe refusé. Votre candidature est bien enregistrée : choisissez-en un autre."
-          : "La création de votre accès a échoué. Votre candidature est bien enregistrée : réessayez.",
-      );
-      return;
+      if (!motDePasseValide(mdp)) {
+        setErreurs({ mdp: "Choisissez un mot de passe qui respecte les trois règles." });
+        document.getElementById("q-mdp")?.focus();
+        return;
+      }
+      const jeton = await enregistrerCandidature();
+      if (!jeton) return;
+
+      setPhase({ type: "envoi", libelle: "Création de votre accès…" });
+      const email = emailEnvoi();
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password: mdp,
+        options: {
+          data: { prenom: r.prenom.trim(), nom: r.nom.trim() },
+          emailRedirectTo: retourEspace(jeton),
+        },
+      });
+      const dejaInscrit =
+        (error &&
+          (error.code === "user_already_exists" ||
+            /already (registered|exists)/i.test(error.message))) ||
+        (!error && data.user && (data.user.identities?.length ?? 0) === 0);
+      if (dejaInscrit) {
+        setPhase({ type: "existant", email });
+        return;
+      }
+      if (error) {
+        setPhase({ type: "saisie" });
+        const faible = error.code === "weak_password" || /password/i.test(error.message);
+        if (faible) {
+          setErreurs({
+            mdp: "Ce mot de passe est trop facile à deviner : choisissez-en un autre.",
+          });
+        }
+        toast.error(
+          faible
+            ? "Mot de passe refusé. Votre candidature est bien enregistrée : choisissez-en un autre."
+            : "La création de votre accès a échoué. Votre candidature est bien enregistrée : réessayez.",
+        );
+        return;
+      }
+      if (data.session) {
+        toast.success("Bienvenue ! Votre candidature est entre les mains de notre équipe.");
+        void router.navigate({ to: "/espace" });
+        return;
+      }
+      setPhase({ type: "verifier", email });
+    });
+  }
+
+  /** Déjà connecté : enregistrement, rattachement immédiat, puis l'espace formateur. */
+  async function envoyerConnecte() {
+    const jeton = await enregistrerCandidature();
+    if (!jeton) return;
+    setPhase({ type: "envoi", libelle: "Mise à jour de votre profil…" });
+    try {
+      const res = await rattacherCandidature({ data: { jeton } });
+      if (res.statut === "complet" || res.statut === "simple") {
+        try {
+          window.localStorage.removeItem(CLE_JETON);
+        } catch {
+          /* sans effet */
+        }
+      }
+      await refresh();
+    } catch {
+      /* le rattachement sera retenté à l'arrivée dans l'espace */
     }
-    if (data.session) {
-      toast.success("Bienvenue ! Votre candidature est entre les mains de notre équipe.");
-      void router.navigate({ to: "/espace" });
-      return;
-    }
-    setPhase({ type: "verifier", email });
+    toast.success("Candidature envoyée : notre équipe revient vers vous rapidement.");
+    void router.navigate({ to: "/espace" });
   }
 
   async function creerAvecGoogle() {
-    if (phase.type === "envoi") return;
-    if (!verifierAvantEnvoi()) return;
-    if (!(await enregistrerCandidature())) return;
-    setPhase({ type: "envoi", libelle: "Redirection vers Google…" });
-    const result = await lovable.auth.signInWithOAuth("google", {
-      redirect_uri: `${window.location.origin}/espace`,
+    await avecVerrou(async () => {
+      if (!verifierAvantEnvoi()) return;
+      const jeton = await enregistrerCandidature();
+      if (!jeton) return;
+      setPhase({ type: "envoi", libelle: "Redirection vers Google…" });
+      const result = await lovable.auth.signInWithOAuth("google", {
+        redirect_uri: retourEspace(jeton),
+      });
+      if (result.error) {
+        setPhase({ type: "saisie" });
+        toast.error(
+          "Connexion Google indisponible. Votre candidature est enregistrée : créez un mot de passe.",
+        );
+      }
     });
-    if (result.error) {
-      setPhase({ type: "saisie" });
-      toast.error(
-        "Connexion Google indisponible. Votre candidature est enregistrée : créez un mot de passe.",
-      );
-    }
   }
 
   // ——— Rendu ————————————————————————————————————————————————————
@@ -685,6 +775,7 @@ function CandidaturePage() {
                         }}
                         voirMdp={voirMdp}
                         setVoirMdp={setVoirMdp}
+                        emailCompte={emailCompte}
                       />
                     </div>
                   </div>
@@ -703,24 +794,34 @@ function CandidaturePage() {
                             <Loader2 className="size-4 animate-spin" aria-hidden />
                             {phase.libelle}
                           </>
+                        ) : emailCompte ? (
+                          "Envoyer ma candidature"
                         ) : (
                           "Créer mon accès et envoyer ma candidature"
                         )}
                       </Button>
-                      <div className="flex items-center gap-3 text-xs text-muted-foreground">
-                        <span className="h-px flex-1 bg-border" /> ou
-                        <span className="h-px flex-1 bg-border" />
-                      </div>
-                      <Button
-                        type="button"
-                        variant="outline"
-                        size="lg"
-                        className="h-auto min-h-12 w-full py-3 text-base whitespace-normal"
-                        disabled={occupe}
-                        onClick={() => void creerAvecGoogle()}
-                      >
-                        <GoogleG /> Continuer avec Google
-                      </Button>
+                      {emailCompte ? null : (
+                        <>
+                          <div className="flex items-center gap-3 text-xs text-muted-foreground">
+                            <span className="h-px flex-1 bg-border" /> ou
+                            <span className="h-px flex-1 bg-border" />
+                          </div>
+                          <Button
+                            type="button"
+                            variant="outline"
+                            size="lg"
+                            className="h-auto min-h-12 w-full py-3 text-base whitespace-normal"
+                            disabled={occupe}
+                            onClick={() => void creerAvecGoogle()}
+                          >
+                            <GoogleG /> Continuer avec Google
+                          </Button>
+                          <p className="-mt-1 text-center text-xs text-muted-foreground">
+                            Utilisez le compte Google associé à{" "}
+                            <span className="font-medium text-foreground">{r.email.trim()}</span>
+                          </p>
+                        </>
+                      )}
                       <p className="text-xs leading-relaxed text-muted-foreground">
                         Vos données servent uniquement à l'étude de votre candidature et à votre
                         espace formateur.{" "}
@@ -795,6 +896,7 @@ function Etape({
   setMdp,
   voirMdp,
   setVoirMdp,
+  emailCompte,
 }: {
   etape: number;
   r: Reponses;
@@ -808,6 +910,7 @@ function Etape({
   setMdp: (v: string) => void;
   voirMdp: boolean;
   setVoirMdp: (v: boolean) => void;
+  emailCompte: string | null;
 }) {
   switch (ETAPES[etape]?.id) {
     case "identite":
@@ -1115,58 +1218,65 @@ function Etape({
       return (
         <>
           <Recapitulatif r={r} fichiers={fichiers} allerA={allerA} />
-          <div className="grid gap-2">
-            <Label htmlFor="q-mdp" className="text-sm font-medium">
-              Choisissez un mot de passe
-            </Label>
-            <input type="email" autoComplete="username" value={r.email.trim()} readOnly hidden />
-            <div className="relative">
-              <Input
-                id="q-mdp"
-                type={voirMdp ? "text" : "password"}
-                autoComplete="new-password"
-                value={mdp}
-                onChange={(e) => setMdp(e.target.value)}
-                maxLength={72}
-                aria-invalid={Boolean(erreurs["mdp"])}
-                aria-describedby="mdp-regles"
-                className="h-12 rounded-xl bg-background pr-12 text-base"
-              />
-              <button
-                type="button"
-                onClick={() => setVoirMdp(!voirMdp)}
-                className="absolute inset-y-0 right-1 my-auto inline-flex size-10 items-center justify-center rounded-lg text-muted-foreground hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
-                aria-label={voirMdp ? "Masquer le mot de passe" : "Afficher le mot de passe"}
-                aria-pressed={voirMdp}
-              >
-                {voirMdp ? (
-                  <EyeOff className="size-4" aria-hidden />
-                ) : (
-                  <Eye className="size-4" aria-hidden />
-                )}
-              </button>
-            </div>
-            <ul id="mdp-regles" className="flex flex-wrap gap-x-4 gap-y-1 text-xs">
-              {reglesMotDePasse(mdp).map((regle) => (
-                <li
-                  key={regle.id}
-                  className={cn(
-                    "inline-flex items-center gap-1.5 transition-colors",
-                    regle.ok ? "text-primary" : "text-muted-foreground",
-                  )}
+          {emailCompte ? (
+            <p className="rounded-2xl bg-accent/60 p-4 text-sm">
+              Vous êtes connecté avec <strong>{emailCompte}</strong> : votre candidature sera reliée
+              directement à ce compte.
+            </p>
+          ) : (
+            <div className="grid gap-2">
+              <Label htmlFor="q-mdp" className="text-sm font-medium">
+                Choisissez un mot de passe
+              </Label>
+              <input type="email" autoComplete="username" value={r.email.trim()} readOnly hidden />
+              <div className="relative">
+                <Input
+                  id="q-mdp"
+                  type={voirMdp ? "text" : "password"}
+                  autoComplete="new-password"
+                  value={mdp}
+                  onChange={(e) => setMdp(e.target.value)}
+                  maxLength={72}
+                  aria-invalid={Boolean(erreurs["mdp"])}
+                  aria-describedby="mdp-regles"
+                  className="h-12 rounded-xl bg-background pr-12 text-base"
+                />
+                <button
+                  type="button"
+                  onClick={() => setVoirMdp(!voirMdp)}
+                  className="absolute inset-y-0 right-1 my-auto inline-flex size-10 items-center justify-center rounded-lg text-muted-foreground hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+                  aria-label={voirMdp ? "Masquer le mot de passe" : "Afficher le mot de passe"}
+                  aria-pressed={voirMdp}
                 >
-                  {regle.ok ? (
-                    <Check className="size-3.5" strokeWidth={3} aria-hidden />
+                  {voirMdp ? (
+                    <EyeOff className="size-4" aria-hidden />
                   ) : (
-                    <X className="size-3.5" aria-hidden />
+                    <Eye className="size-4" aria-hidden />
                   )}
-                  {regle.label}
-                  <span className="sr-only">{regle.ok ? " : respecté" : " : à respecter"}</span>
-                </li>
-              ))}
-            </ul>
-            <MessageErreur id="mdp-erreur">{erreurs["mdp"]}</MessageErreur>
-          </div>
+                </button>
+              </div>
+              <ul id="mdp-regles" className="flex flex-wrap gap-x-4 gap-y-1 text-xs">
+                {reglesMotDePasse(mdp).map((regle) => (
+                  <li
+                    key={regle.id}
+                    className={cn(
+                      "inline-flex items-center gap-1.5 transition-colors",
+                      regle.ok ? "text-primary" : "text-muted-foreground",
+                    )}
+                  >
+                    {regle.ok ? (
+                      <Check className="size-3.5" strokeWidth={3} aria-hidden />
+                    ) : (
+                      <X className="size-3.5" aria-hidden />
+                    )}
+                    {regle.label}
+                    <span className="sr-only">{regle.ok ? " : respecté" : " : à respecter"}</span>
+                  </li>
+                ))}
+              </ul>
+              <MessageErreur id="mdp-erreur">{erreurs["mdp"]}</MessageErreur>
+            </div>
+          )}
         </>
       );
     default:
