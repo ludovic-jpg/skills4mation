@@ -664,7 +664,7 @@ function PortageQualiopi() {
           <div>
             <p className="eyebrow">Ressource gratuite</p>
             <h2 className="mt-3 text-2xl font-semibold">Le guide du formateur indépendant</h2>
-            <p className="mt-3 text-sm text-muted-foreground">Cadre légal, financements et comparatif des coûts : notre livre blanc en 30 pages.</p>
+            <p className="mt-3 text-sm text-muted-foreground">Cadre légal, financements et comparatif des coûts : notre livre blanc en 25 pages.</p>
           </div>
           <Button asChild variant="cta" className="h-auto min-h-10 shrink-0 whitespace-normal py-3">
             <Link to="/livre-blanc">Découvrir le livre blanc</Link>

@@ -200,7 +200,7 @@ function Accueil() {
               </div>
               <div className="mt-6 border-t border-border pt-5">
                 <p className="eyebrow">Ressource gratuite</p>
-                <p className="mt-2 text-sm text-muted-foreground">Le guide complet du portage Qualiopi pour formateurs indépendants · PDF, 30 pages.</p>
+                <p className="mt-2 text-sm text-muted-foreground">Le guide complet du portage Qualiopi pour formateurs indépendants · PDF, 25 pages.</p>
                 <Button asChild variant="link" className="mt-2 h-auto justify-start whitespace-normal px-0 text-left">
                   <Link to="/livre-blanc">Découvrir le livre blanc <ArrowRight aria-hidden /></Link>
                 </Button>

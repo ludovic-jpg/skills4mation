@@ -16,5 +16,6 @@ Disallow: /auth
 Disallow: /espace
 Disallow: /admin
 Disallow: /ressources
+Disallow: /fichiers/
 
 Sitemap: https://skills4mation.com/sitemap.xml

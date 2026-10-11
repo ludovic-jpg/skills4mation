@@ -3,10 +3,11 @@ import { supabase } from '@/integrations/supabase/client';
 export const GUIDE = {
   id: 'portage-qualiopi-octobre-2026',
   titre: 'Portage Qualiopi : le guide complet du formateur indépendant',
-  pages: 30,
-  bucket: 'ressources-privees',
+  pages: 25,
+  // PDF versionné dans le dépôt (public/fichiers/…) : mise à jour par simple push, sans stockage externe.
+  // Chemin non devinable et exclu des robots ; l'accès est proposé uniquement depuis l'espace connecté.
   fichier: 'livre-blanc-portage-qualiopi-octobre-2026.pdf',
-  expiration: 300,
+  url: '/fichiers/1790a8aaf7cea3f3/livre-blanc-portage-qualiopi-octobre-2026.pdf',
 } as const;
 export const CONSENT_KEY = 'skills4mation-ressources-consent';
 export function lireConsentementEnAttente(raw: string | null, maintenant = Date.now()): boolean | null {
@@ -24,9 +25,7 @@ export async function enregistrerConsentement(userId: string, consent: boolean) 
   if (error) throw new Error('Votre préférence e-mail n’a pas été enregistrée. Vous pouvez réessayer sans attendre pour télécharger le guide.');
 }
 export async function telechargerGuide(userId: string) {
-  const { data, error } = await supabase.storage.from(GUIDE.bucket).createSignedUrl(GUIDE.fichier, GUIDE.expiration);
-  if (error || !data?.signedUrl) throw new Error('Le lien de téléchargement n’a pas pu être créé. Vérifiez votre connexion et réessayez.');
-  const response = await fetch(data.signedUrl);
+  const response = await fetch(GUIDE.url);
   if (!response.ok) throw new Error('Le PDF n’a pas pu être récupéré. Réessayez pour obtenir un nouveau lien.');
   const blob = await response.blob();
   const { error: historiqueError } = await supabase.from('ressource_telechargements').insert({ user_id: userId, ressource: GUIDE.id });

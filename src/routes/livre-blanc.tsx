@@ -8,7 +8,7 @@ import { CONSENT_KEY, GUIDE } from '@/lib/ressources';
 import '@/lib/ressources.css';
 
 const TITLE = 'Guide portage Qualiopi formateur indépendant | Skills4mation';
-const DESCRIPTION = 'Guide du portage Qualiopi pour formateurs indépendants : cadre légal, financements OPCO, coûts et dossier qualité. PDF gratuit de 30 pages.';
+const DESCRIPTION = 'Guide du portage Qualiopi pour formateurs indépendants : cadre légal, financements OPCO, coûts et dossier qualité. PDF gratuit de 25 pages.';
 const CHAPITRES = [
   'Le portage Qualiopi : comment ça marche',
   'Pourquoi l’accès aux financements change votre activité',
@@ -75,10 +75,10 @@ function LivreBlanc() {
             </div>
             <p className="mt-6 flex items-center gap-2 text-sm"><LockKeyhole className="size-4 shrink-0" aria-hidden />PDF réservé aux comptes connectés · Sans achat ni abonnement</p>
           </div>
-          <div role="img" aria-label="Couverture du guide Portage Qualiopi, Skills4mation, édition octobre 2026, 30 pages" className="mx-auto flex aspect-[3/4] w-full max-w-72 flex-col justify-between rounded-3xl border border-border bg-card p-7 text-card-foreground shadow-elevated">
+          <div role="img" aria-label="Couverture du guide Portage Qualiopi, Skills4mation, édition octobre 2026, 25 pages" className="mx-auto flex aspect-[3/4] w-full max-w-72 flex-col justify-between rounded-3xl border border-border bg-card p-7 text-card-foreground shadow-elevated">
             <div><p className="font-display text-lg font-semibold text-primary">Skills4mation</p><p className="mt-2 text-xs text-muted-foreground">L’ingénierie des compétences en mouvement</p></div>
             <div><BookOpen className="mb-5 size-10 text-primary" aria-hidden /><p className="eyebrow">Guide pratique</p><p className="mt-3 font-display text-2xl font-semibold text-primary">Portage Qualiopi</p><p className="mt-3 text-sm">Le guide complet du formateur indépendant</p></div>
-            <div className="border-t border-border pt-4 text-xs text-muted-foreground">Octobre 2026 · 30 pages</div>
+            <div className="border-t border-border pt-4 text-xs text-muted-foreground">Octobre 2026 · 25 pages</div>
           </div>
         </div>
       </div>
@@ -101,6 +101,6 @@ function LivreBlanc() {
       <p>Une partie du guide présente les OPCO, les fonds d’assurance formation et les dispositifs de transition professionnelle. Aucun financement n’est automatique. Le CPF obéit à des conditions spécifiques, notamment en matière de certification éligible et d’habilitation. Le guide invite à vérifier ces conditions avant de présenter une prise en charge comme acquise. Les données citées sont accompagnées de références dans le PDF ; les scénarios pédagogiques sont signalés comme illustratifs.</p>
       <p>Enfin, vous trouverez les points de contrôle d’un dossier : programme, convention, planning, recueil des besoins, émargements, évaluations et justificatifs de réalisation. Le dernier chapitre propose des critères pour choisir votre organisme porteur, vérifier sa certification et comparer ses engagements écrits. Un plan d’action vous aide à préparer votre première formation financée. Ce document constitue une information générale, non un avis juridique individuel ; les règles applicables et les conditions du financeur doivent être vérifiées pour chaque projet.</p>
     </div></div></section>
-    <section className="section-shell max-w-4xl py-14"><p className="eyebrow">Questions sur le guide</p><h2 className="mt-3 text-3xl font-semibold">Avant de télécharger</h2><div className="mt-8 space-y-7">{FAQ.map(([q, a]) => <article key={q} className="border-b border-border pb-6"><h3 className="text-lg font-semibold">{q}</h3><p className="mt-3 leading-relaxed text-muted-foreground">{a}</p></article>)}</div><Button asChild variant="cta" size="lg" className="mt-8 h-auto min-h-12 whitespace-normal py-3"><Link to="/auth" search={{ next: '/ressources' }} onClick={memoriserChoix}>Accéder au guide gratuit (PDF, 30 pages)<ArrowRight aria-hidden /></Link></Button></section>
+    <section className="section-shell max-w-4xl py-14"><p className="eyebrow">Questions sur le guide</p><h2 className="mt-3 text-3xl font-semibold">Avant de télécharger</h2><div className="mt-8 space-y-7">{FAQ.map(([q, a]) => <article key={q} className="border-b border-border pb-6"><h3 className="text-lg font-semibold">{q}</h3><p className="mt-3 leading-relaxed text-muted-foreground">{a}</p></article>)}</div><Button asChild variant="cta" size="lg" className="mt-8 h-auto min-h-12 whitespace-normal py-3"><Link to="/auth" search={{ next: '/ressources' }} onClick={memoriserChoix}>Accéder au guide gratuit (PDF, {GUIDE.pages} pages)<ArrowRight aria-hidden /></Link></Button></section>
   </PublicLayout></div>;
 }
