@@ -169,6 +169,60 @@ export type Database = {
         }
         Relationships: []
       }
+      demandes_amenagement_handicap: {
+        Row: {
+          apprenant_label: string
+          created_at: string
+          demande_le: string
+          dossier_id: string
+          envoi_id: string | null
+          id: string
+          notes: string | null
+          statut: string
+          traite_le: string | null
+          traite_par: string | null
+        }
+        Insert: {
+          apprenant_label: string
+          created_at?: string
+          demande_le?: string
+          dossier_id: string
+          envoi_id?: string | null
+          id?: string
+          notes?: string | null
+          statut?: string
+          traite_le?: string | null
+          traite_par?: string | null
+        }
+        Update: {
+          apprenant_label?: string
+          created_at?: string
+          demande_le?: string
+          dossier_id?: string
+          envoi_id?: string | null
+          id?: string
+          notes?: string | null
+          statut?: string
+          traite_le?: string | null
+          traite_par?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "demandes_amenagement_handicap_dossier_id_fkey"
+            columns: ["dossier_id"]
+            isOneToOne: false
+            referencedRelation: "dossiers"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "demandes_amenagement_handicap_envoi_id_fkey"
+            columns: ["envoi_id"]
+            isOneToOne: false
+            referencedRelation: "document_envois"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       demandes_budget: {
         Row: {
           assigne_a: string | null
@@ -577,6 +631,65 @@ export type Database = {
           },
         ]
       }
+      dossier_financement: {
+        Row: {
+          cloture_le: string | null
+          cloture_par: string | null
+          created_at: string
+          date_reversement_formateur: string | null
+          dossier_id: string
+          formateur_id: string
+          heures_realisees: number | null
+          id: string
+          montant_encaisse: number | null
+          montant_reversement_formateur: number | null
+          objectif_bpf: string | null
+          stagiaires_presents: number | null
+          type_stagiaires: string | null
+          updated_at: string
+        }
+        Insert: {
+          cloture_le?: string | null
+          cloture_par?: string | null
+          created_at?: string
+          date_reversement_formateur?: string | null
+          dossier_id: string
+          formateur_id: string
+          heures_realisees?: number | null
+          id?: string
+          montant_encaisse?: number | null
+          montant_reversement_formateur?: number | null
+          objectif_bpf?: string | null
+          stagiaires_presents?: number | null
+          type_stagiaires?: string | null
+          updated_at?: string
+        }
+        Update: {
+          cloture_le?: string | null
+          cloture_par?: string | null
+          created_at?: string
+          date_reversement_formateur?: string | null
+          dossier_id?: string
+          formateur_id?: string
+          heures_realisees?: number | null
+          id?: string
+          montant_encaisse?: number | null
+          montant_reversement_formateur?: number | null
+          objectif_bpf?: string | null
+          stagiaires_presents?: number | null
+          type_stagiaires?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "dossier_financement_dossier_id_fkey"
+            columns: ["dossier_id"]
+            isOneToOne: true
+            referencedRelation: "dossiers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       dossier_historique: {
         Row: {
           ancien_statut: Database["public"]["Enums"]["crm_statut"] | null
@@ -625,6 +738,7 @@ export type Database = {
           generated_at: string | null
           id: string
           remarque: string | null
+          rendu_degrade: boolean
           statut: Database["public"]["Enums"]["piece_statut"]
           updated_at: string
         }
@@ -637,6 +751,7 @@ export type Database = {
           generated_at?: string | null
           id?: string
           remarque?: string | null
+          rendu_degrade?: boolean
           statut?: Database["public"]["Enums"]["piece_statut"]
           updated_at?: string
         }
@@ -649,6 +764,7 @@ export type Database = {
           generated_at?: string | null
           id?: string
           remarque?: string | null
+          rendu_degrade?: boolean
           statut?: Database["public"]["Enums"]["piece_statut"]
           updated_at?: string
         }
@@ -686,6 +802,7 @@ export type Database = {
           signature_organisme_date: string | null
           signature_organisme_hash: string | null
           signature_organisme_par: string | null
+          signature_organisme_rendu_degrade: boolean
           signature_organisme_user_id: string | null
           statut: Database["public"]["Enums"]["dossier_statut"]
           statut_crm: Database["public"]["Enums"]["crm_statut"]
@@ -717,6 +834,7 @@ export type Database = {
           signature_organisme_date?: string | null
           signature_organisme_hash?: string | null
           signature_organisme_par?: string | null
+          signature_organisme_rendu_degrade?: boolean
           signature_organisme_user_id?: string | null
           statut?: Database["public"]["Enums"]["dossier_statut"]
           statut_crm?: Database["public"]["Enums"]["crm_statut"]
@@ -748,6 +866,7 @@ export type Database = {
           signature_organisme_date?: string | null
           signature_organisme_hash?: string | null
           signature_organisme_par?: string | null
+          signature_organisme_rendu_degrade?: boolean
           signature_organisme_user_id?: string | null
           statut?: Database["public"]["Enums"]["dossier_statut"]
           statut_crm?: Database["public"]["Enums"]["crm_statut"]
@@ -1169,6 +1288,27 @@ export type Database = {
           },
         ]
       }
+      parametres_organisme: {
+        Row: {
+          cle: string
+          mis_a_jour_le: string
+          mis_a_jour_par: string | null
+          valeur: string | null
+        }
+        Insert: {
+          cle: string
+          mis_a_jour_le?: string
+          mis_a_jour_par?: string | null
+          valeur?: string | null
+        }
+        Update: {
+          cle?: string
+          mis_a_jour_le?: string
+          mis_a_jour_par?: string | null
+          valeur?: string | null
+        }
+        Relationships: []
+      }
       parcours_formation: {
         Row: {
           created_at: string
@@ -1235,6 +1375,7 @@ export type Database = {
           email: string
           entreprise: string | null
           entreprise_adresse: string | null
+          exigences_qualite_lu_le: string | null
           expertise: string | null
           id: string
           linkedin_connected_at: string | null
@@ -1263,6 +1404,7 @@ export type Database = {
           email?: string
           entreprise?: string | null
           entreprise_adresse?: string | null
+          exigences_qualite_lu_le?: string | null
           expertise?: string | null
           id: string
           linkedin_connected_at?: string | null
@@ -1291,6 +1433,7 @@ export type Database = {
           email?: string
           entreprise?: string | null
           entreprise_adresse?: string | null
+          exigences_qualite_lu_le?: string | null
           expertise?: string | null
           id?: string
           linkedin_connected_at?: string | null
@@ -1489,6 +1632,42 @@ export type Database = {
           id?: string
           role?: Database["public"]["Enums"]["app_role"]
           user_id?: string
+        }
+        Relationships: []
+      }
+      veille_reglementaire: {
+        Row: {
+          created_at: string
+          cree_par: string | null
+          date_veille: string
+          diffuse: boolean
+          diffuse_le: string | null
+          id: string
+          resume: string
+          source: string | null
+          theme: string
+        }
+        Insert: {
+          created_at?: string
+          cree_par?: string | null
+          date_veille?: string
+          diffuse?: boolean
+          diffuse_le?: string | null
+          id?: string
+          resume: string
+          source?: string | null
+          theme: string
+        }
+        Update: {
+          created_at?: string
+          cree_par?: string | null
+          date_veille?: string
+          diffuse?: boolean
+          diffuse_le?: string | null
+          id?: string
+          resume?: string
+          source?: string | null
+          theme?: string
         }
         Relationships: []
       }

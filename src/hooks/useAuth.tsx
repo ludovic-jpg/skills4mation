@@ -21,6 +21,8 @@ export type Profile = {
   entreprise_adresse: string | null;
   cv_url: string | null;
   deroule_pedagogique_url: string | null;
+  /** Date d'acceptation du code déontologique / des exigences qualité (Qualiopi 27). */
+  exigences_qualite_lu_le: string | null;
   parcours_formation: string | null;
   parcours_formation_url: string | null;
   secteur_activite: string | null;

@@ -38,10 +38,10 @@ export const Route = createFileRoute("/_app/admin/bpf")({
  */
 function anneeFormation(dossier: { donnees: unknown } | null | undefined): number | null {
   if (!dossier || typeof dossier.donnees !== "object" || dossier.donnees === null) return null;
-  const formation = (dossier.donnees as Record<string, unknown>).formation;
+  const formation = (dossier.donnees as Record<string, unknown>)["formation"];
   if (typeof formation !== "object" || formation === null) return null;
-  const fin = (formation as Record<string, unknown>).dateFin;
-  const debut = (formation as Record<string, unknown>).dateDebut;
+  const fin = (formation as Record<string, unknown>)["dateFin"];
+  const debut = (formation as Record<string, unknown>)["dateDebut"];
   const date = typeof fin === "string" && fin ? fin : typeof debut === "string" ? debut : null;
   if (!date) return null;
   const annee = Number(date.slice(0, 4));
