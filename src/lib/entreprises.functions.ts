@@ -89,7 +89,7 @@ async function rechercher(q: string): Promise<ResultatRechercheEntreprise> {
 export const rechercherEntreprise = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((data: unknown) => entreeSchema.parse(data))
-  .handler(async ({ data }) => rechercher(data.q));
+  .handler(async ({ data }) => rechercherAvecCache(data.q));
 
 /**
  * Variante publique (formulaires du site sans compte) : mêmes contrôles stricts de la saisie,
@@ -97,4 +97,50 @@ export const rechercherEntreprise = createServerFn({ method: "POST" })
  */
 export const rechercherEntreprisePublique = createServerFn({ method: "POST" })
   .inputValidator((data: unknown) => entreeSchema.parse(data))
-  .handler(async ({ data }) => rechercher(data.q));
+  .handler(async ({ data }) => {
+    // Protection de l'endpoint public : limite par IP + cache, pour ne pas épuiser
+    // le quota de l'API de l'État (7 req/s par IP, IP de sortie Cloudflare partagées).
+    const { getRequest } = await import("@tanstack/react-start/server");
+    const ip = getRequest().headers.get("cf-connecting-ip") ?? "inconnue";
+    if (!autoriserIp(ip)) {
+      return {
+        ok: false,
+        message:
+          "Trop de recherches. Patientez une minute ou saisissez les informations manuellement.",
+      } satisfies ResultatRechercheEntreprise;
+    }
+    return rechercherAvecCache(data.q);
+  });
+
+// ——— Cache et limitation (mémoire de l'isolat Worker : protection « best effort ») ———
+const CACHE_TTL_MS = 24 * 60 * 60 * 1000;
+const CACHE_MAX = 500;
+const cache = new Map<string, { expire: number; valeur: ResultatRechercheEntreprise }>();
+
+async function rechercherAvecCache(q: string): Promise<ResultatRechercheEntreprise> {
+  const cle = q.replace(/\s+/g, " ").trim().toLowerCase();
+  const enCache = cache.get(cle);
+  if (enCache && enCache.expire > Date.now()) return enCache.valeur;
+  const valeur = await rechercher(q);
+  if (valeur.ok) {
+    if (cache.size >= CACHE_MAX) cache.delete(cache.keys().next().value as string);
+    cache.set(cle, { expire: Date.now() + CACHE_TTL_MS, valeur });
+  }
+  return valeur;
+}
+
+const FENETRE_MS = 60_000;
+const MAX_PAR_FENETRE = 30;
+const compteurs = new Map<string, { debut: number; n: number }>();
+
+function autoriserIp(ip: string): boolean {
+  const maintenant = Date.now();
+  const c = compteurs.get(ip);
+  if (!c || maintenant - c.debut > FENETRE_MS) {
+    if (compteurs.size > 5000) compteurs.clear();
+    compteurs.set(ip, { debut: maintenant, n: 1 });
+    return true;
+  }
+  c.n += 1;
+  return c.n <= MAX_PAR_FENETRE;
+}

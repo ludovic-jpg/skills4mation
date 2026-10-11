@@ -58,6 +58,8 @@ function validateStep(step: number, d: DossierDonnees): Errs {
       err["dateFin"] = "La date de fin doit suivre la date de démarrage.";
     if (!d.formation.heuresTotal || Number(d.formation.heuresTotal) <= 0)
       err["heuresTotal"] = "Durée totale en heures requise.";
+    if (d.lieu.siret && !/^\d{14}$/.test(normaliseSiret(d.lieu.siret)))
+      err["lieuSiret"] = "Le SIRET du lieu comporte 14 chiffres.";
     if (d.formation.format !== "presentiel" && !d.formation.lienConnexion.trim())
       err["lienConnexion"] = "Lien de connexion requis pour le distanciel.";
   }
@@ -217,7 +219,9 @@ export function DossierWizard({
 
         {showBlocking ? (
           totalManquants === 0 ? (
-            <p className="mt-3 text-xs text-success">Dossier complet : documents prêts à générer.</p>
+            <p className="mt-3 text-xs text-success">
+              Dossier complet : documents prêts à générer.
+            </p>
           ) : (
             <div className="mt-3 rounded-xl border border-cta/40 bg-cta/10 p-3 text-xs">
               <p className="font-semibold">
@@ -298,7 +302,6 @@ export function DossierWizard({
               ) : null}
             </div>
           ) : (
-
             <Button
               variant="teal"
               onClick={() => {

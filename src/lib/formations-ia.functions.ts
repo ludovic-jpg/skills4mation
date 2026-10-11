@@ -374,7 +374,7 @@ Rédige le programme complet de cette formation au format Skills4mation.
       consigne,
       outil: OUTIL,
       validation: sortieSchema,
-      maxTokens: 10000,
+      maxTokens: 6000,
     });
 
     const resultat = versProgramme(sortie, s.duree_heures, data.categories);
@@ -396,7 +396,7 @@ export const importerProgrammeFormation = createServerFn({ method: "POST" })
   .inputValidator((data: unknown) => importerSchema.parse(data))
   .handler(async ({ data, context }): Promise<ResultatProgrammeIa> => {
     await verifierProprietaire(context, data.formationId);
-    if (!data.path.startsWith(`${context.userId}/`) || data.path.includes("..")) {
+    if (!data.path.startsWith(`${context.userId}/programmes/`) || data.path.includes("..")) {
       throw new Error("Document non autorisé.");
     }
     const nom = data.nomFichier.toLowerCase();
@@ -448,7 +448,7 @@ Le document ci-dessus est le programme de formation rédigé par le formateur. C
       consigne,
       outil: OUTIL,
       validation: sortieSchema,
-      maxTokens: 10000,
+      maxTokens: 6000,
     });
 
     const dureeTotale = sortie.duree_heures ?? data.dureeHeures;

@@ -104,6 +104,16 @@ export function OutilBuilder({
         .select("id, titre, parcours_id, formation_id, questions, created_at")
         .eq("formateur_id", user!.id)
         .order("created_at", { ascending: false });
+      // Tolérance : migration `formation_id` pas encore appliquée (42703 = colonne absente).
+      if (error?.code === "42703") {
+        const repli = await supabase
+          .from(table)
+          .select("id, titre, parcours_id, questions, created_at")
+          .eq("formateur_id", user!.id)
+          .order("created_at", { ascending: false });
+        if (repli.error) throw repli.error;
+        return (repli.data ?? []).map((o) => ({ ...o, formation_id: null as string | null }));
+      }
       if (error) throw error;
       return data ?? [];
     },
@@ -173,9 +183,11 @@ export function OutilBuilder({
     mutationFn: async () => {
       const nettoyees = questions.filter((q) => q.enonce.trim().length > 0);
       if (!nettoyees.length) throw new Error("Ajoutez au moins une question.");
+      // `formation_id` n'est envoyé que s'il est renseigné : un outil rattaché à un
+      // ancien parcours reste enregistrable même si la migration n'est pas appliquée.
       const payload = {
         formateur_id: user!.id,
-        formation_id: source?.kind === "formation" ? source.id : null,
+        ...(source?.kind === "formation" ? { formation_id: source.id } : {}),
         parcours_id: source?.kind === "parcours" ? source.id : null,
         titre: titre.trim() || titreDefaut,
         questions: nettoyees as never,

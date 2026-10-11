@@ -32,7 +32,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Switch } from "@/components/ui/switch";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
-import { parseProgramme } from "@/lib/formations";
+import { parseProgramme, slugify, titreModulePropre } from "@/lib/formations";
 import { genererDiapositivesModule } from "@/lib/supports-ia.functions";
 import { deposerSupportGenerique } from "@/lib/supports";
 
@@ -66,7 +66,8 @@ export function GenerateurPowerPoint() {
   const [formationId, setFormationId] = useState("");
   const [etats, setEtats] = useState<Record<number, EtatModule>>({});
   const [lot, setLot] = useState<{ fait: number; total: number } | null>(null);
-  const [rattacher, setRattacher] = useState(true);
+  // Désactivé par défaut : un support généré par l'IA doit être relu avant d'être partagé.
+  const [rattacher, setRattacher] = useState(false);
 
   const formations = useQuery({
     queryKey: ["pptx-formations", user?.id],
@@ -120,18 +121,28 @@ export function GenerateurPowerPoint() {
 
   async function genererTous() {
     setLot({ fait: 0, total: modules.length });
-    let reussis = 0;
+    const fichiers: File[] = [];
     // Un module à la fois : chaque appel IA reste court et un échec n'interrompt pas les autres.
     for (let i = 0; i < modules.length; i++) {
-      const fichier = await genererModule(i, true);
-      if (fichier) reussis++;
+      const fichier = await genererModule(i, false);
+      if (fichier) fichiers.push(fichier);
       setLot({ fait: i + 1, total: modules.length });
     }
     setLot(null);
-    if (reussis === modules.length) toast.success(`${reussis} PowerPoint générés et téléchargés.`);
+    if (fichiers.length > 0 && formation) {
+      // Un seul téléchargement (ZIP) : les navigateurs bloquent les téléchargements multiples.
+      const JSZip = (await import("jszip")).default;
+      const zip = new JSZip();
+      for (const f of fichiers) zip.file(f.name, f);
+      const blob = await zip.generateAsync({ type: "blob" });
+      const nom = `${slugify(formation.titre)}-supports-powerpoint.zip`;
+      telecharger(new File([blob], nom, { type: "application/zip" }));
+    }
+    if (fichiers.length === modules.length)
+      toast.success(`${fichiers.length} PowerPoint générés, téléchargés dans un fichier ZIP.`);
     else
       toast.warning(
-        `${reussis} sur ${modules.length} PowerPoint générés : relancez les modules en erreur.`,
+        `${fichiers.length} sur ${modules.length} PowerPoint générés : relancez les modules en erreur.`,
       );
   }
 
@@ -143,7 +154,8 @@ export function GenerateurPowerPoint() {
       await deposerSupportGenerique({
         formateurId: user.id,
         fichier: etat.fichier,
-        titre: `${formation.titre} — Module ${index + 1} : ${modules[index]?.titre ?? ""}`.trim(),
+        titre:
+          `${formation.titre} — Module ${index + 1} : ${titreModulePropre(modules[index]?.titre ?? "")}`.trim(),
         formationId: rattacher ? formation.id : null,
       });
       maj(index, { statut: "enregistre", fichier: etat.fichier, diapos: etat.diapos });

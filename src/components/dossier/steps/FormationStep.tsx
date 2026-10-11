@@ -17,9 +17,7 @@ import type { DossierDonnees } from "@/lib/dossier/types";
  * il n'est jamais saisi ni modifié par le formateur.
  */
 function AdfField({ d }: { d: DossierDonnees }) {
-  const attribueLe = d.adfAttribueLe
-    ? new Date(d.adfAttribueLe).toLocaleDateString("fr-FR")
-    : null;
+  const attribueLe = d.adfAttribueLe ? new Date(d.adfAttribueLe).toLocaleDateString("fr-FR") : null;
   return (
     <div className="grid gap-1.5">
       <Label>Numéro ADF</Label>
@@ -173,6 +171,7 @@ export function FormationStep({
         label="SIRET du lieu"
         value={d.lieu.siret}
         onChange={(v) => set("lieu", { siret: v })}
+        error={errors["lieuSiret"]}
         onSelect={(e) => {
           set("lieu", {
             siret: e.siret,

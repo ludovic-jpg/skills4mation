@@ -108,7 +108,9 @@ export function appliquerFormation(
       objectifs,
       niveau: formation.niveau ?? donnees.formation.niveau,
       prerequis: formation.prerequis ?? donnees.formation.prerequis,
-      heuresTotal: formation.duree_heures ? String(formation.duree_heures) : donnees.formation.heuresTotal,
+      heuresTotal: formation.duree_heures
+        ? String(formation.duree_heures)
+        : donnees.formation.heuresTotal,
       nbJours: formation.duree_jours ? String(formation.duree_jours) : donnees.formation.nbJours,
       format,
       lienConnexion: formation.lien_connexion ?? donnees.formation.lienConnexion,
@@ -124,12 +126,13 @@ export function appliquerFormation(
     },
     formateur: {
       ...donnees.formateur,
-      coutHoraire: formation.cout_horaire ? String(formation.cout_horaire) : donnees.formateur.coutHoraire,
+      coutHoraire: formation.cout_horaire
+        ? String(formation.cout_horaire)
+        : donnees.formateur.coutHoraire,
     },
     besoins: {
       ...donnees.besoins,
-      modalitesEvaluation:
-        formation.modalites_evaluation ?? donnees.besoins.modalitesEvaluation,
+      modalitesEvaluation: formation.modalites_evaluation ?? donnees.besoins.modalitesEvaluation,
     },
     facture: {
       ...donnees.facture,
@@ -142,12 +145,7 @@ export const FORMATION_VIDE = {
 };
 
 /** Référentiels de saisie des formations (menus déroulants côté formateur). */
-export const NIVEAUX_OPTIONS: string[] = [
-  "Débutant",
-  "Avancé",
-  "Expert",
-  "Tous les niveaux",
-];
+export const NIVEAUX_OPTIONS: string[] = ["Débutant", "Avancé", "Expert", "Tous les niveaux"];
 
 export const PUBLICS_OPTIONS: string[] = [
   "Tout public",
@@ -188,3 +186,11 @@ export const CERTIFICATION_OPTIONS: string[] = [
   "Certification AEC DISC",
   "Formation non certifiante",
 ];
+
+/** Titre de module sans préfixe « Module N — » ni durée « (3 h) » ajoutés par l'IA. */
+export function titreModulePropre(titre: string): string {
+  return titre
+    .replace(/^\s*module\s*\d+\s*[—–:-]\s*/i, "")
+    .replace(/\s*\(\s*\d+(?:[.,]\d+)?\s*h(?:eures?)?\s*\)\s*$/i, "")
+    .trim();
+}

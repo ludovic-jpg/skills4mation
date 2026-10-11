@@ -2,7 +2,7 @@ import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
-import { parseProgramme } from "@/lib/formations";
+import { parseProgramme, titreModulePropre } from "@/lib/formations";
 
 const schema = z.object({
   formationId: z.string().uuid(),
@@ -183,7 +183,7 @@ Reste fidèle aux points clés fournis ; n'invente ni chiffre précis non vérif
     return {
       formationTitre: formation.titre,
       moduleNumero: numero,
-      moduleTitre: module.titre || `Module ${numero}`,
+      moduleTitre: titreModulePropre(module.titre) || `Module ${numero}`,
       totalModules: modules.length,
       diapositives,
     };
