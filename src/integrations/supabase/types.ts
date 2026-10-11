@@ -1497,6 +1497,45 @@ export type Database = {
         }
         Relationships: []
       }
+      ressource_consentements: {
+        Row: {
+          consent_marketing: boolean
+          consent_recorded_at: string
+          user_id: string
+        }
+        Insert: {
+          consent_marketing?: boolean
+          consent_recorded_at?: string
+          user_id?: string
+        }
+        Update: {
+          consent_marketing?: boolean
+          consent_recorded_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      ressource_telechargements: {
+        Row: {
+          date: string
+          id: string
+          ressource: string
+          user_id: string
+        }
+        Insert: {
+          date?: string
+          id?: string
+          ressource: string
+          user_id?: string
+        }
+        Update: {
+          date?: string
+          id?: string
+          ressource?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       supports_apprenants: {
         Row: {
           apprenant_id: string

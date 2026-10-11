@@ -71,6 +71,9 @@ export function SiteFooter() {
               <Link to="/mediatheque">Médiathèque</Link>
             </li>
             <li>
+              <Link to="/livre-blanc">Livre blanc</Link>
+            </li>
+            <li>
               <Link to="/blog">Blog pédagogique</Link>
             </li>
             <li>
