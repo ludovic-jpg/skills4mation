@@ -3,7 +3,14 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { useMemo, useState } from "react";
 import { toast } from "sonner";
-import { Banknote, ClipboardCheck, ClipboardList, FileSignature, Send, SmilePlus } from "lucide-react";
+import {
+  Banknote,
+  ClipboardCheck,
+  ClipboardList,
+  FileSignature,
+  Send,
+  SmilePlus,
+} from "lucide-react";
 
 import { AppShell } from "@/components/app/AppShell";
 import { FORMATEUR_NAV } from "@/components/app/nav";
@@ -25,10 +32,7 @@ import { envoyerDocumentsFinancement } from "@/lib/dossier-communication.functio
 import { DOCUMENTS } from "@/lib/dossier/html";
 import { mergeDonnees } from "@/lib/dossier/types";
 import { pieceLabel } from "@/lib/dossier/pieces";
-import {
-  PREREQUIS_ENVOI_TIERS,
-  prerequisEnvoiTiersManquants,
-} from "@/lib/dossier/visibilite";
+import { PREREQUIS_ENVOI_TIERS, prerequisEnvoiTiersManquants } from "@/lib/dossier/visibilite";
 import { parseQuestions } from "@/lib/outils";
 
 export const Route = createFileRoute("/_app/espace/communication")({
@@ -113,7 +117,9 @@ function CommunicationPage() {
         .eq("formateur_id", user!.id)
         .order("nom");
       if (error) throw error;
-      return (data ?? []) as unknown as ApprenantRow[];
+      // Typage vérifié par le compilateur (types Supabase à jour) : plus de conversion forcée.
+      const lignes: ApprenantRow[] = data ?? [];
+      return lignes;
     },
   });
 
@@ -305,7 +311,9 @@ function CommunicationPage() {
                     .map((c) =>
                       c === "F0A" ? "Recueil des besoins (F0A)" : "Test de positionnement (TP)",
                     )
-                    .join(" et ")} : sans cela, la convention et le programme partent sans connaître le niveau réel de l'apprenant.`
+                    .join(
+                      " et ",
+                    )} : sans cela, la convention et le programme partent sans connaître le niveau réel de l'apprenant.`
                 : undefined
             }
           />
@@ -340,7 +348,10 @@ function CommunicationPage() {
                   envoiSimple.mutate({
                     code: "TP",
                     label: outil.titre || pieceLabel("TP"),
-                    html: outilHtml(outil.titre || "Test de positionnement", parseQuestions(outil.questions)),
+                    html: outilHtml(
+                      outil.titre || "Test de positionnement",
+                      parseQuestions(outil.questions),
+                    ),
                   });
                 }}
               >
@@ -389,7 +400,10 @@ function CommunicationPage() {
                   envoiSimple.mutate({
                     code: "EA",
                     label: outil.titre || pieceLabel("EA"),
-                    html: outilHtml(outil.titre || "Évaluation des acquis", parseQuestions(outil.questions)),
+                    html: outilHtml(
+                      outil.titre || "Évaluation des acquis",
+                      parseQuestions(outil.questions),
+                    ),
                   });
                 }}
               >

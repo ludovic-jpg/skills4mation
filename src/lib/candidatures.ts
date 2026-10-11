@@ -45,7 +45,9 @@ export function useCandidatures(enabled = true) {
         .select("*")
         .order("created_at", { ascending: false });
       if (error) throw error;
-      return (data ?? []) as unknown as Candidature[];
+      // Typage vérifié par le compilateur (types Supabase à jour) : plus de conversion forcée.
+      const lignes: Candidature[] = data ?? [];
+      return lignes;
     },
   });
 }

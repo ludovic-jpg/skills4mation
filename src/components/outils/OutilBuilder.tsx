@@ -87,7 +87,7 @@ export function OutilBuilder({
     queryFn: async () => {
       const { data, error } = await supabase
         .from("parcours_formation")
-        .select("id, titre")
+        .select("id, titre, formation_catalogue_id")
         .eq("formateur_id", user!.id)
         .order("created_at", { ascending: false });
       if (error) throw error;
@@ -135,7 +135,21 @@ export function OutilBuilder({
   });
 
   const listeFormations = useMemo(() => formations.data ?? [], [formations.data]);
-  const listeParcours = useMemo(() => parcours.data ?? [], [parcours.data]);
+  // `parcours_formation` sert surtout de miroir des formations (mis à jour à chaque
+  // enregistrement d'une formation) : seuls les parcours SANS formation sont proposés
+  // comme « Anciens parcours », sinon chaque formation apparaîtrait deux fois.
+  const listeParcours = useMemo(
+    () => (parcours.data ?? []).filter((p) => !p.formation_catalogue_id),
+    [parcours.data],
+  );
+  /** Parcours miroir → formation d'origine (pour rouvrir un ancien outil sur sa formation). */
+  const formationDuParcours = useMemo(() => {
+    const m = new Map<string, string>();
+    for (const p of parcours.data ?? []) {
+      if (p.formation_catalogue_id) m.set(p.id, p.formation_catalogue_id);
+    }
+    return m;
+  }, [parcours.data]);
   const chargementSources = formations.isLoading || parcours.isLoading;
   const aucuneSource =
     !chargementSources && listeFormations.length === 0 && listeParcours.length === 0;
@@ -143,9 +157,9 @@ export function OutilBuilder({
   const nomsSources = useMemo(() => {
     const noms = new Map<string, string>();
     for (const f of listeFormations) noms.set(`f:${f.id}`, f.titre);
-    for (const p of listeParcours) noms.set(`p:${p.id}`, p.titre);
+    for (const p of parcours.data ?? []) noms.set(`p:${p.id}`, p.titre);
     return noms;
-  }, [listeFormations, listeParcours]);
+  }, [listeFormations, parcours.data]);
 
   const formationChoisie =
     source?.kind === "formation" ? listeFormations.find((f) => f.id === source.id) : undefined;
@@ -218,12 +232,17 @@ export function OutilBuilder({
   }) {
     setOutilId(outil.id);
     setTitre(outil.titre);
+    const formationMiroir = outil.parcours_id
+      ? formationDuParcours.get(outil.parcours_id)
+      : undefined;
     setSourceValeur(
       outil.formation_id
         ? `f:${outil.formation_id}`
-        : outil.parcours_id
-          ? `p:${outil.parcours_id}`
-          : "",
+        : formationMiroir
+          ? `f:${formationMiroir}`
+          : outil.parcours_id
+            ? `p:${outil.parcours_id}`
+            : "",
     );
     setQuestions(parseQuestions(outil.questions));
     requestAnimationFrame(() =>
