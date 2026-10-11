@@ -40,3 +40,8 @@
 - src/components/dossier/PiecesPanel.tsx et DocumentsPanel.tsx = outils
   back-office, utilisés uniquement depuis KanbanDossiers.tsx (admin). Ne
   pas les réintroduire côté formateur.
+
+## Resource access
+- Keep the public guide and authenticated resources as separate routes; reuse the existing auth guard without role restrictions so resource-only accounts remain supported.
+- Resource downloads use private Storage signed URLs and owner-scoped tables; keep marketing consent independent so it never gates access.
+- Scope the guide palette to its own CSS wrapper to preserve existing pages.

@@ -1,0 +1,9 @@
+/* Charte limitée aux deux nouvelles pages, sans changement des pages existantes. */
+.livre-blanc-theme {
+  --primary: #007F44;
+  --primary-light: #25AD64;
+  --secondary: #25AD64;
+  --cta: #F3E31F;
+  --background-image-gradient-hero: linear-gradient(135deg, var(--primary), var(--primary-light));
+}
+.livre-blanc-theme h1, .livre-blanc-theme h2, .livre-blanc-theme h3 { letter-spacing: 0; }

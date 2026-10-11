@@ -16,6 +16,7 @@ import { Route as BilanDeCompetencesRouteImport } from './routes/bilan-de-compet
 import { Route as CodeDeontologiqueRouteImport } from './routes/code-deontologique'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as EvaluerDroitFormationRouteImport } from './routes/evaluer-droit-formation'
+import { Route as LivreBlancRouteImport } from './routes/livre-blanc'
 import { Route as McpRouteImport } from './routes/mcp'
 import { Route as MediathequeRouteImport } from './routes/mediatheque'
 import { Route as MentionsLegalesRouteImport } from './routes/mentions-legales'
@@ -27,6 +28,7 @@ import { Route as ReclamationsRouteImport } from './routes/reclamations'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as Char91DotmcpChar93ListToolsRouteImport } from './routes/[.mcp]/list-tools'
 import { Route as Char91DotwellKnownChar93OauthProtectedResourceRouteImport } from './routes/[.well-known]/oauth-protected-resource'
+import { Route as AppRessourcesRouteImport } from './routes/_app.ressources'
 import { Route as BlogIndexRouteImport } from './routes/blog.index'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 import { Route as CatalogueIndexRouteImport } from './routes/catalogue.index'
@@ -103,6 +105,11 @@ const EvaluerDroitFormationRoute = EvaluerDroitFormationRouteImport.update({
   path: '/evaluer-droit-formation',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LivreBlancRoute = LivreBlancRouteImport.update({
+  id: '/livre-blanc',
+  path: '/livre-blanc',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const McpRoute = McpRouteImport.update({
   id: '/mcp',
   path: '/mcp',
@@ -161,6 +168,11 @@ const Char91DotwellKnownChar93OauthProtectedResourceRoute =
     path: '/.well-known/oauth-protected-resource',
     getParentRoute: () => rootRouteImport,
   } as any)
+const AppRessourcesRoute = AppRessourcesRouteImport.update({
+  id: '/ressources',
+  path: '/ressources',
+  getParentRoute: () => AppRoute,
+} as any)
 const BlogIndexRoute = BlogIndexRouteImport.update({
   id: '/blog/',
   path: '/blog/',
@@ -379,6 +391,7 @@ export interface FileRoutesByFullPath {
   '/code-deontologique': typeof CodeDeontologiqueRoute
   '/contact': typeof ContactRoute
   '/evaluer-droit-formation': typeof EvaluerDroitFormationRoute
+  '/livre-blanc': typeof LivreBlancRoute
   '/mcp': typeof McpRoute
   '/mediatheque': typeof MediathequeRoute
   '/mentions-legales': typeof MentionsLegalesRoute
@@ -390,6 +403,7 @@ export interface FileRoutesByFullPath {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
+  '/ressources': typeof AppRessourcesRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/formations/$slug': typeof FormationsSlugRoute
   '/blog/': typeof BlogIndexRoute
@@ -439,6 +453,7 @@ export interface FileRoutesByTo {
   '/code-deontologique': typeof CodeDeontologiqueRoute
   '/contact': typeof ContactRoute
   '/evaluer-droit-formation': typeof EvaluerDroitFormationRoute
+  '/livre-blanc': typeof LivreBlancRoute
   '/mcp': typeof McpRoute
   '/mediatheque': typeof MediathequeRoute
   '/mentions-legales': typeof MentionsLegalesRoute
@@ -450,6 +465,7 @@ export interface FileRoutesByTo {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
+  '/ressources': typeof AppRessourcesRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/formations/$slug': typeof FormationsSlugRoute
   '/blog': typeof BlogIndexRoute
@@ -501,6 +517,7 @@ export interface FileRoutesById {
   '/code-deontologique': typeof CodeDeontologiqueRoute
   '/contact': typeof ContactRoute
   '/evaluer-droit-formation': typeof EvaluerDroitFormationRoute
+  '/livre-blanc': typeof LivreBlancRoute
   '/mcp': typeof McpRoute
   '/mediatheque': typeof MediathequeRoute
   '/mentions-legales': typeof MentionsLegalesRoute
@@ -512,6 +529,7 @@ export interface FileRoutesById {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
+  '/_app/ressources': typeof AppRessourcesRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/formations/$slug': typeof FormationsSlugRoute
   '/blog/': typeof BlogIndexRoute
@@ -563,6 +581,7 @@ export interface FileRouteTypes {
     | '/code-deontologique'
     | '/contact'
     | '/evaluer-droit-formation'
+    | '/livre-blanc'
     | '/mcp'
     | '/mediatheque'
     | '/mentions-legales'
@@ -574,6 +593,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/.mcp/list-tools'
     | '/.well-known/oauth-protected-resource'
+    | '/ressources'
     | '/blog/$slug'
     | '/formations/$slug'
     | '/blog/'
@@ -623,6 +643,7 @@ export interface FileRouteTypes {
     | '/code-deontologique'
     | '/contact'
     | '/evaluer-droit-formation'
+    | '/livre-blanc'
     | '/mcp'
     | '/mediatheque'
     | '/mentions-legales'
@@ -634,6 +655,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/.mcp/list-tools'
     | '/.well-known/oauth-protected-resource'
+    | '/ressources'
     | '/blog/$slug'
     | '/formations/$slug'
     | '/blog'
@@ -684,6 +706,7 @@ export interface FileRouteTypes {
     | '/code-deontologique'
     | '/contact'
     | '/evaluer-droit-formation'
+    | '/livre-blanc'
     | '/mcp'
     | '/mediatheque'
     | '/mentions-legales'
@@ -695,6 +718,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/.mcp/list-tools'
     | '/.well-known/oauth-protected-resource'
+    | '/_app/ressources'
     | '/blog/$slug'
     | '/formations/$slug'
     | '/blog/'
@@ -746,6 +770,7 @@ export interface RootRouteChildren {
   CodeDeontologiqueRoute: typeof CodeDeontologiqueRoute
   ContactRoute: typeof ContactRoute
   EvaluerDroitFormationRoute: typeof EvaluerDroitFormationRoute
+  LivreBlancRoute: typeof LivreBlancRoute
   McpRoute: typeof McpRoute
   MediathequeRoute: typeof MediathequeRoute
   MentionsLegalesRoute: typeof MentionsLegalesRoute
@@ -824,6 +849,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EvaluerDroitFormationRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/livre-blanc': {
+      id: '/livre-blanc'
+      path: '/livre-blanc'
+      fullPath: '/livre-blanc'
+      preLoaderRoute: typeof LivreBlancRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/mcp': {
       id: '/mcp'
       path: '/mcp'
@@ -900,6 +932,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/.well-known/oauth-protected-resource'
       preLoaderRoute: typeof Char91DotwellKnownChar93OauthProtectedResourceRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/_app/ressources': {
+      id: '/_app/ressources'
+      path: '/ressources'
+      fullPath: '/ressources'
+      preLoaderRoute: typeof AppRessourcesRouteImport
+      parentRoute: typeof AppRoute
     }
     '/blog/': {
       id: '/blog/'
@@ -1192,6 +1231,7 @@ declare module '@tanstack/react-router' {
 }
 
 interface AppRouteChildren {
+  AppRessourcesRoute: typeof AppRessourcesRoute
   AppAdminBpfRoute: typeof AppAdminBpfRoute
   AppAdminCertificationsRoute: typeof AppAdminCertificationsRoute
   AppAdminComptesRoute: typeof AppAdminComptesRoute
@@ -1222,6 +1262,7 @@ interface AppRouteChildren {
 }
 
 const AppRouteChildren: AppRouteChildren = {
+  AppRessourcesRoute: AppRessourcesRoute,
   AppAdminBpfRoute: AppAdminBpfRoute,
   AppAdminCertificationsRoute: AppAdminCertificationsRoute,
   AppAdminComptesRoute: AppAdminComptesRoute,
@@ -1261,6 +1302,7 @@ const rootRouteChildren: RootRouteChildren = {
   CodeDeontologiqueRoute: CodeDeontologiqueRoute,
   ContactRoute: ContactRoute,
   EvaluerDroitFormationRoute: EvaluerDroitFormationRoute,
+  LivreBlancRoute: LivreBlancRoute,
   McpRoute: McpRoute,
   MediathequeRoute: MediathequeRoute,
   MentionsLegalesRoute: MentionsLegalesRoute,

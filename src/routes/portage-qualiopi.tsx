@@ -659,6 +659,19 @@ function PortageQualiopi() {
         </div>
       </section>
 
+      <section className="section-shell py-12">
+        <div className="flex flex-col gap-6 border-y border-border py-8 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <p className="eyebrow">Ressource gratuite</p>
+            <h2 className="mt-3 text-2xl font-semibold">Le guide du formateur indépendant</h2>
+            <p className="mt-3 text-sm text-muted-foreground">Cadre légal, financements et comparatif des coûts : notre livre blanc en 30 pages.</p>
+          </div>
+          <Button asChild variant="cta" className="h-auto min-h-10 shrink-0 whitespace-normal py-3">
+            <Link to="/livre-blanc">Découvrir le livre blanc</Link>
+          </Button>
+        </div>
+      </section>
+
       <section className="section-shell pb-20">
         <Card className="rounded-3xl border-none bg-gradient-hero text-primary-foreground shadow-elevated">
           <CardContent className="p-8 sm:p-12">

@@ -16,6 +16,7 @@ const NAV = [
   { to: "/portage-qualiopi", hash: "tarifs", label: "Tarifs" },
   { to: "/", hash: "projet", label: "Mon projet" },
   { to: "/mediatheque", hash: undefined, label: "Médiathèque" },
+  { to: "/livre-blanc", hash: undefined, label: "Livre blanc" },
   { to: "/blog", hash: undefined, label: "Blog" },
   { to: "/contact", hash: undefined, label: "Contact" },
 ] as const;
