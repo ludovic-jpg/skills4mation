@@ -43,5 +43,5 @@
 
 ## Resource access
 - Keep the public guide and authenticated resources as separate routes; reuse the existing auth guard without role restrictions so resource-only accounts remain supported.
-- Resource downloads use private Storage signed URLs and owner-scoped tables; keep marketing consent independent so it never gates access.
+- White paper PDFs are versioned in the repo under public/fichiers/<sha256-16>/ (owner decision, 11/10/2026: updates ship by git push, no external storage). Only /ressources offers the download; keep download logging in owner-scoped tables, keep /fichiers/ disallowed in robots.txt, and never move the PDF back to Storage signed URLs. Keep marketing consent independent so it never gates access.
 - Scope the guide palette to its own CSS wrapper to preserve existing pages.
