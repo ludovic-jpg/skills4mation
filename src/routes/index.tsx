@@ -26,9 +26,9 @@ import { PublicLayout } from "@/components/site/PublicLayout";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 
-const TITRE = "Skills4mation, votre vecteur de réussite";
+const TITRE = "Portage Qualiopi & formations certifiées | Skills4mation";
 const DESCRIPTION =
-  "Vous voulez vous former auprès du formateur de votre choix ? Vous souhaitez former les apprenants de votre choix, sans tracas ? Skills4mation est le vecteur de la réussite de vos espaces de formation.";
+  "Organisme de formation certifié Qualiopi : portage pour formateurs indépendants, financement CPF/OPCO, formations à Rixheim-Mulhouse et toute la France.";
 
 export const Route = createFileRoute("/")({
   head: () => ({
