@@ -1069,6 +1069,7 @@ export type Database = {
         Row: {
           created_at: string
           formateur_id: string
+          formation_id: string | null
           id: string
           parcours_id: string | null
           questions: Json
@@ -1077,6 +1078,7 @@ export type Database = {
         Insert: {
           created_at?: string
           formateur_id: string
+          formation_id?: string | null
           id?: string
           parcours_id?: string | null
           questions?: Json
@@ -1085,12 +1087,20 @@ export type Database = {
         Update: {
           created_at?: string
           formateur_id?: string
+          formation_id?: string | null
           id?: string
           parcours_id?: string | null
           questions?: Json
           titre?: string
         }
         Relationships: [
+          {
+            foreignKeyName: "outils_evaluation_acquis_formation_id_fkey"
+            columns: ["formation_id"]
+            isOneToOne: false
+            referencedRelation: "formations_catalogue"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "outils_evaluation_acquis_parcours_id_fkey"
             columns: ["parcours_id"]
@@ -1111,6 +1121,7 @@ export type Database = {
         Row: {
           created_at: string
           formateur_id: string
+          formation_id: string | null
           id: string
           parcours_id: string | null
           questions: Json
@@ -1119,6 +1130,7 @@ export type Database = {
         Insert: {
           created_at?: string
           formateur_id: string
+          formation_id?: string | null
           id?: string
           parcours_id?: string | null
           questions?: Json
@@ -1127,12 +1139,20 @@ export type Database = {
         Update: {
           created_at?: string
           formateur_id?: string
+          formation_id?: string | null
           id?: string
           parcours_id?: string | null
           questions?: Json
           titre?: string
         }
         Relationships: [
+          {
+            foreignKeyName: "outils_positionnement_formation_id_fkey"
+            columns: ["formation_id"]
+            isOneToOne: false
+            referencedRelation: "formations_catalogue"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "outils_positionnement_parcours_id_fkey"
             columns: ["parcours_id"]

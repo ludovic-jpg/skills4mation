@@ -17,10 +17,15 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Skeleton } from "@/components/ui/skeleton";
 import { Switch } from "@/components/ui/switch";
 import { supabase } from "@/integrations/supabase/client";
+import { deposerSupportGenerique } from "@/lib/supports";
 
 const AUCUNE = "__aucune__";
+
+/** Clé de cache des supports génériques (partagée avec le générateur PowerPoint). */
+export const SUPPORTS_GENERIQUES_KEY = "supports-generiques";
 
 /**
  * Supports de cours "génériques" du formateur : indépendants d'un dossier
@@ -35,7 +40,7 @@ export function SupportsCoursPanel() {
   const [apprenantIds, setApprenantIds] = useState<string[]>([]);
   const [busy, setBusy] = useState(false);
 
-  const key = ["supports-generiques", user?.id];
+  const key = [SUPPORTS_GENERIQUES_KEY, user?.id];
 
   const { data: formations } = useQuery({
     queryKey: ["supports-formations", user?.id],
@@ -65,7 +70,7 @@ export function SupportsCoursPanel() {
     },
   });
 
-  const { data: supports } = useQuery({
+  const supportsQuery = useQuery({
     queryKey: key,
     enabled: Boolean(user),
     queryFn: async () => {
@@ -81,37 +86,17 @@ export function SupportsCoursPanel() {
       return data ?? [];
     },
   });
+  const supports = supportsQuery.data;
 
   const upload = useMutation({
     mutationFn: async (file: File) => {
-      const ext = file.name.split(".").pop()?.toLowerCase() ?? "pdf";
-      const path = `supports/generiques/${user!.id}/${crypto.randomUUID()}.${ext}`;
-      const { error: upErr } = await supabase.storage
-        .from("documents")
-        .upload(path, file, { upsert: true, contentType: file.type || "application/pdf" });
-      if (upErr) throw new Error("Dépôt du fichier impossible.");
-      const { data: inserted, error } = await supabase
-        .from("supports_pedagogiques")
-        .insert({
-          dossier_id: null,
-          formateur_id: user!.id,
-          formation_id: formationId === AUCUNE ? null : formationId,
-          titre: titre.trim() || file.name,
-          type: ext === "pdf" ? "pdf" : "autre",
-          fichier_url: path,
-        })
-        .select("id")
-        .single();
-      if (error || !inserted) throw new Error("Enregistrement impossible.");
-      if (apprenantIds.length > 0) {
-        const { error: linkErr } = await supabase.from("supports_apprenants").insert(
-          apprenantIds.map((apprenant_id) => ({
-            support_id: inserted.id,
-            apprenant_id,
-          })),
-        );
-        if (linkErr) throw new Error("Partage avec les apprenants impossible.");
-      }
+      await deposerSupportGenerique({
+        formateurId: user!.id,
+        fichier: file,
+        titre,
+        formationId: formationId === AUCUNE ? null : formationId,
+        apprenantIds,
+      });
     },
     onSuccess: () => {
       toast.success("Support déposé.");
@@ -162,7 +147,7 @@ export function SupportsCoursPanel() {
       <Card className="rounded-2xl border-border/70 shadow-soft">
         <CardContent className="grid gap-4 p-6">
           <div>
-            <h2 className="text-base font-semibold">Déposer un support de cours</h2>
+            <h2 className="text-base font-semibold">Déposer un support existant</h2>
             <p className="text-sm text-muted-foreground">
               PDF, présentation ou tout autre document. Choisissez une formation pour le partager
               avec tous ses apprenants, ou sélectionnez des apprenants précis.
@@ -253,8 +238,20 @@ export function SupportsCoursPanel() {
       <Card className="rounded-2xl border-border/70 shadow-soft">
         <CardContent className="grid gap-3 p-6">
           <h2 className="text-base font-semibold">Mes supports de cours</h2>
-          {(supports ?? []).length === 0 ? (
-            <p className="text-sm text-muted-foreground">Aucun support déposé pour le moment.</p>
+          {supportsQuery.isLoading ? (
+            <div className="grid gap-2" aria-busy="true" aria-label="Chargement des supports">
+              <Skeleton className="h-16 rounded-xl" />
+              <Skeleton className="h-16 rounded-xl" />
+            </div>
+          ) : supportsQuery.isError ? (
+            <p className="text-sm text-destructive">
+              Impossible de charger vos supports. Rechargez la page.
+            </p>
+          ) : (supports ?? []).length === 0 ? (
+            <p className="rounded-xl border border-dashed border-border p-6 text-center text-sm text-muted-foreground">
+              Aucun support pour le moment : générez un PowerPoint ci-dessus ou déposez un fichier
+              existant.
+            </p>
           ) : (
             (supports ?? []).map((s) => (
               <div
@@ -271,9 +268,8 @@ export function SupportsCoursPanel() {
                     {(s.supports_apprenants ?? []).length > 0 ? (
                       <span>
                         {(s.supports_apprenants ?? [])
-                          .map(
-                            (sa) =>
-                              `${sa.dossier_apprenants?.prenom ?? ""} ${sa.dossier_apprenants?.nom ?? ""}`.trim(),
+                          .map((sa) =>
+                            `${sa.dossier_apprenants?.prenom ?? ""} ${sa.dossier_apprenants?.nom ?? ""}`.trim(),
                           )
                           .filter(Boolean)
                           .join(", ")}

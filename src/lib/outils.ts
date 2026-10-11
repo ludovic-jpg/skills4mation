@@ -7,6 +7,11 @@ export type QuestionOutil = {
   type: TypeQuestion;
   /** Propositions de réponse (QCM uniquement). */
   options: string[];
+  /**
+   * Texte de la bonne réponse (QCM uniquement, facultatif). Stocké dans le JSON
+   * `questions` : les outils enregistrés avant son ajout restent valides.
+   */
+  bonneReponse?: string | undefined;
 };
 
 export const TYPES_QUESTION: { value: TypeQuestion; label: string }[] = [
@@ -23,11 +28,13 @@ export function parseQuestions(raw: unknown): QuestionOutil[] {
     .map((item) => {
       const q = (item ?? {}) as Partial<QuestionOutil>;
       const type: TypeQuestion = q.type === "qcm" ? "qcm" : "ouverte";
-      return {
-        enonce: String(q.enonce ?? "").trim(),
-        type,
-        options: Array.isArray(q.options) ? q.options.map((o) => String(o ?? "").trim()).filter(Boolean) : [],
-      };
+      const options = Array.isArray(q.options)
+        ? q.options.map((o) => String(o ?? "").trim()).filter(Boolean)
+        : [];
+      const bonne = typeof q.bonneReponse === "string" ? q.bonneReponse.trim() : "";
+      const question: QuestionOutil = { enonce: String(q.enonce ?? "").trim(), type, options };
+      if (type === "qcm" && bonne && options.includes(bonne)) question.bonneReponse = bonne;
+      return question;
     })
     .filter((q) => q.enonce.length > 0);
 }
