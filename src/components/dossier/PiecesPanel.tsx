@@ -16,7 +16,9 @@ import {
 } from "@/components/ui/select";
 import { supabase } from "@/integrations/supabase/client";
 import { PIECES, PIECE_SOURCES, PIECE_STATUTS, type PieceStatut } from "@/lib/dossier/pieces";
-import { downloadBlob, exportDossierZip, pieceFileName, renderPieceBlob } from "@/lib/dossier/pdf";
+// Chargé à la demande : React-PDF (pdfkit) ne doit pas être évalué pendant le rendu
+// serveur Cloudflare Workers (erreur « Invalid URL string » au chargement du module).
+const chargerPdf = () => import("@/lib/dossier/pdf");
 import type { DossierDonnees } from "@/lib/dossier/types";
 import {
   PIECES_ENVOI_TIERS,
@@ -103,6 +105,7 @@ export function PiecesPanel({
   async function generer(code: string) {
     setBusy(code);
     try {
+      const { downloadBlob, pieceFileName, renderPieceBlob } = await chargerPdf();
       const blob = await renderPieceBlob(code, donnees);
       downloadBlob(blob, pieceFileName(code, donnees));
       await upsert.mutateAsync({ code, statut: "complete" });
@@ -121,6 +124,7 @@ export function PiecesPanel({
         (p) =>
           `${p.code};${p.label};${PIECE_SOURCES[p.source]};${PIECE_STATUTS[statutOf(p.code)].label}`,
       );
+      const { downloadBlob, exportDossierZip } = await chargerPdf();
       const blob = await exportDossierZip(
         pieces.filter((p) => p.generable).map((p) => p.code),
         donnees,
