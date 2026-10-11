@@ -16,6 +16,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { BUDGET_STATUTS, formatDate, type BudgetStatut } from "@/lib/statuts";
 import { useCandidatures, useCandidatureMutation, DEMANDES_KEYS } from "@/lib/candidatures";
+import { resumeQuestionnaire } from "@/lib/candidature-questionnaire";
 
 export const Route = createFileRoute("/_app/admin/demandes")({
   component: AdminDemandes,
@@ -56,6 +57,12 @@ function normalise(source: Source, row: Record<string, unknown>): Ligne {
       sousTitre: `${texte(row["email"])} · ${texte(row["telephone"])}`,
       details: [
         { label: "Expertise", valeur: texte(row["expertise"]) },
+        ...resumeQuestionnaire(row["questionnaire"]).map((l) => ({
+          label: l.label,
+          valeur: l.valeurs.join(", "),
+        })),
+        { label: "SIRET", valeur: texte(row["siret"]) },
+        { label: "NDA", valeur: texte(row["numero_nda"]) },
         { label: "Message", valeur: texte(row["message"]) },
       ],
       statut: String(row["statut"]),

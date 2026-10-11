@@ -160,7 +160,7 @@ function Mediatheque() {
               </p>
             </div>
             <Button asChild variant="cta" size="lg">
-              <Link to="/pole-formateur" hash="candidature">
+              <Link to="/candidature">
                 Rejoindre Skills4mation
               </Link>
             </Button>

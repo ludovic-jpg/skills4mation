@@ -295,7 +295,7 @@ function PortageQualiopi() {
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Button asChild variant="cta" size="lg">
-                <Link to="/pole-formateur" hash="candidature">Rejoindre Skills4mation</Link>
+                <Link to="/candidature">Rejoindre Skills4mation</Link>
               </Button>
               <Button asChild variant="onDark" size="lg">
                 <Link to="/portage-qualiopi" hash="tarifs">
@@ -680,7 +680,7 @@ function PortageQualiopi() {
             </h2>
             <div className="mt-8 flex flex-wrap gap-3">
               <Button asChild variant="cta" size="lg">
-                <Link to="/pole-formateur" hash="candidature">Rejoindre Skills4mation</Link>
+                <Link to="/candidature">Rejoindre Skills4mation</Link>
               </Button>
               <Button asChild variant="onDark" size="lg">
                 <Link to="/contact">Nous contacter</Link>

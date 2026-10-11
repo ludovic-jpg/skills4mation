@@ -529,7 +529,7 @@ function CodeDeontologique() {
             </ul>
             <div className="mt-6">
               <Button asChild variant="cta">
-                <Link to="/pole-formateur" hash="candidature">
+                <Link to="/candidature">
                   Rejoindre Skills4mation
                 </Link>
               </Button>

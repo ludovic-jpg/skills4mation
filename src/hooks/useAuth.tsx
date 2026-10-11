@@ -33,7 +33,8 @@ export type Profile = {
   recueil_besoins_questions_perso: string[] | null;
   /** Lien Tally personnalisé pour la satisfaction à chaud (alternative au formulaire interne). */
   statut_candidature: CandidatureStatut;
-
+  /** Réponses du questionnaire de candidature (jsonb, absent tant que la migration n'est pas appliquée). */
+  questionnaire?: unknown;
 };
 
 export type AppRole = "conseiller_formation" | "formateur" | "apprenant";
@@ -133,7 +134,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       },
     };
   }, [session, profile, role, roles, loading]);
-
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
