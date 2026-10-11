@@ -1,0 +1,604 @@
+{
+ "siret": {
+  "results": [
+   {
+    "siren": "418166096",
+    "nom_complet": "OCTO-TECHNOLOGY",
+    "nom_raison_sociale": "OCTO-TECHNOLOGY",
+    "sigle": null,
+    "activite_principale": "62.02A",
+    "nature_juridique": "5710",
+    "tranche_effectif_salarie": "41",
+    "etat_administratif": "A",
+    "siege": {
+     "siret": "41816609600069",
+     "adresse": "34 AVENUE DE L'OPERA 75002 PARIS",
+     "code_postal": "75002",
+     "libelle_commune": "PARIS",
+     "activite_principale": "62.02A",
+     "tranche_effectif_salarie": "41",
+     "etat_administratif": "A",
+     "est_siege": true,
+     "nom_commercial": null,
+     "liste_enseignes": null
+    },
+    "matching_etablissements": [
+     {
+      "siret": "41816609600069",
+      "adresse": "34 AVENUE DE L'OPERA 75002 PARIS",
+      "code_postal": "75002",
+      "libelle_commune": "PARIS",
+      "activite_principale": "62.02A",
+      "tranche_effectif_salarie": "41",
+      "etat_administratif": "A",
+      "est_siege": true,
+      "nom_commercial": null,
+      "liste_enseignes": null
+     }
+    ],
+    "dirigeants": [
+     {
+      "type_dirigeant": "personne physique",
+      "nom": "ROUX",
+      "prenoms": "OLIVIER",
+      "qualite": "Président de SAS"
+     },
+     {
+      "type_dirigeant": "personne morale",
+      "nom": null,
+      "prenoms": null,
+      "qualite": "Commissaire aux comptes titulaire"
+     }
+    ]
+   }
+  ],
+  "total_results": 1,
+  "page": 1,
+  "per_page": 5,
+  "total_pages": 1
+ },
+ "siretFerme": {
+  "results": [
+   {
+    "siren": "418166096",
+    "nom_complet": "OCTO-TECHNOLOGY",
+    "nom_raison_sociale": "OCTO-TECHNOLOGY",
+    "sigle": null,
+    "activite_principale": "62.02A",
+    "nature_juridique": "5710",
+    "tranche_effectif_salarie": "41",
+    "etat_administratif": "A",
+    "siege": {
+     "siret": "41816609600069",
+     "adresse": "34 AVENUE DE L'OPERA 75002 PARIS",
+     "code_postal": "75002",
+     "libelle_commune": "PARIS",
+     "activite_principale": "62.02A",
+     "tranche_effectif_salarie": "41",
+     "etat_administratif": "A",
+     "est_siege": true,
+     "nom_commercial": null,
+     "liste_enseignes": null
+    },
+    "matching_etablissements": [
+     {
+      "siret": "41816609600010",
+      "adresse": "51 RUE DE VERDUN 92150 SURESNES",
+      "code_postal": "92150",
+      "libelle_commune": "SURESNES",
+      "activite_principale": "72.1Z",
+      "tranche_effectif_salarie": "NN",
+      "etat_administratif": "F",
+      "est_siege": false,
+      "nom_commercial": null,
+      "liste_enseignes": null
+     }
+    ],
+    "dirigeants": [
+     {
+      "type_dirigeant": "personne physique",
+      "nom": "ROUX",
+      "prenoms": "OLIVIER",
+      "qualite": "Président de SAS"
+     },
+     {
+      "type_dirigeant": "personne morale",
+      "nom": null,
+      "prenoms": null,
+      "qualite": "Commissaire aux comptes titulaire"
+     }
+    ]
+   }
+  ],
+  "total_results": 1,
+  "page": 1,
+  "per_page": 1,
+  "total_pages": 1
+ },
+ "siren": {
+  "results": [
+   {
+    "siren": "418166096",
+    "nom_complet": "OCTO-TECHNOLOGY",
+    "nom_raison_sociale": "OCTO-TECHNOLOGY",
+    "sigle": null,
+    "activite_principale": "62.02A",
+    "nature_juridique": "5710",
+    "tranche_effectif_salarie": "41",
+    "etat_administratif": "A",
+    "siege": {
+     "siret": "41816609600069",
+     "adresse": "34 AVENUE DE L'OPERA 75002 PARIS",
+     "code_postal": "75002",
+     "libelle_commune": "PARIS",
+     "activite_principale": "62.02A",
+     "tranche_effectif_salarie": "41",
+     "etat_administratif": "A",
+     "est_siege": true,
+     "nom_commercial": null,
+     "liste_enseignes": null
+    },
+    "matching_etablissements": [],
+    "dirigeants": [
+     {
+      "type_dirigeant": "personne physique",
+      "nom": "ROUX",
+      "prenoms": "OLIVIER",
+      "qualite": "Président de SAS"
+     },
+     {
+      "type_dirigeant": "personne morale",
+      "nom": null,
+      "prenoms": null,
+      "qualite": "Commissaire aux comptes titulaire"
+     }
+    ]
+   }
+  ],
+  "total_results": 1,
+  "page": 1,
+  "per_page": 1,
+  "total_pages": 1
+ },
+ "nom": {
+  "results": [
+   {
+    "siren": "418166096",
+    "nom_complet": "OCTO-TECHNOLOGY",
+    "nom_raison_sociale": "OCTO-TECHNOLOGY",
+    "sigle": null,
+    "activite_principale": "62.02A",
+    "nature_juridique": "5710",
+    "tranche_effectif_salarie": "41",
+    "etat_administratif": "A",
+    "siege": {
+     "siret": "41816609600069",
+     "adresse": "34 AVENUE DE L'OPERA 75002 PARIS",
+     "code_postal": "75002",
+     "libelle_commune": "PARIS",
+     "activite_principale": "62.02A",
+     "tranche_effectif_salarie": "41",
+     "etat_administratif": "A",
+     "est_siege": true,
+     "nom_commercial": null,
+     "liste_enseignes": null
+    },
+    "matching_etablissements": [
+     {
+      "siret": "41816609600069",
+      "adresse": "34 AVENUE DE L'OPERA 75002 PARIS",
+      "code_postal": "75002",
+      "libelle_commune": "PARIS",
+      "activite_principale": "62.02A",
+      "tranche_effectif_salarie": "41",
+      "etat_administratif": "A",
+      "est_siege": true,
+      "nom_commercial": null,
+      "liste_enseignes": null
+     },
+     {
+      "siret": "41816609600010",
+      "adresse": "51 RUE DE VERDUN 92150 SURESNES",
+      "code_postal": "92150",
+      "libelle_commune": "SURESNES",
+      "activite_principale": "72.1Z",
+      "tranche_effectif_salarie": "NN",
+      "etat_administratif": "F",
+      "est_siege": false,
+      "nom_commercial": null,
+      "liste_enseignes": null
+     },
+     {
+      "siret": "41816609600028",
+      "adresse": "26 28 RUE MARIUS AUFAN 92300 LEVALLOIS-PERRET",
+      "code_postal": "92300",
+      "libelle_commune": "LEVALLOIS-PERRET",
+      "activite_principale": "72.1Z",
+      "tranche_effectif_salarie": "NN",
+      "etat_administratif": "F",
+      "est_siege": false,
+      "nom_commercial": null,
+      "liste_enseignes": null
+     },
+     {
+      "siret": "41816609600036",
+      "adresse": "3 RUE KEPLER 75016 PARIS",
+      "code_postal": "75016",
+      "libelle_commune": "PARIS",
+      "activite_principale": "72.1Z",
+      "tranche_effectif_salarie": "NN",
+      "etat_administratif": "F",
+      "est_siege": false,
+      "nom_commercial": null,
+      "liste_enseignes": null
+     },
+     {
+      "siret": "41816609600044",
+      "adresse": "62 RUE LA BOETIE 75008 PARIS",
+      "code_postal": "75008",
+      "libelle_commune": "PARIS",
+      "activite_principale": "72.1Z",
+      "tranche_effectif_salarie": "NN",
+      "etat_administratif": "F",
+      "est_siege": false,
+      "nom_commercial": null,
+      "liste_enseignes": null
+     },
+     {
+      "siret": "41816609600051",
+      "adresse": "50 AVENUE DES CHAMPS ELYSEES 75008 PARIS",
+      "code_postal": "75008",
+      "libelle_commune": "PARIS",
+      "activite_principale": "62.02A",
+      "tranche_effectif_salarie": "NN",
+      "etat_administratif": "F",
+      "est_siege": false,
+      "nom_commercial": null,
+      "liste_enseignes": null
+     },
+     {
+      "siret": "41816609600077",
+      "adresse": "4-4-2 BIS 4 B RUE DU BOULOI 75001 PARIS",
+      "code_postal": "75001",
+      "libelle_commune": "PARIS",
+      "activite_principale": "71.12B",
+      "tranche_effectif_salarie": "NN",
+      "etat_administratif": "F",
+      "est_siege": false,
+      "nom_commercial": null,
+      "liste_enseignes": null
+     }
+    ],
+    "dirigeants": [
+     {
+      "type_dirigeant": "personne physique",
+      "nom": "ROUX",
+      "prenoms": "OLIVIER",
+      "qualite": "Président de SAS"
+     },
+     {
+      "type_dirigeant": "personne morale",
+      "nom": null,
+      "prenoms": null,
+      "qualite": "Commissaire aux comptes titulaire"
+     }
+    ]
+   },
+   {
+    "siren": "801364258",
+    "nom_complet": "APPALOOSA TECHNOLOGY",
+    "nom_raison_sociale": "APPALOOSA TECHNOLOGY",
+    "sigle": null,
+    "activite_principale": "62.01Z",
+    "nature_juridique": "5710",
+    "tranche_effectif_salarie": "NN",
+    "etat_administratif": "C",
+    "siege": {
+     "siret": "80136425800021",
+     "adresse": "34 AV DE L OPERA 75002 PARIS 2",
+     "code_postal": "75002",
+     "libelle_commune": "PARIS 2",
+     "activite_principale": "62.01Z",
+     "tranche_effectif_salarie": "NN",
+     "etat_administratif": "F",
+     "est_siege": true,
+     "nom_commercial": null,
+     "liste_enseignes": null
+    },
+    "matching_etablissements": [],
+    "dirigeants": [
+     {
+      "type_dirigeant": "personne physique",
+      "nom": "SAADA",
+      "prenoms": "GARY",
+      "qualite": "Commissaire aux comptes suppléant"
+     },
+     {
+      "type_dirigeant": "personne morale",
+      "nom": null,
+      "prenoms": null,
+      "qualite": "Président de SAS"
+     },
+     {
+      "type_dirigeant": "personne morale",
+      "nom": null,
+      "prenoms": null,
+      "qualite": "Commissaire aux comptes titulaire"
+     }
+    ]
+   },
+   {
+    "siren": "809501679",
+    "nom_complet": "ELCURATOR",
+    "nom_raison_sociale": "ELCURATOR",
+    "sigle": null,
+    "activite_principale": "62.01Z",
+    "nature_juridique": "5710",
+    "tranche_effectif_salarie": "NN",
+    "etat_administratif": "C",
+    "siege": {
+     "siret": "80950167900025",
+     "adresse": "34 AV DE L OPERA 75002 PARIS 2",
+     "code_postal": "75002",
+     "libelle_commune": "PARIS 2",
+     "activite_principale": "62.01Z",
+     "tranche_effectif_salarie": "NN",
+     "etat_administratif": "F",
+     "est_siege": true,
+     "nom_commercial": null,
+     "liste_enseignes": null
+    },
+    "matching_etablissements": [],
+    "dirigeants": [
+     {
+      "type_dirigeant": "personne physique",
+      "nom": "SAADA",
+      "prenoms": "GARY",
+      "qualite": "Commissaire aux comptes suppléant"
+     },
+     {
+      "type_dirigeant": "personne morale",
+      "nom": null,
+      "prenoms": null,
+      "qualite": "Président de SAS"
+     },
+     {
+      "type_dirigeant": "personne morale",
+      "nom": null,
+      "prenoms": null,
+      "qualite": "Commissaire aux comptes titulaire"
+     }
+    ]
+   },
+   {
+    "siren": "841317340",
+    "nom_complet": "NOVANCES INFORMATIQUE TECHNOLOGY (NOVANCES IT)",
+    "nom_raison_sociale": "NOVANCES INFORMATIQUE TECHNOLOGY",
+    "sigle": null,
+    "activite_principale": "62.03Z",
+    "nature_juridique": "5710",
+    "tranche_effectif_salarie": "11",
+    "etat_administratif": "A",
+    "siege": {
+     "siret": "84131734000013",
+     "adresse": "PARC DE CRECY 13 RUE CLAUDE CHAPPE 69370 SAINT-DIDIER-AU-MONT-D'OR",
+     "code_postal": "69370",
+     "libelle_commune": "SAINT-DIDIER-AU-MONT-D'OR",
+     "activite_principale": "62.03Z",
+     "tranche_effectif_salarie": "01",
+     "etat_administratif": "A",
+     "est_siege": true,
+     "nom_commercial": "NOVANCES IT",
+     "liste_enseignes": null
+    },
+    "matching_etablissements": [],
+    "dirigeants": [
+     {
+      "type_dirigeant": "personne morale",
+      "nom": null,
+      "prenoms": null,
+      "qualite": "Président de SAS"
+     },
+     {
+      "type_dirigeant": "personne morale",
+      "nom": null,
+      "prenoms": null,
+      "qualite": "Directeur Général"
+     }
+    ]
+   }
+  ],
+  "total_results": 4,
+  "page": 1,
+  "per_page": 6,
+  "total_pages": 1
+ },
+ "laPoste": {
+  "results": [
+   {
+    "siren": "356000000",
+    "nom_complet": "LA POSTE",
+    "nom_raison_sociale": "LA POSTE",
+    "sigle": null,
+    "activite_principale": "53.10Z",
+    "nature_juridique": "5510",
+    "tranche_effectif_salarie": "53",
+    "etat_administratif": "A",
+    "siege": {
+     "siret": "35600000000048",
+     "adresse": "DIRECTION GENERALE DE LA POSTE 9 RUE DU COLONEL PIERRE AVIA 75015 PARIS",
+     "code_postal": "75015",
+     "libelle_commune": "PARIS",
+     "activite_principale": "53.10Z",
+     "tranche_effectif_salarie": "51",
+     "etat_administratif": "A",
+     "est_siege": true,
+     "nom_commercial": null,
+     "liste_enseignes": [
+      "LA POSTE"
+     ]
+    },
+    "matching_etablissements": [
+     {
+      "siret": "35600000000048",
+      "adresse": "DIRECTION GENERALE DE LA POSTE 9 RUE DU COLONEL PIERRE AVIA 75015 PARIS",
+      "code_postal": "75015",
+      "libelle_commune": "PARIS",
+      "activite_principale": "53.10Z",
+      "tranche_effectif_salarie": "51",
+      "etat_administratif": "A",
+      "est_siege": true,
+      "nom_commercial": null,
+      "liste_enseignes": [
+       "LA POSTE"
+      ]
+     }
+    ],
+    "dirigeants": [
+     {
+      "type_dirigeant": "personne physique",
+      "nom": "BAUDRY",
+      "prenoms": "IRENE",
+      "qualite": "Autre"
+     },
+     {
+      "type_dirigeant": "personne physique",
+      "nom": "CHEVET-DEHAIL",
+      "prenoms": "STEPHANE",
+      "qualite": "Autre"
+     },
+     {
+      "type_dirigeant": "personne physique",
+      "nom": "JAY (DEBON)",
+      "prenoms": "MARIE-ANGE CATHERINE",
+      "qualite": "Autre"
+     },
+     {
+      "type_dirigeant": "personne physique",
+      "nom": "GEORGHIOU",
+      "prenoms": "JEAN CHRISTOPHE",
+      "qualite": "Commissaire aux comptes suppléant"
+     },
+     {
+      "type_dirigeant": "personne physique",
+      "nom": "HASPOT",
+      "prenoms": "FRANCK",
+      "qualite": "Autre"
+     },
+     {
+      "type_dirigeant": "personne physique",
+      "nom": "JOSEPH",
+      "prenoms": "SYLVIE",
+      "qualite": "Autre"
+     },
+     {
+      "type_dirigeant": "personne physique",
+      "nom": "BERTHOME (KERMOAL)",
+      "prenoms": "MARIANNE",
+      "qualite": "Administrateur"
+     },
+     {
+      "type_dirigeant": "personne physique",
+      "nom": "FLEURENCE (LEGAIN)",
+      "prenoms": "ISABELLE",
+      "qualite": "Autre"
+     },
+     {
+      "type_dirigeant": "personne physique",
+      "nom": "LEJBOWICZ",
+      "prenoms": "CORINNE",
+      "qualite": "Administrateur"
+     },
+     {
+      "type_dirigeant": "personne physique",
+      "nom": "LEMOINE",
+      "prenoms": "PHILIPPE",
+      "qualite": "Administrateur"
+     },
+     {
+      "type_dirigeant": "personne physique",
+      "nom": "MAREUSE",
+      "prenoms": "OLIVIER",
+      "qualite": "Administrateur"
+     },
+     {
+      "type_dirigeant": "personne physique",
+      "nom": "ESTABLIE (MAYENOBE)",
+      "prenoms": "CATHERINE",
+      "qualite": "Administrateur"
+     },
+     {
+      "type_dirigeant": "personne physique",
+      "nom": "NEVES DA ROCHA",
+      "prenoms": "RUBEN JOSE",
+      "qualite": "Autre"
+     },
+     {
+      "type_dirigeant": "personne physique",
+      "nom": "REIS",
+      "prenoms": "HUGO",
+      "qualite": "Autre"
+     },
+     {
+      "type_dirigeant": "personne physique",
+      "nom": "DE BAILLIENCOURT DIT COURCOL (RICHARTE)",
+      "prenoms": "MARIE-PIERRE",
+      "qualite": "Administrateur"
+     },
+     {
+      "type_dirigeant": "personne physique",
+      "nom": "SAINTOYANT",
+      "prenoms": "ANTOINE",
+      "qualite": "Administrateur"
+     },
+     {
+      "type_dirigeant": "personne physique",
+      "nom": "SORIANO",
+      "prenoms": "SÉBASTIEN LOUIS AUGUSTE MARCEL MAO",
+      "qualite": "Administrateur"
+     },
+     {
+      "type_dirigeant": "personne physique",
+      "nom": "TUBIANA (SPANAGLE)",
+      "prenoms": "NATHALIE",
+      "qualite": "Administrateur"
+     },
+     {
+      "type_dirigeant": "personne physique",
+      "nom": "URBAIN",
+      "prenoms": "VALÉRIE MARIE-HÉLÈNE",
+      "qualite": "Administrateur"
+     },
+     {
+      "type_dirigeant": "personne morale",
+      "nom": null,
+      "prenoms": null,
+      "qualite": "Commissaire aux comptes suppléant"
+     },
+     {
+      "type_dirigeant": "personne morale",
+      "nom": null,
+      "prenoms": null,
+      "qualite": "Commissaire aux comptes titulaire"
+     },
+     {
+      "type_dirigeant": "personne morale",
+      "nom": null,
+      "prenoms": null,
+      "qualite": "Commissaire aux comptes titulaire"
+     },
+     {
+      "type_dirigeant": "personne morale",
+      "nom": null,
+      "prenoms": null,
+      "qualite": null
+     }
+    ]
+   }
+  ],
+  "total_results": 1,
+  "page": 1,
+  "per_page": 1,
+  "total_pages": 1
+ }
+}

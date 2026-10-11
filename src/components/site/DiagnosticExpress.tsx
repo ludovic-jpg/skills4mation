@@ -3,6 +3,7 @@ import { toast } from "sonner";
 import { z } from "zod";
 import { Calculator, CheckCircle2, ChevronDown } from "lucide-react";
 
+import { SiretAutocomplete, toastChampsRemplis } from "@/components/app/SiretAutocomplete";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -77,8 +78,8 @@ const schema = z.object({
   entreprise_nom: z.string().trim().min(1, "Nom de l'entreprise requis").max(160),
   entreprise_siret: z
     .string()
-    .trim()
-    .regex(/^\d{14}$/, "SIRET à 14 chiffres"),
+    .transform((v) => v.replace(/[\s.-]/g, ""))
+    .pipe(z.string().regex(/^\d{14}$/, "SIRET à 14 chiffres")),
   theme_formation: z.string().trim().min(2, "Thème de formation requis").max(200),
   objectif_professionnel: z
     .string()
@@ -129,6 +130,8 @@ export function DiagnosticExpress({ variant = "compact" }: { variant?: "compact"
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [sending, setSending] = useState(false);
   const [sent, setSent] = useState(false);
+  const [entrepriseSiret, setEntrepriseSiret] = useState("");
+  const [entrepriseNom, setEntrepriseNom] = useState("");
 
   const selection = STATUTS.find((s) => s.value === statut) ?? STATUTS[0];
 
@@ -318,17 +321,33 @@ export function DiagnosticExpress({ variant = "compact" }: { variant?: "compact"
                   ) : null}
                 </div>
 
-                <Champ
-                  label="Nom de l'entreprise employeuse *"
-                  name="entreprise_nom"
-                  error={errors["entreprise_nom"]}
-                />
-                <Champ
-                  label="SIRET de l'entreprise *"
+                <SiretAutocomplete
+                  publique
+                  id="entreprise_siret"
                   name="entreprise_siret"
-                  placeholder="14 chiffres"
+                  label="SIRET de l'entreprise *"
+                  value={entrepriseSiret}
+                  onChange={setEntrepriseSiret}
+                  onSelect={(e) => {
+                    setEntrepriseNom(e.raisonSociale);
+                    toastChampsRemplis(e, ["SIRET", "nom de l'entreprise employeuse"]);
+                  }}
                   error={errors["entreprise_siret"]}
+                  hint="14 chiffres — ou tapez le nom de l'entreprise pour la retrouver."
                 />
+                <div>
+                  <Label htmlFor="entreprise_nom">Nom de l'entreprise employeuse *</Label>
+                  <Input
+                    id="entreprise_nom"
+                    name="entreprise_nom"
+                    value={entrepriseNom}
+                    onChange={(event) => setEntrepriseNom(event.target.value)}
+                    className="mt-2"
+                  />
+                  {errors["entreprise_nom"] ? (
+                    <p className="mt-1 text-xs text-destructive">{errors["entreprise_nom"]}</p>
+                  ) : null}
+                </div>
 
                 <Champ
                   label="Thème de la formation souhaité *"

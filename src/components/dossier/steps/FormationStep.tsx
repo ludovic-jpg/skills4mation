@@ -1,3 +1,4 @@
+import { SiretAutocomplete, toastChampsRemplis } from "@/components/app/SiretAutocomplete";
 import { Label } from "@/components/ui/label";
 import {
   Select,
@@ -168,10 +169,23 @@ export function FormationStep({
         value={d.lieu.intitule}
         onChange={(v) => set("lieu", { intitule: v })}
       />
-      <Field
+      <SiretAutocomplete
         label="SIRET du lieu"
         value={d.lieu.siret}
         onChange={(v) => set("lieu", { siret: v })}
+        onSelect={(e) => {
+          set("lieu", {
+            siret: e.siret,
+            intitule: e.nomCommercial ?? e.raisonSociale,
+            adresse: e.adresseComplete || d.lieu.adresse,
+          });
+          toastChampsRemplis(e, [
+            "SIRET du lieu",
+            "lieu de la formation",
+            ...(e.adresseComplete ? ["adresse du lieu"] : []),
+          ]);
+        }}
+        hint={null}
       />
       <Field
         label="Adresse du lieu"

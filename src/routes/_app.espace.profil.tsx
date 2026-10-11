@@ -5,6 +5,7 @@ import { toast } from "sonner";
 import { AppShell } from "@/components/app/AppShell";
 import { DocField } from "@/components/app/DocField";
 import { FORMATEUR_NAV } from "@/components/app/nav";
+import { SiretAutocomplete, toastChampsRemplis } from "@/components/app/SiretAutocomplete";
 
 import { StatutBadge } from "@/components/StatutBadge";
 import { Button } from "@/components/ui/button";
@@ -13,6 +14,7 @@ import { Combobox } from "@/components/dossier/fields";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useAuth } from "@/hooks/useAuth";
+import { nettoieNumero, type EntrepriseTrouvee } from "@/lib/entreprises";
 import { REGIONS_FR } from "@/lib/referentiels";
 import { supabase } from "@/integrations/supabase/client";
 import type { TablesUpdate } from "@/integrations/supabase/types";
@@ -52,6 +54,32 @@ function Profil() {
   if ((profile?.nda_region ?? "") !== regionSync) {
     setRegionSync(profile?.nda_region ?? "");
     setRegion(profile?.nda_region ?? "");
+  }
+
+  // Champs « Mon entreprise » contrôlés : ils peuvent être remplis depuis l'annuaire INSEE.
+  const entrepriseProfil = {
+    entreprise: profile?.entreprise ?? "",
+    siret: profile?.siret ?? "",
+    adresse: profile?.entreprise_adresse ?? "",
+  };
+  const [entreprise, setEntreprise] = useState(entrepriseProfil);
+  const [entrepriseSync, setEntrepriseSync] = useState(JSON.stringify(entrepriseProfil));
+  if (JSON.stringify(entrepriseProfil) !== entrepriseSync) {
+    setEntrepriseSync(JSON.stringify(entrepriseProfil));
+    setEntreprise(entrepriseProfil);
+  }
+
+  function remplirEntreprise(e: EntrepriseTrouvee) {
+    setEntreprise({
+      entreprise: e.raisonSociale.slice(0, 150),
+      siret: e.siret,
+      adresse: (e.adresseComplete || entreprise.adresse).slice(0, 300),
+    });
+    toastChampsRemplis(e, [
+      "raison sociale",
+      "SIRET",
+      ...(e.adresseComplete ? ["adresse de l'entreprise"] : []),
+    ]);
   }
 
   async function upload(kind: Piece, file: File) {
@@ -244,39 +272,44 @@ function Profil() {
               className="mt-5 grid gap-4"
               onSubmit={(event) => {
                 event.preventDefault();
-                const form = new FormData(event.currentTarget);
+                const siret = nettoieNumero(entreprise.siret);
+                if (siret && !/^\d{14}$/.test(siret)) {
+                  toast.error("Le SIRET comporte 14 chiffres.");
+                  return;
+                }
                 void save("entreprise", {
-                  entreprise: text(form, "entreprise", 150),
-                  entreprise_adresse: text(form, "entreprise_adresse", 300),
-                  siret: text(form, "siret", 20),
+                  entreprise: entreprise.entreprise.trim().slice(0, 150) || null,
+                  entreprise_adresse: entreprise.adresse.trim().slice(0, 300) || null,
+                  siret: siret || null,
                 });
               }}
             >
-              <div className="grid gap-4 sm:grid-cols-2">
-                <div className="grid gap-2">
-                  <Label htmlFor="entreprise">Raison sociale</Label>
-                  <Input
-                    id="entreprise"
-                    name="entreprise"
-                    defaultValue={profile?.entreprise ?? ""}
-                  />
-                </div>
-                <div className="grid gap-2">
-                  <Label htmlFor="siret">SIRET</Label>
-                  <Input
-                    id="siret"
-                    name="siret"
-                    maxLength={20}
-                    defaultValue={profile?.siret ?? ""}
-                  />
-                </div>
+              <SiretAutocomplete
+                id="siret"
+                name="siret"
+                value={entreprise.siret}
+                onChange={(v) => setEntreprise((s) => ({ ...s, siret: v }))}
+                onSelect={remplirEntreprise}
+                hint="Saisissez votre SIRET (ou le nom de votre entreprise) : raison sociale et adresse se remplissent depuis l'annuaire officiel."
+              />
+              <div className="grid gap-2">
+                <Label htmlFor="entreprise">Raison sociale</Label>
+                <Input
+                  id="entreprise"
+                  name="entreprise"
+                  maxLength={150}
+                  value={entreprise.entreprise}
+                  onChange={(e) => setEntreprise((s) => ({ ...s, entreprise: e.target.value }))}
+                />
               </div>
               <div className="grid gap-2">
                 <Label htmlFor="entreprise_adresse">Adresse de l'entreprise</Label>
                 <Input
                   id="entreprise_adresse"
                   name="entreprise_adresse"
-                  defaultValue={profile?.entreprise_adresse ?? ""}
+                  maxLength={300}
+                  value={entreprise.adresse}
+                  onChange={(e) => setEntreprise((s) => ({ ...s, adresse: e.target.value }))}
                 />
               </div>
               <Button type="submit" variant="cta" disabled={saving === "entreprise"}>
