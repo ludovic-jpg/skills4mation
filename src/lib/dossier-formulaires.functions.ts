@@ -128,7 +128,7 @@ export const repondreFormulaire = createServerFn({ method: "POST" })
     // explicitement, toute l'équipe conseiller formation (qui porte ce rôle),
     // et on trace la demande dans un registre dédié : la notification seule ne
     // prouve pas qu'une demande a été suivie d'effet, le registre si.
-    if (envoi.code === "F0A" && (data.reponses.amenagement ?? "").startsWith("Oui")) {
+    if (envoi.code === "F0A" && (data.reponses["amenagement"] ?? "").startsWith("Oui")) {
       const { data: conseillers } = await supabaseAdmin
         .from("user_roles")
         .select("user_id")
