@@ -1,7 +1,17 @@
 import { useState } from "react";
-import { ExternalLink, ImagePlus, Save } from "lucide-react";
+import { ExternalLink, ImagePlus, Save, Sparkles, X } from "lucide-react";
 import { toast } from "sonner";
 
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -16,9 +26,11 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import { AssistantIaProgramme, type ModeIa } from "@/components/formation/AssistantIaProgramme";
 import { SelectAutre } from "@/components/formation/SelectAutre";
 import { CATEGORIES } from "@/lib/catalogue-historique";
 import { supabase } from "@/integrations/supabase/client";
+import type { ProgrammeIa, ResultatProgrammeIa } from "@/lib/formations-ia.functions";
 import {
   CERTIFICATION_OPTIONS,
   EVALUATION_OPTIONS,
@@ -152,6 +164,51 @@ function ImageField({
   );
 }
 
+type ChampIa = Exclude<keyof ProgrammeIa, "programme">;
+
+/** Sections du formulaire que l'IA peut remplir ; `generation` = modifiable par la génération. */
+const SECTIONS_IA: { cle: ChampIa; label: string; generation: boolean }[] = [
+  { cle: "titre", label: "Titre", generation: false },
+  { cle: "categorie", label: "Catégorie", generation: true },
+  { cle: "niveau", label: "Niveau", generation: false },
+  { cle: "public_cible", label: "Public visé", generation: false },
+  { cle: "intro", label: "Présentation", generation: true },
+  { cle: "objectif", label: "Objectif général", generation: false },
+  { cle: "objectifs", label: "Objectifs pédagogiques", generation: true },
+  { cle: "prerequis", label: "Prérequis", generation: true },
+  { cle: "duree_heures", label: "Durée totale", generation: false },
+  { cle: "duree_jours", label: "Nombre de jours", generation: true },
+  { cle: "modalites", label: "Modalités pédagogiques", generation: true },
+  { cle: "moyens_pedagogiques", label: "Moyens pédagogiques et techniques", generation: true },
+  { cle: "modalites_evaluation", label: "Modalités d'évaluation", generation: true },
+  { cle: "accessibilite", label: "Accessibilité handicap", generation: true },
+];
+
+type ValeurChamp = string | string[] | number | null | undefined;
+
+function estVide(v: ValeurChamp) {
+  if (Array.isArray(v)) return !v.some((x) => x.trim());
+  if (typeof v === "number") return false;
+  return !v || !v.trim();
+}
+
+function normalise(v: ValeurChamp) {
+  if (Array.isArray(v))
+    return v
+      .map((x) => x.trim())
+      .filter(Boolean)
+      .join("\n");
+  return v === null || v === undefined ? "" : String(v).trim();
+}
+
+const modulesTexte = (list: ModuleProgramme[]) =>
+  list
+    .filter((m) => m.titre.trim() || m.points.some((p) => p.trim()))
+    .map((m) => `${m.titre.trim()}|${m.points.map((p) => p.trim()).join("|")}`)
+    .join("\n");
+
+type Proposition = { resultat: ResultatProgrammeIa; mode: ModeIa; remplaces: string[] };
+
 const num = (v: string) => (v.trim() === "" ? null : Number(v.replace(",", ".")));
 const str = (v: number | null | undefined) => (v === null || v === undefined ? "" : String(v));
 
@@ -161,15 +218,19 @@ export function FormationEditor({ value, saving, onSave }: Props) {
     sixModules(parseProgramme(value.programme)),
   );
   const [uploading, setUploading] = useState<string | null>(null);
+  const [proposition, setProposition] = useState<Proposition | null>(null);
+  const [contenuIa, setContenuIa] = useState(false);
 
   const [syncRef, setSyncRef] = useState(value);
   if (value.id !== syncRef.id) {
     setSyncRef(value);
     setF(value);
     setModules(sixModules(parseProgramme(value.programme)));
+    setContenuIa(false);
   }
 
-  const etatPublication = (value.publication_statut ?? "brouillon") as keyof typeof PUBLICATION_BADGE;
+  const etatPublication = (value.publication_statut ??
+    "brouillon") as keyof typeof PUBLICATION_BADGE;
   const badge = PUBLICATION_BADGE[etatPublication] ?? PUBLICATION_BADGE["brouillon"]!;
 
   function majModule(index: number, patch: Partial<ModuleProgramme>) {
@@ -178,6 +239,56 @@ export function FormationEditor({ value, saving, onSave }: Props) {
 
   function set<K extends keyof FormationCatalogue>(key: K, v: FormationCatalogue[K]) {
     setF((prev) => ({ ...prev, [key]: v }));
+  }
+
+  /** Sections que la proposition de l'IA remplacerait (champs déjà remplis et différents). */
+  function sectionsRemplacees(resultat: ResultatProgrammeIa, mode: ModeIa) {
+    const p = resultat.programme;
+    const remplaces = SECTIONS_IA.filter((s) => mode === "import" || s.generation)
+      .filter((s) => {
+        const actuel = f[s.cle] as ValeurChamp;
+        const propose = p[s.cle] as ValeurChamp;
+        return !estVide(actuel) && !estVide(propose) && normalise(actuel) !== normalise(propose);
+      })
+      .map((s) => s.label);
+    const actuels = modulesTexte(modules);
+    if (actuels && p.programme.length > 0 && actuels !== modulesTexte(p.programme)) {
+      remplaces.push("Programme détaillé (modules)");
+    }
+    return remplaces;
+  }
+
+  function recevoirIa(resultat: ResultatProgrammeIa, mode: ModeIa) {
+    const remplaces = sectionsRemplacees(resultat, mode);
+    if (remplaces.length > 0) {
+      setProposition({ resultat, mode, remplaces });
+      return;
+    }
+    appliquerIa(resultat, mode);
+  }
+
+  /** Remplit le formulaire en mémoire : rien n'est enregistré avant « Enregistrer ». */
+  function appliquerIa(resultat: ResultatProgrammeIa, mode: ModeIa) {
+    const p = resultat.programme;
+    setF((prev) => {
+      const suivant: Record<string, unknown> = { ...prev };
+      for (const section of SECTIONS_IA) {
+        if (mode === "generation" && !section.generation) continue;
+        const propose = p[section.cle] as ValeurChamp;
+        if (estVide(propose)) continue;
+        suivant[section.cle] = propose;
+      }
+      return suivant as FormationCatalogue;
+    });
+    if (p.programme.length > 0) setModules(sixModules(p.programme));
+    setContenuIa(true);
+    setProposition(null);
+    toast.success(
+      mode === "import"
+        ? "Programme importé : relisez puis enregistrez."
+        : "Programme rédigé : relisez puis enregistrez.",
+    );
+    for (const avertissement of resultat.avertissements) toast.warning(avertissement);
   }
 
   async function upload(kind: "visuel" | "photo", file: File) {
@@ -203,9 +314,11 @@ export function FormationEditor({ value, saving, onSave }: Props) {
       toast.error("Le titre de la formation est requis.");
       return;
     }
+    setContenuIa(false);
     onSave({
       titre,
-      slug: slugify(f.slug || titre),
+      // L'adresse publique n'est plus modifiable ici : on conserve celle en base.
+      slug: f.slug?.trim() ? f.slug : slugify(titre),
       categorie: f.categorie,
       intro: f.intro,
       objectif: f.objectif,
@@ -220,6 +333,7 @@ export function FormationEditor({ value, saving, onSave }: Props) {
       modalites: (f.modalites ?? []).filter((m) => m.trim()),
       moyens_pedagogiques: f.moyens_pedagogiques,
       modalites_evaluation: f.modalites_evaluation,
+      accessibilite: f.accessibilite,
       programme: modules.filter((m) => m.titre.trim() || m.points.length),
       certification: f.certification,
       tarif_ht: f.tarif_ht,
@@ -235,6 +349,27 @@ export function FormationEditor({ value, saving, onSave }: Props) {
 
   return (
     <div className="grid gap-6">
+      <AssistantIaProgramme formation={f} disabled={saving} onResultat={recevoirIa} />
+
+      {contenuIa ? (
+        <div
+          role="note"
+          className="flex items-center gap-3 rounded-xl border border-cta/50 bg-cta/15 px-4 py-2.5 text-sm"
+        >
+          <Sparkles className="size-4 shrink-0 text-primary" aria-hidden />
+          <p className="min-w-0 flex-1">Contenu proposé par l'IA — relisez avant d'enregistrer.</p>
+          <Button
+            variant="ghost"
+            size="sm"
+            className="h-7 px-2"
+            onClick={() => setContenuIa(false)}
+            aria-label="Masquer ce message"
+          >
+            <X className="size-4" aria-hidden />
+          </Button>
+        </div>
+      ) : null}
+
       <Card className="rounded-2xl border-border/70 shadow-soft">
         <CardContent className="grid gap-4 p-6 sm:grid-cols-2">
           <h2 className="text-base font-semibold sm:col-span-2">Identité de la formation</h2>
@@ -246,10 +381,7 @@ export function FormationEditor({ value, saving, onSave }: Props) {
           />
           <div className="grid gap-2">
             <Label>Catégorie</Label>
-            <Select
-              value={f.categorie ?? ""}
-              onValueChange={(v) => set("categorie", v)}
-            >
+            <Select value={f.categorie ?? ""} onValueChange={(v) => set("categorie", v)}>
               <SelectTrigger>
                 <SelectValue placeholder="Choisir une catégorie" />
               </SelectTrigger>
@@ -262,12 +394,6 @@ export function FormationEditor({ value, saving, onSave }: Props) {
               </SelectContent>
             </Select>
           </div>
-          <Field
-            label="Adresse de la page publique"
-            value={f.slug}
-            onChange={(v) => set("slug", v)}
-            hint={`/formations/${slugify(f.slug || f.titre)}`}
-          />
           <Area
             label="Présentation (affichée sur le site)"
             value={f.intro ?? ""}
@@ -367,6 +493,13 @@ export function FormationEditor({ value, saving, onSave }: Props) {
             onChange={(v) => set("certification", v)}
             options={CERTIFICATION_OPTIONS}
             placeholder="Aucune certification"
+            className="sm:col-span-2"
+          />
+          <Area
+            label="Accessibilité aux personnes en situation de handicap"
+            value={f.accessibilite ?? ""}
+            onChange={(v) => set("accessibilite", v)}
+            rows={3}
             className="sm:col-span-2"
           />
         </CardContent>
@@ -519,6 +652,42 @@ export function FormationEditor({ value, saving, onSave }: Props) {
           ) : null}
         </CardContent>
       </Card>
+
+      <AlertDialog
+        open={proposition !== null}
+        onOpenChange={(open) => {
+          if (!open) setProposition(null);
+        }}
+      >
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Remplacer votre saisie ?</AlertDialogTitle>
+            <AlertDialogDescription>
+              La proposition de l'IA remplacera le contenu déjà saisi dans ces sections :
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <ul className="grid gap-1 rounded-xl border border-border bg-muted/40 p-4 text-sm">
+            {(proposition?.remplaces ?? []).map((label) => (
+              <li key={label} className="list-inside list-disc">
+                {label}
+              </li>
+            ))}
+          </ul>
+          <p className="text-xs text-muted-foreground">
+            Rien n'est enregistré tant que vous ne cliquez pas sur « Enregistrer la formation ».
+          </p>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Garder ma saisie</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={() => {
+                if (proposition) appliquerIa(proposition.resultat, proposition.mode);
+              }}
+            >
+              Remplacer
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
 
       <div className="flex justify-end">
         <Button variant="cta" disabled={saving} onClick={submit}>
