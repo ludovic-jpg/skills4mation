@@ -1,4 +1,4 @@
-import { ArrowDown, ArrowUp, Plus, Trash2 } from "lucide-react";
+import { ArrowDown, ArrowUp, CheckCircle2, Plus, Trash2 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -19,6 +19,8 @@ import {
   type TypeQuestion,
 } from "@/lib/outils";
 
+const AUCUNE = "__aucune__";
+
 /** Éditeur simple de questions : modification, réordonnancement, ajout et suppression. */
 export function QuestionsEditor({
   questions,
@@ -35,7 +37,7 @@ export function QuestionsEditor({
     <div className="grid gap-3">
       {questions.length === 0 ? (
         <p className="text-sm text-muted-foreground">
-          Aucune question pour le moment : générez-les depuis un parcours ou créez-les de toutes
+          Aucune question pour le moment : générez-les depuis une formation ou créez-les de toutes
           pièces.
         </p>
       ) : null}
@@ -88,6 +90,7 @@ export function QuestionsEditor({
                   maj(index, {
                     type: type as TypeQuestion,
                     options: type === "qcm" ? q.options : [],
+                    bonneReponse: type === "qcm" ? q.bonneReponse : undefined,
                   })
                 }
               >
@@ -105,21 +108,53 @@ export function QuestionsEditor({
             </div>
             {q.type === "qcm" ? (
               <div className="grid gap-1.5">
-                <Label>Propositions (séparées par « ; »)</Label>
+                <Label htmlFor={`options-${index}`}>Propositions (séparées par « ; »)</Label>
                 <Input
+                  id={`options-${index}`}
                   value={q.options.join(" ; ")}
-                  onChange={(e) =>
+                  onChange={(e) => {
+                    const options = e.target.value
+                      .split(";")
+                      .map((o) => o.trim())
+                      .filter(Boolean);
                     maj(index, {
-                      options: e.target.value
-                        .split(";")
-                        .map((o) => o.trim())
-                        .filter(Boolean),
-                    })
-                  }
+                      options,
+                      bonneReponse:
+                        q.bonneReponse && options.includes(q.bonneReponse)
+                          ? q.bonneReponse
+                          : undefined,
+                    });
+                  }}
                 />
               </div>
             ) : null}
           </div>
+          {q.type === "qcm" && q.options.length > 0 ? (
+            <div className="grid gap-1.5 sm:max-w-md">
+              <Label className="flex items-center gap-1.5">
+                <CheckCircle2 className="size-3.5 text-primary" aria-hidden />
+                Bonne réponse (corrigé, non visible par l'apprenant)
+              </Label>
+              <Select
+                value={
+                  q.bonneReponse && q.options.includes(q.bonneReponse) ? q.bonneReponse : AUCUNE
+                }
+                onValueChange={(v) => maj(index, { bonneReponse: v === AUCUNE ? undefined : v })}
+              >
+                <SelectTrigger aria-label={`Bonne réponse de la question ${index + 1}`}>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value={AUCUNE}>Non précisée</SelectItem>
+                  {Array.from(new Set(q.options)).map((o) => (
+                    <SelectItem key={o} value={o}>
+                      {o}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+          ) : null}
         </div>
       ))}
       <Button
