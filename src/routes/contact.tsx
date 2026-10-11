@@ -132,7 +132,7 @@ function Contact() {
               candidature.
             </p>
             <Button asChild variant="cta">
-              <Link to="/pole-formateur" hash="candidature">
+              <Link to="/candidature">
                 Déposer ma candidature
               </Link>
             </Button>

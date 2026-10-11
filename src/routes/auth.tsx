@@ -218,12 +218,12 @@ function AuthPage() {
               <div className="mt-7 rounded-2xl bg-muted/60 p-5">
                 <p className="text-sm font-semibold">Pas encore de compte ?</p>
                 <p className="mt-1 text-sm text-muted-foreground">
-                  L'accès à l'espace formateur est activé après validation de votre candidature au
-                  réseau Skills4mation.
+                  Présentez-vous en quelques minutes : votre accès est créé à la fin de la
+                  candidature.
                 </p>
                 <Button asChild variant="cta" className="mt-4 w-full">
-                  <Link to="/pole-formateur" hash="candidature">
-                    Rejoindre Skills4mation <ArrowRight className="size-4" />
+                  <Link to="/candidature">
+                    Candidater <ArrowRight className="size-4" />
                   </Link>
                 </Button>
               </div>

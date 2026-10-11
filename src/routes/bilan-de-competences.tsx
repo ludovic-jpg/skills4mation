@@ -282,7 +282,7 @@ function BilanDeCompetences() {
             </div>
             <div className="mt-6 flex flex-wrap items-center gap-4">
               <Button asChild variant="cta" size="lg">
-                <Link to="/pole-formateur" hash="candidature">
+                <Link to="/candidature">
                   Rejoindre Skills4mation
                 </Link>
               </Button>

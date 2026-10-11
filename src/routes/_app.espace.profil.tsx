@@ -8,6 +8,7 @@ import { FORMATEUR_NAV } from "@/components/app/nav";
 import { SiretAutocomplete, toastChampsRemplis } from "@/components/app/SiretAutocomplete";
 
 import { StatutBadge } from "@/components/StatutBadge";
+import { ProfilFormateurCard } from "@/components/candidature/ProfilFormateurCard";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Combobox } from "@/components/dossier/fields";
@@ -148,7 +149,8 @@ function Profil() {
   const manquant: string[] = [];
   if (!profile?.prenom || !profile?.nom) manquant.push("votre identité");
   if (!profile?.telephone) manquant.push("votre téléphone");
-  if (!profile?.entreprise || !profile?.siret) manquant.push("votre entreprise (raison sociale et SIRET)");
+  if (!profile?.entreprise || !profile?.siret)
+    manquant.push("votre entreprise (raison sociale et SIRET)");
   if (!profile?.cv_url) manquant.push("votre CV");
   if (!profile?.deroule_pedagogique_url) manquant.push("votre déroulé pédagogique");
   if (!profile?.exigences_qualite_lu_le) manquant.push("la lecture des exigences qualité");
@@ -177,7 +179,9 @@ function Profil() {
   }
 
   function text(form: FormData, key: string, max = 200) {
-    const value = String(form.get(key) ?? "").trim().slice(0, max);
+    const value = String(form.get(key) ?? "")
+      .trim()
+      .slice(0, max);
     return value || null;
   }
 
@@ -194,8 +198,6 @@ function Profil() {
               <h2 className="text-base font-semibold">Identité</h2>
               <StatutBadge kind="candidature" statut={statut} />
             </div>
-
-
 
             <form
               data-profil
@@ -260,6 +262,12 @@ function Profil() {
             </form>
           </CardContent>
         </Card>
+
+        <ProfilFormateurCard
+          userId={user?.id}
+          questionnaire={profile?.questionnaire ?? null}
+          onSaved={refresh}
+        />
 
         <Card className="rounded-2xl border-border/70 shadow-soft">
           <CardContent className="p-6">

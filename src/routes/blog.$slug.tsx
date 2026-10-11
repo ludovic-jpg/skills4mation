@@ -108,7 +108,7 @@ function ArticlePage() {
           </p>
           <div className="mt-5 flex flex-wrap gap-3">
             <Button asChild variant="cta">
-              <Link to="/pole-formateur" hash="candidature">
+              <Link to="/candidature">
                 Rejoindre Skills4mation
               </Link>
             </Button>

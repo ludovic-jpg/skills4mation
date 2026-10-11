@@ -32,6 +32,8 @@ export type Candidature = {
   cv_url: string | null;
   parcours_formation_url: string | null;
   deroule_pedagogique_url: string | null;
+  /** Réponses du questionnaire /candidature (absent sur les anciennes candidatures). */
+  questionnaire?: unknown;
 };
 
 /** Source de vérité unique : une seule requête / une seule clé de cache. */

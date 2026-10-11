@@ -23,6 +23,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { useAuth } from "@/hooks/useAuth";
+import { useRattachementCandidature } from "@/hooks/useRattachementCandidature";
 import { CATEGORIES } from "@/lib/catalogue-historique";
 import { CRM_STATUTS, dossierNom, type CrmStatut } from "@/lib/crm";
 import { visuelUrl } from "@/lib/formations";
@@ -73,6 +74,7 @@ const EN_COURS: CrmStatut[] = [
 
 function EspaceAccueil() {
   const { profile, user, isValidatedFormateur } = useAuth();
+  useRattachementCandidature();
   const photo = usePhotoProfil(profile?.photo_url);
   const initiales =
     `${profile?.prenom?.[0] ?? ""}${profile?.nom?.[0] ?? ""}`.toUpperCase() || "S4";

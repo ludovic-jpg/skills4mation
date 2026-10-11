@@ -16,17 +16,12 @@ import { validerCandidatureEtDonnerAcces } from "@/lib/admin-candidatures.functi
 import { supabase } from "@/integrations/supabase/client";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-  useCandidatures,
-  useCandidatureMutation,
-  type Candidature,
-} from "@/lib/candidatures";
-
+import { useCandidatures, useCandidatureMutation, type Candidature } from "@/lib/candidatures";
+import { resumeQuestionnaire } from "@/lib/candidature-questionnaire";
 
 export const Route = createFileRoute("/_app/admin/")({
   component: AdminCandidatures,
 });
-
 
 const PIECES: { key: keyof Candidature; label: string }[] = [
   { key: "cv_url", label: "CV" },
@@ -65,7 +60,6 @@ function PieceLink({ label, path }: { label: string; path: string | null }) {
   );
 }
 
-
 function AdminCandidatures() {
   const { isConseiller, loading } = useAuth();
   const queryClient = useQueryClient();
@@ -98,7 +92,6 @@ function AdminCandidatures() {
 
   if (!loading && !isConseiller) {
     return (
-
       <AppShell items={adminNav()} title="Back-office">
         <Card className="rounded-2xl border-destructive/30">
           <CardContent className="p-8">
@@ -137,7 +130,6 @@ function AdminCandidatures() {
 
       {isLoading ? (
         <p className="text-sm text-muted-foreground">Chargement…</p>
-
       ) : candidatures.length === 0 ? (
         <Card className="rounded-2xl border-dashed">
           <CardContent className="p-10 text-center text-sm text-muted-foreground">
@@ -178,6 +170,7 @@ function AdminCandidatures() {
                       <span className="font-semibold">Expertise :</span> {c.expertise}
                     </p>
                   ) : null}
+                  <QuestionnaireBadges questionnaire={c.questionnaire} />
                   {c.message ? (
                     <p className="mt-2 text-sm whitespace-pre-line text-muted-foreground">
                       {c.message}
@@ -275,12 +268,33 @@ function AdminCandidatures() {
                     </Button>
                   </div>
                 ) : null}
-
               </CardContent>
             </Card>
           ))}
         </div>
       )}
     </AppShell>
+  );
+}
+
+function QuestionnaireBadges({ questionnaire }: { questionnaire: unknown }) {
+  const lignes = resumeQuestionnaire(questionnaire);
+  if (!lignes.length) return null;
+  return (
+    <dl className="mt-3 grid gap-1.5">
+      {lignes.map((l) => (
+        <div key={l.label} className="flex flex-wrap items-center gap-1.5">
+          <dt className="mr-1 text-xs text-muted-foreground">{l.label}</dt>
+          {l.valeurs.map((v) => (
+            <dd
+              key={v}
+              className="rounded-full border border-primary/20 bg-accent px-2.5 py-0.5 text-xs font-medium text-accent-foreground"
+            >
+              {v}
+            </dd>
+          ))}
+        </div>
+      ))}
+    </dl>
   );
 }
