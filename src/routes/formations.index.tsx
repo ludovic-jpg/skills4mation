@@ -74,7 +74,9 @@ export const Route = createFileRoute("/formations/")({
     <PublicLayout>
       <section className="section-shell py-20">
         <h1 className="text-2xl font-semibold">Page indisponible</h1>
-        <p className="mt-3 text-sm text-muted-foreground">{error.message}</p>
+        <p className="mt-3 text-sm text-muted-foreground">
+          {error instanceof Error ? error.message : "Une erreur est survenue."}
+        </p>
       </section>
     </PublicLayout>
   ),
@@ -108,7 +110,6 @@ function CataloguePublic() {
     [historique, formateurs],
   );
 
-
   const categories = useMemo(() => {
     const compte = new Map<string, number>();
     for (const f of toutes) {
@@ -125,8 +126,7 @@ function CataloguePublic() {
     return toutes.filter(
       (f) =>
         (!categorie || f.categorie === categorie) &&
-        (!term ||
-          `${f.titre} ${categoryLabel(f.categorie ?? "")}`.toLowerCase().includes(term)),
+        (!term || `${f.titre} ${categoryLabel(f.categorie ?? "")}`.toLowerCase().includes(term)),
     );
   }, [toutes, categorie, q]);
 

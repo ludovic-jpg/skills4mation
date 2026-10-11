@@ -56,9 +56,7 @@ export const Route = createFileRoute("/formations/$slug")({
     const formation = data as FormationCatalogue;
     if (formation.source === "historique") {
       const fiche = ficheDepuisLigne(formation);
-      const related = fiche.categorie
-        ? await chargerCatalogueHistorique(fiche.categorie)
-        : [];
+      const related = fiche.categorie ? await chargerCatalogueHistorique(fiche.categorie) : [];
       return { kind: "statique", fiche, related };
     }
     return { kind: "db", formation };
@@ -79,12 +77,10 @@ export const Route = createFileRoute("/formations/$slug")({
     const description = (
       loaderData.kind === "statique"
         ? loaderData.fiche.intro || loaderData.fiche.objectif
-        : loaderData.formation.intro ?? `Formation ${titre} avec Skills4mation.`
+        : (loaderData.formation.intro ?? `Formation ${titre} avec Skills4mation.`)
     ).slice(0, 155);
     const brut =
-      loaderData.kind === "statique"
-        ? loaderData.fiche.image
-        : loaderData.formation.visuel_url;
+      loaderData.kind === "statique" ? loaderData.fiche.image : loaderData.formation.visuel_url;
     const image = brut ? `${BASE}${visuelUrl(brut)}` : null;
     const certification =
       loaderData.kind === "statique"
@@ -129,9 +125,7 @@ export const Route = createFileRoute("/formations/$slug")({
     <PublicLayout>
       <section className="section-shell py-20">
         <h1 className="text-3xl font-semibold">Formation introuvable</h1>
-        <p className="mt-3 text-muted-foreground">
-          Cette page de formation n'est plus publiée.
-        </p>
+        <p className="mt-3 text-muted-foreground">Cette page de formation n'est plus publiée.</p>
         <Button asChild variant="cta" className="mt-6">
           <Link to="/formations">Voir le catalogue</Link>
         </Button>
@@ -142,7 +136,9 @@ export const Route = createFileRoute("/formations/$slug")({
     <PublicLayout>
       <section className="section-shell py-20">
         <h1 className="text-2xl font-semibold">Page indisponible</h1>
-        <p className="mt-3 text-sm text-muted-foreground">{error.message}</p>
+        <p className="mt-3 text-sm text-muted-foreground">
+          {error instanceof Error ? error.message : "Une erreur est survenue."}
+        </p>
       </section>
     </PublicLayout>
   ),
@@ -177,7 +173,10 @@ function PageFormation() {
   async function inscrire(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const form = new FormData(event.currentTarget);
-    const get = (key: string, max = 500) => String(form.get(key) ?? "").trim().slice(0, max);
+    const get = (key: string, max = 500) =>
+      String(form.get(key) ?? "")
+        .trim()
+        .slice(0, max);
     setSending(true);
     const { error } = await supabase.from("formations_inscriptions").insert({
       formation_id: f.id,
@@ -205,9 +204,7 @@ function PageFormation() {
       <section className="bg-gradient-hero py-14 text-primary-foreground">
         <div className="section-shell grid gap-8 lg:grid-cols-[1.2fr_1fr] lg:items-center">
           <div>
-            {f.categorie ? (
-              <p className="eyebrow text-cta">{categoryLabel(f.categorie)}</p>
-            ) : null}
+            {f.categorie ? <p className="eyebrow text-cta">{categoryLabel(f.categorie)}</p> : null}
             <h1 className="mt-3 text-3xl font-semibold text-primary-foreground sm:text-4xl">
               {f.titre}
             </h1>
@@ -299,15 +296,9 @@ function PageFormation() {
                     <div className="grid gap-4 sm:grid-cols-2">
                       {[
                         ["Intitulé exact de la certification", detail.certification.libelle],
-                        [
-                          "N° d'enregistrement au Répertoire spécifique",
-                          detail.certification.code,
-                        ],
+                        ["N° d'enregistrement au Répertoire spécifique", detail.certification.code],
                         ["Certificateur", detail.certification.certificateur],
-                        [
-                          "Date d'enregistrement",
-                          detail.certification.dateEnregistrement,
-                        ],
+                        ["Date d'enregistrement", detail.certification.dateEnregistrement],
                         ...(detail.certification.validiteJusquau
                           ? [["Validité jusqu'au", detail.certification.validiteJusquau]]
                           : []),
@@ -339,7 +330,6 @@ function PageFormation() {
               </CardContent>
             </Card>
           ) : null}
-
 
           <Card className="rounded-2xl border-border/70">
             <CardContent className="grid gap-4 p-6 text-sm sm:grid-cols-2">
