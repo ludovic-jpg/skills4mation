@@ -55,7 +55,7 @@ export const LEGACY_PAGE_MAP: Record<string, string> = {
   "/category": "/blog",
   "/feed": "/blog",
   "/comments/feed": "/blog",
-  "/politique-de-cookies-ue": "/politique-de-confidentialite",
+  "/politique-de-cookies-ue": "/politique-de-cookies",
   "/confirmation-de-rdv": "/contact",
   "/accompagnement-pedagogique-chez-formatrix": "/qui-sommes-nous",
   "/sitemaps.xml": "/sitemap.xml",

@@ -21,8 +21,10 @@ import { Route as LivreBlancRouteImport } from './routes/livre-blanc'
 import { Route as McpRouteImport } from './routes/mcp'
 import { Route as MediathequeRouteImport } from './routes/mediatheque'
 import { Route as MentionsLegalesRouteImport } from './routes/mentions-legales'
+import { Route as NosResultatsRouteImport } from './routes/nos-resultats'
 import { Route as PoleFormateurRouteImport } from './routes/pole-formateur'
 import { Route as PolitiqueDeConfidentialiteRouteImport } from './routes/politique-de-confidentialite'
+import { Route as PolitiqueDeCookiesRouteImport } from './routes/politique-de-cookies'
 import { Route as PortageQualiopiRouteImport } from './routes/portage-qualiopi'
 import { Route as QuiSommesNousRouteImport } from './routes/qui-sommes-nous'
 import { Route as ReclamationsRouteImport } from './routes/reclamations'
@@ -131,6 +133,11 @@ const MentionsLegalesRoute = MentionsLegalesRouteImport.update({
   path: '/mentions-legales',
   getParentRoute: () => rootRouteImport,
 } as any)
+const NosResultatsRoute = NosResultatsRouteImport.update({
+  id: '/nos-resultats',
+  path: '/nos-resultats',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PoleFormateurRoute = PoleFormateurRouteImport.update({
   id: '/pole-formateur',
   path: '/pole-formateur',
@@ -142,6 +149,11 @@ const PolitiqueDeConfidentialiteRoute =
     path: '/politique-de-confidentialite',
     getParentRoute: () => rootRouteImport,
   } as any)
+const PolitiqueDeCookiesRoute = PolitiqueDeCookiesRouteImport.update({
+  id: '/politique-de-cookies',
+  path: '/politique-de-cookies',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PortageQualiopiRoute = PortageQualiopiRouteImport.update({
   id: '/portage-qualiopi',
   path: '/portage-qualiopi',
@@ -402,8 +414,10 @@ export interface FileRoutesByFullPath {
   '/mcp': typeof McpRoute
   '/mediatheque': typeof MediathequeRoute
   '/mentions-legales': typeof MentionsLegalesRoute
+  '/nos-resultats': typeof NosResultatsRoute
   '/pole-formateur': typeof PoleFormateurRoute
   '/politique-de-confidentialite': typeof PolitiqueDeConfidentialiteRoute
+  '/politique-de-cookies': typeof PolitiqueDeCookiesRoute
   '/portage-qualiopi': typeof PortageQualiopiRoute
   '/qui-sommes-nous': typeof QuiSommesNousRoute
   '/reclamations': typeof ReclamationsRoute
@@ -465,8 +479,10 @@ export interface FileRoutesByTo {
   '/mcp': typeof McpRoute
   '/mediatheque': typeof MediathequeRoute
   '/mentions-legales': typeof MentionsLegalesRoute
+  '/nos-resultats': typeof NosResultatsRoute
   '/pole-formateur': typeof PoleFormateurRoute
   '/politique-de-confidentialite': typeof PolitiqueDeConfidentialiteRoute
+  '/politique-de-cookies': typeof PolitiqueDeCookiesRoute
   '/portage-qualiopi': typeof PortageQualiopiRoute
   '/qui-sommes-nous': typeof QuiSommesNousRoute
   '/reclamations': typeof ReclamationsRoute
@@ -530,8 +546,10 @@ export interface FileRoutesById {
   '/mcp': typeof McpRoute
   '/mediatheque': typeof MediathequeRoute
   '/mentions-legales': typeof MentionsLegalesRoute
+  '/nos-resultats': typeof NosResultatsRoute
   '/pole-formateur': typeof PoleFormateurRoute
   '/politique-de-confidentialite': typeof PolitiqueDeConfidentialiteRoute
+  '/politique-de-cookies': typeof PolitiqueDeCookiesRoute
   '/portage-qualiopi': typeof PortageQualiopiRoute
   '/qui-sommes-nous': typeof QuiSommesNousRoute
   '/reclamations': typeof ReclamationsRoute
@@ -595,8 +613,10 @@ export interface FileRouteTypes {
     | '/mcp'
     | '/mediatheque'
     | '/mentions-legales'
+    | '/nos-resultats'
     | '/pole-formateur'
     | '/politique-de-confidentialite'
+    | '/politique-de-cookies'
     | '/portage-qualiopi'
     | '/qui-sommes-nous'
     | '/reclamations'
@@ -658,8 +678,10 @@ export interface FileRouteTypes {
     | '/mcp'
     | '/mediatheque'
     | '/mentions-legales'
+    | '/nos-resultats'
     | '/pole-formateur'
     | '/politique-de-confidentialite'
+    | '/politique-de-cookies'
     | '/portage-qualiopi'
     | '/qui-sommes-nous'
     | '/reclamations'
@@ -722,8 +744,10 @@ export interface FileRouteTypes {
     | '/mcp'
     | '/mediatheque'
     | '/mentions-legales'
+    | '/nos-resultats'
     | '/pole-formateur'
     | '/politique-de-confidentialite'
+    | '/politique-de-cookies'
     | '/portage-qualiopi'
     | '/qui-sommes-nous'
     | '/reclamations'
@@ -787,8 +811,10 @@ export interface RootRouteChildren {
   McpRoute: typeof McpRoute
   MediathequeRoute: typeof MediathequeRoute
   MentionsLegalesRoute: typeof MentionsLegalesRoute
+  NosResultatsRoute: typeof NosResultatsRoute
   PoleFormateurRoute: typeof PoleFormateurRoute
   PolitiqueDeConfidentialiteRoute: typeof PolitiqueDeConfidentialiteRoute
+  PolitiqueDeCookiesRoute: typeof PolitiqueDeCookiesRoute
   PortageQualiopiRoute: typeof PortageQualiopiRoute
   QuiSommesNousRoute: typeof QuiSommesNousRoute
   ReclamationsRoute: typeof ReclamationsRoute
@@ -897,6 +923,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MentionsLegalesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/nos-resultats': {
+      id: '/nos-resultats'
+      path: '/nos-resultats'
+      fullPath: '/nos-resultats'
+      preLoaderRoute: typeof NosResultatsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/pole-formateur': {
       id: '/pole-formateur'
       path: '/pole-formateur'
@@ -909,6 +942,13 @@ declare module '@tanstack/react-router' {
       path: '/politique-de-confidentialite'
       fullPath: '/politique-de-confidentialite'
       preLoaderRoute: typeof PolitiqueDeConfidentialiteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/politique-de-cookies': {
+      id: '/politique-de-cookies'
+      path: '/politique-de-cookies'
+      fullPath: '/politique-de-cookies'
+      preLoaderRoute: typeof PolitiqueDeCookiesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/portage-qualiopi': {
@@ -1327,8 +1367,10 @@ const rootRouteChildren: RootRouteChildren = {
   McpRoute: McpRoute,
   MediathequeRoute: MediathequeRoute,
   MentionsLegalesRoute: MentionsLegalesRoute,
+  NosResultatsRoute: NosResultatsRoute,
   PoleFormateurRoute: PoleFormateurRoute,
   PolitiqueDeConfidentialiteRoute: PolitiqueDeConfidentialiteRoute,
+  PolitiqueDeCookiesRoute: PolitiqueDeCookiesRoute,
   PortageQualiopiRoute: PortageQualiopiRoute,
   QuiSommesNousRoute: QuiSommesNousRoute,
   ReclamationsRoute: ReclamationsRoute,

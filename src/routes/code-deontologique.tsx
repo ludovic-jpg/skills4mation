@@ -3,6 +3,7 @@ import { Link } from "@tanstack/react-router";
 import { BadgeCheck, HeartHandshake, Scale, ShieldCheck, Sparkles, Users } from "lucide-react";
 
 import { CharteDeontologieBadge, QualiopiBadge } from "@/components/Brand";
+import { INDICATEURS, INDICATEURS_MAJ, PERIODE } from "@/data/indicateurs";
 import { PageHero, PublicLayout } from "@/components/site/PublicLayout";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -10,13 +11,13 @@ import { Card, CardContent } from "@/components/ui/card";
 export const Route = createFileRoute("/code-deontologique")({
   head: () => ({
     meta: [
-      { title: "Code déontologique — Skills4mation" },
+      { title: "Code déontologique du centre de formation | Skills4mation" },
       {
         name: "description",
         content:
-          "Le code déontologique Skills4mation : 13 articles d'engagement sur l'analyse des besoins, la réalisation des actions de formation, la confidentialité des données et le respect de l'apprenant.",
+          "Les 13 articles et les engagements déontologiques de Skills4mation (groupe Back to Business / Formatrix) envers les bénéficiaires, les formateurs et les commanditaires.",
       },
-      { property: "og:title", content: "Code déontologique — Skills4mation" },
+      { property: "og:title", content: "Code déontologique | Skills4mation" },
       {
         property: "og:description",
         content:
@@ -26,9 +27,7 @@ export const Route = createFileRoute("/code-deontologique")({
       { name: "twitter:card", content: "summary_large_image" },
       { property: "og:url", content: "https://skills4mation.com/code-deontologique" },
     ],
-    links: [
-      { rel: "canonical", href: "https://skills4mation.com/code-deontologique" },
-    ],
+    links: [{ rel: "canonical", href: "https://skills4mation.com/code-deontologique" }],
   }),
   component: CodeDeontologique,
 });
@@ -224,19 +223,22 @@ const CHAPITRES: Chapitre[] = [
   },
 ];
 
-const INDICATEURS = [
-  { valeur: "100 %", label: "Taux de satisfaction 2024" },
-  { valeur: "100 %", label: "Taux de réussite 2024" },
-  { valeur: "100 %", label: "Objectifs atteints" },
-  { valeur: "0 %", label: "Taux d'abandon" },
-];
-
 const SOMMAIRE_REFERENTIEL = [
   { id: "referentiel", label: "A. Le référentiel national qualité", icon: ShieldCheck },
   { id: "indicateurs", label: "B. Les indicateurs associés", icon: BadgeCheck },
   { id: "charte-professionnelle", label: "C. Charte professionnelle", icon: Scale },
   { id: "sous-traitance", label: "Sous-traitance & portage", icon: HeartHandshake },
 ];
+
+const CERTIFICAT_QUALIOPI = {
+  numero: "B02267",
+  organisme: "ICPF",
+  validite: "28/10/2027",
+  titulaire:
+    "Back to Business – Formatrix (groupe Formatrix, dont Skills4mation est un nom commercial)",
+  categories:
+    "actions de formation (article L.6313-1-1° du Code du travail) et bilans de compétences (article L.6313-1-2°)",
+};
 
 const CRITERES = [
   {
@@ -363,15 +365,38 @@ const SOUS_TRAITANCE = [
   },
 ];
 
-
 function CodeDeontologique() {
   return (
     <PublicLayout>
       <PageHero
         eyebrow="Qualité & déontologie"
         title="Code déontologique"
-        description="Les 13 articles qui engagent Skills4mation et l'ensemble des formateurs mandatés, de l'analyse du besoin à l'archivage du dossier de formation."
+        description="Les 13 articles qui engagent Skills4mation — nom commercial du groupe Back to Business / Formatrix — et l'ensemble des formateurs mandatés, de l'analyse du besoin à l'archivage du dossier de formation."
       />
+
+      <section className="section-shell py-10">
+        <Card className="rounded-3xl border-primary/20 bg-primary/5 shadow-soft">
+          <CardContent className="flex flex-col gap-4 p-6 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <p className="eyebrow text-secondary">Certification Qualiopi</p>
+              <h2 className="mt-1 text-lg font-semibold">
+                Skills4mation est certifié Qualiopi via le groupe Back to Business / Formatrix
+              </h2>
+              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                La certification qualité a été délivrée au titre des catégories d'actions suivantes
+                : {CERTIFICAT_QUALIOPI.categories}. Certificat n° {CERTIFICAT_QUALIOPI.numero}{" "}
+                délivré par {CERTIFICAT_QUALIOPI.organisme} à {CERTIFICAT_QUALIOPI.titulaire},
+                valable jusqu'au {CERTIFICAT_QUALIOPI.validite}.
+              </p>
+            </div>
+            <Button asChild variant="outline">
+              <a href="https://www.certif-icpf.org" target="_blank" rel="noopener noreferrer">
+                Vérifier le certificat sur certif-icpf.org
+              </a>
+            </Button>
+          </CardContent>
+        </Card>
+      </section>
 
       <section className="section-shell py-12">
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
@@ -414,7 +439,10 @@ function CodeDeontologique() {
                     <ul className="mt-4 space-y-2.5">
                       {article.points.map((point) => (
                         <li key={point} className="flex gap-3 text-sm text-muted-foreground">
-                          <BadgeCheck className="mt-0.5 size-4 shrink-0 text-secondary" aria-hidden />
+                          <BadgeCheck
+                            className="mt-0.5 size-4 shrink-0 text-secondary"
+                            aria-hidden
+                          />
                           <span className="leading-relaxed">{point}</span>
                         </li>
                       ))}
@@ -475,7 +503,9 @@ function CodeDeontologique() {
                   </span>
                 </div>
                 <p className="mt-2 text-base font-semibold leading-snug">{critere.titre}</p>
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{critere.texte}</p>
+                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                  {critere.texte}
+                </p>
               </CardContent>
             </Card>
           ))}
@@ -529,9 +559,7 @@ function CodeDeontologique() {
             </ul>
             <div className="mt-6">
               <Button asChild variant="cta">
-                <Link to="/candidature">
-                  Rejoindre Skills4mation
-                </Link>
+                <Link to="/candidature">Rejoindre Skills4mation</Link>
               </Button>
             </div>
           </CardContent>
@@ -558,7 +586,9 @@ function CodeDeontologique() {
                   </span>
                   <div>
                     <p className="text-base font-semibold leading-snug">{item.titre}</p>
-                    <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{item.texte}</p>
+                    <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                      {item.texte}
+                    </p>
                   </div>
                 </CardContent>
               </Card>
@@ -567,16 +597,19 @@ function CodeDeontologique() {
         </div>
       </section>
 
-
-
       <section className="section-shell max-w-4xl py-12">
         <Card className="rounded-3xl border-cta/40 bg-cta/10 shadow-soft">
           <CardContent className="p-8">
             <h2 className="text-xl font-semibold">En cas de non-respect du code de déontologie</h2>
             <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-              En cas de différend ou de non-respect du code de déontologie, les parties s'efforceront
-              de trouver une solution à l'amiable avant de faire appel aux tribunaux compétents.
-              Elles demanderont si besoin l'intervention d'un médiateur.
+              En cas de différend ou de non-respect du code de déontologie, les parties
+              s'efforceront de trouver une solution à l'amiable avant de faire appel aux tribunaux
+              compétents. Elles demanderont si besoin l'intervention d'un médiateur. Toute
+              réclamation, difficulté ou tout aléa peut être signalé directement via notre{" "}
+              <Link to="/reclamations" className="font-medium text-primary underline">
+                formulaire de réclamation
+              </Link>
+              .
             </p>
           </CardContent>
         </Card>
@@ -587,17 +620,23 @@ function CodeDeontologique() {
           <p className="eyebrow text-secondary">Nos certificats</p>
           <h2 className="mt-2 text-2xl font-semibold">Des engagements mesurés et certifiés</h2>
           <p className="mt-3 text-sm text-muted-foreground">
-            Résultats des actions de formation dispensées : indicateurs qualité suivis chaque année
-            dans le cadre de notre certification Qualiopi.
+            Indicateurs de résultats de l'organisme de formation Back to Business – Formatrix
+            (groupe Formatrix, dont Skills4mation est un nom commercial), calculés sur la période du{" "}
+            {PERIODE.debut} au {PERIODE.fin} et mis à jour le {INDICATEURS_MAJ}. Méthode de calcul
+            détaillée sur la page{" "}
+            <Link to="/nos-resultats" className="font-medium text-primary underline">
+              Nos résultats
+            </Link>
+            .
           </p>
-          <div className="mt-8 grid gap-4 sm:grid-cols-4">
+          <div className="mt-8 grid gap-4 sm:grid-cols-3">
             {INDICATEURS.map((item) => (
               <div
-                key={item.label}
+                key={item.id}
                 className="rounded-2xl border border-border/70 bg-card p-5 text-center shadow-soft"
               >
                 <p className="text-3xl font-semibold text-primary">{item.valeur}</p>
-                <p className="mt-2 text-xs text-muted-foreground">{item.label}</p>
+                <p className="mt-2 text-xs text-muted-foreground">{item.libelle}</p>
               </div>
             ))}
           </div>

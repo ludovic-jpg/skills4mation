@@ -60,6 +60,8 @@ export const Route = createFileRoute("/sitemap.xml")({
           { path: "/evaluer-droit-formation", changefreq: "monthly", priority: "0.9" },
           { path: "/mentions-legales", changefreq: "yearly", priority: "0.2" },
           { path: "/politique-de-confidentialite", changefreq: "yearly", priority: "0.2" },
+          { path: "/politique-de-cookies", changefreq: "yearly", priority: "0.2" },
+          { path: "/nos-resultats", changefreq: "monthly", priority: "0.5" },
           { path: "/code-deontologique", changefreq: "yearly", priority: "0.3" },
           { path: "/bilan-de-competences", changefreq: "monthly", priority: "0.9" },
           { path: "/reclamations", changefreq: "yearly", priority: "0.2" },

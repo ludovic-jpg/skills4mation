@@ -1,37 +1,31 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { Cookie, Database, FileLock2, Globe2, ShieldCheck, UserCheck } from "lucide-react";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { Clock, Cookie, Database, FileLock2, Globe2, ShieldCheck, UserCheck } from "lucide-react";
 
 import { PageHero, PublicLayout } from "@/components/site/PublicLayout";
-import { Card, CardContent } from "@/components/ui/card";
+
+const PAGE_PATH = "/politique-de-confidentialite";
+const PAGE_URL = `https://skills4mation.com${PAGE_PATH}`;
 
 export const Route = createFileRoute("/politique-de-confidentialite")({
   head: () => ({
     meta: [
-      { title: "Politique de confidentialité et cookies — Skills4mation" },
+      { title: "Politique de confidentialité | Skills4mation" },
       {
         name: "description",
         content:
-          "RGPD : responsable du traitement, données collectées, finalités, droits des utilisateurs, conservation, sécurité, transferts et politique de cookies de Skills4mation (SAS, RCS Mulhouse 925 376 725).",
+          "RGPD : responsable du traitement, données collectées, finalités et bases légales, durées de conservation, destinataires, droits des utilisateurs et sécurité sur le site Skills4mation (groupe Back to Business / Formatrix).",
       },
-      { property: "og:title", content: "Politique de confidentialité et cookies — Skills4mation" },
+      { property: "og:title", content: "Politique de confidentialité | Skills4mation" },
       {
         property: "og:description",
         content:
-          "Comment Skills4mation collecte, utilise et protège vos données personnelles, et quels cookies sont déposés sur le site.",
+          "Comment Skills4mation, nom commercial du groupe Back to Business / Formatrix, collecte, utilise et protège vos données personnelles.",
       },
       { property: "og:type", content: "article" },
       { name: "twitter:card", content: "summary_large_image" },
-      {
-        property: "og:url",
-        content: "https://skills4mation.com/politique-de-confidentialite",
-      },
+      { property: "og:url", content: PAGE_URL },
     ],
-    links: [
-      {
-        rel: "canonical",
-        href: "https://skills4mation.com/politique-de-confidentialite",
-      },
-    ],
+    links: [{ rel: "canonical", href: PAGE_URL }],
   }),
   component: PolitiqueConfidentialite,
 });
@@ -39,50 +33,64 @@ export const Route = createFileRoute("/politique-de-confidentialite")({
 const SOMMAIRE = [
   { id: "responsable", label: "Responsable du traitement", icon: ShieldCheck },
   { id: "donnees", label: "Données collectées", icon: Database },
-  { id: "finalites", label: "Finalités du traitement", icon: FileLock2 },
-  { id: "droits", label: "Droits des utilisateurs", icon: UserCheck },
-  { id: "transferts", label: "Conservation & transferts", icon: Globe2 },
-  { id: "cookies", label: "Politique de cookies (UE)", icon: Cookie },
+  { id: "finalites", label: "Finalités et bases légales", icon: FileLock2 },
+  { id: "conservation", label: "Durées de conservation", icon: Clock },
+  { id: "droits", label: "Vos droits", icon: UserCheck },
+  { id: "transferts", label: "Sécurité & transferts", icon: Globe2 },
+  { id: "cookies", label: "Cookies", icon: Cookie },
 ];
 
-const COOKIES = [
+const FINALITES = [
   {
-    service: "Plateforme applicative",
-    categorie: "Fonctionnel",
-    usage:
-      "Cookies strictement nécessaires au fonctionnement du site, à la session de connexion à l'espace formateur et à la mémorisation de vos préférences. Ces cookies sont déposés sans consentement.",
-    items: [
-      { nom: "session / auth-token", duree: "Session à 1 an", fonction: "Maintien de la connexion" },
-      { nom: "preferences", duree: "Persistant", fonction: "Mémoriser les préférences utilisateur" },
-      { nom: "consent-status", duree: "365 jours", fonction: "Mémoriser votre choix de consentement" },
-    ],
+    finalite: "Traiter vos demandes (contact, projet de formation, évaluation des droits)",
+    base: "Mesures précontractuelles / intérêt légitime",
   },
   {
-    service: "Mesure d'audience",
-    categorie: "Statistiques",
-    usage:
-      "Nous utilisons des cookies de statistiques pour optimiser l'expérience du site et comprendre son usage. Votre autorisation est demandée avant leur dépôt.",
-    items: [
-      { nom: "_ga", duree: "2 ans", fonction: "Enregistrer et compter les pages vues" },
-      { nom: "_ga_*", duree: "1 an", fonction: "Enregistrer et compter les pages vues" },
-    ],
+    finalite:
+      "Gérer le dossier d'inscription, la convention et le suivi pédagogique et administratif de la formation",
+    base: "Exécution du contrat et obligations légales de l'organisme de formation",
   },
   {
-    service: "Formulaires & anti-spam",
-    categorie: "Finalité en cours d'analyse",
-    usage:
-      "Des services tiers sont utilisés pour la prévention du spam sur les formulaires et l'affichage des polices de caractères (Google reCAPTCHA, Google Fonts). Consultez leurs déclarations de confidentialité respectives.",
-    items: [
-      { nom: "rc::a / rc::b / rc::c", duree: "—", fonction: "Prévention du spam (reCAPTCHA)" },
-      { nom: "Google Fonts API", duree: "—", fonction: "Affichage des polices web" },
-    ],
+    finalite:
+      "Instruire les candidatures de formateurs et gérer l'espace formateur (portage Qualiopi)",
+    base: "Exécution du contrat / mesures précontractuelles",
   },
   {
-    service: "Marketing / suivi",
-    categorie: "Marketing",
-    usage:
-      "Les cookies marketing ou toute autre forme de stockage local servent à créer des profils d'internautes afin d'afficher des publicités ou de suivre l'utilisateur sur ce site ou sur plusieurs sites. Ils ne sont déposés qu'après votre consentement explicite.",
-    items: [{ nom: "—", duree: "—", fonction: "Aucun cookie marketing actif à ce jour" }],
+    finalite: "Enregistrer et traiter les réclamations, difficultés et aléas",
+    base: "Obligation légale (référentiel national qualité) et intérêt légitime",
+  },
+  {
+    finalite: "Envoyer des communications relatives à votre projet de formation (e-mail, SMS)",
+    base: "Exécution du contrat / intérêt légitime",
+  },
+  {
+    finalite:
+      "Vous adresser des contenus (livre blanc, ressources) et des informations commerciales",
+    base: "Consentement, révocable à tout moment",
+  },
+];
+
+const DUREES = [
+  {
+    donnees: "Demandes d'information et de contact",
+    duree: "Le temps nécessaire au traitement, puis 3 ans à compter du dernier contact",
+  },
+  {
+    donnees: "Dossiers de formation (convention, émargements, évaluations, attestations)",
+    duree:
+      "Durée de la relation puis archivage selon les délais légaux applicables aux organismes de formation (prescription et contrôles des financeurs)",
+  },
+  {
+    donnees: "Comptes de l'espace formateur et pièces de candidature",
+    duree: "Durée du compte, puis archivage limité aux obligations légales",
+  },
+  {
+    donnees: "Registre des réclamations",
+    duree: "Durée nécessaire au suivi de la démarche qualité et aux audits Qualiopi",
+  },
+  {
+    donnees: "Consentement aux communications commerciales",
+    duree: "Jusqu'au retrait du consentement, puis preuve conservée 3 ans",
   },
 ];
 
@@ -112,13 +120,13 @@ function PolitiqueConfidentialite() {
   return (
     <PublicLayout>
       <PageHero
-        eyebrow="RGPD & cookies"
+        eyebrow="RGPD"
         title="Politique de confidentialité"
-        description="En conformité avec le Règlement Général sur la Protection des Données (RGPD) et la loi Informatique et Libertés, cette politique détaille la manière dont la société Skills4mation collecte, utilise et protège les données personnelles des utilisateurs."
+        description="En conformité avec le Règlement Général sur la Protection des Données (RGPD) et la loi Informatique et Libertés, cette politique détaille la manière dont Skills4mation, nom commercial du groupe Back to Business / Formatrix, collecte, utilise et protège les données personnelles des visiteurs, apprenants et formateurs."
       />
 
       <section className="section-shell py-12">
-        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           {SOMMAIRE.map((item) => (
             <a
               key={item.id}
@@ -135,246 +143,217 @@ function PolitiqueConfidentialite() {
       </section>
 
       <section className="section-shell max-w-3xl space-y-10 pb-14">
-        <Bloc id="responsable" numero="1." titre="Responsable du traitement des données personnelles">
+        <Bloc
+          id="responsable"
+          numero="1."
+          titre="Responsable du traitement des données personnelles"
+        >
+          <p>
+            Skills4mation est un nom commercial du groupe Back to Business / Formatrix. Le
+            responsable du traitement des données collectées via ce site est la société BACK TO
+            BUSINESS (nom commercial Formatrix).
+          </p>
           <div className="rounded-2xl border border-border/70 bg-card p-5 text-foreground shadow-soft">
             <dl className="grid gap-3 text-sm sm:grid-cols-2">
               <div>
                 <dt className="text-xs uppercase tracking-wide text-muted-foreground">Société</dt>
-                <dd className="font-semibold">SKILLS4MATION — SAS</dd>
+                <dd className="font-semibold">
+                  BACK TO BUSINESS — SASU (Formatrix / Skills4mation)
+                </dd>
               </div>
               <div>
                 <dt className="text-xs uppercase tracking-wide text-muted-foreground">
-                  SIREN / RCS
+                  SIRET / RCS
                 </dt>
-                <dd className="font-semibold">925 376 725 R.C.S. Mulhouse</dd>
+                <dd className="font-semibold">918 433 723 00015 — RCS Mulhouse</dd>
               </div>
               <div>
                 <dt className="text-xs uppercase tracking-wide text-muted-foreground">Adresse</dt>
-                <dd className="font-semibold">13 C rue des Romains, 68170 Rixheim</dd>
+                <dd className="font-semibold">91 Grand Rue Pierre Braun, 68170 Rixheim</dd>
               </div>
               <div>
                 <dt className="text-xs uppercase tracking-wide text-muted-foreground">
                   Numéro de TVA
                 </dt>
-                <dd className="font-semibold">FR81925376725</dd>
+                <dd className="font-semibold">FR79918433723</dd>
               </div>
               <div>
                 <dt className="text-xs uppercase tracking-wide text-muted-foreground">E-mail</dt>
-                <dd className="font-semibold">contact@skills4mation.com</dd>
+                <dd className="font-semibold">pedagogie@formatrix.fr</dd>
               </div>
               <div>
                 <dt className="text-xs uppercase tracking-wide text-muted-foreground">
-                  Délégué à la Protection des Données (DPO)
+                  Référent protection des données
                 </dt>
-                <dd className="font-semibold">Ludovic Albisser</dd>
+                <dd className="font-semibold">Ludovic Albisser, Président</dd>
               </div>
             </dl>
           </div>
+          <p className="text-xs">
+            La société SKILLS4MATION SAS (RCS Mulhouse 925 376 725, 91 Grand'Rue Pierre Braun, 68170
+            Rixheim, contact@skills4mation.com) est une entité distincte qui porte également la
+            marque ; les demandes adressées à contact@skills4mation.com sont traitées dans les mêmes
+            conditions.
+          </p>
         </Bloc>
 
         <Bloc id="donnees" numero="2." titre="Données collectées">
-          <p>Skills4mation collecte les données personnelles suivantes :</p>
+          <p>
+            Nous collectons uniquement les données nécessaires aux finalités décrites ci-dessous :
+          </p>
           <ul className="list-disc space-y-1 pl-5">
             <li>
               <strong className="text-foreground">
                 Données fournies directement par l'utilisateur
               </strong>{" "}
-              : nom, prénom, adresse e-mail, numéro de téléphone, adresse postale.
-            </li>
-            <li>
-              <strong className="text-foreground">Données techniques</strong> : adresse IP, cookies,
-              historique de navigation.
+              via nos formulaires : nom, prénom, adresse e-mail, numéro de téléphone, adresse
+              postale, société, situation professionnelle, description de votre projet.
             </li>
             <li>
               <strong className="text-foreground">Données de dossier de formation</strong> :
-              informations professionnelles (SIRET, NDA), pièces pédagogiques et administratives
-              déposées par les formateurs portés.
+              informations professionnelles (SIRET, numéro de déclaration d'activité), pièces
+              pédagogiques et administratives déposées par les formateurs portés, documents générés
+              (convention, émargements, évaluations, attestations).
             </li>
-          </ul>
-        </Bloc>
-
-        <Bloc id="finalites" numero="3." titre="Finalités du traitement">
-          <p>Les données collectées sont utilisées pour :</p>
-          <ul className="list-disc space-y-1 pl-5">
-            <li>Permettre l'accès et l'utilisation du site.</li>
-            <li>Améliorer l'expérience utilisateur et le contenu du site.</li>
-            <li>Gérer les demandes de formation, d'inscription et le suivi des projets pédagogiques.</li>
-            <li>Réaliser des analyses statistiques d'audience.</li>
-            <li>Envoyer des communications relatives à votre projet de formation (email, SMS).</li>
             <li>
-              Instruire les candidatures de formateurs, les demandes de budget et les demandes
-              d'évaluation des droits à la formation.
+              <strong className="text-foreground">Données de réclamation</strong> : nom, e-mail,
+              formation concernée et contenu du signalement déposé via le formulaire de réclamation.
+            </li>
+            <li>
+              <strong className="text-foreground">Données techniques</strong> : adresse IP et
+              journaux techniques nécessaires au fonctionnement, à la sécurité du site et de
+              l'espace formateur.
             </li>
           </ul>
         </Bloc>
 
-        <Bloc id="droits" numero="4." titre="Droits des utilisateurs">
+        <Bloc id="finalites" numero="3." titre="Finalités du traitement et bases légales">
+          <div className="overflow-hidden rounded-xl border border-border/70">
+            <table className="w-full text-left text-xs">
+              <thead className="bg-muted/70 text-muted-foreground">
+                <tr>
+                  <th className="p-3 font-semibold">Finalité</th>
+                  <th className="p-3 font-semibold">Base légale (art. 6 RGPD)</th>
+                </tr>
+              </thead>
+              <tbody>
+                {FINALITES.map((f) => (
+                  <tr key={f.finalite} className="border-t border-border/60">
+                    <td className="p-3 font-medium text-foreground">{f.finalite}</td>
+                    <td className="p-3 text-muted-foreground">{f.base}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <p>
+            Les données sont utilisées pour permettre l'accès et l'utilisation du site, traiter
+            votre demande, vous proposer des parcours de formation adaptés, gérer votre dossier
+            d'inscription et assurer le suivi pédagogique et administratif de votre formation.
+          </p>
+        </Bloc>
+
+        <Bloc id="conservation" numero="4." titre="Durées de conservation">
+          <div className="overflow-hidden rounded-xl border border-border/70">
+            <table className="w-full text-left text-xs">
+              <thead className="bg-muted/70 text-muted-foreground">
+                <tr>
+                  <th className="p-3 font-semibold">Catégorie de données</th>
+                  <th className="p-3 font-semibold">Durée</th>
+                </tr>
+              </thead>
+              <tbody>
+                {DUREES.map((d) => (
+                  <tr key={d.donnees} className="border-t border-border/60">
+                    <td className="p-3 font-medium text-foreground">{d.donnees}</td>
+                    <td className="p-3 text-muted-foreground">{d.duree}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <p>
+            Les données liées à une demande d'information sont conservées le temps nécessaire à son
+            traitement, puis archivées dans le respect des délais légaux applicables aux organismes
+            de formation.
+          </p>
+        </Bloc>
+
+        <Bloc id="droits" numero="5." titre="Destinataires et vos droits">
+          <p>
+            <strong className="text-foreground">Destinataires.</strong> Vos données sont accessibles
+            aux équipes pédagogiques et administratives du groupe Back to Business / Formatrix
+            (Skills4mation), ainsi qu'aux prestataires techniques strictement nécessaires au
+            fonctionnement du site (hébergement, base de données, envoi d'e-mails). Elles ne sont
+            jamais revendues. Elles peuvent être communiquées aux financeurs de votre formation
+            (OPCO, CPF, France Travail…) dans la mesure requise par le financement.
+          </p>
           <p>Conformément au RGPD, vous disposez des droits suivants :</p>
           <ul className="list-disc space-y-1 pl-5">
             <li>
-              <strong className="text-foreground">Accès, rectification et suppression</strong> des
+              <strong className="text-foreground">Accès, rectification et effacement</strong> de vos
               données personnelles.
             </li>
             <li>
-              <strong className="text-foreground">Opposition au traitement</strong> de vos données
-              personnelles.
+              <strong className="text-foreground">Opposition</strong> au traitement et{" "}
+              <strong className="text-foreground">retrait du consentement</strong> à tout moment.
             </li>
             <li>
-              <strong className="text-foreground">Portabilité des données</strong> que vous avez
+              <strong className="text-foreground">Portabilité</strong> des données que vous avez
               fournies.
             </li>
             <li>
-              <strong className="text-foreground">Limitation du traitement</strong> dans certains
+              <strong className="text-foreground">Limitation</strong> du traitement dans certains
               cas.
             </li>
           </ul>
           <p>
-            Pour exercer vos droits, contactez-nous par courrier à l'adresse suivante :{" "}
-            <strong className="text-foreground">
-              SKILLS4MATION, 13 C rue des Romains, 68170 Rixheim
-            </strong>
-            . Joignez une copie de votre pièce d'identité.
+            Pour exercer vos droits, adressez votre demande à{" "}
+            <a className="font-medium text-primary underline" href="mailto:pedagogie@formatrix.fr">
+              pedagogie@formatrix.fr
+            </a>{" "}
+            en précisant l'objet de votre requête, ou par courrier à BACK TO BUSINESS — Formatrix,
+            91 Grand Rue Pierre Braun, 68170 Rixheim. Une copie d'une pièce d'identité pourra vous
+            être demandée en cas de doute sur votre identité. Vous disposez également du droit
+            d'introduire une réclamation auprès de la CNIL (www.cnil.fr).
           </p>
         </Bloc>
 
-        <Bloc id="transferts" numero="5." titre="Conservation, sécurité et transfert des données">
+        <Bloc id="transferts" numero="6." titre="Sécurité et transfert des données">
           <p>
-            <strong className="text-foreground">Conservation.</strong> Les données personnelles sont
-            conservées pendant la durée nécessaire à la réalisation des finalités mentionnées.
-            Certaines données peuvent être conservées plus longtemps si la loi l'exige.
+            <strong className="text-foreground">Sécurité.</strong> Nous mettons en œuvre des mesures
+            techniques et organisationnelles adaptées (chiffrement des échanges, contrôle d'accès
+            par rôle, journalisation) pour protéger vos données contre tout accès, altération ou
+            divulgation non autorisés.
           </p>
           <p>
-            <strong className="text-foreground">Sécurité.</strong> Skills4mation met en œuvre des
-            mesures techniques et organisationnelles pour protéger vos données personnelles contre
-            tout accès non autorisé, altération ou destruction.
+            <strong className="text-foreground">Transfert.</strong> Les données applicatives sont
+            hébergées dans l'Union européenne. En cas de recours à des sous-traitants, nous nous
+            assurons qu'ils respectent les exigences du RGPD.
           </p>
           <p>
-            <strong className="text-foreground">Transfert.</strong> Aucune donnée personnelle n'est
-            transférée hors de l'Union européenne. En cas de recours à des sous-traitants,
-            Skills4mation s'assure qu'ils respectent les exigences du RGPD.
-          </p>
-          <p>
-            <strong className="text-foreground">Violation de données.</strong> En cas de violation de
-            données, les utilisateurs concernés seront informés conformément à la réglementation en
-            vigueur.
-          </p>
-          <p>
-            <strong className="text-foreground">Contact.</strong> Pour toute question relative à
-            cette politique de confidentialité, contactez-nous à : contact@skills4mation.com
+            <strong className="text-foreground">Violation de données.</strong> En cas de violation
+            de données, les utilisateurs concernés seront informés conformément à la réglementation
+            en vigueur.
           </p>
         </Bloc>
-      </section>
 
-      <section id="cookies" className="scroll-mt-24 bg-muted/50 py-14">
-        <div className="section-shell max-w-3xl">
-          <p className="eyebrow text-secondary">Politique de cookies (UE)</p>
-          <h2 className="mt-2 text-2xl font-semibold">Cookies et technologies similaires</h2>
-          <p className="mt-3 text-sm italic text-muted-foreground">
-            Cette politique de cookies s'applique aux citoyens et résidents permanents légaux de
-            l'Espace économique européen et de la Suisse.
+        <Bloc id="cookies" numero="7." titre="Cookies et stockage local">
+          <p>
+            Le site n'utilise que des cookies et stockages strictement nécessaires à son
+            fonctionnement (session de connexion à l'espace formateur, brouillons de formulaire,
+            mémorisation de votre choix). Aucun cookie de mesure d'audience ni de publicité n'est
+            déposé. Le détail est présenté dans notre{" "}
+            <Link className="font-medium text-primary underline" to="/politique-de-cookies">
+              politique de cookies
+            </Link>
+            .
           </p>
-
-          <div className="mt-8 space-y-6 text-sm leading-relaxed text-muted-foreground">
-            <div>
-              <h3 className="text-base font-semibold text-foreground">1. Introduction</h3>
-              <p className="mt-2">
-                Notre site web utilise des cookies et d'autres technologies associées (par
-                commodité, toutes ces technologies sont désignées par « cookies »). Des cookies sont
-                également déposés par les tiers auxquels nous faisons appel. Le document ci-dessous
-                vous informe de l'utilisation des cookies sur notre site.
-              </p>
-            </div>
-            <div>
-              <h3 className="text-base font-semibold text-foreground">
-                2. Qu'est-ce qu'un cookie ?
-              </h3>
-              <p className="mt-2">
-                Un cookie est un petit fichier simple envoyé avec les pages de ce site et stocké par
-                votre navigateur sur le disque dur de votre ordinateur ou d'un autre appareil. Les
-                informations qui y sont enregistrées peuvent être renvoyées à nos serveurs ou à ceux
-                des tiers concernés lors d'une visite ultérieure.
-              </p>
-            </div>
-            <div>
-              <h3 className="text-base font-semibold text-foreground">
-                3. Qu'est-ce qu'un script ?
-              </h3>
-              <p className="mt-2">
-                Un script est un fragment de code de programme utilisé pour permettre à notre site
-                de fonctionner correctement et de manière interactive. Ce code est exécuté sur notre
-                serveur ou sur votre appareil.
-              </p>
-            </div>
-            <div>
-              <h3 className="text-base font-semibold text-foreground">
-                4. Qu'est-ce qu'un web beacon ?
-              </h3>
-              <p className="mt-2">
-                Un web beacon (ou pixel invisible) est un petit texte ou une image invisible sur un
-                site web, utilisé pour suivre le trafic. Diverses données vous concernant sont
-                stockées à l'aide de web beacons.
-              </p>
-            </div>
-            <div>
-              <h3 className="text-base font-semibold text-foreground">
-                5. Consentement et gestion des préférences
-              </h3>
-              <p className="mt-2">
-                Pour offrir les meilleures expériences, nous utilisons des technologies telles que
-                les cookies pour stocker et/ou accéder aux informations des appareils. Le fait de
-                consentir à ces technologies nous permettra de traiter des données telles que le
-                comportement de navigation ou les identifiants uniques sur ce site. Le fait de ne pas
-                consentir ou de retirer son consentement peut avoir un effet négatif sur certaines
-                caractéristiques et fonctions. Vous pouvez configurer votre navigateur pour refuser
-                les cookies ; cela peut toutefois limiter certaines fonctionnalités du site.
-              </p>
-            </div>
-          </div>
-
-          <h3 className="mt-10 text-base font-semibold">6. Cookies déposés</h3>
-          <div className="mt-4 space-y-4">
-            {COOKIES.map((groupe) => (
-              <Card key={groupe.service} className="rounded-2xl border-border/70 shadow-soft">
-                <CardContent className="p-6">
-                  <div className="flex flex-wrap items-center gap-3">
-                    <h4 className="text-base font-semibold">{groupe.service}</h4>
-                    <span className="rounded-full border border-secondary/30 bg-secondary/10 px-3 py-1 text-xs font-semibold text-secondary">
-                      {groupe.categorie}
-                    </span>
-                  </div>
-                  <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-                    {groupe.usage}
-                  </p>
-                  <div className="mt-4 overflow-hidden rounded-xl border border-border/70">
-                    <table className="w-full text-left text-xs">
-                      <thead className="bg-muted/70 text-muted-foreground">
-                        <tr>
-                          <th className="p-3 font-semibold">Nom</th>
-                          <th className="p-3 font-semibold">Expiration</th>
-                          <th className="p-3 font-semibold">Fonction</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {groupe.items.map((item) => (
-                          <tr key={item.nom} className="border-t border-border/60">
-                            <td className="p-3 font-medium">{item.nom}</td>
-                            <td className="p-3 text-muted-foreground">{item.duree}</td>
-                            <td className="p-3 text-muted-foreground">{item.fonction}</td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-
-          <p className="mt-8 text-sm text-muted-foreground">
-            Pour toute question sur les cookies déposés ou pour retirer votre consentement, écrivez à{" "}
-            <strong className="text-foreground">contact@skills4mation.com</strong>.
+          <p>
+            Pour toute question relative à cette politique, écrivez à{" "}
+            <strong className="text-foreground">pedagogie@formatrix.fr</strong>.
           </p>
-        </div>
+        </Bloc>
       </section>
     </PublicLayout>
   );

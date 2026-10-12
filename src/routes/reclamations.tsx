@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { toast } from "sonner";
 import { z } from "zod";
-import { CheckCircle2 } from "lucide-react";
+import { CheckCircle2, ShieldAlert } from "lucide-react";
 
 import { PageHero, PublicLayout } from "@/components/site/PublicLayout";
 import { Button } from "@/components/ui/button";
@@ -15,16 +15,17 @@ import { supabase } from "@/integrations/supabase/client";
 export const Route = createFileRoute("/reclamations")({
   head: () => ({
     meta: [
-      { title: "Réclamation, difficulté ou aléa — Skills4mation" },
+      { title: "Réclamation, difficulté ou aléa | Skills4mation" },
       {
         name: "description",
         content:
-          "Signalez une réclamation, une difficulté, un aléa ou une appréciation liée à une action de formation. Accusé de réception immédiat et traitement tracé.",
+          "Signalez une réclamation, une difficulté ou un aléa rencontré pendant une formation Skills4mation (groupe Back to Business / Formatrix). Chaque signalement est enregistré, suivi et traité sous 15 jours ouvrés.",
       },
-      { property: "og:title", content: "Réclamation, difficulté ou aléa — Skills4mation" },
+      { property: "og:title", content: "Réclamation ou difficulté — Skills4mation" },
       {
         property: "og:description",
-        content: "Formulaire de signalement pour bénéficiaires, financeurs et formateurs.",
+        content:
+          "Formulaire de signalement pour les bénéficiaires, financeurs et formateurs Skills4mation.",
       },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "https://skills4mation.com/reclamations" },
@@ -78,7 +79,9 @@ function Reclamations() {
     });
     setSending(false);
     if (error) {
-      toast.error("L'envoi a échoué. Merci de réessayer.");
+      toast.error(
+        "L'enregistrement a échoué. Merci de réessayer ou d'écrire à pedagogie@formatrix.fr.",
+      );
       return;
     }
     setRecu({
@@ -93,10 +96,40 @@ function Reclamations() {
       <PageHero
         eyebrow="Qualité"
         title="Réclamation, difficulté ou aléa"
-        description="Skills4mation traite toute réclamation, difficulté ou aléa signalé par un bénéficiaire, un financeur ou un formateur. Chaque signalement est enregistré, horodaté, instruit par notre équipe qualité et reçoit une réponse écrite."
+        description="Skills4mation, nom commercial du groupe Back to Business / Formatrix, traite toute réclamation, difficulté ou aléa signalé par un bénéficiaire, un financeur ou un formateur. Chaque signalement est enregistré dans notre registre qualité, horodaté, examiné par l'équipe pédagogique et suivi jusqu'à sa résolution."
       />
 
-      <section className="section-shell py-14">
+      <section className="section-shell pt-14">
+        <ul className="grid gap-4 text-sm text-muted-foreground md:grid-cols-2">
+          <li className="flex items-start gap-3 rounded-2xl border border-border/70 bg-card p-5 shadow-soft">
+            <ShieldAlert className="mt-0.5 size-5 shrink-0 text-primary" aria-hidden />
+            <span className="leading-relaxed">
+              Accusé de réception immédiat avec un numéro de suivi, puis réponse écrite de l'équipe
+              pédagogique sous 15 jours ouvrés. Si la réponse ne vous satisfait pas, demandez un
+              réexamen de second niveau à Ludovic Albisser, Président, responsable du traitement des
+              réclamations (ludovic@formatrix.fr), qui répond sous 15 jours ouvrés. Vous pouvez
+              aussi informer l'organisme financeur de votre formation. Médiateur de la consommation
+              : en cours de désignation.
+            </span>
+          </li>
+          <li className="flex items-start gap-3 rounded-2xl border border-border/70 bg-card p-5 shadow-soft">
+            <CheckCircle2 className="mt-0.5 size-5 shrink-0 text-primary" aria-hidden />
+            <span className="leading-relaxed">
+              Les signalements alimentent notre démarche d'amélioration continue (analyse des
+              causes, action corrective, suivi). Vous pouvez aussi nous écrire directement à{" "}
+              <a
+                href="mailto:pedagogie@formatrix.fr"
+                className="font-medium text-primary underline"
+              >
+                pedagogie@formatrix.fr
+              </a>
+              .
+            </span>
+          </li>
+        </ul>
+      </section>
+
+      <section className="section-shell py-10 pb-14">
         <Card className="rounded-3xl border-border/70 shadow-soft">
           <CardContent className="p-6 sm:p-10">
             {recu ? (
@@ -105,8 +138,9 @@ function Reclamations() {
                 <h2 className="mt-4 text-2xl font-semibold">Accusé de réception</h2>
                 <p className="mt-3 text-sm text-muted-foreground">
                   Votre signalement a été enregistré le <strong>{recu.date}</strong> sous le numéro
-                  de suivi <strong>{recu.numero}</strong>. Conservez ce numéro : il vous permet de
-                  suivre le traitement de votre demande auprès de notre équipe qualité.
+                  de suivi <strong>{recu.numero}</strong>. Conservez ce numéro pour tout échange
+                  avec l'équipe pédagogique (pedagogie@formatrix.fr). Une réponse écrite vous sera
+                  apportée sous 15 jours ouvrés.
                 </p>
               </div>
             ) : (
@@ -115,7 +149,7 @@ function Reclamations() {
                   <h2 className="text-2xl font-semibold">Signaler une situation</h2>
                   <p className="mt-2 text-sm text-muted-foreground">
                     Décrivez précisément la situation : nous accusons réception immédiatement et
-                    revenons vers vous par email.
+                    revenons vers vous par e-mail sous 15 jours ouvrés.
                   </p>
                 </div>
 
@@ -173,7 +207,8 @@ function Reclamations() {
                     {sending ? "Envoi en cours…" : "Envoyer mon signalement"}
                   </Button>
                   <p className="text-xs text-muted-foreground">
-                    Vos informations servent uniquement au traitement de votre signalement.
+                    Vos informations servent uniquement au traitement de votre signalement (voir
+                    notre politique de confidentialité).
                   </p>
                 </div>
               </form>

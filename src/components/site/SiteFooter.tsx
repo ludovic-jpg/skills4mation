@@ -98,9 +98,7 @@ export function SiteFooter() {
               <Link to="/politique-de-confidentialite">Politique de confidentialité</Link>
             </li>
             <li>
-              <Link to="/politique-de-confidentialite" hash="cookies">
-                Politique de cookies (UE)
-              </Link>
+              <Link to="/politique-de-cookies">Politique de cookies</Link>
             </li>
             <li>
               <Link to="/code-deontologique">Code déontologique</Link>
@@ -114,8 +112,10 @@ export function SiteFooter() {
             <li>
               <Link to="/reclamations">Réclamation ou difficulté ?</Link>
             </li>
+            <li>
+              <Link to="/nos-resultats">Nos résultats</Link>
+            </li>
           </ul>
-
 
           <div className="mt-5 flex flex-wrap gap-3">
             <QualiopiBadge />
@@ -125,10 +125,48 @@ export function SiteFooter() {
       </div>
 
       <div className="border-t border-primary-foreground/15 py-5">
-        <p className="section-shell text-xs text-primary-foreground/60">
-          © {new Date().getFullYear()} Skills4mation — Organisme de formation certifié Qualiopi ·
-          Portage de formation professionnelle.
-        </p>
+        <div className="section-shell flex flex-col gap-3 text-xs text-primary-foreground/60 md:flex-row md:items-center md:justify-between">
+          <p>
+            © {new Date().getFullYear()} Skills4mation — nom commercial du groupe Back to Business /
+            Formatrix — Organisme de formation certifié Qualiopi · Portage de formation
+            professionnelle.
+          </p>
+          <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
+            <a
+              href="mailto:pedagogie@formatrix.fr"
+              className="inline-flex items-center gap-2 hover:text-primary-foreground hover:underline"
+            >
+              <Mail className="size-3.5" aria-hidden /> pedagogie@formatrix.fr
+            </a>
+            <Link
+              to="/politique-de-confidentialite"
+              className="hover:text-primary-foreground hover:underline"
+            >
+              Politique de confidentialité
+            </Link>
+            <Link
+              to="/politique-de-cookies"
+              className="hover:text-primary-foreground hover:underline"
+            >
+              Politique de cookies
+            </Link>
+            <Link
+              to="/code-deontologique"
+              className="hover:text-primary-foreground hover:underline"
+            >
+              Code déontologique
+            </Link>
+            <Link to="/reclamations" className="hover:text-primary-foreground hover:underline">
+              Réclamation ou difficulté&nbsp;?
+            </Link>
+            <Link to="/nos-resultats" className="hover:text-primary-foreground hover:underline">
+              Nos résultats
+            </Link>
+            <Link to="/mentions-legales" className="hover:text-primary-foreground hover:underline">
+              Mentions légales
+            </Link>
+          </div>
+        </div>
       </div>
     </footer>
   );
