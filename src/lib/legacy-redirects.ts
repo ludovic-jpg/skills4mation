@@ -7,6 +7,11 @@
  */
 
 import { LEGACY_ASSETS } from "./legacy-assets";
+import {
+  CATEGORIE_EXTERNALISEE,
+  FORMABIENETRE_CATALOGUE,
+  redirectionFicheRetiree,
+} from "./seo-exclusions";
 
 /** Articles WordPress publiés à la racine (/<slug>/) → /blog/<slug>. */
 export const LEGACY_POST_SLUGS = new Set<string>([
@@ -99,6 +104,20 @@ export function legacyRedirectTarget(pathname: string): string | null {
   const direct = LEGACY_PAGE_MAP[clean];
   if (direct) return direct;
 
+  // Fiches retirées du site (test, bien-être porté par formabientre.fr) : cible finale en un saut,
+  // quelle que soit l'ancienne forme de l'URL.
+  if (first === "formations" && second && !third) {
+    const retiree = redirectionFicheRetiree(second);
+    if (retiree) return retiree;
+  }
+  if ((first === "formation" || first === "catalogue") && third) {
+    const retiree = redirectionFicheRetiree(third, second);
+    if (retiree) return retiree;
+  }
+  if ((first === "formation" || first === "catalogue") && second === CATEGORIE_EXTERNALISEE) {
+    return FORMABIENETRE_CATALOGUE;
+  }
+
   // /formation/<sphère>/<slug>/ → /formations/<slug>
   if (first === "formation" && third) return `/formations/${third}`;
   // /formation/<sphère>/ → catalogue filtré
@@ -119,5 +138,59 @@ export function legacyRedirectTarget(pathname: string): string | null {
   // Slash final WordPress sur une page qui existe telle quelle → version sans slash, en un saut.
   if (hadSlash) return clean || "/";
 
+  return null;
+}
+
+/**
+ * Premiers segments à ne jamais passer en minuscules : fichiers statiques,
+ * routes techniques (API, MCP, OAuth, e-mails Lovable) et espaces connectés.
+ */
+const CASSE_LIBRE = new Set([
+  "api",
+  "assets",
+  "images",
+  "fichiers",
+  "wp-content",
+  "wp-includes",
+  "lovable",
+  "mcp",
+  "espace",
+  "admin",
+  "apprenant",
+  "ressources",
+  "auth",
+]);
+
+/** Chemin public à ramener en minuscules (301), ou null s'il doit rester tel quel. */
+export function cheminEnMinuscules(pathname: string): string | null {
+  // Les séquences %XX (souvent en majuscules) ne comptent pas : seules les lettres comptent.
+  if (!/[A-Z]/.test(pathname.replace(/%[0-9A-F]{2}/gi, ""))) return null;
+  const premier = pathname.split("/")[1] ?? "";
+  if (/^[._~]/.test(premier)) return null; // /.well-known, /.mcp, /_serverFn, /~flock.js…
+  if (CASSE_LIBRE.has(premier.toLowerCase())) return null;
+  const dernier = pathname.split("/").pop() ?? "";
+  if (dernier.includes(".") && !dernier.toLowerCase().endsWith(".xml")) return null; // fichiers
+  return pathname.replace(/(%[0-9A-F]{2})|[A-Z]+/gi, (m, escape: string | undefined) =>
+    escape ? m : m.toLowerCase(),
+  );
+}
+
+/**
+ * Point d'entrée unique des redirections 301 du site public (appelé par src/server.ts) :
+ * casse, anciennes URL WordPress et fiches retirées, résolus en une seule redirection.
+ */
+export function publicRedirectTarget(pathname: string, search = ""): string | null {
+  const minuscules = cheminEnMinuscules(pathname);
+  const chemin = minuscules ?? pathname;
+  const params = new URLSearchParams(search);
+  if (
+    chemin.replace(/\/+$/, "") === "/formations" &&
+    params.get("categorie") === CATEGORIE_EXTERNALISEE
+  ) {
+    return FORMABIENETRE_CATALOGUE;
+  }
+  const legacy = legacyRedirectTarget(chemin);
+  if (legacy) return legacy;
+  if (minuscules) return `${minuscules}${search}`;
   return null;
 }

@@ -2,7 +2,7 @@ import "./lib/error-capture";
 
 import { consumeLastCapturedError } from "./lib/error-capture";
 import { renderErrorPage } from "./lib/error-page";
-import { legacyRedirectTarget } from "./lib/legacy-redirects";
+import { publicRedirectTarget } from "./lib/legacy-redirects";
 
 type ServerEntry = {
   fetch: (request: Request, env: unknown, ctx: unknown) => Promise<Response> | Response;
@@ -48,7 +48,9 @@ function isH3SwallowedErrorBody(body: string): boolean {
 function legacyRedirect(request: Request): Response | null {
   if (request.method !== "GET" && request.method !== "HEAD") return null;
   const url = new URL(request.url);
-  const target = legacyRedirectTarget(url.pathname);
+  // Casse, anciennes URL WordPress, fiches retirées (test, bien-être → formabientre.fr) :
+  // une seule redirection 301, cible relative ou absolue.
+  const target = publicRedirectTarget(url.pathname, url.search);
   if (!target) return null;
   return new Response(null, {
     status: 301,

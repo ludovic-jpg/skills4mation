@@ -1,4 +1,4 @@
-import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { createFileRoute, Link, notFound, redirect } from "@tanstack/react-router";
 import { useState } from "react";
 import { Check, Clock, MapPin, ShieldCheck, Target, Users, Wallet } from "lucide-react";
 import { toast } from "sonner";
@@ -28,6 +28,7 @@ import {
 } from "@/lib/catalogue-historique";
 
 import { supabase } from "@/integrations/supabase/client";
+import { estFichePublique, redirectionFicheRetiree } from "@/lib/seo-exclusions";
 import {
   FINANCEMENTS_APPRENANT,
   FORMAT_OPTIONS,
@@ -40,12 +41,22 @@ import {
 
 const BASE = "https://skills4mation.com";
 
+/** Redirection 301 vers une route interne ou une URL absolue (formabientre.fr). */
+function redirectionPermanente(cible: string) {
+  return cible.startsWith("http")
+    ? redirect({ href: cible, statusCode: 301 })
+    : redirect({ to: "/formations", statusCode: 301 });
+}
+
 type Donnees =
   | { kind: "statique"; fiche: FicheFormation; related: CarteHistorique[] }
   | { kind: "db"; formation: FormationCatalogue };
 
 export const Route = createFileRoute("/formations/$slug")({
   loader: async ({ params }): Promise<Donnees> => {
+    // Fiches retirées du site (src/lib/seo-exclusions.ts) : 301, y compris en navigation client.
+    const retiree = redirectionFicheRetiree(params.slug);
+    if (retiree) throw redirectionPermanente(retiree);
     const { data, error } = await supabase
       .from("formations_catalogue")
       .select("*")
@@ -54,9 +65,13 @@ export const Route = createFileRoute("/formations/$slug")({
       .maybeSingle();
     if (error || !data) throw notFound();
     const formation = data as FormationCatalogue;
+    const retireeParCategorie = redirectionFicheRetiree(formation.slug, formation.categorie);
+    if (retireeParCategorie) throw redirectionPermanente(retireeParCategorie);
     if (formation.source === "historique") {
       const fiche = ficheDepuisLigne(formation);
-      const related = fiche.categorie ? await chargerCatalogueHistorique(fiche.categorie) : [];
+      const related = fiche.categorie
+        ? (await chargerCatalogueHistorique(fiche.categorie)).filter(estFichePublique)
+        : [];
       return { kind: "statique", fiche, related };
     }
     return { kind: "db", formation };

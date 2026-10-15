@@ -14,10 +14,11 @@ import {
 import { SPHERES } from "@/data/spheres";
 import { supabase } from "@/integrations/supabase/client";
 import { dureeLabel, tarifLabel, visuelUrl } from "@/lib/formations";
+import { estFichePublique } from "@/lib/seo-exclusions";
 
 const BASE = "https://skills4mation.com";
 const DESC =
-  "Le catalogue Skills4mation : bureautique & digital, langues, RH & management, ventes, RSE, business, bien-être et métiers spécifiques. Programme complet, durée, tarifs et inscription directe.";
+  "Le catalogue Skills4mation : bureautique & digital, langues, RH & management, ventes, RSE, business et métiers spécifiques. Programme complet, durée, tarifs et inscription directe.";
 
 type LigneFormateur = {
   id: string;
@@ -51,9 +52,10 @@ export const Route = createFileRoute("/formations/")({
         .eq("source", "formateur")
         .order("titre", { ascending: true }),
     ]);
+    // Fiches de test et bien-être (porté par formabientre.fr) exclues : src/lib/seo-exclusions.ts.
     return {
-      historique,
-      formateurs: (formateursRes.data ?? []) as LigneFormateur[],
+      historique: historique.filter(estFichePublique),
+      formateurs: ((formateursRes.data ?? []) as LigneFormateur[]).filter(estFichePublique),
     };
   },
 
@@ -148,9 +150,9 @@ function CataloguePublic() {
               Notre catalogue de formations
             </h1>
             <p className="mt-5 max-w-xl text-base leading-relaxed text-primary-foreground/80">
-              Digital, langues, management, commerce, RSE, bien-être : parcourez l'ensemble de nos
-              parcours et trouvez la formation qui fera avancer votre carrière. Chaque programme est
-              animé par un expert de son domaine et adapté à votre niveau.
+              Digital, langues, management, commerce, RSE : parcourez l'ensemble de nos parcours et
+              trouvez la formation qui fera avancer votre carrière. Chaque programme est animé par
+              un expert de son domaine et adapté à votre niveau.
             </p>
             <div className="mt-7 flex max-w-md items-center gap-2 rounded-full border border-primary-foreground/20 bg-primary-foreground/10 px-4 py-2.5">
               <Search className="size-4 text-primary-foreground/70" aria-hidden />
