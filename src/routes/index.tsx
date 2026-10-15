@@ -25,6 +25,7 @@ import { PortageFormateurSheet } from "@/components/site/PortageFormateurSheet";
 import { PublicLayout } from "@/components/site/PublicLayout";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { FORMATIONS_PHARES, derniersArticles } from "@/data/maillage";
 
 const TITRE = "Portage Qualiopi & formations certifiées | Skills4mation";
 const DESCRIPTION =
@@ -158,9 +159,9 @@ function Accueil() {
               </span>
               <h3 className="mt-4 text-2xl font-semibold">Je suis apprenant</h3>
               <p className="mt-3 text-sm text-muted-foreground">
-                Explorez le catalogue de formations professionnelles — bien-être, bureautique &amp;
-                digital, business, management, langues, sécurité — et formez-vous auprès du
-                formateur qui correspond à votre projet et à vos disponibilités.
+                Explorez le catalogue de formations professionnelles — bureautique &amp; digital,
+                business, vente, management, langues — et formez-vous auprès du formateur qui
+                correspond à votre projet et à vos disponibilités.
               </p>
               <div className="mt-7">
                 <Button asChild variant="cta" size="lg">
@@ -190,6 +191,24 @@ function Accueil() {
                 Formez sous notre certification Qualiopi : conventions et documents en 24h, accès
                 aux financements professionnels, autonomie pédagogique totale. Accès à une
                 plateforme de suivi et de coordination de vos dossiers formations.
+              </p>
+              <p className="mt-3 text-sm text-muted-foreground">
+                Découvrez{" "}
+                <Link to="/portage-qualiopi" className="font-medium text-primary hover:underline">
+                  le portage Qualiopi pour formateurs indépendants
+                </Link>
+                , rejoignez{" "}
+                <Link to="/pole-formateur" className="font-medium text-primary hover:underline">
+                  notre pôle formateur
+                </Link>{" "}
+                ou, si vous êtes consultant, notre offre de{" "}
+                <Link
+                  to="/bilan-de-competences"
+                  className="font-medium text-primary hover:underline"
+                >
+                  portage pour bilans de compétences
+                </Link>
+                .
               </p>
               <div className="mt-7">
                 <PortageFormateurSheet titre="Rejoindre Skills4mation — portage Qualiopi">
@@ -268,6 +287,74 @@ function Accueil() {
                 </div>
               </CardContent>
             </Card>
+          </div>
+        </div>
+      </section>
+
+      <section id="formations-demandees" className="section-shell scroll-mt-24 py-16 lg:py-20">
+        <p className="eyebrow">Catalogue</p>
+        <h2 className="mt-3 max-w-2xl text-3xl font-semibold sm:text-4xl">
+          Formations les plus demandées
+        </h2>
+        <ul className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {FORMATIONS_PHARES.map((f) => (
+            <li key={f.slug}>
+              <Card className="h-full rounded-2xl border-border/70 shadow-soft">
+                <CardContent className="flex h-full items-start justify-between gap-3 p-5">
+                  <Link
+                    to="/formations/$slug"
+                    params={{ slug: f.slug }}
+                    className="text-sm font-semibold hover:text-primary hover:underline"
+                  >
+                    {f.label}
+                  </Link>
+                  <ArrowRight className="mt-0.5 size-4 shrink-0 text-secondary" aria-hidden />
+                </CardContent>
+              </Card>
+            </li>
+          ))}
+        </ul>
+        <div className="mt-8">
+          <Button asChild variant="outline" size="lg">
+            <Link to="/formations">Voir tout le catalogue de formations</Link>
+          </Button>
+        </div>
+      </section>
+
+      <section id="derniers-articles" className="scroll-mt-24 bg-muted/60 py-16 lg:py-20">
+        <div className="section-shell">
+          <p className="eyebrow">Blog pédagogique</p>
+          <h2 className="mt-3 max-w-2xl text-3xl font-semibold sm:text-4xl">Derniers articles</h2>
+          <div className="mt-10 grid gap-5 lg:grid-cols-3">
+            {derniersArticles(3).map((post) => (
+              <Card key={post.slug} className="rounded-2xl border-border/70 shadow-soft">
+                <CardContent className="p-6">
+                  <p className="text-xs text-muted-foreground">
+                    {new Date(post.date).toLocaleDateString("fr-FR", {
+                      day: "numeric",
+                      month: "long",
+                      year: "numeric",
+                      timeZone: "UTC",
+                    })}
+                  </p>
+                  <h3 className="mt-3 text-lg font-semibold">
+                    <Link
+                      to="/blog/$slug"
+                      params={{ slug: post.slug }}
+                      className="hover:text-primary hover:underline"
+                    >
+                      {post.title}
+                    </Link>
+                  </h3>
+                  <p className="mt-2 line-clamp-3 text-sm text-muted-foreground">{post.excerpt}</p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+          <div className="mt-8">
+            <Button asChild variant="outline" size="lg">
+              <Link to="/blog">Tous les articles du blog</Link>
+            </Button>
           </div>
         </div>
       </section>

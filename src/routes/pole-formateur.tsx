@@ -1,11 +1,13 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, BadgeCheck, Banknote, FolderCheck, HeartHandshake } from "lucide-react";
 
+import { ArticlesLies } from "@/components/site/ArticlesLies";
 import { PageHero, PublicLayout } from "@/components/site/PublicLayout";
 import formateurWebapp from "@/assets/formateur-webapp.jpg";
 import formatriceTablette from "@/assets/formatrice-tablette.jpg";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { ARTICLES_PAR_PAGE } from "@/data/maillage";
 
 export const Route = createFileRoute("/pole-formateur")({
   head: () => ({
@@ -85,6 +87,12 @@ function PoleFormateur() {
           ))}
         </div>
       </section>
+
+      <ArticlesLies
+        slugs={ARTICLES_PAR_PAGE.pole}
+        titre="Devenir formateur indépendant : nos guides"
+        className="section-shell pb-14"
+      />
 
       <section id="candidature" className="section-shell pb-20 scroll-mt-24">
         <div className="relative overflow-hidden rounded-3xl bg-primary text-primary-foreground shadow-elevated">

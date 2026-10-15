@@ -1,11 +1,12 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { ArrowLeft, CalendarDays } from "lucide-react";
+import { ArrowLeft, ArrowRight, CalendarDays } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
 import { PublicLayout } from "@/components/site/PublicLayout";
 import { Button } from "@/components/ui/button";
 import { blogPosts, getPost } from "@/data/blog";
+import { themeArticle } from "@/data/maillage";
 
 const BASE = "https://skills4mation.com";
 
@@ -68,6 +69,8 @@ export const Route = createFileRoute("/blog/$slug")({
 function ArticlePage() {
   const { post } = Route.useLoaderData();
   const autres = blogPosts.filter((p) => p.slug !== post.slug).slice(0, 3);
+  // Maillage : page commerciale et formations du même thème (règles dans src/data/maillage.ts).
+  const theme = themeArticle(post.slug);
 
   return (
     <PublicLayout>
@@ -98,7 +101,34 @@ function ArticlePage() {
           <ReactMarkdown remarkPlugins={[remarkGfm]}>{post.content}</ReactMarkdown>
         </div>
 
-        <div className="mt-12 rounded-2xl border border-border/70 bg-accent/40 p-8">
+        <section className="mt-12 rounded-2xl border border-border/70 p-8">
+          <h2 className="text-xl font-semibold">Pour aller plus loin</h2>
+          <p className="mt-4">
+            <Link
+              to={theme.page.to}
+              search={theme.page.categorie ? { categorie: theme.page.categorie } : {}}
+              className="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:underline"
+            >
+              {theme.page.label} <ArrowRight className="size-4" aria-hidden />
+            </Link>
+          </p>
+          <p className="mt-6 text-sm text-muted-foreground">Formations associées :</p>
+          <ul className="mt-3 space-y-2">
+            {theme.formations.map((f) => (
+              <li key={f.slug}>
+                <Link
+                  to="/formations/$slug"
+                  params={{ slug: f.slug }}
+                  className="text-sm font-medium text-primary hover:underline"
+                >
+                  {f.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </section>
+
+        <div className="mt-8 rounded-2xl border border-border/70 bg-accent/40 p-8">
           <h2 className="text-xl font-semibold">
             Envie de former sous notre certification Qualiopi ?
           </h2>

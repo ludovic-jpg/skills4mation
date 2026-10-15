@@ -35,6 +35,7 @@ import portageHero from "@/assets/portage-hero.jpg";
 import { QualiopiBadge } from "@/components/Brand";
 import { PortailMockup } from "@/components/site/PortailMockup";
 import { PublicLayout } from "@/components/site/PublicLayout";
+import { ArticlesLies } from "@/components/site/ArticlesLies";
 import { SimulateurCommission } from "@/components/site/SimulateurCommission";
 
 import {
@@ -45,6 +46,7 @@ import {
 } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { ARTICLES_PAR_PAGE } from "@/data/maillage";
 
 const TITRE = "Portage Qualiopi Formation et Bilan de Compétences | Skills4mation";
 const DESCRIPTION =
@@ -637,6 +639,12 @@ function PortageQualiopi() {
           ))}
         </div>
       </section>
+
+      <ArticlesLies
+        slugs={ARTICLES_PAR_PAGE.portage}
+        titre="Nos guides pour comprendre le portage Qualiopi"
+        className="section-shell pb-16 lg:pb-20"
+      />
 
       <section id="faq" className="scroll-mt-24 bg-muted/60 py-16 lg:py-20">
         <div className="section-shell max-w-3xl">

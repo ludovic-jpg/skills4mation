@@ -15,9 +15,11 @@ import {
 } from "lucide-react";
 
 import { QualiopiBadge } from "@/components/Brand";
+import { ArticlesLies } from "@/components/site/ArticlesLies";
 import { PageHero, PublicLayout } from "@/components/site/PublicLayout";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { ARTICLES_PAR_PAGE } from "@/data/maillage";
 import heroImage from "@/assets/formatrice-tablette.jpg";
 import consultantsImage from "@/assets/people-equipe.jpg";
 
@@ -294,6 +296,12 @@ function BilanDeCompetences() {
           </div>
         </div>
       </section>
+
+      <ArticlesLies
+        slugs={ARTICLES_PAR_PAGE.bilan}
+        titre="Portage Qualiopi et bilan de compétences : nos guides"
+        className="section-shell py-14"
+      />
 
       <section className="section-shell max-w-4xl py-14">
         <Card className="rounded-3xl border-cta/40 bg-cta/10 shadow-soft">
