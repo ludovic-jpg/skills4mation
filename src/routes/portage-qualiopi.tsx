@@ -47,6 +47,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ARTICLES_PAR_PAGE } from "@/data/maillage";
+import { RDV_FORMATEUR_URL } from "@/lib/rdv-formateur";
 
 const TITRE = "Portage Qualiopi Formation et Bilan de Compétences | Skills4mation";
 const DESCRIPTION =
@@ -691,7 +692,9 @@ function PortageQualiopi() {
                 <Link to="/candidature">Rejoindre Skills4mation</Link>
               </Button>
               <Button asChild variant="onDark" size="lg">
-                <Link to="/contact">Nous contacter</Link>
+                <a href={RDV_FORMATEUR_URL} target="_blank" rel="noopener noreferrer">
+                  Prendre rendez-vous
+                </a>
               </Button>
             </div>
             <p className="mt-4 text-sm text-primary-foreground/75">

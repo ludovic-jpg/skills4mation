@@ -8,6 +8,7 @@ import formatriceTablette from "@/assets/formatrice-tablette.jpg";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ARTICLES_PAR_PAGE } from "@/data/maillage";
+import { RDV_FORMATEUR_URL } from "@/lib/rdv-formateur";
 
 export const Route = createFileRoute("/pole-formateur")({
   head: () => ({
@@ -126,6 +127,11 @@ function PoleFormateur() {
                   <Link to="/candidature">
                     Commencer ma candidature <ArrowRight className="size-4" aria-hidden />
                   </Link>
+                </Button>
+                <Button asChild variant="onDark" size="lg" className="h-12 px-7 text-base">
+                  <a href={RDV_FORMATEUR_URL} target="_blank" rel="noopener noreferrer">
+                    Prendre rendez-vous
+                  </a>
                 </Button>
                 <Link
                   to="/auth"
