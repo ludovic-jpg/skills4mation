@@ -42,6 +42,19 @@ export const Route = createFileRoute("/sitemap.xml")({
         const entries: SitemapEntry[] = [
           { path: "/", changefreq: "weekly", priority: "1.0" },
           { path: "/formations", changefreq: "weekly", priority: "0.9" },
+          // Parcours installateur photovoltaïque (17/10/2026) : routes statiques, hors catalogue.
+          {
+            path: "/formations/installateur-panneaux-photovoltaiques",
+            lastmod: "2026-10-17",
+            changefreq: "monthly",
+            priority: "0.9",
+          },
+          ...["programme", "financement", "prerequis-habilitations", "faq"].map((sous) => ({
+            path: `/formations/installateur-panneaux-photovoltaiques/${sous}`,
+            lastmod: "2026-10-17",
+            changefreq: "monthly" as const,
+            priority: "0.7",
+          })),
           { path: "/livre-blanc", changefreq: "monthly", priority: "0.8" },
           { path: "/portage-qualiopi", changefreq: "weekly", priority: "0.9" },
           { path: "/pole-formateur", changefreq: "monthly", priority: "0.8" },

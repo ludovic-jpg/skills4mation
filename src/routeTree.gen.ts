@@ -62,6 +62,11 @@ import { Route as AppEspaceParrainageRouteImport } from './routes/_app.espace.pa
 import { Route as AppEspaceProfilRouteImport } from './routes/_app.espace.profil'
 import { Route as CatalogueCategoryIndexRouteImport } from './routes/catalogue.$category.index'
 import { Route as CatalogueCategorySlugRouteImport } from './routes/catalogue.$category.$slug'
+import { Route as FormationsInstallateurPanneauxPhotovoltaiquesIndexRouteImport } from './routes/formations.installateur-panneaux-photovoltaiques.index'
+import { Route as FormationsInstallateurPanneauxPhotovoltaiquesFaqRouteImport } from './routes/formations.installateur-panneaux-photovoltaiques.faq'
+import { Route as FormationsInstallateurPanneauxPhotovoltaiquesFinancementRouteImport } from './routes/formations.installateur-panneaux-photovoltaiques.financement'
+import { Route as FormationsInstallateurPanneauxPhotovoltaiquesPrerequisHabilitationsRouteImport } from './routes/formations.installateur-panneaux-photovoltaiques.prerequis-habilitations'
+import { Route as FormationsInstallateurPanneauxPhotovoltaiquesProgrammeRouteImport } from './routes/formations.installateur-panneaux-photovoltaiques.programme'
 import { Route as AppEspaceDossiersIndexRouteImport } from './routes/_app.espace.dossiers.index'
 import { Route as AppEspaceDossiersIdRouteImport } from './routes/_app.espace.dossiers.$id'
 import { Route as AppEspaceDossiersNewRouteImport } from './routes/_app.espace.dossiers.new'
@@ -342,6 +347,38 @@ const CatalogueCategorySlugRoute = CatalogueCategorySlugRouteImport.update({
   path: '/catalogue/$category/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const FormationsInstallateurPanneauxPhotovoltaiquesIndexRoute =
+  FormationsInstallateurPanneauxPhotovoltaiquesIndexRouteImport.update({
+    id: '/formations/installateur-panneaux-photovoltaiques/',
+    path: '/formations/installateur-panneaux-photovoltaiques/',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const FormationsInstallateurPanneauxPhotovoltaiquesFaqRoute =
+  FormationsInstallateurPanneauxPhotovoltaiquesFaqRouteImport.update({
+    id: '/formations/installateur-panneaux-photovoltaiques/faq',
+    path: '/formations/installateur-panneaux-photovoltaiques/faq',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const FormationsInstallateurPanneauxPhotovoltaiquesFinancementRoute =
+  FormationsInstallateurPanneauxPhotovoltaiquesFinancementRouteImport.update({
+    id: '/formations/installateur-panneaux-photovoltaiques/financement',
+    path: '/formations/installateur-panneaux-photovoltaiques/financement',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const FormationsInstallateurPanneauxPhotovoltaiquesPrerequisHabilitationsRoute =
+  FormationsInstallateurPanneauxPhotovoltaiquesPrerequisHabilitationsRouteImport.update(
+    {
+      id: '/formations/installateur-panneaux-photovoltaiques/prerequis-habilitations',
+      path: '/formations/installateur-panneaux-photovoltaiques/prerequis-habilitations',
+      getParentRoute: () => rootRouteImport,
+    } as any,
+  )
+const FormationsInstallateurPanneauxPhotovoltaiquesProgrammeRoute =
+  FormationsInstallateurPanneauxPhotovoltaiquesProgrammeRouteImport.update({
+    id: '/formations/installateur-panneaux-photovoltaiques/programme',
+    path: '/formations/installateur-panneaux-photovoltaiques/programme',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const AppEspaceDossiersIndexRoute = AppEspaceDossiersIndexRouteImport.update({
   id: '/espace/dossiers/',
   path: '/espace/dossiers/',
@@ -451,10 +488,15 @@ export interface FileRoutesByFullPath {
   '/espace/parrainage': typeof AppEspaceParrainageRoute
   '/espace/profil': typeof AppEspaceProfilRoute
   '/catalogue/$category/$slug': typeof CatalogueCategorySlugRoute
+  '/formations/installateur-panneaux-photovoltaiques/faq': typeof FormationsInstallateurPanneauxPhotovoltaiquesFaqRoute
+  '/formations/installateur-panneaux-photovoltaiques/financement': typeof FormationsInstallateurPanneauxPhotovoltaiquesFinancementRoute
+  '/formations/installateur-panneaux-photovoltaiques/prerequis-habilitations': typeof FormationsInstallateurPanneauxPhotovoltaiquesPrerequisHabilitationsRoute
+  '/formations/installateur-panneaux-photovoltaiques/programme': typeof FormationsInstallateurPanneauxPhotovoltaiquesProgrammeRoute
   '/admin/': typeof AppAdminIndexRoute
   '/apprenant/': typeof AppApprenantIndexRoute
   '/espace/': typeof AppEspaceIndexRoute
   '/catalogue/$category/': typeof CatalogueCategoryIndexRoute
+  '/formations/installateur-panneaux-photovoltaiques/': typeof FormationsInstallateurPanneauxPhotovoltaiquesIndexRoute
   '/espace/dossiers/$id': typeof AppEspaceDossiersIdRoute
   '/espace/dossiers/new': typeof AppEspaceDossiersNewRoute
   '/espace/formations/$id': typeof AppEspaceFormationsIdRoute
@@ -516,10 +558,15 @@ export interface FileRoutesByTo {
   '/espace/parrainage': typeof AppEspaceParrainageRoute
   '/espace/profil': typeof AppEspaceProfilRoute
   '/catalogue/$category/$slug': typeof CatalogueCategorySlugRoute
+  '/formations/installateur-panneaux-photovoltaiques/faq': typeof FormationsInstallateurPanneauxPhotovoltaiquesFaqRoute
+  '/formations/installateur-panneaux-photovoltaiques/financement': typeof FormationsInstallateurPanneauxPhotovoltaiquesFinancementRoute
+  '/formations/installateur-panneaux-photovoltaiques/prerequis-habilitations': typeof FormationsInstallateurPanneauxPhotovoltaiquesPrerequisHabilitationsRoute
+  '/formations/installateur-panneaux-photovoltaiques/programme': typeof FormationsInstallateurPanneauxPhotovoltaiquesProgrammeRoute
   '/admin': typeof AppAdminIndexRoute
   '/apprenant': typeof AppApprenantIndexRoute
   '/espace': typeof AppEspaceIndexRoute
   '/catalogue/$category': typeof CatalogueCategoryIndexRoute
+  '/formations/installateur-panneaux-photovoltaiques': typeof FormationsInstallateurPanneauxPhotovoltaiquesIndexRoute
   '/espace/dossiers/$id': typeof AppEspaceDossiersIdRoute
   '/espace/dossiers/new': typeof AppEspaceDossiersNewRoute
   '/espace/formations/$id': typeof AppEspaceFormationsIdRoute
@@ -583,10 +630,15 @@ export interface FileRoutesById {
   '/_app/espace/parrainage': typeof AppEspaceParrainageRoute
   '/_app/espace/profil': typeof AppEspaceProfilRoute
   '/catalogue/$category/$slug': typeof CatalogueCategorySlugRoute
+  '/formations/installateur-panneaux-photovoltaiques/faq': typeof FormationsInstallateurPanneauxPhotovoltaiquesFaqRoute
+  '/formations/installateur-panneaux-photovoltaiques/financement': typeof FormationsInstallateurPanneauxPhotovoltaiquesFinancementRoute
+  '/formations/installateur-panneaux-photovoltaiques/prerequis-habilitations': typeof FormationsInstallateurPanneauxPhotovoltaiquesPrerequisHabilitationsRoute
+  '/formations/installateur-panneaux-photovoltaiques/programme': typeof FormationsInstallateurPanneauxPhotovoltaiquesProgrammeRoute
   '/_app/admin/': typeof AppAdminIndexRoute
   '/_app/apprenant/': typeof AppApprenantIndexRoute
   '/_app/espace/': typeof AppEspaceIndexRoute
   '/catalogue/$category/': typeof CatalogueCategoryIndexRoute
+  '/formations/installateur-panneaux-photovoltaiques/': typeof FormationsInstallateurPanneauxPhotovoltaiquesIndexRoute
   '/_app/espace/dossiers/$id': typeof AppEspaceDossiersIdRoute
   '/_app/espace/dossiers/new': typeof AppEspaceDossiersNewRoute
   '/_app/espace/formations/$id': typeof AppEspaceFormationsIdRoute
@@ -650,10 +702,15 @@ export interface FileRouteTypes {
     | '/espace/parrainage'
     | '/espace/profil'
     | '/catalogue/$category/$slug'
+    | '/formations/installateur-panneaux-photovoltaiques/faq'
+    | '/formations/installateur-panneaux-photovoltaiques/financement'
+    | '/formations/installateur-panneaux-photovoltaiques/prerequis-habilitations'
+    | '/formations/installateur-panneaux-photovoltaiques/programme'
     | '/admin/'
     | '/apprenant/'
     | '/espace/'
     | '/catalogue/$category/'
+    | '/formations/installateur-panneaux-photovoltaiques/'
     | '/espace/dossiers/$id'
     | '/espace/dossiers/new'
     | '/espace/formations/$id'
@@ -715,10 +772,15 @@ export interface FileRouteTypes {
     | '/espace/parrainage'
     | '/espace/profil'
     | '/catalogue/$category/$slug'
+    | '/formations/installateur-panneaux-photovoltaiques/faq'
+    | '/formations/installateur-panneaux-photovoltaiques/financement'
+    | '/formations/installateur-panneaux-photovoltaiques/prerequis-habilitations'
+    | '/formations/installateur-panneaux-photovoltaiques/programme'
     | '/admin'
     | '/apprenant'
     | '/espace'
     | '/catalogue/$category'
+    | '/formations/installateur-panneaux-photovoltaiques'
     | '/espace/dossiers/$id'
     | '/espace/dossiers/new'
     | '/espace/formations/$id'
@@ -781,10 +843,15 @@ export interface FileRouteTypes {
     | '/_app/espace/parrainage'
     | '/_app/espace/profil'
     | '/catalogue/$category/$slug'
+    | '/formations/installateur-panneaux-photovoltaiques/faq'
+    | '/formations/installateur-panneaux-photovoltaiques/financement'
+    | '/formations/installateur-panneaux-photovoltaiques/prerequis-habilitations'
+    | '/formations/installateur-panneaux-photovoltaiques/programme'
     | '/_app/admin/'
     | '/_app/apprenant/'
     | '/_app/espace/'
     | '/catalogue/$category/'
+    | '/formations/installateur-panneaux-photovoltaiques/'
     | '/_app/espace/dossiers/$id'
     | '/_app/espace/dossiers/new'
     | '/_app/espace/formations/$id'
@@ -829,7 +896,12 @@ export interface RootRouteChildren {
   DotlovableOauthConsentRoute: typeof DotlovableOauthConsentRoute
   Char91DotmcpChar93InvokeToolToolRoute: typeof Char91DotmcpChar93InvokeToolToolRoute
   CatalogueCategorySlugRoute: typeof CatalogueCategorySlugRoute
+  FormationsInstallateurPanneauxPhotovoltaiquesFaqRoute: typeof FormationsInstallateurPanneauxPhotovoltaiquesFaqRoute
+  FormationsInstallateurPanneauxPhotovoltaiquesFinancementRoute: typeof FormationsInstallateurPanneauxPhotovoltaiquesFinancementRoute
+  FormationsInstallateurPanneauxPhotovoltaiquesPrerequisHabilitationsRoute: typeof FormationsInstallateurPanneauxPhotovoltaiquesPrerequisHabilitationsRoute
+  FormationsInstallateurPanneauxPhotovoltaiquesProgrammeRoute: typeof FormationsInstallateurPanneauxPhotovoltaiquesProgrammeRoute
   CatalogueCategoryIndexRoute: typeof CatalogueCategoryIndexRoute
+  FormationsInstallateurPanneauxPhotovoltaiquesIndexRoute: typeof FormationsInstallateurPanneauxPhotovoltaiquesIndexRoute
   ApiPublicCronTachesQuotidiennesRoute: typeof ApiPublicCronTachesQuotidiennesRoute
   ApiPublicFormationImageSplatRoute: typeof ApiPublicFormationImageSplatRoute
   LovableEmailAuthPreviewRoute: typeof LovableEmailAuthPreviewRoute
@@ -1210,6 +1282,41 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CatalogueCategorySlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/formations/installateur-panneaux-photovoltaiques/': {
+      id: '/formations/installateur-panneaux-photovoltaiques/'
+      path: '/formations/installateur-panneaux-photovoltaiques'
+      fullPath: '/formations/installateur-panneaux-photovoltaiques/'
+      preLoaderRoute: typeof FormationsInstallateurPanneauxPhotovoltaiquesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/formations/installateur-panneaux-photovoltaiques/faq': {
+      id: '/formations/installateur-panneaux-photovoltaiques/faq'
+      path: '/formations/installateur-panneaux-photovoltaiques/faq'
+      fullPath: '/formations/installateur-panneaux-photovoltaiques/faq'
+      preLoaderRoute: typeof FormationsInstallateurPanneauxPhotovoltaiquesFaqRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/formations/installateur-panneaux-photovoltaiques/financement': {
+      id: '/formations/installateur-panneaux-photovoltaiques/financement'
+      path: '/formations/installateur-panneaux-photovoltaiques/financement'
+      fullPath: '/formations/installateur-panneaux-photovoltaiques/financement'
+      preLoaderRoute: typeof FormationsInstallateurPanneauxPhotovoltaiquesFinancementRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/formations/installateur-panneaux-photovoltaiques/prerequis-habilitations': {
+      id: '/formations/installateur-panneaux-photovoltaiques/prerequis-habilitations'
+      path: '/formations/installateur-panneaux-photovoltaiques/prerequis-habilitations'
+      fullPath: '/formations/installateur-panneaux-photovoltaiques/prerequis-habilitations'
+      preLoaderRoute: typeof FormationsInstallateurPanneauxPhotovoltaiquesPrerequisHabilitationsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/formations/installateur-panneaux-photovoltaiques/programme': {
+      id: '/formations/installateur-panneaux-photovoltaiques/programme'
+      path: '/formations/installateur-panneaux-photovoltaiques/programme'
+      fullPath: '/formations/installateur-panneaux-photovoltaiques/programme'
+      preLoaderRoute: typeof FormationsInstallateurPanneauxPhotovoltaiquesProgrammeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_app/espace/dossiers/': {
       id: '/_app/espace/dossiers/'
       path: '/espace/dossiers'
@@ -1386,7 +1493,17 @@ const rootRouteChildren: RootRouteChildren = {
   DotlovableOauthConsentRoute: DotlovableOauthConsentRoute,
   Char91DotmcpChar93InvokeToolToolRoute: Char91DotmcpChar93InvokeToolToolRoute,
   CatalogueCategorySlugRoute: CatalogueCategorySlugRoute,
+  FormationsInstallateurPanneauxPhotovoltaiquesFaqRoute:
+    FormationsInstallateurPanneauxPhotovoltaiquesFaqRoute,
+  FormationsInstallateurPanneauxPhotovoltaiquesFinancementRoute:
+    FormationsInstallateurPanneauxPhotovoltaiquesFinancementRoute,
+  FormationsInstallateurPanneauxPhotovoltaiquesPrerequisHabilitationsRoute:
+    FormationsInstallateurPanneauxPhotovoltaiquesPrerequisHabilitationsRoute,
+  FormationsInstallateurPanneauxPhotovoltaiquesProgrammeRoute:
+    FormationsInstallateurPanneauxPhotovoltaiquesProgrammeRoute,
   CatalogueCategoryIndexRoute: CatalogueCategoryIndexRoute,
+  FormationsInstallateurPanneauxPhotovoltaiquesIndexRoute:
+    FormationsInstallateurPanneauxPhotovoltaiquesIndexRoute,
   ApiPublicCronTachesQuotidiennesRoute: ApiPublicCronTachesQuotidiennesRoute,
   ApiPublicFormationImageSplatRoute: ApiPublicFormationImageSplatRoute,
   LovableEmailAuthPreviewRoute: LovableEmailAuthPreviewRoute,

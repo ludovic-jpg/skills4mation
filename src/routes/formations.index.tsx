@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { Search } from "lucide-react";
 import { useMemo, useState } from "react";
 
@@ -175,6 +175,21 @@ function CataloguePublic() {
             priority
           />
         </div>
+      </section>
+
+      <section className="section-shell pt-10">
+        <Link
+          to="/formations/installateur-panneaux-photovoltaiques"
+          className="flex flex-col gap-1 rounded-2xl border border-border bg-accent p-5 transition-colors hover:border-primary sm:flex-row sm:items-center sm:justify-between"
+        >
+          <span>
+            <span className="eyebrow">Nouveau parcours en cours d'ouverture</span>
+            <span className="mt-1 block text-base font-semibold">
+              Formation installateur de panneaux photovoltaïques
+            </span>
+          </span>
+          <span className="text-sm font-medium text-primary">Découvrir le parcours</span>
+        </Link>
       </section>
 
       <section className="section-shell py-14">
