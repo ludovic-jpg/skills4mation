@@ -1,6 +1,6 @@
 /**
  * Visuels du parcours « Installateur / poseur de panneaux photovoltaïques ».
- * Les images arriveront plus tard : tant que `src` vaut null, les pages affichent un bloc
+ * Tant que `src` vaut null, les pages affichent un bloc
  * décoratif aux couleurs de la charte (dégradé vert), sans image cassée.
  * Pour activer un visuel : déposer le fichier WebP dans
  * public/images/formations/photovoltaique/ puis renseigner `src` (ex. "/images/formations/photovoltaique/pv-hero.webp").
@@ -17,27 +17,27 @@ export type CleVisuelPv =
 
 export const VISUELS_PV: Record<CleVisuelPv, VisuelPv> = {
   "pv-hero": {
-    src: null,
-    alt: "Installateur posant des panneaux photovoltaïques sur une toiture, équipé d'un harnais",
+    src: "/images/formations/photovoltaique/pv-hero.webp",
+    alt: "Deux installateurs en casque et harnais, reliés à une ligne de vie, posent des panneaux solaires sur un toit en tuiles devant un village alsacien.",
   },
   "pv-pose-hauteur": {
     src: null,
     alt: "Apprenant en situation de travail en hauteur, protections collectives et individuelles en place",
   },
   "pv-cablage": {
-    src: null,
-    alt: "Câblage d'une chaîne de panneaux photovoltaïques et raccordement des connecteurs",
+    src: "/images/formations/photovoltaique/pv-cablage.webp",
+    alt: "Un technicien en casque, lunettes et gants isolants contrôle au multimètre un coffret électrique à côté d'un onduleur solaire mural.",
   },
   "pv-plateau": {
     src: null,
     alt: "Plateau technique de formation avec panneaux, onduleur et coffret de protection",
   },
   "pv-salle": {
-    src: null,
-    alt: "Salle de formation : groupe d'apprenants autour d'un schéma d'installation photovoltaïque",
+    src: "/images/formations/photovoltaique/pv-salle.webp",
+    alt: "Des stagiaires suivent un cours théorique sur l'installation solaire dans une salle de formation lumineuse.",
   },
   "pv-social": {
-    src: null,
-    alt: "Formation installateur de panneaux photovoltaïques, parcours Skills4mation",
+    src: "/images/formations/photovoltaique/pv-social.webp",
+    alt: "Un installateur en casque blanc et harnais fixe un panneau solaire sur une toiture en tuiles sous un ciel dégagé.",
   },
 };
